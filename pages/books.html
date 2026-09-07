@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>الكتب | مكتبة الثانوية</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+
+<!-- شريط التنقل -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">📚</div>
+
+        <div>
+
+            <div class="logo-title">
+                مكتبة الثانوية
+            </div>
+
+            <div class="logo-subtitle">
+                المكتبة الإلكترونية
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="../index.html">
+            الرئيسية
+        </a>
+
+        <a href="books.html" class="active">
+            الكتب
+        </a>
+
+        <a href="categories.html">
+            التصنيفات
+        </a>
+
+        <a href="#">
+            عن المكتبة
+        </a>
+
+    </nav>
+
+
+    <button class="login-btn">
+        تسجيل الدخول
+    </button>
+
+</header>
+
+
+
+<!-- المحتوى الرئيسي -->
+
+<main>
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>
+                    مكتبة الثانوية
+                </span>
+
+                <h2 id="pageTitle">
+                    جميع الكتب
+                </h2>
+
+
+                <!-- مربع البحث -->
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="bookSearch"
+                        placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
+                    >
+
+                    <span>
+                        🔎
+                    </span>
+
+                </div>
+
+
+                <!-- عدد النتائج -->
+
+                <p id="resultsCount"
+                   style="
+                       margin-top: 15px;
+                       color: #64748b;
+                       font-size: 15px;
+                   ">
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- قائمة الكتب -->
+
+        <div
+            class="books-container"
+            id="booksContainer">
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- الفوتر -->
+
+<footer>
+
+    <div class="copyright">
+
+        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+
+    </div>
+
+</footer>
+
+
+
+<!-- بيانات الكتب -->
+
+<script src="../books-data.js"></script>
+
+
+<!-- نظام المكتبة -->
+
+<script>
+
+    const booksContainer =
+        document.getElementById("booksContainer");
+
+    const searchInput =
+        document.getElementById("bookSearch");
+
+    const pageTitle =
+        document.getElementById("pageTitle");
+
+    const resultsCount =
+        document.getElementById("resultsCount");
+
+
+
+    /*
+       إنشاء بطاقة كتاب
+    */
+
+    function createBookCard(book) {
+
+        const article =
+            document.createElement("article");
+
+        article.className =
+            "book-card";
+
+
+        let coverHTML;
+
+
+        /*
+           إذا كان للكتاب غلاف
+        */
+
+        if (book.cover) {
+
+            coverHTML = `
+                <img
+                    src="../covers/${book.cover}"
+                    alt="غلاف ${book.title}">
+            `;
+
+        } else {
+
+            coverHTML = "📚";
+
+        }
+
+
+
+        /*
+           إنشاء رابط القراءة
+        */
+
+        let readButton;
+
+
+        if (book.pdf) {
+
+            const bookIndex =
+                booksData.indexOf(book);
+
+            readButton = `
+                <a
+                    href="book.html?book=${bookIndex}"
+                    class="read-button">
+
+                    📖 قراءة الكتاب
+
+                </a>
+            `;
+
+        } else {
+
+            readButton = `
+                <span
+                    class="read-button"
+                    style="
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                    ">
+
+                    📖 الكتاب غير متوفر
+
+                </span>
+            `;
+
+        }
+
+
+
+        /*
+           بناء البطاقة
+        */
+
+        article.innerHTML = `
+
+            <div class="book-cover">
+
+                ${coverHTML}
+
+            </div>
+
+
+            <div class="book-info">
+
+                <span class="book-category">
+
+                    ${book.category}
+
+                </span>
+
+
+                <h3>
+
+                    ${book.title}
+
+                </h3>
+
+
+                <p>
+
+                    ${book.description}
+
+                </p>
+
+
+                <p style="
+                    color: #64748b;
+                    font-size: 14px;
+                    margin-top: 8px;
+                ">
+
+                    ✍️ ${book.author}
+
+                </p>
+
+
+                ${readButton}
+
+            </div>
+
+        `;
+
+
+        return article;
+
+    }
+
+
+
+    /*
+       عرض الكتب
+    */
+
+    function displayBooks(list) {
+
+        booksContainer.innerHTML = "";
+
+
+        /*
+           تحديث عدد النتائج
+        */
+
+        if (list.length === 0) {
+
+            resultsCount.textContent =
+                "لم يتم العثور على أي كتاب.";
+
+        }
+
+        else if (list.length === 1) {
+
+            resultsCount.textContent =
+                "تم العثور على كتاب واحد.";
+
+        }
+
+        else {
+
+            resultsCount.textContent =
+                "تم العثور على " +
+                list.length +
+                " كتب.";
+
+        }
+
+
+
+        /*
+           إذا لم توجد نتائج
+        */
+
+        if (list.length === 0) {
+
+            booksContainer.innerHTML = `
+
+                <div style="
+                    grid-column: 1 / -1;
+                    text-align: center;
+                    padding: 60px 20px;
+                    font-size: 20px;
+                    color: #64748b;
+                ">
+
+                    📚 لا توجد كتب مطابقة للبحث
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+
+        /*
+           عرض الكتب
+        */
+
+        list.forEach(book => {
+
+            const card =
+                createBookCard(book);
+
+            booksContainer.appendChild(card);
+
+        });
+
+    }
+
+
+
+    /*
+       البحث والتصنيف
+    */
+
+    function filterBooks() {
+
+        const search =
+            searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const category =
+            params.get("category");
+
+
+
+        const filteredBooks =
+            booksData.filter(book => {
+
+
+                const matchesSearch =
+
+                    book.title
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    book.author
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    book.category
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    book.description
+                        .toLowerCase()
+                        .includes(search);
+
+
+
+                const matchesCategory =
+
+                    !category
+
+                    ||
+
+                    book.category === category;
+
+
+
+                return (
+                    matchesSearch
+                    &&
+                    matchesCategory
+                );
+
+            });
+
+
+
+        displayBooks(filteredBooks);
+
+    }
+
+
+
+    /*
+       البحث أثناء الكتابة
+    */
+
+    searchInput.addEventListener(
+        "input",
+        filterBooks
+    );
+
+
+
+    /*
+       استقبال البحث من الصفحة الرئيسية
+    */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const searchFromHome =
+        params.get("search");
+
+
+    if (searchFromHome) {
+
+        searchInput.value =
+            searchFromHome;
+
+    }
+
+
+
+    /*
+       إظهار اسم التصنيف
+    */
+
+    const category =
+        params.get("category");
+
+
+    if (category) {
+
+        pageTitle.innerText =
+            "كتب " + category;
+
+    }
+
+
+
+    /*
+       تشغيل المكتبة
+    */
+
+    filterBooks();
+
+</script>
+
+
+</body>
+
+</html>

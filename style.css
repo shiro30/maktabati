@@ -1,0 +1,1797 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+
+/* =====================================================
+   GENERAL
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #111827;
+    --black-soft: #1f2937;
+
+    --blue: #1d4ed8;
+    --blue-dark: #173b8f;
+    --blue-light: #eff6ff;
+
+    --orange: #f97316;
+    --orange-light: #fff7ed;
+
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+
+    --white: #ffffff;
+    --background: #f5f7fa;
+
+    --text: #172033;
+    --text-light: #64748b;
+
+    --border: #e2e8f0;
+
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --shadow-hover: 0 18px 40px rgba(15, 23, 42, 0.14);
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   NAVBAR
+   ===================================================== */
+
+.navbar {
+    height: 82px;
+    padding: 0 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: var(--black);
+    border-bottom: 3px solid var(--blue);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: var(--blue);
+    color: white;
+
+    font-size: 23px;
+
+    box-shadow: 0 5px 15px rgba(29, 78, 216, 0.35);
+}
+
+.logo-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+}
+
+.logo-subtitle {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+nav {
+    display: flex;
+    gap: 32px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+    color: #60a5fa;
+}
+
+.login-btn {
+    border: 1px solid var(--orange);
+
+    background: transparent;
+
+    color: var(--orange);
+
+    padding: 9px 20px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.login-btn:hover {
+    background: var(--orange);
+    color: white;
+}
+
+
+/* =====================================================
+   HERO
+   ===================================================== */
+
+.hero {
+    min-height: 570px;
+
+    padding: 80px 10%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 70px;
+
+    background:
+        radial-gradient(
+            circle at 75% 40%,
+            rgba(29, 78, 216, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #111827,
+            #172554
+        );
+
+    color: white;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.welcome {
+    display: inline-block;
+
+    color: #93c5fd;
+
+    background: rgba(29, 78, 216, 0.18);
+
+    border: 1px solid rgba(96, 165, 250, 0.35);
+
+    padding: 6px 15px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 65px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+}
+
+.hero h1 span {
+    color: #fb923c;
+}
+
+.hero p {
+    color: #cbd5e1;
+
+    font-size: 17px;
+
+    max-width: 620px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.search-box {
+    max-width: 650px;
+
+    display: flex;
+
+    padding: 6px;
+
+    background: white;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 13px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+.search-box input {
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: var(--text);
+
+    padding: 14px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+}
+
+.search-box input::placeholder {
+    color: #94a3b8;
+}
+
+.search-box button {
+    border: none;
+
+    background: var(--orange);
+
+    color: white;
+
+    padding: 0 28px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.search-box button:hover {
+    background: #ea580c;
+}
+
+
+/* =====================================================
+   HERO CARD
+   ===================================================== */
+
+.hero-card {
+    width: 300px;
+
+    padding: 40px 30px;
+
+    text-align: center;
+
+    border-radius: 25px;
+
+    background: white;
+
+    color: var(--text);
+
+    border: 1px solid #dbeafe;
+
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+.book-symbol {
+    width: 100px;
+    height: 100px;
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--blue-light);
+
+    color: var(--blue);
+
+    font-size: 50px;
+
+    border: 4px solid #dbeafe;
+}
+
+.hero-card h2 {
+    margin-top: 20px;
+}
+
+.hero-card p {
+    margin: 5px 0 25px;
+
+    font-size: 14px;
+
+    color: var(--text-light);
+}
+
+.hero-stat {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 45px;
+
+    border-top: 1px solid var(--border);
+
+    padding-top: 20px;
+}
+
+.hero-stat strong {
+    display: block;
+
+    color: var(--blue);
+
+    font-size: 22px;
+}
+
+.hero-stat span {
+    color: #858d99;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   SECTIONS
+   ===================================================== */
+
+.section {
+    padding: 75px 10%;
+}
+
+.section-heading {
+    display: flex;
+
+    align-items: end;
+
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.section-heading span {
+    color: var(--blue);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.section-heading h2 {
+    font-size: 28px;
+
+    color: var(--black);
+}
+
+.section-heading a {
+    color: var(--blue);
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.section-heading a:hover {
+    color: var(--orange);
+}
+
+
+/* =====================================================
+   CATEGORIES
+   ===================================================== */
+
+.categories {
+    display: grid;
+
+    grid-template-columns: repeat(6, 1fr);
+
+    gap: 14px;
+}
+
+.category-card {
+    padding: 25px 10px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    transition: 0.3s ease;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    color: var(--text);
+
+    box-shadow: var(--shadow);
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+
+    border-color: var(--blue);
+
+    box-shadow: var(--shadow-hover);
+}
+
+
+/* =====================================================
+   CATEGORY ICONS
+   ===================================================== */
+
+.category-icon {
+    width: 72px;
+    height: 72px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 38px;
+
+    transition: 0.3s ease;
+}
+
+.category-card:nth-child(1) .category-icon {
+    background: #dbeafe;
+}
+
+.category-card:nth-child(2) .category-icon {
+    background: #dcfce7;
+}
+
+.category-card:nth-child(3) .category-icon {
+    background: #e5e7eb;
+}
+
+.category-card:nth-child(4) .category-icon {
+    background: #ffedd5;
+}
+
+.category-card:nth-child(5) .category-icon {
+    background: #e0f2fe;
+}
+
+.category-card:nth-child(6) .category-icon {
+    background: #dcfce7;
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.08);
+}
+
+.category-card h3 {
+    font-size: 15px;
+
+    margin-bottom: 5px;
+
+    color: var(--black);
+}
+
+.category-card p {
+    color: var(--text-light);
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   BOOKS SECTION
+   ===================================================== */
+
+.books-section {
+    background: #eef2f7;
+}
+
+.books-container {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 22px;
+}
+
+.book-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    transition: 0.3s ease;
+
+    box-shadow: var(--shadow);
+}
+
+.book-card:hover {
+    transform: translateY(-7px);
+
+    border-color: var(--blue);
+
+    box-shadow: var(--shadow-hover);
+}
+
+.book-cover {
+    height: 230px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 70px;
+
+    overflow: hidden;
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.4s ease;
+}
+
+.book-card:hover .book-cover img {
+    transform: scale(1.05);
+}
+
+.book-cover.math {
+    background: #dbeafe;
+}
+
+.book-cover.science {
+    background: #dcfce7;
+}
+
+.book-cover.computer {
+    background: #e5e7eb;
+}
+
+.book-cover.literature {
+    background: #ffedd5;
+}
+
+.book-info {
+    padding: 20px;
+}
+
+.book-category {
+    color: var(--blue);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.book-info h3 {
+    font-size: 17px;
+
+    margin: 7px 0;
+
+    color: var(--black);
+}
+
+.book-info p {
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    margin-bottom: 15px;
+}
+
+.book-info button {
+    width: 100%;
+
+    padding: 10px;
+
+    background: var(--black);
+
+    border: none;
+
+    color: white;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.book-info button:hover {
+    background: var(--blue);
+}
+
+
+/* =====================================================
+   READ BUTTON
+   ===================================================== */
+
+.read-button {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    background: var(--blue);
+
+    color: white;
+
+    transition: 0.3s ease;
+}
+
+.read-button:hover {
+    background: var(--orange);
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   CATEGORY PAGE
+   ===================================================== */
+
+.categories-page {
+    max-width: 1100px;
+
+    margin: 50px auto;
+}
+
+.categories-page .section-heading p {
+    margin-top: 10px;
+
+    color: var(--text-light);
+}
+
+.categories-container {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin-top: 40px;
+}
+
+.categories-page .category-card {
+    padding: 35px 25px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+
+    transition: 0.3s ease;
+}
+
+.categories-page .category-card:hover {
+    transform: translateY(-7px);
+
+    border-color: var(--blue);
+
+    box-shadow: var(--shadow-hover);
+}
+
+.categories-page .category-icon {
+    width: 85px;
+    height: 85px;
+
+    font-size: 45px;
+
+    margin-bottom: 18px;
+}
+
+.categories-page .category-card h3 {
+    font-size: 21px;
+
+    margin-bottom: 10px;
+}
+
+.categories-page .category-card p {
+    color: var(--text-light);
+
+    font-size: 14px;
+}
+
+.category-count {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    background: var(--green-light);
+
+    color: var(--green);
+
+    border: 1px solid #bbf7d0;
+}
+
+
+/* =====================================================
+   BOOK DETAILS
+   ===================================================== */
+
+.book-details {
+    display: grid;
+
+    grid-template-columns: 260px 1fr;
+
+    gap: 50px;
+
+    align-items: center;
+
+    max-width: 1000px;
+
+    margin: 50px auto;
+
+    padding: 35px;
+}
+
+
+/* غلاف الكتاب في صفحة التفاصيل */
+
+.book-details-cover {
+    width: 240px;
+    height: 340px;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background: #dbeafe;
+
+    border: 1px solid var(--border);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+.book-details-cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* توافق مع التنسيقات القديمة */
+
+.large-book-cover {
+    width: 240px;
+    height: 340px;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background: #dbeafe;
+
+    border: 1px solid var(--border);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+.large-book-cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+.book-details-info {
+    padding: 10px;
+}
+
+
+.book-details-info h1 {
+    font-size: 38px;
+
+    margin: 15px 0;
+
+    color: var(--black);
+}
+
+
+.book-author {
+    font-size: 17px;
+
+    color: var(--text-light);
+
+    margin-bottom: 20px;
+}
+
+
+.book-description {
+    font-size: 16px;
+
+    line-height: 2;
+
+    color: #475569;
+
+    margin-bottom: 20px;
+}
+
+
+/* توافق مع التنسيقات القديمة */
+
+.book-details-content {
+    padding: 10px;
+}
+
+.book-details-content h1 {
+    font-size: 38px;
+
+    margin: 15px 0;
+
+    color: var(--black);
+}
+
+.book-details-content h3 {
+    font-size: 18px;
+
+    margin-bottom: 20px;
+
+    color: var(--text-light);
+}
+
+.book-details-content p {
+    font-size: 17px;
+
+    line-height: 2;
+
+    color: #475569;
+}
+
+.book-details-content .book-category {
+    display: inline-block;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    background: var(--blue-light);
+
+    color: var(--blue);
+}
+
+
+/* =====================================================
+   BOOK META
+   ===================================================== */
+
+.book-meta {
+    display: flex;
+
+    gap: 15px;
+
+    margin: 30px 0;
+
+    flex-wrap: wrap;
+}
+
+.book-meta div {
+    min-width: 120px;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+.book-meta strong {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+
+    color: var(--text-light);
+}
+
+.book-meta span {
+    font-size: 15px;
+
+    color: var(--black);
+}
+
+
+/* =====================================================
+   BOOK ACTIONS
+   ===================================================== */
+
+.book-actions {
+    display: flex;
+
+    gap: 12px;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.primary-button,
+.secondary-button,
+.favorite-button {
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.primary-button {
+    background: var(--blue);
+
+    color: white;
+}
+
+.secondary-button {
+    background: var(--black);
+
+    color: white;
+}
+
+.favorite-button {
+    background: white;
+
+    border: 1px solid var(--orange);
+
+    color: var(--orange);
+}
+
+.primary-button:hover {
+    background: var(--blue-dark);
+
+    transform: translateY(-3px);
+}
+
+.secondary-button:hover {
+    background: #374151;
+
+    transform: translateY(-3px);
+}
+
+.favorite-button:hover {
+    background: var(--orange);
+
+    color: white;
+
+    transform: translateY(-3px);
+}
+
+
+/* =====================================================
+   DOWNLOAD BUTTON
+   ===================================================== */
+
+.download-button {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    background: var(--black);
+
+    color: white;
+
+    transition: 0.3s ease;
+}
+
+.download-button:hover {
+    background: var(--orange);
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   BACK BUTTON
+   ===================================================== */
+
+.back-button {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    background: #e2e8f0;
+
+    color: var(--black);
+
+    transition: 0.3s ease;
+}
+
+.back-button:hover {
+    background: var(--blue-light);
+
+    color: var(--blue);
+}
+
+
+/* =====================================================
+   PDF READER
+   ===================================================== */
+
+.pdf-section {
+    max-width: 1100px;
+
+    margin: 30px auto 60px;
+
+    padding: 30px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+.pdf-section h2 {
+    margin-bottom: 20px;
+
+    font-size: 26px;
+
+    color: var(--black);
+}
+
+.pdf-section iframe {
+    width: 100%;
+
+    height: 700px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f1f5f9;
+}
+
+
+/* التنسيق القديم لقارئ PDF */
+
+.pdf-reader {
+    max-width: 1100px;
+
+    margin: 30px auto 60px;
+
+    padding: 30px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+.pdf-reader h2 {
+    margin-bottom: 20px;
+
+    font-size: 26px;
+
+    color: var(--black);
+}
+
+.pdf-reader iframe {
+    width: 100%;
+
+    height: 700px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f1f5f9;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+footer {
+    background: var(--black);
+
+    padding: 55px 10% 20px;
+
+    color: white;
+}
+
+.footer-content {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr 1fr;
+
+    gap: 70px;
+
+    padding-bottom: 40px;
+}
+
+footer p {
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    margin-top: 15px;
+
+    max-width: 400px;
+}
+
+.footer-links {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.footer-links h3 {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #94a3b8;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #60a5fa;
+}
+
+.copyright {
+    padding-top: 20px;
+
+    border-top: 1px solid #374151;
+
+    color: #64748b;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   RESPONSIVE - TABLET
+   ===================================================== */
+
+@media (max-width: 1000px) {
+
+    nav {
+        display: none;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .hero-card {
+        width: 100%;
+
+        max-width: 350px;
+    }
+
+    .search-box {
+        margin: auto;
+    }
+
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .books-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE - MOBILE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .book-details {
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+
+        margin: 30px auto;
+
+        padding: 20px;
+
+        text-align: center;
+    }
+
+
+    .book-details-cover {
+        width: 220px;
+
+        height: 310px;
+
+        margin: 0 auto;
+    }
+
+
+    .large-book-cover {
+        width: 220px;
+
+        height: 310px;
+
+        margin: 0 auto;
+    }
+
+
+    .book-details-info h1 {
+        font-size: 30px;
+    }
+
+
+    .book-details-content h1 {
+        font-size: 30px;
+    }
+
+
+    .book-details-content p {
+        font-size: 16px;
+    }
+
+
+    .book-meta {
+        justify-content: center;
+    }
+
+
+    .book-actions {
+        justify-content: center;
+    }
+
+
+    .pdf-section {
+        margin: 20px 10px 40px;
+
+        padding: 15px;
+    }
+
+
+    .pdf-section iframe {
+        height: 550px;
+    }
+
+
+    .pdf-reader {
+        margin: 20px 10px 40px;
+
+        padding: 15px;
+    }
+
+
+    .pdf-reader iframe {
+        height: 550px;
+    }
+
+
+    .books-container {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+
+        padding: 15px;
+    }
+
+
+    .book-card {
+        width: 100%;
+    }
+
+
+    .book-cover {
+        height: 300px;
+    }
+
+
+    .section {
+        padding: 20px 10px;
+    }
+
+
+    .section-heading {
+        text-align: center;
+    }
+
+
+    .search-box {
+        width: 100%;
+
+        margin-top: 20px;
+    }
+
+
+    .categories-container {
+        grid-template-columns: 1fr;
+
+        padding: 10px;
+    }
+
+
+    .categories-page {
+        margin: 30px auto;
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE - SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+
+    .login-btn {
+        display: none;
+    }
+
+
+    .hero {
+        padding: 60px 6%;
+    }
+
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+
+    .search-box {
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+
+    .search-box button {
+        padding: 12px;
+    }
+
+
+    .section {
+        padding: 55px 6%;
+    }
+
+
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .books-container {
+        grid-template-columns: 1fr;
+    }
+
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+
+    .book-details-cover {
+        width: 200px;
+
+        height: 285px;
+    }
+
+
+    .large-book-cover {
+        width: 200px;
+
+        height: 285px;
+    }
+
+}
+/* =========================================
+   تحسينات صفحة تفاصيل الكتاب
+   ========================================= */
+
+.book-details-info {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.book-details-info h1 {
+    font-size: 32px;
+    margin: 15px 0 10px;
+    color: var(--text);
+}
+
+.book-author {
+    color: #64748b;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.book-description {
+    color: #475569;
+    line-height: 1.9;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.book-meta {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.book-meta > div {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.book-meta span {
+    display: block;
+    color: #64748b;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.book-meta strong {
+    color: var(--text);
+    font-size: 15px;
+}
+
+.download-button,
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 8px;
+    transition: 0.2s;
+}
+
+.download-button {
+    background: #16a34a;
+    color: white;
+}
+
+.download-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.back-button {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.back-button:hover {
+    background: #cbd5e1;
+}
+
+.pdf-section {
+    margin-top: 45px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.pdf-section h2 {
+    margin-bottom: 20px;
+    color: var(--text);
+}
+/* =====================================================
+   تحسين احترافي لبطاقات الكتب
+   ===================================================== */
+
+.books-container {
+    align-items: stretch;
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.book-cover {
+    position: relative;
+    height: 260px;
+    background: #f1f5f9;
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    transition: transform 0.4s ease;
+}
+
+.book-card:hover .book-cover img {
+    transform: scale(1.04);
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.book-info h3 {
+    min-height: 30px;
+}
+
+.book-info p {
+    line-height: 1.7;
+}
+
+.book-info .read-button {
+    width: 100%;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   غلاف الكتاب الحقيقي
+   ===================================================== */
+
+.book-cover:has(img) {
+    background: #f8fafc;
+}
+
+
+/* =====================================================
+   تحسين زر قراءة الكتاب
+   ===================================================== */
+
+.read-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    padding: 11px 15px;
+
+    margin-top: 15px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    background: var(--blue);
+
+    color: white;
+
+    border: none;
+
+    transition: all 0.25s ease;
+
+    box-sizing: border-box;
+}
+
+.read-button:hover {
+    background: var(--orange);
+
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 18px rgba(249, 115, 22, 0.25);
+}
+
+
+/* =====================================================
+   تحسين معلومات الكتاب
+   ===================================================== */
+
+.book-category {
+    display: inline-block;
+
+    width: fit-content;
+
+    padding: 4px 10px;
+
+    border-radius: 20px;
+
+    background: var(--blue-light);
+
+    color: var(--blue);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   تحسين عرض الكتب على الهاتف
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .book-cover {
+        height: 280px;
+    }
+
+    .book-info {
+        padding: 20px;
+    }
+
+}
+
+
+/* =====================================================
+   حركة ناعمة للبطاقات
+   ===================================================== */
+
+.book-card {
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+}
+
+
+/* =====================================================
+   تحسين العناوين
+   ===================================================== */
+
+.books-section .section-heading {
+    margin-bottom: 35px;
+}
+
+.books-section .section-heading h2 {
+    font-weight: 800;
+}

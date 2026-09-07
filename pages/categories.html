@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>التصنيفات | مكتبة الثانوية</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">📚</div>
+
+        <div>
+            <div class="logo-title">مكتبة الثانوية</div>
+            <div class="logo-subtitle">المكتبة الإلكترونية</div>
+        </div>
+    </div>
+
+    <nav>
+        <a href="../index.html">الرئيسية</a>
+        <a href="books.html">الكتب</a>
+        <a href="categories.html" class="active">التصنيفات</a>
+        <a href="about.html">عن المكتبة</a>
+    </nav>
+
+    <a href="login.html" class="login-btn">
+        تسجيل الدخول
+    </a>
+
+</header>
+
+
+<main>
+
+    <section class="section categories-page">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>مكتبة الثانوية</span>
+
+                <h2>تصنيفات الكتب</h2>
+
+                <p>
+                    تصفح الكتب والمراجع التعليمية حسب المادة الدراسية.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="categories-container">
+
+
+            <!-- الرياضيات -->
+
+            <a href="books.html?category=رياضيات"
+               class="category-card">
+
+                <div class="category-icon">
+                    📐
+                </div>
+
+                <h3>
+                    الرياضيات
+                </h3>
+
+                <p>
+                    كتب ومراجع الرياضيات
+                </p>
+
+                <span class="category-count"
+                      data-category="رياضيات">
+                    جاري الحساب...
+                </span>
+
+            </a>
+
+
+            <!-- العلوم -->
+
+            <a href="books.html?category=علوم"
+               class="category-card">
+
+                <div class="category-icon">
+                    🔬
+                </div>
+
+                <h3>
+                    العلوم
+                </h3>
+
+                <p>
+                    كتب العلوم والمراجع العلمية
+                </p>
+
+                <span class="category-count"
+                      data-category="علوم">
+                    جاري الحساب...
+                </span>
+
+            </a>
+
+
+            <!-- الإعلام الآلي -->
+
+            <a href="books.html?category=إعلام آلي"
+               class="category-card">
+
+                <div class="category-icon">
+                    💻
+                </div>
+
+                <h3>
+                    الإعلام الآلي
+                </h3>
+
+                <p>
+                    البرمجة والحاسوب والتكنولوجيا
+                </p>
+
+                <span class="category-count"
+                      data-category="إعلام آلي">
+                    جاري الحساب...
+                </span>
+
+            </a>
+
+
+            <!-- الأدب -->
+
+            <a href="books.html?category=أدب"
+               class="category-card">
+
+                <div class="category-icon">
+                    📚
+                </div>
+
+                <h3>
+                    الأدب
+                </h3>
+
+                <p>
+                    النصوص والكتب الأدبية
+                </p>
+
+                <span class="category-count"
+                      data-category="أدب">
+                    جاري الحساب...
+                </span>
+
+            </a>
+
+
+            <!-- اللغات -->
+
+            <a href="books.html?category=لغات"
+               class="category-card">
+
+                <div class="category-icon">
+                    🌍
+                </div>
+
+                <h3>
+                    اللغات
+                </h3>
+
+                <p>
+                    كتب ومراجع اللغات
+                </p>
+
+                <span class="category-count"
+                      data-category="لغات">
+                    جاري الحساب...
+                </span>
+
+            </a>
+
+
+            <!-- التاريخ -->
+
+            <a href="books.html?category=تاريخ"
+               class="category-card">
+
+                <div class="category-icon">
+                    🏛️
+                </div>
+
+                <h3>
+                    التاريخ
+                </h3>
+
+                <p>
+                    كتب التاريخ والحضارات
+                </p>
+
+                <span class="category-count"
+                      data-category="تاريخ">
+                    جاري الحساب...
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="copyright">
+        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+    </div>
+
+</footer>
+
+
+<script src="../books-data.js"></script>
+
+<script>
+
+    /*
+       حساب عدد الكتب في كل تصنيف
+    */
+
+    const categoryCounts = {};
+
+
+    booksData.forEach(book => {
+
+        if (!categoryCounts[book.category]) {
+
+            categoryCounts[book.category] = 0;
+
+        }
+
+        categoryCounts[book.category]++;
+
+    });
+
+
+    /*
+       عرض العدد داخل كل بطاقة
+    */
+
+    document.querySelectorAll(".category-count").forEach(element => {
+
+        const category =
+            element.getAttribute("data-category");
+
+        const count =
+            categoryCounts[category] || 0;
+
+
+        if (count === 0) {
+
+            element.textContent =
+                "لا توجد كتب";
+
+        }
+
+        else if (count === 1) {
+
+            element.textContent =
+                "كتاب واحد";
+
+        }
+
+        else {
+
+            element.textContent =
+                count + " كتب";
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

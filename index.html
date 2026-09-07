@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مكتبة الثانوية | المكتبة الإلكترونية</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">📚</div>
+
+            <div>
+                <div class="logo-title">مكتبة الثانوية</div>
+                <div class="logo-subtitle">المكتبة الإلكترونية</div>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#" class="active">الرئيسية</a>
+            <a href="pages/books.html">الكتب</a>
+            <a href="pages/categories.html">التصنيفات</a>
+            <a href="pages/about.html">عن المكتبة</a>
+        </nav>
+
+        <a href="pages/login.html" class="login-btn">
+            تسجيل الدخول
+        </a>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="welcome">
+                    أهلاً بكم في مكتبة الثانوية
+                </div>
+
+                <h1>
+                    المعرفة بين<br>
+                    <span>يديك</span>
+                </h1>
+
+                <p>
+                    اكتشف مجموعة واسعة من الكتب والمراجع التعليمية
+                    التي تساعدك على التعلم والبحث وتطوير معارفك.
+                </p>
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
+                    >
+
+                    <button onclick="searchBooks()">
+                        🔍 بحث
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO CARD -->
+
+            <div class="hero-card">
+
+                <div class="book-symbol">
+                    📖
+                </div>
+
+                <h2>
+                    مكتبة المعرفة
+                </h2>
+
+                <p>
+                    اقرأ، تعلّم، واكتشف
+                </p>
+
+                <div class="hero-stat">
+
+                    <div>
+                        <strong>+500</strong>
+                        <span>كتاب</span>
+                    </div>
+
+                    <div>
+                        <strong>+50</strong>
+                        <span>مادة</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIES ================= -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span>تصفح المكتبة</span>
+                    <h2>التصنيفات</h2>
+                </div>
+
+                <a href="pages/categories.html">
+                    جميع التصنيفات ←
+                </a>
+
+            </div>
+
+
+            <div class="categories">
+
+                <a href="pages/books.html?category=رياضيات"
+                   class="category-card">
+
+                    <div class="category-icon">
+                        📐
+                    </div>
+
+                    <h3>
+                        الرياضيات
+                    </h3>
+
+                    <p>
+                        الكتب والمراجع الرياضية
+                    </p>
+
+                </a>
+
+
+                <a href="pages/books.html?category=علوم"
+                   class="category-card">
+
+                    <div class="category-icon">
+                        🔬
+                    </div>
+
+                    <h3>
+                        العلوم
+                    </h3>
+
+                    <p>
+                        العلوم الطبيعية والتجريبية
+                    </p>
+
+                </a>
+
+
+                <a href="pages/books.html?category=إعلام آلي"
+                   class="category-card">
+
+                    <div class="category-icon">
+                        💻
+                    </div>
+
+                    <h3>
+                        الإعلام الآلي
+                    </h3>
+
+                    <p>
+                        البرمجة والتكنولوجيا
+                    </p>
+
+                </a>
+
+
+                <a href="pages/books.html?category=لغات"
+                   class="category-card">
+
+                    <div class="category-icon">
+                        📚
+                    </div>
+
+                    <h3>
+                        اللغات
+                    </h3>
+
+                    <p>
+                        العربية والفرنسية والإنجليزية
+                    </p>
+
+                </a>
+
+
+                <a href="pages/books.html?category=تاريخ"
+                   class="category-card">
+
+                    <div class="category-icon">
+                        🌍
+                    </div>
+
+                    <h3>
+                        التاريخ والجغرافيا
+                    </h3>
+
+                    <p>
+                        الحضارات والعالم
+                    </p>
+
+                </a>
+
+
+                <a href="pages/books.html?category=فلسفة"
+                   class="category-card">
+
+                    <div class="category-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        الفلسفة
+                    </h3>
+
+                    <p>
+                        الفكر والفلسفة
+                    </p>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= BOOKS ================= -->
+
+        <section class="section books-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span>مكتبتنا</span>
+                    <h2>أحدث الكتب</h2>
+                </div>
+
+                <a href="pages/books.html">
+                    عرض جميع الكتب ←
+                </a>
+
+            </div>
+
+
+            <div class="books-container" id="latestBooksContainer">
+                <!-- سيتم تحميل الكتب تلقائيًا من books-data.js -->
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div>
+
+                <div class="logo">
+
+                    <div class="logo-icon">
+                        📚
+                    </div>
+
+                    <div>
+
+                        <div class="logo-title">
+                            مكتبة الثانوية
+                        </div>
+
+                        <div class="logo-subtitle">
+                            المكتبة الإلكترونية
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <p>
+                    منصة إلكترونية للقراءة والتعلم
+                    والوصول إلى المعرفة.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>
+                    روابط
+                </h3>
+
+                <a href="index.html">
+                    الرئيسية
+                </a>
+
+                <a href="pages/books.html">
+                    الكتب
+                </a>
+
+                <a href="pages/categories.html">
+                    التصنيفات
+                </a>
+
+                <a href="pages/about.html">
+                    عن المكتبة
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>
+                    المساعدة
+                </h3>
+
+                <a href="#">
+                    كيفية استخدام المكتبة
+                </a>
+
+                <a href="#">
+                    اتصل بنا
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= SCRIPTS ================= -->
+
+    <script src="books-data.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+
+        const latestBooksContainer =
+            document.getElementById("latestBooksContainer");
+
+
+        function createLatestBookCard(book, index) {
+
+            const article =
+                document.createElement("article");
+
+            article.className = "book-card";
+
+
+            let coverHTML;
+
+            if (book.cover) {
+
+                coverHTML = `
+                    <img
+                        src="covers/${book.cover}"
+                        alt="غلاف ${book.title}"
+                    >
+                `;
+
+            } else {
+
+                coverHTML = "📚";
+
+            }
+
+
+            let buttonHTML;
+
+            if (book.pdf) {
+
+                buttonHTML = `
+                    <a
+                        href="pages/book.html?book=${index}"
+                        class="read-button"
+                    >
+                        📖 قراءة الكتاب
+                    </a>
+                `;
+
+            } else {
+
+                buttonHTML = `
+                    <span
+                        class="read-button"
+                        style="
+                            opacity:0.5;
+                            cursor:not-allowed;
+                        "
+                    >
+                        📖 الكتاب غير متوفر
+                    </span>
+                `;
+
+            }
+
+
+            article.innerHTML = `
+
+                <div class="book-cover">
+                    ${coverHTML}
+                </div>
+
+                <div class="book-info">
+
+                    <span class="book-category">
+                        ${book.category}
+                    </span>
+
+                    <h3>
+                        ${book.title}
+                    </h3>
+
+                    <p>
+                        ${book.description}
+                    </p>
+
+                    <p style="
+                        color:#64748b;
+                        font-size:14px;
+                        margin-top:8px;
+                    ">
+                        ✍️ ${book.author}
+                    </p>
+
+                    ${buttonHTML}
+
+                </div>
+
+            `;
+
+
+            return article;
+
+        }
+
+
+        function displayLatestBooks() {
+
+            latestBooksContainer.innerHTML = "";
+
+
+            /*
+                نعرض آخر الكتب الموجودة في قاعدة البيانات
+                الحالية، مع الاحتفاظ بترتيبها.
+            */
+
+            const latestBooks =
+                booksData.slice(-4).reverse();
+
+
+            latestBooks.forEach(book => {
+
+                const index =
+                    booksData.indexOf(book);
+
+                const card =
+                    createLatestBookCard(book, index);
+
+                latestBooksContainer.appendChild(card);
+
+            });
+
+        }
+
+
+        displayLatestBooks();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تسجيل الدخول | مكتبة الثانوية</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">📚</div>
+
+        <div>
+            <div class="logo-title">مكتبة الثانوية</div>
+            <div class="logo-subtitle">المكتبة الإلكترونية</div>
+        </div>
+    </div>
+
+    <nav>
+        <a href="../index.html">الرئيسية</a>
+        <a href="books.html">الكتب</a>
+        <a href="categories.html">التصنيفات</a>
+        <a href="about.html">عن المكتبة</a>
+    </nav>
+
+    <a href="login.html" class="login-btn">
+        تسجيل الدخول
+    </a>
+
+</header>
+
+
+<main>
+
+    <section class="section">
+
+        <div style="
+            max-width: 500px;
+            margin: 60px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        ">
+
+            <div style="
+                text-align:center;
+                margin-bottom:30px;
+            ">
+
+                <div style="font-size:50px;">
+                    📚
+                </div>
+
+                <h1 style="margin:15px 0 8px;">
+                    تسجيل الدخول
+                </h1>
+
+                <p style="color:#64748b;">
+                    مرحبًا بك في مكتبة الثانوية
+                </p>
+
+            </div>
+
+
+            <form id="loginForm">
+
+                <label style="
+                    display:block;
+                    margin-bottom:8px;
+                    font-weight:700;
+                ">
+                    البريد الإلكتروني
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="أدخل بريدك الإلكتروني"
+                    required
+                    style="
+                        width:100%;
+                        padding:14px;
+                        border:1px solid #cbd5e1;
+                        border-radius:10px;
+                        margin-bottom:20px;
+                        font-family:inherit;
+                        box-sizing:border-box;
+                    "
+                >
+
+
+                <label style="
+                    display:block;
+                    margin-bottom:8px;
+                    font-weight:700;
+                ">
+                    كلمة المرور
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="أدخل كلمة المرور"
+                    required
+                    minlength="4"
+                    style="
+                        width:100%;
+                        padding:14px;
+                        border:1px solid #cbd5e1;
+                        border-radius:10px;
+                        margin-bottom:25px;
+                        font-family:inherit;
+                        box-sizing:border-box;
+                    "
+                >
+
+
+                <button
+                    type="submit"
+                    style="
+                        width:100%;
+                        padding:14px;
+                        border:none;
+                        border-radius:10px;
+                        background:#2563eb;
+                        color:white;
+                        font-size:16px;
+                        font-weight:700;
+                        cursor:pointer;
+                        font-family:inherit;
+                    "
+                >
+                    دخول
+                </button>
+
+
+                <div
+                    id="loginMessage"
+                    style="
+                        text-align:center;
+                        margin-top:20px;
+                        font-weight:700;
+                    "
+                ></div>
+
+            </form>
+
+
+            <div style="
+                text-align:center;
+                margin-top:25px;
+                color:#64748b;
+                font-size:14px;
+            ">
+                منصة مكتبة الثانوية التعليمية
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="copyright">
+        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+    </div>
+
+</footer>
+
+
+<script>
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginMessage =
+        document.getElementById("loginMessage");
+
+
+    loginForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+
+        if (email === "" || password === "") {
+
+            loginMessage.textContent =
+                "يرجى إدخال جميع البيانات.";
+
+            loginMessage.style.color =
+                "#dc2626";
+
+            return;
+        }
+
+
+        loginMessage.textContent =
+            "تم تسجيل الدخول بنجاح ✓";
+
+        loginMessage.style.color =
+            "#16a34a";
+
+
+        setTimeout(function() {
+
+            window.location.href =
+                "../index.html";
+
+        }, 1000);
+
+    });
+
+</script>
+
+</body>
+
+</html>
