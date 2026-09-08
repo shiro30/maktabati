@@ -20,20 +20,13 @@
             margin-right: 10px;
         }
 
-        /* رسالة تسجيل الدخول للزائر */
-
         .login-required {
             display: none;
-
             margin-top: 25px;
             padding: 25px;
-
             background: #f8f9fa;
-
             border: 1px solid #ddd;
-
             border-radius: 14px;
-
             text-align: center;
         }
 
@@ -49,12 +42,9 @@
         .login-required a {
             display: inline-block;
             padding: 12px 25px;
-
             background: #2563eb;
             color: white;
-
             text-decoration: none;
-
             border-radius: 8px;
         }
 
@@ -68,8 +58,6 @@
 
 <header class="navbar">
 
-
-    <!-- الشعار -->
 
     <div class="logo">
 
@@ -92,8 +80,6 @@
     </div>
 
 
-    <!-- القائمة -->
-
     <nav>
 
         <a href="../index.html">
@@ -114,8 +100,6 @@
 
     </nav>
 
-
-    <!-- الحساب -->
 
     <div style="
         display:flex;
@@ -161,8 +145,6 @@
         <div class="book-details">
 
 
-            <!-- غلاف الكتاب -->
-
             <div class="book-details-cover">
 
                 <img
@@ -173,8 +155,6 @@
             </div>
 
 
-
-            <!-- معلومات الكتاب -->
 
             <div class="book-details-info">
 
@@ -239,14 +219,10 @@
 
 
 
-                <!-- أزرار الكتاب -->
-
                 <div
                     id="bookActions"
                     class="book-actions">
 
-
-                    <!-- قراءة -->
 
                     <a
                         id="readButton"
@@ -258,20 +234,15 @@
                     </a>
 
 
-                    <!-- تحميل -->
-
                     <a
                         id="downloadButton"
                         href="#"
-                        class="download-button"
-                        target="_blank">
+                        class="download-button">
 
                         ⬇️ تحميل الكتاب
 
                     </a>
 
-
-                    <!-- العودة -->
 
                     <a
                         href="books.html"
@@ -285,8 +256,6 @@
                 </div>
 
 
-
-                <!-- رسالة للزائر -->
 
                 <div
                     id="loginRequired"
@@ -315,8 +284,6 @@
 
 
 
-        <!-- قارئ PDF -->
-
         <div
             id="pdfSection"
             class="pdf-section">
@@ -327,6 +294,18 @@
             </h2>
 
 
+            <div
+                id="pdfLoading"
+                style="
+                    text-align:center;
+                    padding:30px;
+                ">
+
+                جاري تحميل الكتاب...
+
+            </div>
+
+
             <iframe
                 id="pdfReader"
                 src=""
@@ -335,6 +314,7 @@
                 style="
                     border: none;
                     border-radius: 12px;
+                    display:none;
                 ">
             </iframe>
 
@@ -406,6 +386,7 @@ const loginButton =
     );
 
 
+
 /* =========================================
    حالة المستخدم
 ========================================= */
@@ -413,6 +394,8 @@ const loginButton =
 let currentUser = null;
 
 let currentProfile = null;
+
+let currentAccessToken = null;
 
 
 
@@ -426,20 +409,30 @@ async function setupUser() {
 
         const {
             data: {
-                user
+                session
             }
         } =
-            await supabaseClient.auth.getUser();
+            await supabaseClient.auth.getSession();
 
 
-        currentUser = user;
+        currentUser =
+            session
+                ? session.user
+                : null;
+
+
+        currentAccessToken =
+            session
+                ? session.access_token
+                : null;
+
 
 
         /* ================================
            زائر
         ================================= */
 
-        if (!user) {
+        if (!currentUser || !currentAccessToken) {
 
             dashboardBack.style.display =
                 "none";
@@ -450,6 +443,7 @@ async function setupUser() {
             return false;
 
         }
+
 
 
         /* ================================
@@ -467,7 +461,7 @@ async function setupUser() {
                 )
                 .eq(
                     "id",
-                    user.id
+                    currentUser.id
                 )
                 .single();
 
@@ -487,7 +481,8 @@ async function setupUser() {
         }
 
 
-        currentProfile = profile;
+        currentProfile =
+            profile;
 
 
 
@@ -667,6 +662,12 @@ const pdfSection =
     );
 
 
+const pdfLoading =
+    document.getElementById(
+        "pdfLoading"
+    );
+
+
 const readButton =
     document.getElementById(
         "readButton"
@@ -695,6 +696,14 @@ const bookContent =
     document.getElementById(
         "bookContent"
     );
+
+
+
+/* =========================================
+   رابط PDF المؤقت
+========================================= */
+
+let pdfObjectURL = null;
 
 
 
@@ -743,56 +752,62 @@ function showBookNotFound() {
 
 function setupGuestMode() {
 
-    /* إخفاء أزرار القراءة والتحميل */
-
     readButton.style.display =
         "none";
 
     downloadButton.style.display =
         "none";
 
-
-    /* إبقاء زر العودة */
-
     loginRequired.style.display =
         "block";
-
-
-    /* إخفاء قارئ PDF */
 
     pdfSection.style.display =
         "none";
 
-
-    /* التأكد أن iframe فارغ */
-
-    pdfReader.src = "";
+    pdfReader.src =
+        "";
 
 }
 
 
 
 /* =========================================
-   وضع المستخدم المسجل
+   جلب PDF مع رمز تسجيل الدخول
 ========================================= */
 
-function setupAuthenticatedMode(book) {
+async function fetchPdfWithAuthentication(book) {
 
-    loginRequired.style.display =
-        "none";
+    try {
+
+        if (
+            !currentAccessToken
+        ) {
+
+            throw new Error(
+                "جلسة تسجيل الدخول غير موجودة."
+            );
+
+        }
 
 
-    readButton.style.display =
-        "inline-block";
+        if (
+            !book ||
+            !book.id
+        ) {
+
+            throw new Error(
+                "معرف الكتاب غير صالح."
+            );
+
+        }
 
 
-    downloadButton.style.display =
-        "inline-block";
+        pdfLoading.style.display =
+            "block";
 
+        pdfLoading.textContent =
+            "جاري تحميل الكتاب...";
 
-    if (
-        book.drive_file_id
-    ) {
 
         const pdfURL =
             "/api/books/" +
@@ -802,23 +817,128 @@ function setupAuthenticatedMode(book) {
             "/pdf";
 
 
-        /* قارئ PDF */
+        const response =
+            await fetch(
+                pdfURL,
+                {
+
+                    method:
+                        "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " +
+                            currentAccessToken
+
+                    }
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            let errorMessage =
+                "تعذر فتح ملف PDF.";
+
+
+            try {
+
+                const errorData =
+                    await response.json();
+
+
+                if (
+                    errorData &&
+                    errorData.message
+                ) {
+
+                    errorMessage =
+                        errorData.message;
+
+                }
+
+            }
+
+            catch (
+                jsonError
+            ) {
+
+                console.error(
+                    jsonError
+                );
+
+            }
+
+
+            throw new Error(
+                errorMessage
+            );
+
+        }
+
+
+        const blob =
+            await response.blob();
+
+
+        if (
+            !blob ||
+            blob.size === 0
+        ) {
+
+            throw new Error(
+                "ملف PDF فارغ."
+            );
+
+        }
+
+
+        if (pdfObjectURL) {
+
+            URL.revokeObjectURL(
+                pdfObjectURL
+            );
+
+        }
+
+
+        pdfObjectURL =
+            URL.createObjectURL(
+                blob
+            );
+
 
         pdfReader.src =
-            pdfURL;
+            pdfObjectURL;
 
 
-        /* زر القراءة */
+        pdfReader.style.display =
+            "block";
+
+
+        pdfLoading.style.display =
+            "none";
+
+
+        /* =================================
+           زر القراءة
+        ================================= */
+
+        readButton.style.display =
+            "inline-block";
+
 
         readButton.href =
             "#pdfSection";
 
 
         readButton.onclick =
-            function() {
+            function () {
 
                 setTimeout(
-                    function() {
+                    function () {
 
                         pdfSection.scrollIntoView({
                             behavior:
@@ -832,19 +952,84 @@ function setupAuthenticatedMode(book) {
             };
 
 
-        /* زر التحميل */
+
+        /* =================================
+           زر التحميل
+        ================================= */
+
+        downloadButton.style.display =
+            "inline-block";
+
 
         downloadButton.href =
-            pdfURL;
+            pdfObjectURL;
 
 
-        downloadButton.removeAttribute(
-            "download"
-        );
+        downloadButton.download =
+            (
+                book.title ||
+                "book"
+            ) +
+            ".pdf";
+
+
+        downloadButton.onclick =
+            function () {
+
+                return true;
+
+            };
+
+
+        return true;
 
     }
 
-    else {
+    catch (error) {
+
+        console.error(
+            "PDF loading error:",
+            error
+        );
+
+
+        pdfLoading.style.display =
+            "block";
+
+
+        pdfLoading.textContent =
+            "❌ " +
+            (
+                error.message ||
+                "تعذر تحميل الكتاب."
+            );
+
+
+        pdfReader.style.display =
+            "none";
+
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =========================================
+   وضع المستخدم المسجل
+========================================= */
+
+async function setupAuthenticatedMode(book) {
+
+    loginRequired.style.display =
+        "none";
+
+
+    if (
+        !book.drive_file_id
+    ) {
 
         pdfSection.style.display =
             "none";
@@ -855,7 +1040,26 @@ function setupAuthenticatedMode(book) {
         downloadButton.style.display =
             "none";
 
+        return;
+
     }
+
+
+    pdfSection.style.display =
+        "block";
+
+
+    readButton.style.display =
+        "inline-block";
+
+
+    downloadButton.style.display =
+        "inline-block";
+
+
+    await fetchPdfWithAuthentication(
+        book
+    );
 
 }
 
@@ -918,7 +1122,7 @@ async function loadBook() {
 
         const book =
             result.books.find(
-                function(item) {
+                function (item) {
 
                     return (
                         String(item.id) ===
@@ -1009,10 +1213,11 @@ async function loadBook() {
 
         if (
             currentUser &&
-            currentProfile
+            currentProfile &&
+            currentAccessToken
         ) {
 
-            setupAuthenticatedMode(
+            await setupAuthenticatedMode(
                 book
             );
 
@@ -1070,15 +1275,36 @@ async function loadBook() {
 
 
 /* =========================================
+   تنظيف رابط PDF عند مغادرة الصفحة
+========================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        if (pdfObjectURL) {
+
+            URL.revokeObjectURL(
+                pdfObjectURL
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
    التشغيل
 ========================================= */
 
 async function initPage() {
 
     /*
-       مهم جداً:
        نتحقق من الحساب أولاً
-       ثم نحمل الكتاب.
+       ثم نحمل معلومات الكتاب
+       ثم نحمل PDF مع Access Token
     */
 
     await setupUser();
