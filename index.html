@@ -1,23 +1,22 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية</title>
 
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <!-- أيقونة مكتبة ثانوية مصاص رابح -->
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-
         /* =====================================================
            الإعدادات العلوية
         ===================================================== */
@@ -114,9 +113,7 @@
                 font-size: 13px;
                 padding: 7px 9px;
             }
-
         }
-
     </style>
 
 </head>
@@ -370,6 +367,7 @@
 
     <div class="school-identity">
 
+
         <div class="identity-item">
 
             <div class="identity-icon">
@@ -479,11 +477,8 @@
         </div>
 
 
-        <a
-            href="pages/categories.html">
-
+        <a href="pages/categories.html">
             جميع التصنيفات ←
-
         </a>
 
     </div>
@@ -631,11 +626,8 @@
         </div>
 
 
-        <a
-            href="pages/books.html">
-
+        <a href="pages/books.html">
             عرض جميع الكتب ←
-
         </a>
 
     </div>
@@ -819,7 +811,9 @@
 ===================================================== -->
 
 <script src="books-data.js"></script>
+
 <script src="script.js"></script>
+
 
 <script>
 
@@ -830,10 +824,6 @@
 const SUPABASE_URL =
     "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-/*
-   ⚠️ أبقِ مفتاح Supabase الحالي الموجود
-   في ملفك كما هو.
-*/
 
 const SUPABASE_ANON_KEY =
     "  sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK    ";
@@ -1268,12 +1258,10 @@ function createLatestBookCard(
     if (book.cover) {
 
         coverHTML = `
-
             <img
                 src="covers/${book.cover}"
                 alt="غلاف ${book.title}"
             >
-
         `;
 
     }
@@ -1292,16 +1280,12 @@ function createLatestBookCard(
     if (book.pdf) {
 
         buttonHTML = `
-
             <a
                 href="pages/book.html?book=${index}"
                 class="read-button"
             >
-
                 📖 قراءة الكتاب
-
             </a>
-
         `;
 
     }
@@ -1309,7 +1293,6 @@ function createLatestBookCard(
     else {
 
         buttonHTML = `
-
             <span
                 class="read-button"
                 style="
@@ -1317,11 +1300,8 @@ function createLatestBookCard(
                     cursor:not-allowed;
                 "
             >
-
                 📖 الكتاب غير متوفر
-
             </span>
-
         `;
 
     }
@@ -1473,9 +1453,7 @@ function displayLatestBooks() {
                 booksData
                     .map(
                         function(book) {
-
                             return book.category;
-
                         }
                     )
                     .filter(Boolean)
@@ -1498,4 +1476,3 @@ displayLatestBooks();
 </body>
 
 </html>
-```
