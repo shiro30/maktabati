@@ -17,6 +17,32 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+
+        /* =====================================================
+           شعار المكتبة في الواجهة
+        ===================================================== */
+
+        .logo-icon {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+
         /* =====================================================
            الإعدادات العلوية
         ===================================================== */
@@ -45,6 +71,7 @@
             background: rgba(255, 255, 255, 0.22);
             transform: translateY(-1px);
         }
+
 
         /* =====================================================
            الوضع الداكن
@@ -96,6 +123,7 @@
             background: #020617;
         }
 
+
         /* =====================================================
            الشاشات الصغيرة
         ===================================================== */
@@ -113,12 +141,22 @@
                 font-size: 13px;
                 padding: 7px 9px;
             }
+
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+            }
+
         }
+
     </style>
 
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      NAVBAR
@@ -129,7 +167,10 @@
     <div class="logo">
 
         <div class="logo-icon">
-            📚
+            <img
+                src="favicon.png"
+                alt="شعار مكتبة ثانوية مصاص رابح"
+            >
         </div>
 
         <div>
@@ -230,6 +271,7 @@
 </header>
 
 
+
 <!-- =====================================================
      HERO
 ===================================================== -->
@@ -291,6 +333,7 @@
     </div>
 
 
+
     <!-- HERO CARD -->
 
     <div class="hero-card">
@@ -342,6 +385,7 @@
 </section>
 
 
+
 <!-- =====================================================
      SCHOOL IDENTITY
 ===================================================== -->
@@ -389,6 +433,7 @@
         </div>
 
 
+
         <div class="identity-item">
 
             <div class="identity-icon">
@@ -410,6 +455,7 @@
         </div>
 
 
+
         <div class="identity-item">
 
             <div class="identity-icon">
@@ -429,6 +475,7 @@
             </div>
 
         </div>
+
 
 
         <div class="identity-item">
@@ -454,6 +501,7 @@
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -506,6 +554,7 @@
         </a>
 
 
+
         <a
             href="pages/books.html?category=علوم"
             class="category-card">
@@ -523,6 +572,7 @@
             </p>
 
         </a>
+
 
 
         <a
@@ -544,6 +594,7 @@
         </a>
 
 
+
         <a
             href="pages/books.html?category=لغات"
             class="category-card">
@@ -563,6 +614,7 @@
         </a>
 
 
+
         <a
             href="pages/books.html?category=تاريخ"
             class="category-card">
@@ -580,6 +632,7 @@
             </p>
 
         </a>
+
 
 
         <a
@@ -603,6 +656,7 @@
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -648,6 +702,7 @@
 </main>
 
 
+
 <!-- =====================================================
      FOOTER
 ===================================================== -->
@@ -664,8 +719,14 @@
             <div class="logo">
 
                 <div class="logo-icon">
-                    📚
+
+                    <img
+                        src="favicon.png"
+                        alt="شعار مكتبة ثانوية مصاص رابح"
+                    >
+
                 </div>
+
 
                 <div>
 
@@ -691,6 +752,7 @@
             </p>
 
         </div>
+
 
 
         <!-- LINKS -->
@@ -720,6 +782,7 @@
         </div>
 
 
+
         <!-- HELP -->
 
         <div class="footer-links">
@@ -737,6 +800,7 @@
             </a>
 
         </div>
+
 
 
         <!-- SYSTEM ENGINEER -->
@@ -779,6 +843,7 @@
     </div>
 
 
+
     <div class="copyright">
 
         <strong>
@@ -793,7 +858,6 @@
 
         مهندس النظام:
         شراف الدين بوردوسن —
-
         أستاذ مادة الرياضيات
 
         <br>
@@ -806,6 +870,7 @@
 </footer>
 
 
+
 <!-- =====================================================
      SCRIPTS
 ===================================================== -->
@@ -813,6 +878,7 @@
 <script src="books-data.js"></script>
 
 <script src="script.js"></script>
+
 
 
 <script>
@@ -826,7 +892,7 @@ const SUPABASE_URL =
 
 
 const SUPABASE_ANON_KEY =
-    "  sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK    ";
+    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
 
 
 const supabaseClient =
@@ -834,6 +900,7 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
+
 
 
 /* =====================================================
@@ -864,9 +931,11 @@ function getDashboardByRole(role) {
 
         default:
             return "pages/login.html";
+
     }
 
 }
+
 
 
 async function loadUserAccount() {
@@ -874,9 +943,13 @@ async function loadUserAccount() {
     try {
 
         const {
+
             data: { session },
+
             error: sessionError
+
         } =
+
             await supabaseClient
                 .auth
                 .getSession();
@@ -894,13 +967,19 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
+
         }
 
 
+
         const {
+
             data: profile,
+
             error: profileError
+
         } =
+
             await supabaseClient
                 .from("profiles")
                 .select("full_name, role")
@@ -909,6 +988,7 @@ async function loadUserAccount() {
                     session.user.id
                 )
                 .single();
+
 
 
         if (
@@ -923,7 +1003,9 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
+
         }
+
 
 
         const name =
@@ -952,6 +1034,7 @@ async function loadUserAccount() {
                     dashboard;
 
                 return false;
+
             };
 
     }
@@ -969,9 +1052,11 @@ async function loadUserAccount() {
 
         accountButton.href =
             "pages/login.html";
+
     }
 
 }
+
 
 
 supabaseClient.auth.onAuthStateChange(
@@ -982,6 +1067,7 @@ supabaseClient.auth.onAuthStateChange(
 
 
 loadUserAccount();
+
 
 
 /* =====================================================
@@ -1006,6 +1092,7 @@ const soundButton =
     );
 
 
+
 /* =====================================================
    الإعدادات المحفوظة
 ===================================================== */
@@ -1020,6 +1107,7 @@ let soundEnabled =
     localStorage.getItem(
         "maktabati_sound"
     ) !== "false";
+
 
 
 /* =====================================================
@@ -1045,6 +1133,7 @@ function applyTheme() {
     }
 
 }
+
 
 
 /* =====================================================
@@ -1130,6 +1219,7 @@ function playClickSound() {
 }
 
 
+
 /* =====================================================
    Dark
 ===================================================== */
@@ -1156,6 +1246,7 @@ darkButton.addEventListener(
 );
 
 
+
 /* =====================================================
    Light
 ===================================================== */
@@ -1180,6 +1271,7 @@ lightButton.addEventListener(
 
     }
 );
+
 
 
 /* =====================================================
@@ -1214,6 +1306,7 @@ soundButton.addEventListener(
 );
 
 
+
 /* =====================================================
    تطبيق الإعدادات عند فتح الصفحة
 ===================================================== */
@@ -1227,6 +1320,7 @@ soundButton.textContent =
         : "🔇 الصوت";
 
 
+
 /* =====================================================
    أحدث الكتب
 ===================================================== */
@@ -1235,6 +1329,7 @@ const latestBooksContainer =
     document.getElementById(
         "latestBooksContainer"
     );
+
 
 
 function createLatestBookCard(
@@ -1258,10 +1353,12 @@ function createLatestBookCard(
     if (book.cover) {
 
         coverHTML = `
+
             <img
                 src="covers/${book.cover}"
                 alt="غلاف ${book.title}"
             >
+
         `;
 
     }
@@ -1274,18 +1371,23 @@ function createLatestBookCard(
     }
 
 
+
     let buttonHTML;
 
 
     if (book.pdf) {
 
         buttonHTML = `
+
             <a
                 href="pages/book.html?book=${index}"
                 class="read-button"
             >
+
                 📖 قراءة الكتاب
+
             </a>
+
         `;
 
     }
@@ -1293,6 +1395,7 @@ function createLatestBookCard(
     else {
 
         buttonHTML = `
+
             <span
                 class="read-button"
                 style="
@@ -1300,11 +1403,15 @@ function createLatestBookCard(
                     cursor:not-allowed;
                 "
             >
+
                 📖 الكتاب غير متوفر
+
             </span>
+
         `;
 
     }
+
 
 
     article.innerHTML = `
@@ -1364,6 +1471,7 @@ function createLatestBookCard(
 }
 
 
+
 /* =====================================================
    عرض أحدث الكتب
 ===================================================== */
@@ -1382,7 +1490,9 @@ function displayLatestBooks() {
         latestBooksContainer.innerHTML = `
 
             <p>
+
                 لا توجد بيانات كتب محلية.
+
             </p>
 
         `;
@@ -1392,10 +1502,12 @@ function displayLatestBooks() {
     }
 
 
+
     const latestBooks =
         booksData
             .slice(-4)
             .reverse();
+
 
 
     latestBooks.forEach(
@@ -1421,6 +1533,7 @@ function displayLatestBooks() {
     );
 
 
+
     /* عدد الكتب */
 
     const booksCount =
@@ -1435,6 +1548,7 @@ function displayLatestBooks() {
             booksData.length;
 
     }
+
 
 
     /* عدد التصنيفات */
@@ -1469,9 +1583,11 @@ function displayLatestBooks() {
 }
 
 
+
 displayLatestBooks();
 
 </script>
+
 
 </body>
 
