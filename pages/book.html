@@ -5,8 +5,9 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>تفاصيل الكتاب | مكتبة الثانوية</title>
 
@@ -14,11 +15,33 @@
 
     <style>
 
+        /* =========================================
+           إعدادات الصفحة
+        ========================================= */
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================
+           زر لوحة التحكم
+        ========================================= */
+
         .dashboard-back {
             display: none;
             text-decoration: none;
             margin-right: 10px;
         }
+
+
+        /* =========================================
+           رسالة تسجيل الدخول
+        ========================================= */
 
         .login-required {
             display: none;
@@ -37,6 +60,7 @@
         .login-required p {
             margin-bottom: 20px;
             color: #666;
+            line-height: 1.8;
         }
 
         .login-required a {
@@ -46,6 +70,497 @@
             color: white;
             text-decoration: none;
             border-radius: 8px;
+        }
+
+
+        /* =========================================
+           منطقة PDF
+        ========================================= */
+
+        .pdf-section {
+            margin-top: 40px;
+            width: 100%;
+        }
+
+
+        .pdf-section h2 {
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================================
+           حاوية قارئ PDF
+        ========================================= */
+
+        .pdf-reader-container {
+
+            position: relative;
+
+            width: 100%;
+
+            background: #1e293b;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.15);
+
+        }
+
+
+        /* =========================================
+           شريط أدوات PDF
+        ========================================= */
+
+        .pdf-toolbar {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding: 10px 14px;
+
+            background: #0f172a;
+
+            color: white;
+
+        }
+
+
+        .pdf-toolbar-title {
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .pdf-fullscreen-button {
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 8px 14px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+        }
+
+
+        .pdf-fullscreen-button:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* =========================================
+           إطار PDF
+        ========================================= */
+
+        .pdf-frame-wrapper {
+
+            width: 100%;
+
+            height: 800px;
+
+            background: #525252;
+
+        }
+
+
+        #pdfReader {
+
+            display: none;
+
+            width: 100%;
+
+            height: 100%;
+
+            border: none;
+
+            background: white;
+
+        }
+
+
+        /* =========================================
+           وضع ملء الشاشة
+        ========================================= */
+
+        .pdf-reader-container:fullscreen {
+
+            width: 100vw;
+
+            height: 100vh;
+
+            border-radius: 0;
+
+        }
+
+
+        .pdf-reader-container:fullscreen
+        .pdf-frame-wrapper {
+
+            height: calc(100vh - 50px);
+
+        }
+
+
+        /* =========================================
+           تحميل PDF
+        ========================================= */
+
+        #pdfLoading {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: white;
+
+            min-height: 100px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        /* =========================================
+           أزرار الكتاب
+        ========================================= */
+
+        .book-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .book-actions a {
+
+            text-decoration: none;
+
+        }
+
+
+        /* =========================================
+           الهاتف
+        ========================================= */
+
+        @media (max-width: 800px) {
+
+            .dashboard-back {
+
+                margin-right: 5px;
+
+                font-size: 13px;
+
+            }
+
+
+            main {
+
+                padding-left: 0 !important;
+
+                padding-right: 0 !important;
+
+            }
+
+
+            .section {
+
+                width: 100% !important;
+
+                max-width: 100% !important;
+
+                padding-left: 10px !important;
+
+                padding-right: 10px !important;
+
+                box-sizing: border-box;
+
+            }
+
+
+            /* -------------------------------------
+               تفاصيل الكتاب
+            ------------------------------------- */
+
+            .book-details {
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+            }
+
+
+            .book-details-cover {
+
+                max-width: 220px;
+
+                margin-left: auto;
+
+                margin-right: auto;
+
+            }
+
+
+            .book-details-cover img {
+
+                max-width: 100%;
+
+                height: auto;
+
+            }
+
+
+            .book-details-info {
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+            }
+
+
+            #bookTitle {
+
+                font-size: 24px;
+
+                line-height: 1.5;
+
+                word-break: break-word;
+
+            }
+
+
+            .book-description {
+
+                line-height: 1.8;
+
+            }
+
+
+            /* -------------------------------------
+               الأزرار
+            ------------------------------------- */
+
+            .book-actions {
+
+                display: flex;
+
+                flex-direction: column;
+
+                width: 100%;
+
+            }
+
+
+            .book-actions a {
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+                text-align: center;
+
+            }
+
+
+            /* -------------------------------------
+               PDF
+            ------------------------------------- */
+
+            .pdf-section {
+
+                margin-top: 30px;
+
+                width: calc(100% + 20px);
+
+                margin-right: -10px;
+
+                margin-left: -10px;
+
+            }
+
+
+            .pdf-section h2 {
+
+                padding-right: 10px;
+
+                padding-left: 10px;
+
+                font-size: 21px;
+
+            }
+
+
+            .pdf-reader-container {
+
+                width: 100%;
+
+                border-radius: 0;
+
+                box-shadow: none;
+
+            }
+
+
+            .pdf-toolbar {
+
+                padding: 9px 10px;
+
+                min-height: 42px;
+
+                box-sizing: border-box;
+
+            }
+
+
+            .pdf-toolbar-title {
+
+                font-size: 13px;
+
+                max-width: 60%;
+
+            }
+
+
+            .pdf-fullscreen-button {
+
+                padding: 7px 10px;
+
+                font-size: 12px;
+
+            }
+
+
+            .pdf-frame-wrapper {
+
+                height: calc(100vh - 150px);
+
+                min-height: 550px;
+
+            }
+
+
+            .pdf-reader-container:fullscreen
+            .pdf-frame-wrapper {
+
+                height: calc(100vh - 48px);
+
+            }
+
+
+            #pdfReader {
+
+                width: 100%;
+
+                height: 100%;
+
+            }
+
+        }
+
+
+        /* =========================================
+           الهاتف الصغير جدًا
+        ========================================= */
+
+        @media (max-width: 480px) {
+
+            .pdf-frame-wrapper {
+
+                height: calc(100vh - 135px);
+
+                min-height: 500px;
+
+            }
+
+
+            .pdf-toolbar-title {
+
+                font-size: 12px;
+
+            }
+
+
+            .pdf-fullscreen-button {
+
+                font-size: 11px;
+
+                padding: 7px 9px;
+
+            }
+
+
+            #bookTitle {
+
+                font-size: 21px;
+
+            }
+
+        }
+
+
+        /* =========================================
+           الوضع الأفقي للهاتف
+        ========================================= */
+
+        @media (max-width: 900px) and (orientation: landscape) {
+
+            .pdf-frame-wrapper {
+
+                height: calc(100vh - 55px);
+
+                min-height: 300px;
+
+            }
+
+
+            .pdf-reader-container:fullscreen
+            .pdf-frame-wrapper {
+
+                height: calc(100vh - 48px);
+
+            }
+
         }
 
     </style>
@@ -155,7 +670,6 @@
             </div>
 
 
-
             <div class="book-details-info">
 
 
@@ -184,7 +698,6 @@
                     id="bookDescription"
                     class="book-description">
                 </p>
-
 
 
                 <div class="book-meta">
@@ -216,7 +729,6 @@
 
 
                 </div>
-
 
 
                 <div
@@ -256,7 +768,6 @@
                 </div>
 
 
-
                 <div
                     id="loginRequired"
                     class="login-required">
@@ -283,6 +794,9 @@
         </div>
 
 
+        <!-- =====================================
+             قارئ PDF
+        ====================================== -->
 
         <div
             id="pdfSection"
@@ -295,28 +809,58 @@
 
 
             <div
-                id="pdfLoading"
-                style="
-                    text-align:center;
-                    padding:30px;
-                ">
+                id="pdfReaderContainer"
+                class="pdf-reader-container">
 
-                جاري تحميل الكتاب...
+
+                <div class="pdf-toolbar">
+
+
+                    <div
+                        id="pdfToolbarTitle"
+                        class="pdf-toolbar-title">
+
+                        📖 قارئ الكتاب
+
+                    </div>
+
+
+                    <button
+                        id="fullscreenButton"
+                        class="pdf-fullscreen-button"
+                        type="button">
+
+                        ⛶ ملء الشاشة
+
+                    </button>
+
+
+                </div>
+
+
+                <div class="pdf-frame-wrapper">
+
+
+                    <div
+                        id="pdfLoading">
+
+                        جاري تحميل الكتاب...
+
+                    </div>
+
+
+                    <iframe
+                        id="pdfReader"
+                        src=""
+                        title="قارئ PDF">
+
+                    </iframe>
+
+
+                </div>
+
 
             </div>
-
-
-            <iframe
-                id="pdfReader"
-                src=""
-                width="100%"
-                height="800"
-                style="
-                    border: none;
-                    border-radius: 12px;
-                    display:none;
-                ">
-            </iframe>
 
 
         </div>
@@ -369,7 +913,6 @@ const supabaseClient =
     );
 
 
-
 /* =========================================
    عناصر الحساب
 ========================================= */
@@ -386,7 +929,6 @@ const loginButton =
     );
 
 
-
 /* =========================================
    حالة المستخدم
 ========================================= */
@@ -398,9 +940,8 @@ let currentProfile = null;
 let currentAccessToken = null;
 
 
-
 /* =========================================
-   إعداد لوحة التحكم + صلاحية القراءة
+   إعداد لوحة التحكم
 ========================================= */
 
 async function setupUser() {
@@ -427,7 +968,6 @@ async function setupUser() {
                 : null;
 
 
-
         /* ================================
            زائر
         ================================= */
@@ -445,9 +985,8 @@ async function setupUser() {
         }
 
 
-
         /* ================================
-           الحصول على الملف الشخصي
+           الملف الشخصي
         ================================= */
 
         const {
@@ -485,7 +1024,6 @@ async function setupUser() {
             profile;
 
 
-
         /* ================================
            المبرمج
         ================================= */
@@ -508,7 +1046,6 @@ async function setupUser() {
                 "none";
 
         }
-
 
 
         /* ================================
@@ -535,7 +1072,6 @@ async function setupUser() {
         }
 
 
-
         /* ================================
            الأستاذ
         ================================= */
@@ -558,7 +1094,6 @@ async function setupUser() {
                 "none";
 
         }
-
 
 
         /* ================================
@@ -594,7 +1129,6 @@ async function setupUser() {
 }
 
 
-
 /* =========================================
    قراءة ID الكتاب
 ========================================= */
@@ -607,7 +1141,6 @@ const params =
 
 const bookId =
     params.get("id");
-
 
 
 /* =========================================
@@ -668,6 +1201,24 @@ const pdfLoading =
     );
 
 
+const pdfReaderContainer =
+    document.getElementById(
+        "pdfReaderContainer"
+    );
+
+
+const fullscreenButton =
+    document.getElementById(
+        "fullscreenButton"
+    );
+
+
+const pdfToolbarTitle =
+    document.getElementById(
+        "pdfToolbarTitle"
+    );
+
+
 const readButton =
     document.getElementById(
         "readButton"
@@ -698,13 +1249,11 @@ const bookContent =
     );
 
 
-
 /* =========================================
    رابط PDF المؤقت
 ========================================= */
 
 let pdfObjectURL = null;
-
 
 
 /* =========================================
@@ -745,7 +1294,6 @@ function showBookNotFound() {
 }
 
 
-
 /* =========================================
    وضع الزائر
 ========================================= */
@@ -770,9 +1318,97 @@ function setupGuestMode() {
 }
 
 
+/* =========================================
+   ملء الشاشة
+========================================= */
+
+async function toggleFullscreen() {
+
+    try {
+
+        if (
+            !document.fullscreenElement
+        ) {
+
+            if (
+                pdfReaderContainer.requestFullscreen
+            ) {
+
+                await pdfReaderContainer.requestFullscreen();
+
+            }
+
+        }
+
+        else {
+
+            if (
+                document.exitFullscreen
+            ) {
+
+                await document.exitFullscreen();
+
+            }
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Fullscreen error:",
+            error
+        );
+
+        alert(
+            "تعذر تشغيل وضع ملء الشاشة على هذا الجهاز."
+        );
+
+    }
+
+}
+
 
 /* =========================================
-   جلب PDF مع رمز تسجيل الدخول
+   تغيير نص زر ملء الشاشة
+========================================= */
+
+function updateFullscreenButton() {
+
+    if (
+        document.fullscreenElement
+    ) {
+
+        fullscreenButton.textContent =
+            "✕ الخروج من ملء الشاشة";
+
+    }
+
+    else {
+
+        fullscreenButton.textContent =
+            "⛶ ملء الشاشة";
+
+    }
+
+}
+
+
+fullscreenButton.addEventListener(
+    "click",
+    toggleFullscreen
+);
+
+
+document.addEventListener(
+    "fullscreenchange",
+    updateFullscreenButton
+);
+
+
+/* =========================================
+   جلب PDF مع المصادقة
 ========================================= */
 
 async function fetchPdfWithAuthentication(book) {
@@ -803,10 +1439,14 @@ async function fetchPdfWithAuthentication(book) {
 
 
         pdfLoading.style.display =
-            "block";
+            "flex";
 
         pdfLoading.textContent =
-            "جاري تحميل الكتاب...";
+            "⏳ جاري تحميل الكتاب...";
+
+
+        pdfReader.style.display =
+            "none";
 
 
         const pdfURL =
@@ -922,6 +1562,11 @@ async function fetchPdfWithAuthentication(book) {
             "none";
 
 
+        pdfToolbarTitle.textContent =
+            book.title ||
+            "📖 قارئ الكتاب";
+
+
         /* =================================
            زر القراءة
         ================================= */
@@ -941,8 +1586,13 @@ async function fetchPdfWithAuthentication(book) {
                     function () {
 
                         pdfSection.scrollIntoView({
+
                             behavior:
-                                "smooth"
+                                "smooth",
+
+                            block:
+                                "start"
+
                         });
 
                     },
@@ -950,7 +1600,6 @@ async function fetchPdfWithAuthentication(book) {
                 );
 
             };
-
 
 
         /* =================================
@@ -994,7 +1643,7 @@ async function fetchPdfWithAuthentication(book) {
 
 
         pdfLoading.style.display =
-            "block";
+            "flex";
 
 
         pdfLoading.textContent =
@@ -1014,7 +1663,6 @@ async function fetchPdfWithAuthentication(book) {
     }
 
 }
-
 
 
 /* =========================================
@@ -1062,7 +1710,6 @@ async function setupAuthenticatedMode(book) {
     );
 
 }
-
 
 
 /* =========================================
@@ -1142,7 +1789,6 @@ async function loadBook() {
         }
 
 
-
         /* =================================
            معلومات الكتاب
         ================================= */
@@ -1177,7 +1823,6 @@ async function loadBook() {
             "لا يوجد وصف لهذا الكتاب.";
 
 
-
         /* =================================
            الغلاف
         ================================= */
@@ -1204,7 +1849,6 @@ async function loadBook() {
                 "غلاف الكتاب";
 
         }
-
 
 
         /* =================================
@@ -1273,9 +1917,8 @@ async function loadBook() {
 }
 
 
-
 /* =========================================
-   تنظيف رابط PDF عند مغادرة الصفحة
+   تنظيف رابط PDF
 ========================================= */
 
 window.addEventListener(
@@ -1294,18 +1937,11 @@ window.addEventListener(
 );
 
 
-
 /* =========================================
    التشغيل
 ========================================= */
 
 async function initPage() {
-
-    /*
-       نتحقق من الحساب أولاً
-       ثم نحمل معلومات الكتاب
-       ثم نحمل PDF مع Access Token
-    */
 
     await setupUser();
 
