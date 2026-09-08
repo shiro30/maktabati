@@ -12,18 +12,70 @@
 
     <link rel="stylesheet" href="../style.css">
 
+    <style>
+
+        .dashboard-back {
+            display: none;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        /* رسالة تسجيل الدخول للزائر */
+
+        .login-required {
+            display: none;
+
+            margin-top: 25px;
+            padding: 25px;
+
+            background: #f8f9fa;
+
+            border: 1px solid #ddd;
+
+            border-radius: 14px;
+
+            text-align: center;
+        }
+
+        .login-required h3 {
+            margin-bottom: 10px;
+        }
+
+        .login-required p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .login-required a {
+            display: inline-block;
+            padding: 12px 25px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
 
-<!-- شريط التنقل -->
-
 <header class="navbar">
+
+
+    <!-- الشعار -->
 
     <div class="logo">
 
-        <div class="logo-icon">📚</div>
+        <div class="logo-icon">
+            📚
+        </div>
 
         <div>
 
@@ -40,6 +92,8 @@
     </div>
 
 
+    <!-- القائمة -->
+
     <nav>
 
         <a href="../index.html">
@@ -54,26 +108,55 @@
             التصنيفات
         </a>
 
-        <a href="#">
+        <a href="about.html">
             عن المكتبة
         </a>
 
     </nav>
 
 
-    <button class="login-btn">
-        تسجيل الدخول
-    </button>
+    <!-- الحساب -->
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+    ">
+
+        <a
+            id="dashboardBack"
+            class="login-btn dashboard-back"
+            href="#">
+
+            ⬅️ لوحة التحكم
+
+        </a>
+
+
+        <button
+            id="loginButton"
+            class="login-btn"
+            onclick="window.location.href='login.html'">
+
+            تسجيل الدخول
+
+        </button>
+
+    </div>
+
 
 </header>
 
 
 
-<!-- محتوى الكتاب -->
-
 <main>
 
-    <section class="section">
+
+<section class="section">
+
+
+    <div id="bookContent">
+
 
         <div class="book-details">
 
@@ -84,7 +167,7 @@
 
                 <img
                     id="bookCover"
-                    src=""
+                    src="../covers/DD.png"
                     alt="غلاف الكتاب">
 
             </div>
@@ -103,13 +186,14 @@
 
 
                 <h1 id="bookTitle">
-                    اسم الكتاب
+                    جاري تحميل الكتاب...
                 </h1>
 
 
                 <p class="book-author">
 
                     ✍️ المؤلف:
+
                     <strong id="bookAuthor">
                     </strong>
 
@@ -123,9 +207,8 @@
 
 
 
-                <!-- معلومات إضافية -->
-
                 <div class="book-meta">
+
 
                     <div>
 
@@ -137,6 +220,7 @@
                         </strong>
 
                     </div>
+
 
                     <div>
 
@@ -150,17 +234,23 @@
 
                     </div>
 
+
                 </div>
 
 
 
-                <!-- الأزرار -->
+                <!-- أزرار الكتاب -->
 
-                <div class="book-actions">
+                <div
+                    id="bookActions"
+                    class="book-actions">
+
+
+                    <!-- قراءة -->
 
                     <a
                         id="readButton"
-                        href="#pdfReader"
+                        href="#pdfSection"
                         class="read-button">
 
                         📖 قراءة الكتاب
@@ -168,16 +258,20 @@
                     </a>
 
 
+                    <!-- تحميل -->
+
                     <a
                         id="downloadButton"
-                        href=""
+                        href="#"
                         class="download-button"
-                        download>
+                        target="_blank">
 
                         ⬇️ تحميل الكتاب
 
                     </a>
 
+
+                    <!-- العودة -->
 
                     <a
                         href="books.html"
@@ -187,9 +281,35 @@
 
                     </a>
 
+
                 </div>
 
+
+
+                <!-- رسالة للزائر -->
+
+                <div
+                    id="loginRequired"
+                    class="login-required">
+
+                    <h3>
+                        🔐 تسجيل الدخول مطلوب
+                    </h3>
+
+                    <p>
+                        يمكنك مشاهدة معلومات الكتاب، لكن قراءة الكتاب وتحميله
+                        متاحة فقط للمستخدمين المسجلين في المكتبة.
+                    </p>
+
+                    <a href="login.html">
+                        تسجيل الدخول لقراءة الكتاب
+                    </a>
+
+                </div>
+
+
             </div>
+
 
         </div>
 
@@ -200,6 +320,7 @@
         <div
             id="pdfSection"
             class="pdf-section">
+
 
             <h2>
                 📖 قراءة الكتاب
@@ -217,15 +338,19 @@
                 ">
             </iframe>
 
+
         </div>
 
-    </section>
+
+    </div>
+
+
+</section>
+
 
 </main>
 
 
-
-<!-- الفوتر -->
 
 <footer>
 
@@ -239,144 +364,628 @@
 
 
 
-<!-- بيانات الكتب -->
-
-<script src="../books-data.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-    /*
-       قراءة رقم الكتاب من الرابط
-    */
 
-    const params =
-        new URLSearchParams(
-            window.location.search
+/* =========================================
+   Supabase
+========================================= */
+
+const SUPABASE_URL =
+    "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+
+/* =========================================
+   عناصر الحساب
+========================================= */
+
+const dashboardBack =
+    document.getElementById(
+        "dashboardBack"
+    );
+
+
+const loginButton =
+    document.getElementById(
+        "loginButton"
+    );
+
+
+/* =========================================
+   حالة المستخدم
+========================================= */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+
+
+/* =========================================
+   إعداد لوحة التحكم + صلاحية القراءة
+========================================= */
+
+async function setupUser() {
+
+    try {
+
+        const {
+            data: {
+                user
+            }
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        currentUser = user;
+
+
+        /* ================================
+           زائر
+        ================================= */
+
+        if (!user) {
+
+            dashboardBack.style.display =
+                "none";
+
+            loginButton.style.display =
+                "block";
+
+            return false;
+
+        }
+
+
+        /* ================================
+           الحصول على الملف الشخصي
+        ================================= */
+
+        const {
+            data: profile,
+            error
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "full_name, role"
+                )
+                .eq(
+                    "id",
+                    user.id
+                )
+                .single();
+
+
+        if (
+            error ||
+            !profile
+        ) {
+
+            console.error(
+                "Profile error:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        currentProfile = profile;
+
+
+
+        /* ================================
+           المبرمج
+        ================================= */
+
+        if (
+            profile.role ===
+            "programmer"
+        ) {
+
+            dashboardBack.href =
+                "programmer.html";
+
+            dashboardBack.textContent =
+                "⬅️ لوحة المبرمج";
+
+            dashboardBack.style.display =
+                "inline-block";
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+
+        /* ================================
+           المدير
+        ================================= */
+
+        else if (
+            profile.role ===
+            "admin"
+        ) {
+
+            dashboardBack.href =
+                "admin.html";
+
+            dashboardBack.textContent =
+                "⬅️ لوحة المدير";
+
+            dashboardBack.style.display =
+                "inline-block";
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+
+        /* ================================
+           الأستاذ
+        ================================= */
+
+        else if (
+            profile.role ===
+            "teacher"
+        ) {
+
+            dashboardBack.href =
+                "teacher.html";
+
+            dashboardBack.textContent =
+                "⬅️ لوحة الأستاذ";
+
+            dashboardBack.style.display =
+                "inline-block";
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+
+        /* ================================
+           التلميذ
+        ================================= */
+
+        else {
+
+            dashboardBack.style.display =
+                "none";
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "User setup error:",
+            error
         );
 
+        return false;
 
-    const bookIndex =
-        parseInt(
-            params.get("book")
-        );
+    }
 
-
-
-    /*
-       الحصول على بيانات الكتاب
-    */
-
-    const book =
-        booksData[bookIndex];
+}
 
 
 
-    /*
-       التأكد من وجود الكتاب
-    */
+/* =========================================
+   قراءة ID الكتاب
+========================================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const bookId =
+    params.get("id");
+
+
+
+/* =========================================
+   عناصر الصفحة
+========================================= */
+
+const bookTitle =
+    document.getElementById(
+        "bookTitle"
+    );
+
+
+const bookAuthor =
+    document.getElementById(
+        "bookAuthor"
+    );
+
+
+const bookCategory =
+    document.getElementById(
+        "bookCategory"
+    );
+
+
+const metaCategory =
+    document.getElementById(
+        "metaCategory"
+    );
+
+
+const bookDescription =
+    document.getElementById(
+        "bookDescription"
+    );
+
+
+const bookCover =
+    document.getElementById(
+        "bookCover"
+    );
+
+
+const pdfReader =
+    document.getElementById(
+        "pdfReader"
+    );
+
+
+const pdfSection =
+    document.getElementById(
+        "pdfSection"
+    );
+
+
+const readButton =
+    document.getElementById(
+        "readButton"
+    );
+
+
+const downloadButton =
+    document.getElementById(
+        "downloadButton"
+    );
+
+
+const bookActions =
+    document.getElementById(
+        "bookActions"
+    );
+
+
+const loginRequired =
+    document.getElementById(
+        "loginRequired"
+    );
+
+
+const bookContent =
+    document.getElementById(
+        "bookContent"
+    );
+
+
+
+/* =========================================
+   الكتاب غير موجود
+========================================= */
+
+function showBookNotFound() {
+
+    bookContent.innerHTML = `
+
+        <div style="
+            text-align: center;
+            padding: 80px 20px;
+        ">
+
+            <h2>
+                📚 الكتاب غير موجود
+            </h2>
+
+            <p>
+                عذرًا، لم نتمكن من العثور على هذا الكتاب.
+            </p>
+
+            <br>
+
+            <a
+                href="books.html"
+                class="read-button">
+
+                ← العودة إلى الكتب
+
+            </a>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================
+   وضع الزائر
+========================================= */
+
+function setupGuestMode() {
+
+    /* إخفاء أزرار القراءة والتحميل */
+
+    readButton.style.display =
+        "none";
+
+    downloadButton.style.display =
+        "none";
+
+
+    /* إبقاء زر العودة */
+
+    loginRequired.style.display =
+        "block";
+
+
+    /* إخفاء قارئ PDF */
+
+    pdfSection.style.display =
+        "none";
+
+
+    /* التأكد أن iframe فارغ */
+
+    pdfReader.src = "";
+
+}
+
+
+
+/* =========================================
+   وضع المستخدم المسجل
+========================================= */
+
+function setupAuthenticatedMode(book) {
+
+    loginRequired.style.display =
+        "none";
+
+
+    readButton.style.display =
+        "inline-block";
+
+
+    downloadButton.style.display =
+        "inline-block";
+
 
     if (
-        !book ||
-        isNaN(bookIndex)
+        book.drive_file_id
     ) {
 
-        document.querySelector("main").innerHTML = `
+        const pdfURL =
+            "/api/books/" +
+            encodeURIComponent(
+                book.id
+            ) +
+            "/pdf";
 
-            <section class="section">
 
-                <div style="
-                    text-align: center;
-                    padding: 80px 20px;
-                ">
+        /* قارئ PDF */
 
-                    <h2>
-                        📚 الكتاب غير موجود
-                    </h2>
+        pdfReader.src =
+            pdfURL;
 
-                    <p>
-                        عذرًا، لم نتمكن من العثور على هذا الكتاب.
-                    </p>
 
-                    <br>
+        /* زر القراءة */
 
-                    <a
-                        href="books.html"
-                        class="read-button">
+        readButton.href =
+            "#pdfSection";
 
-                        ← العودة إلى الكتب
 
-                    </a>
+        readButton.onclick =
+            function() {
 
-                </div>
+                setTimeout(
+                    function() {
 
-            </section>
+                        pdfSection.scrollIntoView({
+                            behavior:
+                                "smooth"
+                        });
 
-        `;
+                    },
+                    50
+                );
+
+            };
+
+
+        /* زر التحميل */
+
+        downloadButton.href =
+            pdfURL;
+
+
+        downloadButton.removeAttribute(
+            "download"
+        );
 
     }
 
     else {
 
+        pdfSection.style.display =
+            "none";
 
-        /*
+        readButton.style.display =
+            "none";
+
+        downloadButton.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* =========================================
+   تحميل الكتاب
+========================================= */
+
+async function loadBook() {
+
+    try {
+
+        if (!bookId) {
+
+            showBookNotFound();
+
+            return;
+
+        }
+
+
+        bookTitle.textContent =
+            "جاري تحميل الكتاب...";
+
+
+        const response =
+            await fetch(
+                "/api/books"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !result.success ||
+            !Array.isArray(
+                result.books
+            )
+        ) {
+
+            throw new Error(
+                "تعذر تحميل الكتب."
+            );
+
+        }
+
+
+        const book =
+            result.books.find(
+                function(item) {
+
+                    return (
+                        String(item.id) ===
+                        String(bookId)
+                    );
+
+                }
+            );
+
+
+        if (!book) {
+
+            showBookNotFound();
+
+            return;
+
+        }
+
+
+
+        /* =================================
            معلومات الكتاب
-        */
+        ================================= */
 
         document.title =
             book.title +
             " | مكتبة الثانوية";
 
 
-        document.getElementById(
-            "bookTitle"
-        ).textContent =
-            book.title;
+        bookTitle.textContent =
+            book.title ||
+            "بدون عنوان";
 
 
-        document.getElementById(
-            "bookAuthor"
-        ).textContent =
-            book.author;
+        bookAuthor.textContent =
+            book.author ||
+            "مؤلف غير محدد";
 
 
-        document.getElementById(
-            "bookCategory"
-        ).textContent =
-            book.category;
+        bookCategory.textContent =
+            book.category ||
+            "عام";
 
 
-        document.getElementById(
-            "metaCategory"
-        ).textContent =
-            book.category;
+        metaCategory.textContent =
+            book.category ||
+            "عام";
 
 
-        document.getElementById(
-            "bookDescription"
-        ).textContent =
-            book.description;
+        bookDescription.textContent =
+            book.description ||
+            "لا يوجد وصف لهذا الكتاب.";
 
 
 
-        /*
+        /* =================================
            الغلاف
-        */
+        ================================= */
 
-        const cover =
-            document.getElementById(
-                "bookCover"
-            );
+        if (
+            book.cover_url
+        ) {
 
+            bookCover.src =
+                book.cover_url;
 
-        if (book.cover) {
-
-            cover.src =
-                "../covers/" +
-                book.cover;
-
-            cover.alt =
+            bookCover.alt =
                 "غلاف " +
                 book.title;
 
@@ -384,85 +993,103 @@
 
         else {
 
-            cover.src =
+            bookCover.src =
                 "../covers/DD.png";
 
-            cover.alt =
+            bookCover.alt =
                 "غلاف الكتاب";
 
         }
 
 
 
-        /*
-           ملف PDF
-        */
+        /* =================================
+           تحديد صلاحية المستخدم
+        ================================= */
 
-        const pdfSection =
-            document.getElementById(
-                "pdfSection"
+        if (
+            currentUser &&
+            currentProfile
+        ) {
+
+            setupAuthenticatedMode(
+                book
             );
-
-
-        const pdfReader =
-            document.getElementById(
-                "pdfReader"
-            );
-
-
-        const downloadButton =
-            document.getElementById(
-                "downloadButton"
-            );
-
-
-        const readButton =
-            document.getElementById(
-                "readButton"
-            );
-
-
-
-        if (book.pdf) {
-
-            const pdfPath =
-                "../books/" +
-                book.pdf;
-
-
-            pdfReader.src =
-                pdfPath;
-
-
-            downloadButton.href =
-                pdfPath;
-
-
-            downloadButton.download =
-                book.pdf;
-
-
-            readButton.href =
-                "#pdfSection";
 
         }
 
         else {
 
-            pdfSection.style.display =
-                "none";
-
-
-            downloadButton.style.display =
-                "none";
-
-
-            readButton.style.display =
-                "none";
+            setupGuestMode();
 
         }
 
     }
+
+    catch (error) {
+
+        console.error(
+            "Book loading error:",
+            error
+        );
+
+
+        bookContent.innerHTML = `
+
+            <div style="
+                text-align: center;
+                padding: 80px 20px;
+            ">
+
+                <h2>
+                    ❌ تعذر تحميل الكتاب
+                </h2>
+
+                <p>
+                    حدث خطأ أثناء الاتصال بالخادم.
+                </p>
+
+                <br>
+
+                <a
+                    href="books.html"
+                    class="read-button">
+
+                    ← العودة إلى الكتب
+
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================
+   التشغيل
+========================================= */
+
+async function initPage() {
+
+    /*
+       مهم جداً:
+       نتحقق من الحساب أولاً
+       ثم نحمل الكتاب.
+    */
+
+    await setupUser();
+
+    await loadBook();
+
+}
+
+
+initPage();
+
 
 </script>
 

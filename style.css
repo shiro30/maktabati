@@ -1,8 +1,10 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 
-
 /* =====================================================
-   GENERAL
+   مكتبة ثانوية مصاص رابح الإلكترونية
+   مهندس النظام: شراف الدين بوردوسن
+   أستاذ مادة الرياضيات
    ===================================================== */
 
 * {
@@ -37,6 +39,10 @@
     --shadow-hover: 0 18px 40px rgba(15, 23, 42, 0.14);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Cairo', sans-serif;
     background: var(--background);
@@ -44,25 +50,25 @@ body {
     line-height: 1.7;
 }
 
-
 /* =====================================================
    NAVBAR
    ===================================================== */
 
 .navbar {
-    height: 82px;
-    padding: 0 7%;
+    min-height: 82px;
+    padding: 12px 7%;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 25px;
 
     background: var(--black);
     border-bottom: 3px solid var(--blue);
 
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .logo {
@@ -72,8 +78,8 @@ body {
 }
 
 .logo-icon {
-    width: 45px;
-    height: 45px;
+    width: 46px;
+    height: 46px;
 
     display: flex;
     align-items: center;
@@ -102,13 +108,15 @@ body {
 
 nav {
     display: flex;
-    gap: 32px;
+    align-items: center;
+    gap: 28px;
 }
 
 nav a {
     text-decoration: none;
     color: #cbd5e1;
     font-size: 14px;
+    font-weight: 600;
     transition: 0.3s ease;
 }
 
@@ -118,6 +126,10 @@ nav a.active {
 }
 
 .login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     border: 1px solid var(--orange);
 
     background: transparent;
@@ -129,17 +141,22 @@ nav a.active {
     border-radius: 9px;
 
     font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
 
     cursor: pointer;
 
     transition: 0.3s ease;
+
+    white-space: nowrap;
 }
 
 .login-btn:hover {
     background: var(--orange);
     color: white;
 }
-
 
 /* =====================================================
    HERO
@@ -189,6 +206,7 @@ nav a.active {
     border-radius: 20px;
 
     font-size: 13px;
+    font-weight: 600;
 
     margin-bottom: 20px;
 }
@@ -197,6 +215,7 @@ nav a.active {
     font-size: 65px;
     line-height: 1.2;
     margin-bottom: 22px;
+    font-weight: 800;
 }
 
 .hero h1 span {
@@ -212,7 +231,6 @@ nav a.active {
 
     margin-bottom: 30px;
 }
-
 
 /* =====================================================
    SEARCH
@@ -236,6 +254,8 @@ nav a.active {
 
 .search-box input {
     flex: 1;
+
+    min-width: 0;
 
     border: none;
     outline: none;
@@ -279,13 +299,13 @@ nav a.active {
     background: #ea580c;
 }
 
-
 /* =====================================================
    HERO CARD
    ===================================================== */
 
 .hero-card {
     width: 300px;
+    flex-shrink: 0;
 
     padding: 40px 30px;
 
@@ -325,6 +345,7 @@ nav a.active {
 
 .hero-card h2 {
     margin-top: 20px;
+    font-weight: 800;
 }
 
 .hero-card p {
@@ -361,7 +382,6 @@ nav a.active {
     font-size: 12px;
 }
 
-
 /* =====================================================
    SECTIONS
    ===================================================== */
@@ -376,6 +396,8 @@ nav a.active {
     align-items: end;
 
     justify-content: space-between;
+
+    gap: 20px;
 
     margin-bottom: 30px;
 }
@@ -392,6 +414,8 @@ nav a.active {
     font-size: 28px;
 
     color: var(--black);
+
+    font-weight: 800;
 }
 
 .section-heading a {
@@ -400,12 +424,14 @@ nav a.active {
     text-decoration: none;
 
     font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
 }
 
 .section-heading a:hover {
     color: var(--orange);
 }
-
 
 /* =====================================================
    CATEGORIES
@@ -449,11 +475,6 @@ nav a.active {
     box-shadow: var(--shadow-hover);
 }
 
-
-/* =====================================================
-   CATEGORY ICONS
-   ===================================================== */
-
 .category-icon {
     width: 72px;
     height: 72px;
@@ -493,7 +514,7 @@ nav a.active {
 }
 
 .category-card:nth-child(6) .category-icon {
-    background: #dcfce7;
+    background: #ede9fe;
 }
 
 .category-card:hover .category-icon {
@@ -506,6 +527,7 @@ nav a.active {
     margin-bottom: 5px;
 
     color: var(--black);
+    font-weight: 800;
 }
 
 .category-card p {
@@ -513,7 +535,6 @@ nav a.active {
 
     font-size: 10px;
 }
-
 
 /* =====================================================
    BOOKS SECTION
@@ -529,6 +550,8 @@ nav a.active {
     grid-template-columns: repeat(4, 1fr);
 
     gap: 22px;
+
+    align-items: stretch;
 }
 
 .book-card {
@@ -540,13 +563,20 @@ nav a.active {
 
     overflow: hidden;
 
-    transition: 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
 
     box-shadow: var(--shadow);
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .book-card:hover {
-    transform: translateY(-7px);
+    transform: translateY(-8px);
 
     border-color: var(--blue);
 
@@ -554,7 +584,9 @@ nav a.active {
 }
 
 .book-cover {
-    height: 230px;
+    position: relative;
+
+    height: 260px;
 
     display: flex;
 
@@ -565,13 +597,17 @@ nav a.active {
     font-size: 70px;
 
     overflow: hidden;
+
+    background: #f1f5f9;
 }
 
 .book-cover img {
     width: 100%;
     height: 100%;
 
-    object-fit: cover;
+    object-fit: contain;
+
+    padding: 10px;
 
     display: block;
 
@@ -579,7 +615,11 @@ nav a.active {
 }
 
 .book-card:hover .book-cover img {
-    transform: scale(1.05);
+    transform: scale(1.04);
+}
+
+.book-cover:has(img) {
+    background: #f8fafc;
 }
 
 .book-cover.math {
@@ -600,9 +640,24 @@ nav a.active {
 
 .book-info {
     padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
 }
 
 .book-category {
+    display: inline-block;
+
+    width: fit-content;
+
+    padding: 4px 10px;
+
+    border-radius: 20px;
+
+    background: var(--blue-light);
+
     color: var(--blue);
 
     font-size: 11px;
@@ -616,6 +671,10 @@ nav a.active {
     margin: 7px 0;
 
     color: var(--black);
+
+    font-weight: 800;
+
+    min-height: 30px;
 }
 
 .book-info p {
@@ -623,13 +682,17 @@ nav a.active {
 
     font-size: 12px;
 
-    margin-bottom: 15px;
+    margin-bottom: 8px;
+
+    line-height: 1.7;
 }
 
 .book-info button {
     width: 100%;
 
     padding: 10px;
+
+    margin-top: auto;
 
     background: var(--black);
 
@@ -650,23 +713,30 @@ nav a.active {
     background: var(--blue);
 }
 
-
 /* =====================================================
    READ BUTTON
    ===================================================== */
 
 .read-button {
-    display: inline-block;
+    display: flex;
 
-    margin-top: 15px;
+    align-items: center;
 
-    padding: 10px 20px;
+    justify-content: center;
 
-    border-radius: 8px;
+    width: 100%;
+
+    padding: 11px 15px;
+
+    margin-top: auto;
+
+    border-radius: 9px;
 
     text-decoration: none;
 
     text-align: center;
+
+    font-size: 14px;
 
     font-weight: 700;
 
@@ -674,15 +744,22 @@ nav a.active {
 
     color: white;
 
-    transition: 0.3s ease;
+    border: none;
+
+    transition: all 0.25s ease;
+
+    box-sizing: border-box;
 }
 
 .read-button:hover {
     background: var(--orange);
 
-    transform: translateY(-2px);
-}
+    color: white;
 
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 18px rgba(249, 115, 22, 0.25);
+}
 
 /* =====================================================
    CATEGORY PAGE
@@ -692,6 +769,8 @@ nav a.active {
     max-width: 1100px;
 
     margin: 50px auto;
+
+    padding: 0 20px;
 }
 
 .categories-page .section-heading p {
@@ -773,7 +852,6 @@ nav a.active {
     border: 1px solid #bbf7d0;
 }
 
-
 /* =====================================================
    BOOK DETAILS
    ===================================================== */
@@ -794,39 +872,7 @@ nav a.active {
     padding: 35px;
 }
 
-
-/* غلاف الكتاب في صفحة التفاصيل */
-
-.book-details-cover {
-    width: 240px;
-    height: 340px;
-
-    margin: 0 auto;
-
-    overflow: hidden;
-
-    border-radius: 14px;
-
-    background: #dbeafe;
-
-    border: 1px solid var(--border);
-
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
-}
-
-
-.book-details-cover img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-
-    display: block;
-}
-
-
-/* توافق مع التنسيقات القديمة */
-
+.book-details-cover,
 .large-book-cover {
     width: 240px;
     height: 340px;
@@ -844,7 +890,7 @@ nav a.active {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
 }
 
-
+.book-details-cover img,
 .large-book-cover img {
     width: 100%;
     height: 100%;
@@ -854,53 +900,49 @@ nav a.active {
     display: block;
 }
 
-
 .book-details-info {
-    padding: 10px;
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    box-shadow: var(--shadow);
 }
 
+.book-details-info h1,
+.book-details-content h1 {
+    font-size: 32px;
 
-.book-details-info h1 {
-    font-size: 38px;
+    margin: 15px 0 10px;
 
-    margin: 15px 0;
+    color: var(--text);
 
-    color: var(--black);
+    font-weight: 800;
 }
-
 
 .book-author {
-    font-size: 17px;
+    color: #64748b;
 
-    color: var(--text-light);
-
-    margin-bottom: 20px;
-}
-
-
-.book-description {
     font-size: 16px;
 
-    line-height: 2;
-
-    color: #475569;
-
     margin-bottom: 20px;
 }
 
+.book-description {
+    color: #475569;
 
-/* توافق مع التنسيقات القديمة */
+    line-height: 1.9;
+
+    font-size: 16px;
+
+    margin-bottom: 25px;
+}
 
 .book-details-content {
     padding: 10px;
-}
-
-.book-details-content h1 {
-    font-size: 38px;
-
-    margin: 15px 0;
-
-    color: var(--black);
 }
 
 .book-details-content h3 {
@@ -935,7 +977,6 @@ nav a.active {
     color: var(--blue);
 }
 
-
 /* =====================================================
    BOOK META
    ===================================================== */
@@ -945,41 +986,44 @@ nav a.active {
 
     gap: 15px;
 
-    margin: 30px 0;
+    margin: 25px 0;
 
     flex-wrap: wrap;
 }
 
-.book-meta div {
+.book-meta > div {
+    flex: 1;
+
     min-width: 120px;
 
     padding: 15px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    background: white;
+    background: #f8fafc;
 
     border: 1px solid var(--border);
 
-    box-shadow: var(--shadow);
-}
+    box-shadow: none;
 
-.book-meta strong {
-    display: block;
-
-    margin-bottom: 7px;
-
-    font-size: 14px;
-
-    color: var(--text-light);
+    text-align: center;
 }
 
 .book-meta span {
-    font-size: 15px;
+    display: block;
 
-    color: var(--black);
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
 }
 
+.book-meta strong {
+    color: var(--text);
+
+    font-size: 15px;
+}
 
 /* =====================================================
    BOOK ACTIONS
@@ -1011,6 +1055,8 @@ nav a.active {
     cursor: pointer;
 
     transition: 0.3s ease;
+
+    font-family: inherit;
 }
 
 .primary-button {
@@ -1053,19 +1099,20 @@ nav a.active {
     transform: translateY(-3px);
 }
 
-
 /* =====================================================
    DOWNLOAD BUTTON
    ===================================================== */
 
 .download-button {
-    display: inline-block;
+    display: inline-flex;
 
-    margin-top: 15px;
+    align-items: center;
 
-    padding: 10px 20px;
+    justify-content: center;
 
-    border-radius: 8px;
+    padding: 12px 20px;
+
+    border-radius: 10px;
 
     text-decoration: none;
 
@@ -1073,32 +1120,35 @@ nav a.active {
 
     font-weight: 700;
 
-    background: var(--black);
+    background: var(--green);
 
     color: white;
 
-    transition: 0.3s ease;
+    transition: 0.2s;
+
+    margin-left: 8px;
 }
 
 .download-button:hover {
-    background: var(--orange);
-
     transform: translateY(-2px);
-}
 
+    opacity: 0.9;
+}
 
 /* =====================================================
    BACK BUTTON
    ===================================================== */
 
 .back-button {
-    display: inline-block;
+    display: inline-flex;
 
-    margin-top: 15px;
+    align-items: center;
 
-    padding: 10px 20px;
+    justify-content: center;
 
-    border-radius: 8px;
+    padding: 12px 20px;
+
+    border-radius: 10px;
 
     text-decoration: none;
 
@@ -1108,85 +1158,52 @@ nav a.active {
 
     background: #e2e8f0;
 
-    color: var(--black);
+    color: #334155;
 
-    transition: 0.3s ease;
+    transition: 0.2s;
+
+    margin-left: 8px;
 }
 
 .back-button:hover {
-    background: var(--blue-light);
+    background: #cbd5e1;
 
-    color: var(--blue);
+    color: var(--black);
 }
-
 
 /* =====================================================
    PDF READER
    ===================================================== */
 
-.pdf-section {
-    max-width: 1100px;
-
-    margin: 30px auto 60px;
-
-    padding: 30px;
-
-    background: white;
-
-    border-radius: 16px;
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow);
-}
-
-.pdf-section h2 {
-    margin-bottom: 20px;
-
-    font-size: 26px;
-
-    color: var(--black);
-}
-
-.pdf-section iframe {
-    width: 100%;
-
-    height: 700px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #f1f5f9;
-}
-
-
-/* التنسيق القديم لقارئ PDF */
-
+.pdf-section,
 .pdf-reader {
     max-width: 1100px;
 
-    margin: 30px auto 60px;
+    margin: 45px auto 60px;
 
-    padding: 30px;
+    padding: 25px 30px;
 
     background: white;
 
-    border-radius: 16px;
+    border-radius: 18px;
 
     border: 1px solid var(--border);
 
     box-shadow: var(--shadow);
 }
 
+.pdf-section h2,
 .pdf-reader h2 {
     margin-bottom: 20px;
 
     font-size: 26px;
 
     color: var(--black);
+
+    font-weight: 800;
 }
 
+.pdf-section iframe,
 .pdf-reader iframe {
     width: 100%;
 
@@ -1198,7 +1215,6 @@ nav a.active {
 
     background: #f1f5f9;
 }
-
 
 /* =====================================================
    FOOTER
@@ -1242,6 +1258,8 @@ footer p {
 
 .footer-links h3 {
     margin-bottom: 10px;
+
+    font-size: 16px;
 }
 
 .footer-links a {
@@ -1270,31 +1288,36 @@ footer p {
     font-size: 11px;
 }
 
+.footer-credit {
+    margin-top: 8px;
+
+    color: #94a3b8;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+.footer-credit strong {
+    color: #60a5fa;
+}
 
 /* =====================================================
    RESPONSIVE - TABLET
    ===================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
 
-    nav {
-        display: none;
+    .navbar {
+        padding: 12px 5%;
     }
 
     .hero {
-        flex-direction: column;
-
-        text-align: center;
+        padding: 70px 6%;
     }
 
-    .hero-card {
-        width: 100%;
-
-        max-width: 350px;
-    }
-
-    .search-box {
-        margin: auto;
+    .section {
+        padding: 65px 6%;
     }
 
     .categories {
@@ -1307,6 +1330,48 @@ footer p {
 
 }
 
+@media (max-width: 900px) {
+
+    nav {
+        display: none;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 45px;
+    }
+
+    .hero-content {
+        max-width: 800px;
+    }
+
+    .hero-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .search-box {
+        margin: auto;
+    }
+
+    .book-details {
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+
+        max-width: 700px;
+
+        text-align: center;
+    }
+
+    .book-details-info {
+        text-align: right;
+    }
+
+}
 
 /* =====================================================
    RESPONSIVE - MOBILE
@@ -1314,114 +1379,52 @@ footer p {
 
 @media (max-width: 768px) {
 
-    .book-details {
-        grid-template-columns: 1fr;
+    .navbar {
+        min-height: 70px;
 
-        gap: 30px;
+        padding: 10px 4%;
 
-        margin: 30px auto;
-
-        padding: 20px;
-
-        text-align: center;
+        gap: 10px;
     }
 
-
-    .book-details-cover {
-        width: 220px;
-
-        height: 310px;
-
-        margin: 0 auto;
+    .logo {
+        gap: 8px;
     }
 
+    .logo-icon {
+        width: 40px;
+        height: 40px;
 
-    .large-book-cover {
-        width: 220px;
-
-        height: 310px;
-
-        margin: 0 auto;
+        font-size: 20px;
     }
 
-
-    .book-details-info h1 {
-        font-size: 30px;
+    .logo-title {
+        font-size: 15px;
     }
 
-
-    .book-details-content h1 {
-        font-size: 30px;
+    .logo-subtitle {
+        font-size: 9px;
     }
 
+    .login-btn {
+        padding: 8px 12px;
 
-    .book-details-content p {
-        font-size: 16px;
+        font-size: 11px;
     }
 
+    .hero {
+        padding: 60px 6%;
 
-    .book-meta {
-        justify-content: center;
+        min-height: auto;
     }
 
-
-    .book-actions {
-        justify-content: center;
+    .hero h1 {
+        font-size: 45px;
     }
 
-
-    .pdf-section {
-        margin: 20px 10px 40px;
-
-        padding: 15px;
+    .hero p {
+        font-size: 15px;
     }
-
-
-    .pdf-section iframe {
-        height: 550px;
-    }
-
-
-    .pdf-reader {
-        margin: 20px 10px 40px;
-
-        padding: 15px;
-    }
-
-
-    .pdf-reader iframe {
-        height: 550px;
-    }
-
-
-    .books-container {
-        grid-template-columns: 1fr;
-
-        gap: 25px;
-
-        padding: 15px;
-    }
-
-
-    .book-card {
-        width: 100%;
-    }
-
-
-    .book-cover {
-        height: 300px;
-    }
-
-
-    .section {
-        padding: 20px 10px;
-    }
-
-
-    .section-heading {
-        text-align: center;
-    }
-
 
     .search-box {
         width: 100%;
@@ -1429,333 +1432,39 @@ footer p {
         margin-top: 20px;
     }
 
-
-    .categories-container {
-        grid-template-columns: 1fr;
-
-        padding: 10px;
-    }
-
-
-    .categories-page {
-        margin: 30px auto;
-    }
-
-}
-
-
-/* =====================================================
-   RESPONSIVE - SMALL MOBILE
-   ===================================================== */
-
-@media (max-width: 600px) {
-
-    .navbar {
-        padding: 0 5%;
-    }
-
-
-    .login-btn {
-        display: none;
-    }
-
-
-    .hero {
-        padding: 60px 6%;
-    }
-
-
-    .hero h1 {
-        font-size: 45px;
-    }
-
-
-    .search-box {
-        flex-direction: column;
-
-        gap: 5px;
-    }
-
-
-    .search-box button {
+    .search-box input {
         padding: 12px;
     }
 
+    .search-box button {
+        padding: 12px 18px;
+    }
 
     .section {
         padding: 55px 6%;
     }
 
+    .section-heading {
+        align-items: center;
+
+        flex-direction: column;
+
+        text-align: center;
+    }
 
     .categories {
         grid-template-columns: repeat(2, 1fr);
     }
 
-
     .books-container {
         grid-template-columns: 1fr;
+
+        gap: 25px;
     }
 
-
-    .footer-content {
-        grid-template-columns: 1fr;
+    .book-card {
+        width: 100%;
     }
-
-
-    .book-details-cover {
-        width: 200px;
-
-        height: 285px;
-    }
-
-
-    .large-book-cover {
-        width: 200px;
-
-        height: 285px;
-    }
-
-}
-/* =========================================
-   تحسينات صفحة تفاصيل الكتاب
-   ========================================= */
-
-.book-details-info {
-    background: #ffffff;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.book-details-info h1 {
-    font-size: 32px;
-    margin: 15px 0 10px;
-    color: var(--text);
-}
-
-.book-author {
-    color: #64748b;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.book-description {
-    color: #475569;
-    line-height: 1.9;
-    font-size: 16px;
-    margin-bottom: 25px;
-}
-
-.book-meta {
-    display: flex;
-    gap: 15px;
-    margin: 25px 0;
-}
-
-.book-meta > div {
-    flex: 1;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-}
-
-.book-meta span {
-    display: block;
-    color: #64748b;
-    font-size: 13px;
-    margin-bottom: 6px;
-}
-
-.book-meta strong {
-    color: var(--text);
-    font-size: 15px;
-}
-
-.download-button,
-.back-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    margin-left: 8px;
-    transition: 0.2s;
-}
-
-.download-button {
-    background: #16a34a;
-    color: white;
-}
-
-.download-button:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-}
-
-.back-button {
-    background: #e2e8f0;
-    color: #334155;
-}
-
-.back-button:hover {
-    background: #cbd5e1;
-}
-
-.pdf-section {
-    margin-top: 45px;
-    background: #ffffff;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.pdf-section h2 {
-    margin-bottom: 20px;
-    color: var(--text);
-}
-/* =====================================================
-   تحسين احترافي لبطاقات الكتب
-   ===================================================== */
-
-.books-container {
-    align-items: stretch;
-}
-
-.book-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.book-cover {
-    position: relative;
-    height: 260px;
-    background: #f1f5f9;
-}
-
-.book-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 10px;
-    transition: transform 0.4s ease;
-}
-
-.book-card:hover .book-cover img {
-    transform: scale(1.04);
-}
-
-.book-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.book-info h3 {
-    min-height: 30px;
-}
-
-.book-info p {
-    line-height: 1.7;
-}
-
-.book-info .read-button {
-    width: 100%;
-    margin-top: auto;
-    box-sizing: border-box;
-}
-
-
-/* =====================================================
-   غلاف الكتاب الحقيقي
-   ===================================================== */
-
-.book-cover:has(img) {
-    background: #f8fafc;
-}
-
-
-/* =====================================================
-   تحسين زر قراءة الكتاب
-   ===================================================== */
-
-.read-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-
-    padding: 11px 15px;
-
-    margin-top: 15px;
-
-    border-radius: 9px;
-
-    text-decoration: none;
-
-    text-align: center;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    background: var(--blue);
-
-    color: white;
-
-    border: none;
-
-    transition: all 0.25s ease;
-
-    box-sizing: border-box;
-}
-
-.read-button:hover {
-    background: var(--orange);
-
-    color: white;
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 7px 18px rgba(249, 115, 22, 0.25);
-}
-
-
-/* =====================================================
-   تحسين معلومات الكتاب
-   ===================================================== */
-
-.book-category {
-    display: inline-block;
-
-    width: fit-content;
-
-    padding: 4px 10px;
-
-    border-radius: 20px;
-
-    background: var(--blue-light);
-
-    color: var(--blue);
-
-    font-size: 11px;
-
-    font-weight: 700;
-}
-
-
-/* =====================================================
-   تحسين عرض الكتب على الهاتف
-   ===================================================== */
-
-@media (max-width: 768px) {
 
     .book-cover {
         height: 280px;
@@ -1765,33 +1474,656 @@ footer p {
         padding: 20px;
     }
 
-}
+    .categories-container {
+        grid-template-columns: 1fr;
 
+        padding: 10px;
+    }
+
+    .categories-page {
+        margin: 30px auto;
+    }
+
+    .book-details {
+        margin: 30px auto;
+
+        padding: 20px;
+    }
+
+    .book-details-cover,
+    .large-book-cover {
+        width: 220px;
+
+        height: 310px;
+    }
+
+    .book-details-info {
+        padding: 22px;
+    }
+
+    .book-details-info h1,
+    .book-details-content h1 {
+        font-size: 30px;
+    }
+
+    .book-details-content p {
+        font-size: 16px;
+    }
+
+    .book-meta {
+        justify-content: center;
+    }
+
+    .book-actions {
+        justify-content: center;
+    }
+
+    .download-button,
+    .back-button {
+        margin-left: 0;
+    }
+
+    .pdf-section,
+    .pdf-reader {
+        margin: 20px 10px 40px;
+
+        padding: 15px;
+    }
+
+    .pdf-section iframe,
+    .pdf-reader iframe {
+        height: 550px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+    }
+
+    footer {
+        padding: 45px 7% 20px;
+    }
+
+}
 
 /* =====================================================
-   حركة ناعمة للبطاقات
+   RESPONSIVE - SMALL MOBILE
    ===================================================== */
 
-.book-card {
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-}
+@media (max-width: 600px) {
 
-.book-card:hover {
-    transform: translateY(-8px);
-}
+    .navbar {
+        padding: 9px 4%;
+    }
 
+    .logo-subtitle {
+        display: none;
+    }
+
+    .login-btn {
+        display: inline-flex;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-card {
+        max-width: 310px;
+
+        padding: 30px 20px;
+    }
+
+    .search-box {
+        flex-direction: column;
+
+        gap: 5px;
+
+        padding: 5px;
+    }
+
+    .search-box button {
+        padding: 12px;
+    }
+
+    .section {
+        padding: 45px 6%;
+    }
+
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+    }
+
+    .category-card {
+        padding: 20px 7px;
+    }
+
+    .category-icon {
+        width: 60px;
+        height: 60px;
+
+        font-size: 31px;
+    }
+
+    .category-card h3 {
+        font-size: 13px;
+    }
+
+    .category-card p {
+        font-size: 9px;
+    }
+
+    .book-cover {
+        height: 280px;
+    }
+
+    .book-details-cover,
+    .large-book-cover {
+        width: 200px;
+
+        height: 285px;
+    }
+
+}
 
 /* =====================================================
-   تحسين العناوين
+   صفحات لوحة التحكم
    ===================================================== */
 
-.books-section .section-heading {
-    margin-bottom: 35px;
+.dashboard-page {
+    min-height: 100vh;
+
+    background: var(--background);
 }
 
-.books-section .section-heading h2 {
+.dashboard-container {
+    width: 92%;
+
+    max-width: 1200px;
+
+    margin: 40px auto;
+}
+
+.dashboard-header {
+    background: linear-gradient(
+        135deg,
+        #0b1f3a,
+        #173b8f
+    );
+
+    color: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    box-shadow: var(--shadow);
+}
+
+.dashboard-header h1 {
+    font-size: 30px;
+
     font-weight: 800;
 }
+
+.dashboard-header p {
+    margin-top: 7px;
+
+    color: #dbeafe;
+}
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    text-decoration: none;
+
+    color: var(--text);
+
+    box-shadow: var(--shadow);
+
+    transition: 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--blue);
+
+    box-shadow: var(--shadow-hover);
+}
+
+.dashboard-card-icon {
+    font-size: 34px;
+
+    margin-bottom: 12px;
+}
+
+.dashboard-card h2 {
+    color: var(--black);
+
+    font-size: 18px;
+
+    margin-bottom: 7px;
+}
+
+.dashboard-card p {
+    color: var(--text-light);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+/* =====================================================
+   الإحصائيات
+   ===================================================== */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 22px;
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+}
+
+.stat-card strong {
+    display: block;
+
+    font-size: 30px;
+
+    color: var(--blue);
+
+    font-weight: 800;
+}
+
+.stat-card span {
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+/* =====================================================
+   جداول الإدارة
+   ===================================================== */
+
+.admin-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+.admin-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 700px;
+}
+
+.admin-table th {
+    background: #eff6ff;
+
+    color: var(--black);
+
+    font-weight: 800;
+
+    padding: 14px;
+
+    text-align: right;
+}
+
+.admin-table td {
+    padding: 13px 14px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--text);
+
+    font-size: 13px;
+}
+
+.admin-table tr:hover td {
+    background: #f8fafc;
+}
+
+/* =====================================================
+   الأزرار العامة
+   ===================================================== */
+
+.action-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 9px 14px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    transition: 0.25s ease;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+}
+
+.action-blue {
+    background: var(--blue);
+
+    color: white;
+}
+
+.action-green {
+    background: var(--green);
+
+    color: white;
+}
+
+.action-orange {
+    background: var(--orange);
+
+    color: white;
+}
+
+.action-red {
+    background: #dc2626;
+
+    color: white;
+}
+
+.action-dark {
+    background: var(--black);
+
+    color: white;
+}
+
+/* =====================================================
+   النماذج
+   ===================================================== */
+
+.form-card {
+    max-width: 800px;
+
+    margin: 40px auto;
+
+    padding: 30px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--black);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    border: 1px solid var(--border);
+
+    outline: none;
+
+    border-radius: 9px;
+
+    padding: 11px 13px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    background: #f8fafc;
+
+    color: var(--text);
+
+    transition: 0.2s ease;
+}
+
+.form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--blue);
+
+    background: white;
+
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.08);
+}
+
+/* =====================================================
+   رسائل النظام
+   ===================================================== */
+
+.message {
+    padding: 12px 15px;
+
+    border-radius: 9px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.message-success {
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+}
+
+.message-error {
+    background: #fee2e2;
+
+    color: #991b1b;
+
+    border: 1px solid #fecaca;
+}
+
+.message-info {
+    background: #dbeafe;
+
+    color: #1e40af;
+
+    border: 1px solid #bfdbfe;
+}
+
+/* =====================================================
+   التحميل
+   ===================================================== */
+
+.loading {
+    min-height: 70vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+.loading h1 {
+    color: var(--black);
+
+    margin-bottom: 10px;
+
+    font-weight: 800;
+}
+
+.loading p {
+    color: var(--text-light);
+}
+
+/* =====================================================
+   تعريف المؤسسة في الصفحات
+   ===================================================== */
+
+.institution-badge {
+    display: inline-block;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+    background: var(--blue-light);
+
+    color: var(--blue);
+
+    border: 1px solid #bfdbfe;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+.system-credit {
+    margin-top: 10px;
+
+    color: var(--text-light);
+
+    font-size: 12px;
+}
+
+.system-credit strong {
+    color: var(--blue);
+}
+
+/* =====================================================
+   RESPONSIVE DASHBOARD
+   ===================================================== */
+
+@media (max-width: 850px) {
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .dashboard-container {
+        width: 94%;
+
+        margin: 25px auto;
+    }
+
+    .dashboard-header {
+        padding: 22px;
+
+        border-radius: 15px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-card {
+        margin: 25px 10px;
+
+        padding: 20px;
+    }
+
+}
+```

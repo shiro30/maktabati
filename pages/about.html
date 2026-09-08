@@ -1,134 +1,914 @@
+```html
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>عن المكتبة | مكتبة الثانوية</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>عن المكتبة | مكتبة ثانوية مصاص رابح</title>
 
     <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        /* =========================================
+           هوية المؤسسة
+        ========================================= */
+
+        .institution-bar {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e3a8a
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 14px 20px;
+
+            border-radius: 0 0 16px 16px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .institution-bar strong {
+
+            display: block;
+
+            font-size: 18px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .institution-bar span {
+
+            font-size: 13px;
+
+            opacity: 0.9;
+
+        }
+
+
+        /* =========================================
+           محتوى عن المكتبة
+        ========================================= */
+
+        .about-content {
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+        }
+
+
+        .about-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-top: 25px;
+
+            box-shadow:
+                0 8px 25px rgba(15, 23, 42, 0.06);
+
+            border: 1px solid #e2e8f0;
+
+        }
+
+
+        .about-card h2 {
+
+            color: #1e3a8a;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .about-card h3 {
+
+            color: #1e3a8a;
+
+            margin-top: 30px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .about-card p {
+
+            line-height: 2;
+
+            color: #475569;
+
+        }
+
+
+        /* =========================================
+           هوية النظام
+        ========================================= */
+
+        .system-identity {
+
+            margin-top: 30px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        .identity-item {
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+        }
+
+
+        .identity-item span {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .identity-item strong {
+
+            color: #0f172a;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =========================================
+           بطاقة مهندس النظام
+        ========================================= */
+
+        .programmer-info {
+
+            margin-top: 30px;
+
+            padding: 24px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc,
+                    #eff6ff
+                );
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 16px;
+
+        }
+
+
+        .programmer-info strong {
+
+            display: block;
+
+            color: #1e3a8a;
+
+            font-size: 17px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .programmer-info span {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================================
+           زر الحساب
+        ========================================= */
+
+        .account-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 16px;
+
+            border-radius: 10px;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+
+            white-space: nowrap;
+
+        }
+
+
+        .account-btn:hover {
+
+            background: #172554;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* =========================================
+           الهاتف
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+            .institution-bar {
+
+                padding: 12px 10px;
+
+            }
+
+
+            .institution-bar strong {
+
+                font-size: 16px;
+
+            }
+
+
+            .institution-bar span {
+
+                font-size: 12px;
+
+            }
+
+
+            .about-card {
+
+                padding: 20px;
+
+            }
+
+
+            .system-identity {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .account-btn {
+
+                padding: 9px 12px;
+
+                font-size: 13px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================================
+     الشريط العلوي
+========================================= -->
+
 <header class="navbar">
 
+
+    <!-- الشعار -->
+
     <div class="logo">
-        <div class="logo-icon">📚</div>
+
+        <div class="logo-icon">
+            📚
+        </div>
+
 
         <div>
-            <div class="logo-title">مكتبة الثانوية</div>
-            <div class="logo-subtitle">المكتبة الإلكترونية</div>
+
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
+            </div>
+
+
+            <div class="logo-subtitle">
+                المكتبة الرقمية للمؤسسة
+            </div>
+
         </div>
+
     </div>
 
+
+
+    <!-- القائمة -->
+
     <nav>
-        <a href="../index.html">الرئيسية</a>
-        <a href="books.html">الكتب</a>
-        <a href="categories.html">التصنيفات</a>
-        <a href="about.html" class="active">عن المكتبة</a>
+
+        <a href="../index.html">
+            الرئيسية
+        </a>
+
+
+        <a href="books.html">
+            الكتب
+        </a>
+
+
+        <a href="categories.html">
+            التصنيفات
+        </a>
+
+
+        <a href="about.html" class="active">
+            عن المكتبة
+        </a>
+
     </nav>
 
-    <button class="login-btn">تسجيل الدخول</button>
+
+
+    <!-- الحساب -->
+
+    <a
+        href="login.html"
+        class="account-btn"
+        id="accountButton">
+
+        🔐 تسجيل الدخول
+
+    </a>
+
 
 </header>
 
 
+
+<!-- =========================================
+     هوية المؤسسة
+========================================= -->
+
+<div class="institution-bar">
+
+    <strong>
+        🏫 ثانوية مصاص رابح
+    </strong>
+
+
+    <span>
+        المكتبة الرقمية للمؤسسة
+    </span>
+
+</div>
+
+
+
+<!-- =========================================
+     المحتوى الرئيسي
+========================================= -->
+
 <main>
+
 
     <section class="section">
 
+
         <div class="section-heading">
 
-            <div>
-                <span>مكتبة الثانوية</span>
 
-                <h2>عن المكتبة</h2>
+            <div>
+
+                <span>
+                    المكتبة الرقمية للمؤسسة
+                </span>
+
+
+                <h2>
+                    عن المكتبة
+                </h2>
+
 
                 <p>
                     منصة إلكترونية تعليمية تهدف إلى توفير الكتب
                     والمراجع الدراسية للطلاب بطريقة منظمة وسهلة.
                 </p>
-            </div>
-
-        </div>
-
-
-        <div class="book-details-info">
-
-            <h2>📚 مكتبة الثانوية</h2>
-
-            <p class="book-description">
-
-                مكتبة الثانوية هي منصة رقمية مخصصة لجمع وتنظيم
-                الكتب والمراجع التعليمية في مكان واحد، بهدف تسهيل
-                وصول التلاميذ إلى مصادر المعرفة والمطالعة.
-
-            </p>
-
-
-            <div class="book-meta">
-
-                <div>
-                    <span>📚 الكتب</span>
-                    <strong>مراجع تعليمية</strong>
-                </div>
-
-                <div>
-                    <span>🎓 الفئة</span>
-                    <strong>تلاميذ الثانوية</strong>
-                </div>
-
-                <div>
-                    <span>📄 الصيغة</span>
-                    <strong>PDF</strong>
-                </div>
 
             </div>
 
 
-            <h3 style="margin-top:30px;">
-                هدف المكتبة
-            </h3>
-
-            <p class="book-description">
-
-                نسعى إلى إنشاء فضاء تعليمي رقمي يساعد التلميذ
-                على الوصول إلى الكتب والمراجع بسرعة، مع تنظيم
-                المحتوى حسب المواد والتخصصات.
-
-            </p>
+        </div>
 
 
-            <h3 style="margin-top:30px;">
-                ماذا توفر المكتبة؟
-            </h3>
 
-            <p class="book-description">
+        <div class="about-content">
 
-                • تصفح الكتب حسب المادة.<br>
-                • البحث عن الكتب والمؤلفين.<br>
-                • قراءة الكتب مباشرة بصيغة PDF.<br>
-                • تحميل الكتب المتاحة.<br>
-                • تنظيم المحتوى داخل تصنيفات واضحة.
 
-            </p>
+            <!-- =================================
+                 تعريف المكتبة
+            ================================== -->
+
+            <div class="about-card">
+
+
+                <h2>
+                    📚 مكتبة ثانوية مصاص رابح
+                </h2>
+
+
+                <p>
+
+                    مكتبة الثانوية هي منصة رقمية مخصصة لجمع وتنظيم
+                    الكتب والمراجع التعليمية في مكان واحد، بهدف
+                    تسهيل وصول التلاميذ إلى مصادر المعرفة والمطالعة.
+
+                </p>
+
+
+
+                <!-- =================================
+                     معلومات المنصة
+                ================================== -->
+
+                <div class="system-identity">
+
+
+                    <div class="identity-item">
+
+                        <span>
+                            🏫 المؤسسة
+                        </span>
+
+                        <strong>
+                            ثانوية مصاص رابح
+                        </strong>
+
+                    </div>
+
+
+                    <div class="identity-item">
+
+                        <span>
+                            📚 المنصة
+                        </span>
+
+                        <strong>
+                            المكتبة الرقمية للمؤسسة
+                        </strong>
+
+                    </div>
+
+
+                    <div class="identity-item">
+
+                        <span>
+                            👨‍💻 مهندس النظام
+                        </span>
+
+                        <strong>
+                            شراف الدين بوردوسن
+                        </strong>
+
+                    </div>
+
+
+                    <div class="identity-item">
+
+                        <span>
+                            👨‍🏫 الصفة
+                        </span>
+
+                        <strong>
+                            أستاذ مادة الرياضيات
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     خصائص المكتبة
+                ================================== -->
+
+                <div class="book-meta">
+
+
+                    <div>
+
+                        <span>
+                            📚 الكتب
+                        </span>
+
+                        <strong>
+                            مراجع تعليمية
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            🎓 الفئة
+                        </span>
+
+                        <strong>
+                            تلاميذ الثانوية
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            📄 الصيغة
+                        </span>
+
+                        <strong>
+                            PDF
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     هدف المكتبة
+                ================================== -->
+
+                <h3>
+                    🎯 هدف المكتبة
+                </h3>
+
+
+                <p>
+
+                    نسعى إلى إنشاء فضاء تعليمي رقمي يساعد التلميذ
+                    على الوصول إلى الكتب والمراجع بسرعة، مع تنظيم
+                    المحتوى حسب المواد والتخصصات.
+
+                </p>
+
+
+
+                <!-- =================================
+                     ماذا توفر المكتبة؟
+                ================================== -->
+
+                <h3>
+                    📖 ماذا توفر المكتبة؟
+                </h3>
+
+
+                <p>
+
+                    • تصفح الكتب حسب المادة.<br>
+
+                    • البحث عن الكتب والمؤلفين.<br>
+
+                    • قراءة الكتب مباشرة بصيغة PDF.<br>
+
+                    • تحميل الكتب المتاحة.<br>
+
+                    • تنظيم المحتوى داخل تصنيفات واضحة.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 مهندس النظام
+            ================================== -->
+
+            <div class="programmer-info">
+
+
+                <strong>
+                    👨‍💻 مهندس النظام: شراف الدين بوردوسن
+                </strong>
+
+
+                <span>
+                    أستاذ مادة الرياضيات
+                </span>
+
+
+            </div>
+
 
         </div>
+
 
     </section>
+
 
 </main>
 
 
+
+<!-- =========================================
+     التذييل
+========================================= -->
+
 <footer>
 
+
     <div class="copyright">
-        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+
+        <br>
+
+
+        مكتبة الثانوية الرقمية
+
+
+        <br>
+
+
+        <span style="font-size:13px;">
+
+            مهندس النظام:
+            شراف الدين بوردوسن —
+            أستاذ مادة الرياضيات
+
+        </span>
+
+
+        <br><br>
+
+
+        © 2026 — جميع الحقوق محفوظة
+
+
     </div>
+
 
 </footer>
 
+
+
+<!-- =========================================
+     Supabase
+========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =========================================
+   إعداد Supabase
+========================================= */
+
+const SUPABASE_URL =
+    "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+
+/*
+   مهم:
+   اترك هنا نفس قيمة المفتاح الموجودة
+   حاليًا في ملف about.html القديم لديك.
+*/
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================
+   زر الحساب
+========================================= */
+
+const accountButton =
+    document.getElementById("accountButton");
+
+
+/* =========================================
+   تحديد لوحة التحكم حسب الدور
+========================================= */
+
+function getDashboard(role) {
+
+    switch (role) {
+
+        case "programmer":
+            return "programmer.html";
+
+        case "admin":
+            return "admin.html";
+
+        case "teacher":
+            return "teacher.html";
+
+        case "student":
+            return "student.html";
+
+        default:
+            return "login.html";
+
+    }
+
+}
+
+
+/* =========================================
+   تحديث زر الحساب
+========================================= */
+
+async function updateAccountButton() {
+
+    try {
+
+        const {
+            data: {
+                session
+            }
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        /* المستخدم غير مسجل */
+
+        if (!session) {
+
+            accountButton.href =
+                "login.html";
+
+            accountButton.textContent =
+                "🔐 تسجيل الدخول";
+
+            return;
+
+        }
+
+
+        /* المستخدم مسجل */
+
+        const user =
+            session.user;
+
+
+        const {
+            data: profile,
+            error
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select("full_name, role")
+                .eq("id", user.id)
+                .single();
+
+
+        /* تعذر الحصول على الملف الشخصي */
+
+        if (error || !profile) {
+
+            accountButton.href =
+                "login.html";
+
+            accountButton.textContent =
+                "👤 حسابي";
+
+            return;
+
+        }
+
+
+        /* الاسم + لوحة التحكم */
+
+        accountButton.href =
+            getDashboard(profile.role);
+
+
+        accountButton.textContent =
+            "👤 " + profile.full_name;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "خطأ في تحميل الحساب:",
+            error
+        );
+
+
+        accountButton.href =
+            "login.html";
+
+
+        accountButton.textContent =
+            "🔐 تسجيل الدخول";
+
+    }
+
+}
+
+
+/* =========================================
+   مراقبة تسجيل الدخول والخروج
+========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    () => {
+
+        updateAccountButton();
+
+    }
+);
+
+
+/* =========================================
+   تشغيل النظام
+========================================= */
+
+updateAccountButton();
+
+</script>
+
+
 </body>
+
 </html>
+```

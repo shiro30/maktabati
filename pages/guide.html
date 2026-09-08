@@ -1,43 +1,558 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>كيفية استخدام المكتبة | مكتبة الثانوية</title>
+```
+<title>كيفية استخدام المكتبة | مكتبة ثانوية مصاص رابح</title>
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
 
-    <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+    /* =========================================
+       هوية المؤسسة
+    ========================================= */
+
+    .institution-bar {
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .institution-bar strong {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .institution-bar span {
+        font-size: 13px;
+        opacity: 0.9;
+    }
+
+    /* =========================================
+       دليل الاستخدام
+    ========================================= */
+
+    .guide-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .guide-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .guide-intro {
+        text-align: center;
+    }
+
+    .guide-intro-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+
+    .guide-card h2 {
+        margin-top: 0;
+        color: #172033;
+    }
+
+    .guide-card p {
+        color: #64748b;
+        line-height: 2;
+    }
+
+    /* =========================================
+       خطوات الاستخدام
+    ========================================= */
+
+    .step-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .step-number {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        border-radius: 50%;
+        background: #1d4ed8;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 18px;
+    }
+
+    .step-card:nth-child(3) .step-number {
+        background: #1d4ed8;
+    }
+
+    .step-card:nth-child(5) .step-number {
+        background: #16a34a;
+    }
+
+    .step-card:nth-child(6) .step-number {
+        background: #f97316;
+    }
+
+    /* =========================================
+       هوية النظام
+    ========================================= */
+
+    .system-identity {
+        margin-top: 30px;
+        padding: 24px;
+        text-align: center;
+        background: linear-gradient(135deg, #f8fafc, #eff6ff);
+        border: 1px solid #dbeafe;
+        border-radius: 16px;
+    }
+
+    .system-identity strong {
+        display: block;
+        color: #1e3a8a;
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+
+    .system-identity span {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* =========================================
+       زر العودة
+    ========================================= */
+
+    .guide-back {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .guide-back .read-button {
+        display: inline-flex;
+        width: auto;
+        padding: 12px 30px;
+    }
+
+    /* =========================================
+       الهاتف
+    ========================================= */
+
+    @media (max-width: 768px) {
+
+        .institution-bar {
+            padding: 12px 10px;
+        }
+
+        .institution-bar strong {
+            font-size: 16px;
+        }
+
+        .institution-bar span {
+            font-size: 12px;
+        }
+
+        .guide-card {
+            padding: 22px;
+        }
+
+        .step-header {
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+        }
+
+    }
+</style>
+```
+
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+```
+<!-- =========================================
+     الشريط العلوي
+========================================= -->
 
-    <header class="navbar">
+<header class="navbar">
 
-        <div class="logo">
+    <div class="logo">
 
-            <div class="logo-icon">
-                📚
+        <div class="logo-icon">
+            📚
+        </div>
+
+        <div>
+
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
             </div>
 
-            <div>
-                <div class="logo-title">
-                    مكتبة الثانوية
-                </div>
+            <div class="logo-subtitle">
+                المكتبة الرقمية للمؤسسة
+            </div>
 
-                <div class="logo-subtitle">
-                    المكتبة الإلكترونية
-                </div>
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="../index.html">
+            الرئيسية
+        </a>
+
+        <a href="books.html">
+            الكتب
+        </a>
+
+        <a href="categories.html">
+            التصنيفات
+        </a>
+
+        <a href="about.html">
+            عن المكتبة
+        </a>
+
+        <a href="contact.html">
+            اتصل بنا
+        </a>
+
+        <a href="guide.html" class="active">
+            دليل الاستخدام
+        </a>
+
+    </nav>
+
+
+    <a href="login.html" class="login-btn">
+        تسجيل الدخول
+    </a>
+
+</header>
+
+
+<!-- =========================================
+     هوية المؤسسة
+========================================= -->
+
+<div class="institution-bar">
+
+    <strong>
+        🏫 ثانوية مصاص رابح
+    </strong>
+
+    <span>
+        المكتبة الرقمية للمؤسسة
+    </span>
+
+</div>
+
+
+<!-- =========================================
+     المحتوى الرئيسي
+========================================= -->
+
+<main>
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>
+                    دليل المستخدم
+                </span>
+
+                <h2>
+                    كيفية استخدام المكتبة
+                </h2>
+
+                <p>
+                    خطوات بسيطة للاستفادة من خدمات المكتبة الرقمية.
+                </p>
+
             </div>
 
         </div>
 
 
-        <nav>
+        <div class="guide-container">
+
+
+            <!-- =================================
+                 المقدمة
+            ================================== -->
+
+            <div class="guide-card guide-intro">
+
+                <div class="guide-intro-icon">
+                    📚
+                </div>
+
+                <h2>
+                    مرحبًا بك في مكتبة ثانوية مصاص رابح
+                </h2>
+
+                <p>
+                    توفر لك المكتبة الرقمية إمكانية الوصول إلى
+                    مجموعة من الكتب والمراجع التعليمية بطريقة
+                    سهلة ومنظمة.
+                    يمكنك البحث عن الكتب، تصفح التصنيفات،
+                    والاطلاع على الكتب المتوفرة مباشرة من الموقع.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 الخطوة 1
+            ================================== -->
+
+            <div class="guide-card step-card">
+
+                <div class="step-header">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h2>
+                        البحث عن كتاب
+                    </h2>
+
+                </div>
+
+                <p>
+                    استخدم قسم الكتب للبحث عن الكتاب الذي تريده.
+                    يمكنك الاستفادة من البحث للوصول إلى الكتب
+                    المناسبة حسب العنوان أو المعلومات المتوفرة عنها.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 الخطوة 2
+            ================================== -->
+
+            <div class="guide-card step-card">
+
+                <div class="step-header">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h2>
+                        تصفح الكتب
+                    </h2>
+
+                </div>
+
+                <p>
+                    من خلال قسم «الكتب» يمكنك مشاهدة الكتب الموجودة
+                    في المكتبة والاطلاع على عنوان الكتاب ومؤلفه
+                    وتصنيفه ووصفه.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 الخطوة 3
+            ================================== -->
+
+            <div class="guide-card step-card">
+
+                <div class="step-header">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h2>
+                        اختيار التصنيف
+                    </h2>
+
+                </div>
+
+                <p>
+                    يمكنك استخدام صفحة «التصنيفات» للوصول بسرعة
+                    إلى الكتب المتعلقة بمادة أو مجال معين، مثل
+                    الرياضيات والعلوم والإعلام الآلي واللغات.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 الخطوة 4
+            ================================== -->
+
+            <div class="guide-card step-card">
+
+                <div class="step-header">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <h2>
+                        قراءة الكتاب
+                    </h2>
+
+                </div>
+
+                <p>
+                    عندما يكون الكتاب متوفرًا بصيغة PDF، اضغط على
+                    «قراءة الكتاب» لفتح صفحة الكتاب، حيث يمكنك
+                    الاطلاع عليه مباشرة داخل الموقع.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 الخطوة 5
+            ================================== -->
+
+            <div class="guide-card step-card">
+
+                <div class="step-header">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <h2>
+                        التواصل مع إدارة المكتبة
+                    </h2>
+
+                </div>
+
+                <p>
+                    إذا واجهت مشكلة أو كان لديك اقتراح لتطوير
+                    المكتبة، يمكنك الانتقال إلى صفحة «اتصل بنا»
+                    لمعرفة وسائل التواصل المتاحة.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 هوية النظام
+            ================================== -->
+
+            <div class="system-identity">
+
+                <strong>
+                    🏫 مكتبة ثانوية مصاص رابح
+                </strong>
+
+                <span>
+                    مهندس النظام: شراف الدين بوردوسن —
+                    أستاذ مادة الرياضيات
+                </span>
+
+            </div>
+
+
+            <!-- =================================
+                 زر العودة
+            ================================== -->
+
+            <div class="guide-back">
+
+                <a
+                    href="../index.html"
+                    class="read-button"
+                >
+                    ← العودة إلى الصفحة الرئيسية
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================
+     التذييل
+========================================= -->
+
+<footer>
+
+    <div class="footer-content">
+
+
+        <!-- معلومات المكتبة -->
+
+        <div>
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <div class="logo-title">
+                        مكتبة ثانوية مصاص رابح
+                    </div>
+
+                    <div class="logo-subtitle">
+                        المكتبة الرقمية للمؤسسة
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+                منصة إلكترونية للقراءة والتعلم
+                والوصول إلى المعرفة.
+            </p>
+
+        </div>
+
+
+        <!-- روابط -->
+
+        <div class="footer-links">
+
+            <h3>
+                روابط
+            </h3>
 
             <a href="../index.html">
                 الرئيسية
@@ -55,470 +570,66 @@
                 عن المكتبة
             </a>
 
-        </nav>
-
-
-        <a href="login.html" class="login-btn">
-            تسجيل الدخول
-        </a>
-
-    </header>
-
-
-    <!-- ================= GUIDE ================= -->
-
-    <main>
-
-        <section class="section">
-
-            <div class="section-heading">
-
-                <div>
-
-                    <span>
-                        دليل المستخدم
-                    </span>
-
-                    <h2>
-                        كيفية استخدام المكتبة
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div style="
-                max-width: 900px;
-                margin: 0 auto;
-            ">
-
-
-                <!-- INTRODUCTION -->
-
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 30px;
-                    margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-                ">
-
-                    <div style="
-                        font-size: 42px;
-                        margin-bottom: 10px;
-                    ">
-                        📚
-                    </div>
-
-                    <h2 style="
-                        margin-top: 0;
-                        color: #172033;
-                    ">
-                        مرحبًا بك في مكتبة الثانوية
-                    </h2>
-
-                    <p style="
-                        color: #64748b;
-                        line-height: 2;
-                        margin-bottom: 0;
-                    ">
-                        توفر لك المكتبة الإلكترونية إمكانية الوصول
-                        إلى مجموعة من الكتب والمراجع التعليمية بطريقة
-                        سهلة ومنظمة. يمكنك البحث عن الكتب، تصفح
-                        التصنيفات، وقراءة الكتب المتوفرة مباشرة من الموقع.
-                    </p>
-
-                </div>
-
-
-                <!-- STEP 1 -->
-
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 30px;
-                    margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-                ">
-
-                    <div style="
-                        display: flex;
-                        align-items: center;
-                        gap: 15px;
-                        margin-bottom: 15px;
-                    ">
-
-                        <div style="
-                            width: 45px;
-                            height: 45px;
-                            border-radius: 50%;
-                            background: #1d4ed8;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: 800;
-                            font-size: 18px;
-                        ">
-                            1
-                        </div>
-
-                        <h2 style="
-                            margin: 0;
-                            color: #172033;
-                        ">
-                            البحث عن كتاب
-                        </h2>
-
-                    </div>
-
-                    <p style="
-                        color: #64748b;
-                        line-height: 1.9;
-                    ">
-                        استخدم مربع البحث الموجود في الصفحة الرئيسية
-                        للبحث عن كتاب أو مؤلف أو مادة. اكتب كلمة البحث
-                        ثم اضغط على زر «بحث» للوصول إلى النتائج المناسبة.
-                    </p>
-
-                </div>
-
-
-                <!-- STEP 2 -->
-
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 30px;
-                    margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-                ">
-
-                    <div style="
-                        display: flex;
-                        align-items: center;
-                        gap: 15px;
-                        margin-bottom: 15px;
-                    ">
-
-                        <div style="
-                            width: 45px;
-                            height: 45px;
-                            border-radius: 50%;
-                            background: #1d4ed8;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: 800;
-                            font-size: 18px;
-                        ">
-                            2
-                        </div>
-
-                        <h2 style="
-                            margin: 0;
-                            color: #172033;
-                        ">
-                            تصفح الكتب
-                        </h2>
-
-                    </div>
-
-                    <p style="
-                        color: #64748b;
-                        line-height: 1.9;
-                    ">
-                        من خلال قسم «الكتب» يمكنك مشاهدة الكتب الموجودة
-                        في المكتبة والاطلاع على عنوان الكتاب ومؤلفه
-                        وتصنيفه ووصفه.
-                    </p>
-
-                </div>
-
-
-                <!-- STEP 3 -->
-
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 30px;
-                    margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-                ">
-
-                    <div style="
-                        display: flex;
-                        align-items: center;
-                        gap: 15px;
-                        margin-bottom: 15px;
-                    ">
-
-                        <div style="
-                            width: 45px;
-                            height: 45px;
-                            border-radius: 50%;
-                            background: #1d4ed8;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: 800;
-                            font-size: 18px;
-                        ">
-                            3
-                        </div>
-
-                        <h2 style="
-                            margin: 0;
-                            color: #172033;
-                        ">
-                            اختيار التصنيف
-                        </h2>
-
-                    </div>
-
-                    <p style="
-                        color: #64748b;
-                        line-height: 1.9;
-                    ">
-                        يمكنك استخدام صفحة «التصنيفات» للوصول بسرعة
-                        إلى الكتب المتعلقة بمادة أو مجال معين مثل
-                        الرياضيات والعلوم والإعلام الآلي واللغات.
-                    </p>
-
-                </div>
-
-
-                <!-- STEP 4 -->
-
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 30px;
-                    margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-                ">
-
-                    <div style="
-                        display: flex;
-                        align-items: center;
-                        gap: 15px;
-                        margin-bottom: 15px;
-                    ">
-
-                        <div style="
-                            width: 45px;
-                            height: 45px;
-                            border-radius: 50%;
-                            background: #16a34a;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: 800;
-                            font-size: 18px;
-                        ">
-                            4
-                        </div>
-
-                        <h2 style="
-                            margin: 0;
-                            color: #172033;
-                        ">
-                            قراءة الكتاب
-                        </h2>
-
-                    </div>
-
-                    <p style="
-                        color: #64748b;
-                        line-height: 1.9;
-                    ">
-                        عندما يكون الكتاب متوفرًا بصيغة PDF، اضغط على
-                        «قراءة الكتاب» لفتح صفحة الكتاب، حيث يمكنك
-                        الاطلاع عليه مباشرة داخل الموقع.
-                    </p>
-
-                </div>
-
-
-                <!-- STEP 5 -->
-
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 30px;
-                    margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-                ">
-
-                    <div style="
-                        display: flex;
-                        align-items: center;
-                        gap: 15px;
-                        margin-bottom: 15px;
-                    ">
-
-                        <div style="
-                            width: 45px;
-                            height: 45px;
-                            border-radius: 50%;
-                            background: #f97316;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: 800;
-                            font-size: 18px;
-                        ">
-                            5
-                        </div>
-
-                        <h2 style="
-                            margin: 0;
-                            color: #172033;
-                        ">
-                            التواصل مع إدارة المكتبة
-                        </h2>
-
-                    </div>
-
-                    <p style="
-                        color: #64748b;
-                        line-height: 1.9;
-                    ">
-                        إذا واجهت مشكلة أو كان لديك اقتراح لتطوير
-                        المكتبة، يمكنك الانتقال إلى صفحة «اتصل بنا»
-                        لمعرفة وسائل التواصل المتاحة.
-                    </p>
-
-                </div>
-
-
-                <!-- BACK BUTTON -->
-
-                <div style="
-                    text-align: center;
-                    margin-top: 30px;
-                ">
-
-                    <a
-                        href="../index.html"
-                        class="read-button"
-                        style="
-                            display: inline-flex;
-                            width: auto;
-                            padding: 12px 30px;
-                        "
-                    >
-                        ← العودة إلى الصفحة الرئيسية
-                    </a>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer>
-
-        <div class="footer-content">
-
-            <div>
-
-                <div class="logo">
-
-                    <div class="logo-icon">
-                        📚
-                    </div>
-
-                    <div>
-
-                        <div class="logo-title">
-                            مكتبة الثانوية
-                        </div>
-
-                        <div class="logo-subtitle">
-                            المكتبة الإلكترونية
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <p>
-                    منصة إلكترونية للقراءة والتعلم
-                    والوصول إلى المعرفة.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>
-                    روابط
-                </h3>
-
-                <a href="../index.html">
-                    الرئيسية
-                </a>
-
-                <a href="books.html">
-                    الكتب
-                </a>
-
-                <a href="categories.html">
-                    التصنيفات
-                </a>
-
-                <a href="about.html">
-                    عن المكتبة
-                </a>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>
-                    المساعدة
-                </h3>
-
-                <a href="guide.html">
-                    كيفية استخدام المكتبة
-                </a>
-
-                <a href="contact.html">
-                    اتصل بنا
-                </a>
-
-            </div>
+            <a href="contact.html">
+                اتصل بنا
+            </a>
 
         </div>
 
 
-        <div class="copyright">
+        <!-- المساعدة -->
 
-            © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+        <div class="footer-links">
+
+            <h3>
+                المساعدة
+            </h3>
+
+            <a href="guide.html">
+                كيفية استخدام المكتبة
+            </a>
+
+            <a href="contact.html">
+                اتصل بنا
+            </a>
 
         </div>
 
-    </footer>
+    </div>
+
+
+    <!-- =================================
+         حقوق وهوية النظام
+    ================================== -->
+
+    <div class="copyright">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <br>
+
+        مكتبة الثانوية الرقمية
+
+        <br>
+
+        <span style="font-size:13px;">
+
+            مهندس النظام:
+            شراف الدين بوردوسن —
+            أستاذ مادة الرياضيات
+
+        </span>
+
+        <br><br>
+
+        © 2026 — جميع الحقوق محفوظة
+
+    </div>
+
+</footer>
+```
 
 </body>
 

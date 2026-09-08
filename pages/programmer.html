@@ -1,0 +1,2255 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>لوحة المبرمج | مكتبة ثانوية مصاص رابح</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Cairo", sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .programmer-header {
+            background: linear-gradient(135deg, #0b1f3a, #173b8f);
+            color: white;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .programmer-nav {
+            width: 86%;
+            max-width: 1200px;
+            margin: auto;
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .programmer-logo {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .programmer-logo span {
+            display: block;
+            font-size: 11px;
+            font-weight: 500;
+            opacity: 0.82;
+            margin-top: 2px;
+        }
+
+        .programmer-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .programmer-nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .programmer-nav-links a:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .account-button {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 9px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .account-button:hover {
+            background: rgba(255, 255, 255, 0.23);
+        }
+
+        /* =========================================
+           INSTITUTION BAR
+        ========================================= */
+
+        .institution-bar {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            text-align: center;
+            padding: 13px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        .institution-bar strong {
+            display: block;
+            font-size: 17px;
+            margin-bottom: 3px;
+        }
+
+        .institution-bar span {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        .dashboard {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto 60px;
+            min-height: 65vh;
+        }
+
+        #pageMessage {
+            text-align: center;
+            padding: 50px 20px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        #pageMessage.error {
+            color: #b91c1c;
+        }
+
+        /* =========================================
+           WELCOME
+        ========================================= */
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #111827, #173b8f);
+            color: white;
+            padding: 35px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(23, 59, 143, 0.16);
+        }
+
+        .dashboard-header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .dashboard-header p {
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.9;
+        }
+
+        #userInfo {
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .system-identity {
+            margin-top: 20px;
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
+            line-height: 1.9;
+        }
+
+        .system-identity strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .system-identity span {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+
+        /* =========================================
+           QUICK STATS
+        ========================================= */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: background 0.3s ease, border 0.3s ease;
+        }
+
+        .stat-icon {
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #eef4ff;
+            font-size: 27px;
+            flex-shrink: 0;
+        }
+
+        .stat-number {
+            font-size: 27px;
+            font-weight: 800;
+            color: #173b8f;
+        }
+
+        .stat-title {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* =========================================
+           DASHBOARD GRID
+        ========================================= */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            transition:
+                transform 0.2s,
+                background 0.3s ease,
+                border 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
+        }
+
+        .card-icon {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .dashboard-card h2 {
+            margin: 0 0 9px;
+            color: #0b1f3a;
+            font-size: 20px;
+        }
+
+        .dashboard-card p {
+            color: #64748b;
+            line-height: 1.9;
+            min-height: 58px;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .dashboard-button {
+            display: inline-block;
+            padding: 10px 17px;
+            border-radius: 8px;
+            background: #1d4ed8;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .dashboard-button:hover {
+            background: #173b8f;
+        }
+
+        .secondary-button {
+            background: #475569;
+        }
+
+        .secondary-button:hover {
+            background: #334155;
+        }
+
+        .danger-button {
+            background: #dc2626;
+            border: none;
+            color: white;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .danger-button:hover {
+            background: #b91c1c;
+        }
+
+        .danger-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* =========================================
+           BOTTOM ACTIONS
+        ========================================= */
+
+        .bottom-actions {
+            margin-top: 30px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .bottom-actions h3 {
+            margin: 0 0 5px;
+            color: #0b1f3a;
+        }
+
+        .bottom-actions p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* =========================================
+           SETTINGS MODAL
+        ========================================= */
+
+        .settings-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .settings-overlay.active {
+            display: flex;
+        }
+
+        .settings-modal {
+            width: 100%;
+            max-width: 520px;
+            background: white;
+            color: #172033;
+            border-radius: 18px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: settingsOpen 0.25s ease;
+        }
+
+        @keyframes settingsOpen {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .settings-header {
+            padding: 22px 25px;
+            background: linear-gradient(135deg, #0b1f3a, #173b8f);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .settings-header h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .settings-close {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            color: white;
+            font-size: 21px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .settings-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .settings-body {
+            padding: 25px;
+        }
+
+        .setting-item {
+            padding: 18px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .setting-description {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .setting-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .setting-option {
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: #334155;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .setting-option:hover {
+            border-color: #1d4ed8;
+            color: #1d4ed8;
+        }
+
+        .setting-option.active {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: white;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .toggle {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            display: none;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #cbd5e1;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            top: 3px;
+            right: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.25s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle input:checked + .toggle-slider {
+            background: #1d4ed8;
+        }
+
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(-24px);
+        }
+
+        .settings-footer {
+            padding: 18px 25px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .reset-button {
+            border: none;
+            background: #64748b;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+        }
+
+        .reset-button:hover {
+            background: #475569;
+        }
+
+        .close-settings-button {
+            border: none;
+            background: #1d4ed8;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+        }
+
+        /* =========================================
+           DARK MODE
+        ========================================= */
+
+        body.dark-mode {
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .stat-card,
+        body.dark-mode .dashboard-card,
+        body.dark-mode .bottom-actions {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        body.dark-mode .dashboard-card h2,
+        body.dark-mode .bottom-actions h3 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .stat-title,
+        body.dark-mode .dashboard-card p,
+        body.dark-mode .bottom-actions p {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .stat-icon {
+            background: #263b63;
+        }
+
+        body.dark-mode .settings-modal {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .setting-item {
+            border-color: #334155;
+        }
+
+        body.dark-mode .setting-description {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .setting-option {
+            background: #0f172a;
+            color: #cbd5e1;
+            border-color: #475569;
+        }
+
+        body.dark-mode .settings-footer {
+            background: #0f172a;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .programmer-footer {
+            background: #0b1f3a;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .programmer-footer strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+
+        .programmer-footer span {
+            opacity: 0.85;
+            font-size: 12px;
+        }
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1000px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .programmer-nav {
+                width: 92%;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .programmer-nav {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+
+            .programmer-nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard {
+                width: 92%;
+            }
+
+            .dashboard-header {
+                padding: 25px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 25px;
+            }
+
+            .bottom-actions {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .bottom-actions button {
+                width: 100%;
+            }
+
+            .settings-modal {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="programmer-header">
+
+        <div class="programmer-nav">
+
+            <a
+                href="../index.html"
+                class="programmer-logo"
+            >
+                📚 مكتبة ثانوية مصاص رابح
+
+                <span>
+                    المكتبة الرقمية للمؤسسة
+                </span>
+            </a>
+
+            <nav class="programmer-nav-links">
+
+                <a href="../index.html">
+                    الرئيسية
+                </a>
+
+                <a href="books.html">
+                    الكتب
+                </a>
+
+                <a href="categories.html">
+                    التصنيفات
+                </a>
+
+                <a href="about.html">
+                    عن المكتبة
+                </a>
+
+                <a href="contact.html">
+                    اتصل بنا
+                </a>
+
+                <a href="guide.html">
+                    دليل الاستخدام
+                </a>
+
+            </nav>
+
+            <a
+                href="programmer.html"
+                class="account-button"
+                id="accountButton"
+            >
+                👤 المبرمج
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- INSTITUTION -->
+
+    <div class="institution-bar">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <span>
+            مهندس النظام: شراف الدين بوردوسن — أستاذ مادة الرياضيات
+        </span>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard">
+
+        <div id="pageMessage">
+            جار التحقق من صلاحيات الحساب...
+        </div>
+
+
+        <div
+            id="dashboardContent"
+            style="display: none;"
+        >
+
+            <!-- WELCOME -->
+
+            <section class="dashboard-header">
+
+                <h1>
+                    👨‍💻 لوحة المبرمج
+                </h1>
+
+                <p>
+                    مرحبًا بك في لوحة التحكم الرئيسية
+                    لنظام مكتبة ثانوية مصاص رابح.
+                </p>
+
+                <div id="userInfo"></div>
+
+                <div class="system-identity">
+
+                    <strong>
+                        🏫 ثانوية مصاص رابح
+                    </strong>
+
+                    <span>
+                        النظام من تطوير مهندس النظام
+                        شراف الدين بوردوسن — أستاذ مادة الرياضيات.
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📚
+                    </div>
+
+                    <div>
+
+                        <div
+                            class="stat-number"
+                            id="booksCount"
+                        >
+                            -
+                        </div>
+
+                        <div class="stat-title">
+                            الكتب الموجودة
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <div
+                            class="stat-number"
+                            id="usersCount"
+                        >
+                            -
+                        </div>
+
+                        <div class="stat-title">
+                            حسابات المستخدمين
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <div class="stat-number">
+                            4
+                        </div>
+
+                        <div class="stat-title">
+                            مستويات الصلاحيات
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- DASHBOARD CARDS -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- ACCOUNT MANAGEMENT -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">
+                        👥
+                    </div>
+
+                    <h2>
+                        إدارة الحسابات
+                    </h2>
+
+                    <p>
+                        إنشاء وتعديل وحذف حسابات المديرين
+                        والأساتذة والطلاب، وإدارة الصلاحيات.
+                    </p>
+
+                    <a
+                        href="manage-users.html"
+                        class="dashboard-button"
+                    >
+                        👥 إدارة الحسابات
+                    </a>
+
+                </div>
+
+
+                <!-- BOOK LIBRARY -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">
+                        📚
+                    </div>
+
+                    <h2>
+                        مكتبة الكتب
+                    </h2>
+
+                    <p>
+                        عرض جميع الكتب الموجودة في قاعدة البيانات
+                        وفتح صفحات الكتب وقراءتها.
+                    </p>
+
+                    <a
+                        href="books.html"
+                        class="dashboard-button"
+                    >
+                        📚 عرض الكتب
+                    </a>
+
+                </div>
+
+
+                <!-- ADD BOOK -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">
+                        ➕
+                    </div>
+
+                    <h2>
+                        إضافة كتاب
+                    </h2>
+
+                    <p>
+                        رفع كتاب جديد بصيغة PDF وإضافته
+                        إلى المكتبة الإلكترونية.
+                    </p>
+
+                    <a
+                        href="add-book.html"
+                        class="dashboard-button"
+                    >
+                        ➕ إضافة كتاب
+                    </a>
+
+                </div>
+
+
+                <!-- STUDENTS -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">
+                        🎓
+                    </div>
+
+                    <h2>
+                        حسابات الطلاب
+                    </h2>
+
+                    <p>
+                        الوصول إلى إدارة الحسابات لمتابعة
+                        حسابات الطلاب وصلاحياتهم.
+                    </p>
+
+                    <a
+                        href="manage-users.html"
+                        class="dashboard-button"
+                    >
+                        👥 إدارة الطلاب
+                    </a>
+
+                </div>
+
+
+                <!-- GOOGLE DRIVE -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">
+                        ☁️
+                    </div>
+
+                    <h2>
+                        التخزين السحابي
+                    </h2>
+
+                    <p>
+                        التخزين السحابي المستخدم لحفظ
+                        ملفات الكتب الإلكترونية.
+                    </p>
+
+                    <a
+                        href="https://drive.google.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="dashboard-button"
+                    >
+                        ☁️ فتح التخزين السحابي
+                    </a>
+
+                </div>
+
+
+                <!-- SETTINGS -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">
+                        ⚙️
+                    </div>
+
+                    <h2>
+                        إعدادات النظام
+                    </h2>
+
+                    <p>
+                        تخصيص المظهر وصوت النقر
+                        وإعدادات واجهة النظام.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="dashboard-button secondary-button"
+                        id="settingsButton"
+                    >
+                        ⚙️ إعدادات النظام
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- BOTTOM ACTIONS -->
+
+            <section class="bottom-actions">
+
+                <div>
+
+                    <h3>
+                        🔐 جلسة المبرمج
+                    </h3>
+
+                    <p>
+                        أنت مسجل الدخول بصلاحية المبرمج
+                        ويمكنك إدارة النظام بالكامل.
+                    </p>
+
+                </div>
+
+                <button
+                    id="logoutButton"
+                    class="danger-button"
+                >
+                    🚪 تسجيل الخروج
+                </button>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- SETTINGS MODAL -->
+
+    <div
+        class="settings-overlay"
+        id="settingsOverlay"
+    >
+
+        <div
+            class="settings-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="settingsTitle"
+        >
+
+            <div class="settings-header">
+
+                <h2 id="settingsTitle">
+                    ⚙️ إعدادات النظام
+                </h2>
+
+                <button
+                    type="button"
+                    class="settings-close"
+                    id="settingsClose"
+                    aria-label="إغلاق"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="settings-body">
+
+                <!-- THEME -->
+
+                <div class="setting-item">
+
+                    <div class="setting-title">
+                        🎨 المظهر
+                    </div>
+
+                    <div class="setting-description">
+                        اختر بين الوضع الفاتح والوضع الداكن.
+                    </div>
+
+                    <div class="setting-options">
+
+                        <button
+                            type="button"
+                            class="setting-option theme-option"
+                            data-theme="light"
+                        >
+                            ☀️ فاتح
+                        </button>
+
+                        <button
+                            type="button"
+                            class="setting-option theme-option"
+                            data-theme="dark"
+                        >
+                            🌙 داكن
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SOUND -->
+
+                <div class="setting-item">
+
+                    <div class="toggle-row">
+
+                        <div>
+
+                            <div class="setting-title">
+                                🔊 صوت النقر
+                            </div>
+
+                            <div class="setting-description">
+                                تشغيل صوت خفيف عند الضغط على الأزرار.
+                            </div>
+
+                        </div>
+
+
+                        <label class="toggle">
+
+                            <input
+                                type="checkbox"
+                                id="clickSoundToggle"
+                            >
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-footer">
+
+                <button
+                    type="button"
+                    class="reset-button"
+                    id="resetSettingsButton"
+                >
+                    🔄 إعادة الافتراضي
+                </button>
+
+                <button
+                    type="button"
+                    class="close-settings-button"
+                    id="closeSettingsButton"
+                >
+                    ✓ حفظ وإغلاق
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="programmer-footer">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <span>
+            مكتبة الثانوية الرقمية
+        </span>
+
+        <br>
+
+        <span>
+            مهندس النظام: شراف الدين بوردوسن — أستاذ مادة الرياضيات
+        </span>
+
+        <br>
+
+        <span>
+            © 2026 — جميع الحقوق محفوظة
+        </span>
+
+    </footer>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+        /* =========================================
+           SUPABASE
+        ========================================= */
+
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+        /*
+            مهم:
+            اترك مفتاح Supabase الحالي الموجود
+            في ملفك كما هو.
+        */
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        /* =========================================
+           ELEMENTS
+        ========================================= */
+
+        const pageMessage =
+            document.getElementById("pageMessage");
+
+        const dashboardContent =
+            document.getElementById("dashboardContent");
+
+        const userInfo =
+            document.getElementById("userInfo");
+
+        const logoutButton =
+            document.getElementById("logoutButton");
+
+        const accountButton =
+            document.getElementById("accountButton");
+
+        const booksCount =
+            document.getElementById("booksCount");
+
+        const usersCount =
+            document.getElementById("usersCount");
+
+
+        /* =========================================
+           SETTINGS ELEMENTS
+        ========================================= */
+
+        const settingsButton =
+            document.getElementById("settingsButton");
+
+        const settingsOverlay =
+            document.getElementById("settingsOverlay");
+
+        const settingsClose =
+            document.getElementById("settingsClose");
+
+        const closeSettingsButton =
+            document.getElementById("closeSettingsButton");
+
+        const resetSettingsButton =
+            document.getElementById("resetSettingsButton");
+
+        const clickSoundToggle =
+            document.getElementById("clickSoundToggle");
+
+        const themeOptions =
+            document.querySelectorAll(".theme-option");
+
+
+        /* =========================================
+           DEFAULT SETTINGS
+        ========================================= */
+
+        const DEFAULT_SETTINGS = {
+            theme: "light",
+            clickSound: true
+        };
+
+
+        /* =========================================
+           GET SETTINGS
+        ========================================= */
+
+        function getSettings() {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(
+                        "maktabati_settings"
+                    );
+
+                if (!saved) {
+
+                    return {
+                        ...DEFAULT_SETTINGS
+                    };
+
+                }
+
+                const parsed =
+                    JSON.parse(saved);
+
+                return {
+                    ...DEFAULT_SETTINGS,
+                    ...parsed
+                };
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في قراءة الإعدادات:",
+                    error
+                );
+
+                return {
+                    ...DEFAULT_SETTINGS
+                };
+
+            }
+
+        }
+
+
+        /* =========================================
+           SAVE SETTINGS
+        ========================================= */
+
+        function saveSettings(settings) {
+
+            localStorage.setItem(
+                "maktabati_settings",
+                JSON.stringify(settings)
+            );
+
+        }
+
+
+        /* =========================================
+           APPLY THEME
+        ========================================= */
+
+        function applyTheme(theme) {
+
+            if (theme === "dark") {
+
+                document.body.classList.add(
+                    "dark-mode"
+                );
+
+            }
+
+            else {
+
+                document.body.classList.remove(
+                    "dark-mode"
+                );
+
+            }
+
+
+            themeOptions.forEach(
+                function(button) {
+
+                    button.classList.toggle(
+                        "active",
+                        button.dataset.theme === theme
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           APPLY SETTINGS
+        ========================================= */
+
+        function applySettings() {
+
+            const settings =
+                getSettings();
+
+            applyTheme(
+                settings.theme
+            );
+
+            clickSoundToggle.checked =
+                settings.clickSound;
+
+        }
+
+
+        /* =========================================
+           OPEN SETTINGS
+        ========================================= */
+
+        function openSettings() {
+
+            settingsOverlay.classList.add(
+                "active"
+            );
+
+        }
+
+
+        /* =========================================
+           CLOSE SETTINGS
+        ========================================= */
+
+        function closeSettings() {
+
+            settingsOverlay.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        /* =========================================
+           CHANGE THEME
+        ========================================= */
+
+        themeOptions.forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const settings =
+                            getSettings();
+
+                        settings.theme =
+                            button.dataset.theme;
+
+                        saveSettings(
+                            settings
+                        );
+
+                        applyTheme(
+                            settings.theme
+                        );
+
+                        playClickSound();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =========================================
+           CLICK SOUND
+        ========================================= */
+
+        clickSoundToggle.addEventListener(
+            "change",
+            function() {
+
+                const settings =
+                    getSettings();
+
+                settings.clickSound =
+                    clickSoundToggle.checked;
+
+                saveSettings(
+                    settings
+                );
+
+            }
+        );
+
+
+        /* =========================================
+           RESET SETTINGS
+        ========================================= */
+
+        resetSettingsButton.addEventListener(
+            "click",
+            function() {
+
+                saveSettings(
+                    {
+                        ...DEFAULT_SETTINGS
+                    }
+                );
+
+                applySettings();
+
+                playClickSound();
+
+            }
+        );
+
+
+        /* =========================================
+           CLICK SOUND ENGINE
+        ========================================= */
+
+        let audioContext = null;
+
+
+        function playClickSound() {
+
+            const settings =
+                getSettings();
+
+            if (!settings.clickSound) {
+                return;
+            }
+
+            try {
+
+                if (!audioContext) {
+
+                    audioContext =
+                        new (
+                            window.AudioContext ||
+                            window.webkitAudioContext
+                        )();
+
+                }
+
+
+                if (
+                    audioContext.state ===
+                    "suspended"
+                ) {
+
+                    audioContext.resume();
+
+                }
+
+
+                const oscillator =
+                    audioContext.createOscillator();
+
+                const gainNode =
+                    audioContext.createGain();
+
+
+                oscillator.type =
+                    "sine";
+
+                oscillator.frequency.value =
+                    520;
+
+
+                gainNode.gain.setValueAtTime(
+                    0.0001,
+                    audioContext.currentTime
+                );
+
+
+                gainNode.gain.exponentialRampToValueAtTime(
+                    0.045,
+                    audioContext.currentTime + 0.01
+                );
+
+
+                gainNode.gain.exponentialRampToValueAtTime(
+                    0.0001,
+                    audioContext.currentTime + 0.08
+                );
+
+
+                oscillator.connect(
+                    gainNode
+                );
+
+                gainNode.connect(
+                    audioContext.destination
+                );
+
+
+                oscillator.start();
+
+
+                oscillator.stop(
+                    audioContext.currentTime + 0.08
+                );
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "الصوت غير متاح."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           ADD CLICK SOUND
+        ========================================= */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                const target =
+                    event.target.closest(
+                        "button, a"
+                    );
+
+                if (!target) {
+                    return;
+                }
+
+
+                if (
+                    target ===
+                    clickSoundToggle
+                ) {
+                    return;
+                }
+
+
+                playClickSound();
+
+            }
+        );
+
+
+        /* =========================================
+           SETTINGS EVENTS
+        ========================================= */
+
+        settingsButton.addEventListener(
+            "click",
+            openSettings
+        );
+
+
+        settingsClose.addEventListener(
+            "click",
+            closeSettings
+        );
+
+
+        closeSettingsButton.addEventListener(
+            "click",
+            closeSettings
+        );
+
+
+        settingsOverlay.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    settingsOverlay
+                ) {
+
+                    closeSettings();
+
+                }
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeSettings();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           DASHBOARD URL BY ROLE
+        ========================================= */
+
+        function getDashboard(role) {
+
+            if (role === "programmer") {
+                return "programmer.html";
+            }
+
+            if (role === "admin") {
+                return "admin.html";
+            }
+
+            if (role === "teacher") {
+                return "teacher.html";
+            }
+
+            if (role === "student") {
+                return "student.html";
+            }
+
+            return "login.html";
+
+        }
+
+
+        /* =========================================
+           ACCOUNT BUTTON
+        ========================================= */
+
+        async function updateAccountButton() {
+
+            try {
+
+                const {
+                    data: {
+                        session
+                    }
+                } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
+
+
+                if (!session) {
+
+                    accountButton.textContent =
+                        "🔐 تسجيل الدخول";
+
+                    accountButton.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                const {
+                    data: profile,
+                    error
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select("full_name, role")
+                        .eq(
+                            "id",
+                            session.user.id
+                        )
+                        .single();
+
+
+                if (
+                    error ||
+                    !profile
+                ) {
+
+                    accountButton.textContent =
+                        "🔐 تسجيل الدخول";
+
+                    accountButton.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                accountButton.textContent =
+                    "👤 " +
+                    (
+                        profile.full_name ||
+                        "المبرمج"
+                    );
+
+
+                accountButton.href =
+                    getDashboard(
+                        profile.role
+                    );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في زر الحساب:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           CHECK PROGRAMMER
+        ========================================= */
+
+        async function checkProgrammer() {
+
+            try {
+
+                const {
+                    data: {
+                        user
+                    },
+                    error: userError
+                } =
+                    await supabaseClient
+                        .auth
+                        .getUser();
+
+
+                if (
+                    userError ||
+                    !user
+                ) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select(
+                            "id, full_name, role"
+                        )
+                        .eq(
+                            "id",
+                            user.id
+                        )
+                        .single();
+
+
+                if (
+                    profileError ||
+                    !profile
+                ) {
+
+                    pageMessage.className =
+                        "error";
+
+                    pageMessage.textContent =
+                        "تعذر العثور على بيانات الحساب.";
+
+                    return;
+
+                }
+
+
+                if (
+                    profile.role !==
+                    "programmer"
+                ) {
+
+                    window.location.href =
+                        getDashboard(
+                            profile.role
+                        );
+
+                    return;
+
+                }
+
+
+                pageMessage.style.display =
+                    "none";
+
+                dashboardContent.style.display =
+                    "block";
+
+
+                const name =
+                    profile.full_name ||
+                    "المبرمج";
+
+
+                userInfo.textContent =
+                    "الحساب: " +
+                    name +
+                    " — الصلاحية: المبرمج";
+
+
+                accountButton.textContent =
+                    "👤 " + name;
+
+
+                accountButton.href =
+                    "programmer.html";
+
+
+                await loadStatistics();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في التحقق من المبرمج:",
+                    error
+                );
+
+
+                pageMessage.className =
+                    "error";
+
+
+                pageMessage.textContent =
+                    "حدث خطأ أثناء التحقق من الحساب.";
+
+            }
+
+        }
+
+
+        /* =========================================
+           STATISTICS
+        ========================================= */
+
+        async function loadStatistics() {
+
+            try {
+
+                const booksResponse =
+                    await fetch(
+                        "/api/books"
+                    );
+
+
+                if (
+                    booksResponse.ok
+                ) {
+
+                    const booksData =
+                        await booksResponse.json();
+
+
+                    if (
+                        booksData.success &&
+                        Array.isArray(
+                            booksData.books
+                        )
+                    ) {
+
+                        booksCount.textContent =
+                            booksData.books.length;
+
+                    }
+
+                    else {
+
+                        booksCount.textContent =
+                            "0";
+
+                    }
+
+                }
+
+                else {
+
+                    booksCount.textContent =
+                        "—";
+
+                }
+
+
+                const {
+                    data: {
+                        session
+                    }
+                } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
+
+
+                if (session) {
+
+                    const response =
+                        await fetch(
+                            "/api/admin/users",
+                            {
+                                method: "GET",
+
+                                headers: {
+                                    "Authorization":
+                                        "Bearer " +
+                                        session.access_token
+                                }
+                            }
+                        );
+
+
+                    if (
+                        response.ok
+                    ) {
+
+                        const result =
+                            await response.json();
+
+
+                        if (
+                            result.success &&
+                            Array.isArray(
+                                result.users
+                            )
+                        ) {
+
+                            usersCount.textContent =
+                                result.users.length;
+
+                        }
+
+                        else {
+
+                            usersCount.textContent =
+                                "0";
+
+                        }
+
+                    }
+
+                    else {
+
+                        usersCount.textContent =
+                            "—";
+
+                    }
+
+                }
+
+                else {
+
+                    usersCount.textContent =
+                        "—";
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في الإحصائيات:",
+                    error
+                );
+
+                booksCount.textContent =
+                    "—";
+
+                usersCount.textContent =
+                    "—";
+
+            }
+
+        }
+
+
+        /* =========================================
+           LOGOUT
+        ========================================= */
+
+        logoutButton.addEventListener(
+            "click",
+            async function() {
+
+                logoutButton.disabled =
+                    true;
+
+                logoutButton.textContent =
+                    "⏳ جار تسجيل الخروج...";
+
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+
+                if (error) {
+
+                    console.error(
+                        "خطأ في تسجيل الخروج:",
+                        error
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+
+                    logoutButton.textContent =
+                        "🚪 تسجيل الخروج";
+
+                    return;
+
+                }
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+        /* =========================================
+           AUTH STATE
+        ========================================= */
+
+        supabaseClient
+            .auth
+            .onAuthStateChange(
+                function() {
+
+                    updateAccountButton();
+
+                }
+            );
+
+
+        /* =========================================
+           INITIALIZE
+        ========================================= */
+
+        applySettings();
+
+        updateAccountButton();
+
+        checkProgrammer();
+
+    </script>
+
+</body>
+
+</html>
+```

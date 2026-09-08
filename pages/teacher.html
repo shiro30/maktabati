@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة الأستاذ | المكتبة الإلكترونية - ثانوية مصاص رابح</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Cairo", sans-serif;
+        background: #f4f7fb;
+        color: #172033;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+        background: linear-gradient(135deg, #071b35, #0d3b70);
+        color: white;
+        padding: 18px 6%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .brand-icon {
+        width: 54px;
+        height: 54px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 27px;
+        flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .brand-text p {
+        color: #c8d9ec;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .brand-text small {
+        display: block;
+        color: #dbe9f8;
+        font-size: 10px;
+        margin-top: 3px;
+    }
+
+    .top-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .user-name {
+        color: #e1ebf7;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .logout {
+        border: none;
+        background: #b42318;
+        color: white;
+        padding: 9px 16px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 700;
+        transition: 0.2s;
+    }
+
+    .logout:hover {
+        background: #8f1d14;
+        transform: translateY(-1px);
+    }
+
+    .dashboard-back {
+        display: none;
+        color: white;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.14);
+        padding: 9px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .dashboard-back:hover {
+        background: rgba(255, 255, 255, 0.24);
+    }
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+        width: 92%;
+        max-width: 1200px;
+        margin: 38px auto 60px;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #1264c4;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .back:hover {
+        text-decoration: underline;
+    }
+
+    /* =========================
+       WELCOME
+    ========================= */
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+        margin-bottom: 8px;
+        color: #0b1f3a;
+        font-weight: 800;
+    }
+
+    .welcome p {
+        color: #667085;
+        line-height: 1.9;
+    }
+
+    .official-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding: 7px 13px;
+        border-radius: 30px;
+        background: #eaf3ff;
+        color: #1264c4;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid #d5e7fb;
+    }
+
+    /* =========================
+       DASHBOARD CARDS
+    ========================= */
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-bottom: 35px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(20, 40, 70, 0.07);
+        border: 1px solid #e7ecf3;
+        transition: 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 27px rgba(20, 40, 70, 0.10);
+        border-color: #dbe8f7;
+    }
+
+    .card-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 13px;
+        background: #edf5ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+
+    .card h3 {
+        color: #0b1f3a;
+        margin-bottom: 7px;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .card p {
+        color: #667085;
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    .section {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(20, 40, 70, 0.07);
+        margin-bottom: 30px;
+        border: 1px solid #edf1f6;
+    }
+
+    .section h2 {
+        color: #0b1f3a;
+        margin-bottom: 25px;
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-weight: 600;
+        color: #344054;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        outline: none;
+        background: white;
+        transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #1769aa;
+        box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.1);
+    }
+
+    textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .upload-box {
+        border: 2px dashed #b8c5d6;
+        border-radius: 10px;
+        padding: 25px;
+        text-align: center;
+        background: #f8fafc;
+        transition: 0.2s;
+    }
+
+    .upload-box:hover {
+        border-color: #1769aa;
+        background: #f4f9ff;
+    }
+
+    .upload-box p {
+        color: #667085;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .upload-box input {
+        border: none;
+        padding: 5px;
+        background: transparent;
+    }
+
+    .btn {
+        margin-top: 22px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        background: #1769aa;
+        color: white;
+        font-family: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.2s;
+    }
+
+    .btn:hover {
+        background: #12578e;
+        transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
+    .message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        display: none;
+        line-height: 1.8;
+    }
+
+    .success {
+        display: block;
+        background: #ecfdf3;
+        color: #067647;
+    }
+
+    .error {
+        display: block;
+        background: #fef3f2;
+        color: #b42318;
+    }
+
+    /* =========================
+       BOOKS TABLE
+    ========================= */
+
+    .books-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .books-table th,
+    .books-table td {
+        padding: 13px;
+        text-align: right;
+        border-bottom: 1px solid #eaecf0;
+    }
+
+    .books-table th {
+        background: #f8fafc;
+        color: #344054;
+        font-weight: 700;
+    }
+
+    .books-table td {
+        color: #475467;
+    }
+
+    .books-table a {
+        color: #1769aa;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .books-table a:hover {
+        text-decoration: underline;
+    }
+
+    .empty,
+    .loading {
+        text-align: center;
+        padding: 30px;
+        color: #98a2b3;
+    }
+
+    .delete-btn {
+        border: none;
+        background: #fee4e2;
+        color: #b42318;
+        padding: 7px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+    }
+
+    .delete-btn:hover {
+        background: #fecdca;
+    }
+
+    /* =========================
+       OFFICIAL INFORMATION
+    ========================= */
+
+    .official-info {
+        background: linear-gradient(135deg, #ffffff, #f8fbff);
+        border-right: 4px solid #1264c4;
+    }
+
+    .official-info h2 {
+        margin-bottom: 17px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 11px 0;
+        border-bottom: 1px solid #edf0f5;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        color: #667085;
+    }
+
+    .info-value {
+        color: #172033;
+        font-weight: 700;
+        text-align: left;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #e3e8ef;
+        color: #7b8494;
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .footer strong {
+        color: #0b1f3a;
+    }
+
+    .footer-engineer {
+        color: #1264c4;
+        font-weight: 700;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+        .dashboard {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full {
+            grid-column: auto;
+        }
+
+    }
+
+    @media (max-width: 650px) {
+
+        header {
+            padding: 14px 4%;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .brand {
+            justify-content: center;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 23px;
+        }
+
+        .brand-text h1 {
+            font-size: 17px;
+        }
+
+        .brand-text p,
+        .brand-text small {
+            font-size: 10px;
+        }
+
+        .top-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .user-info {
+            justify-content: center;
+        }
+
+        .user-name {
+            font-size: 12px;
+        }
+
+        .container {
+            width: 94%;
+            margin-top: 28px;
+        }
+
+        .welcome h1 {
+            font-size: 24px;
+        }
+
+        .dashboard {
+            grid-template-columns: 1fr;
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+        .books-table {
+            font-size: 13px;
+            display: block;
+            overflow-x: auto;
+        }
+
+        .books-table th,
+        .books-table td {
+            padding: 8px;
+            white-space: nowrap;
+        }
+
+        .info-row {
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-value {
+            text-align: right;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<div class="brand">
+
+    <div class="brand-icon">
+        📚
+    </div>
+
+    <div class="brand-text">
+
+        <h1>
+            المكتبة الإلكترونية
+        </h1>
+
+        <p>
+            ثانوية مصاص رابح
+        </p>
+
+        <small>
+            المنصة الرقمية للمكتبة المدرسية
+        </small>
+
+    </div>
+
+</div>
+
+
+<div class="top-actions">
+
+    <a
+        id="dashboardBack"
+        class="dashboard-back"
+        href="teacher.html">
+
+        ⬅️ لوحة الأستاذ
+
+    </a>
+
+
+    <div class="user-info">
+
+        <span
+            class="user-name"
+            id="userName">
+
+            جاري التحميل...
+
+        </span>
+
+
+        <button
+            class="logout"
+            id="logoutBtn">
+
+            تسجيل الخروج
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</header>
+
+<div class="container">
+
+```
+<a
+    href="../index.html"
+    class="back">
+
+    ← العودة إلى المكتبة
+
+</a>
+
+
+<div class="welcome">
+
+    <h1>
+        لوحة الأستاذ 👨‍🏫
+    </h1>
+
+    <p>
+        مرحبًا بك في لوحة الأستاذ الخاصة بالمكتبة الإلكترونية
+        لثانوية مصاص رابح.
+        يمكنك من هنا إضافة الكتب التعليمية ومتابعة الكتب
+        التي قمت برفعها إلى المكتبة.
+    </p>
+
+    <div class="official-badge">
+        🏫 ثانوية مصاص رابح — المكتبة الإلكترونية
+    </div>
+
+</div>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<div class="dashboard">
+
+
+    <a
+        href="#myBooks"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                📚
+            </div>
+
+            <h3>
+                كتبي
+            </h3>
+
+            <p>
+                عرض الكتب التي قمت بإضافتها
+                إلى المكتبة الإلكترونية.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="#addBook"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⬆️
+            </div>
+
+            <h3>
+                إضافة كتاب
+            </h3>
+
+            <p>
+                رفع كتاب جديد وإتاحته للطلاب
+                داخل المكتبة.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="books.html"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                👨‍🎓
+            </div>
+
+            <h3>
+                المكتبة
+            </h3>
+
+            <p>
+                مشاهدة الكتب الموجودة في
+                المكتبة الإلكترونية.
+            </p>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+<!-- =========================
+     ADD BOOK
+========================= -->
+
+<div
+    class="section"
+    id="addBook">
+
+    <h2>
+        ➕ إضافة كتاب جديد
+    </h2>
+
+
+    <form id="bookForm">
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label for="title">
+                    عنوان الكتاب
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="مثال: الرياضيات للسنة الثانية"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="author">
+                    اسم المؤلف
+                </label>
+
+                <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    placeholder="اسم المؤلف">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="category">
+                    التصنيف
+                </label>
+
+                <select
+                    id="category"
+                    name="category"
+                    required>
+
+                    <option value="">
+                        اختر التصنيف
+                    </option>
+
+                    <option value="رياضيات">
+                        رياضيات
+                    </option>
+
+                    <option value="علوم">
+                        علوم
+                    </option>
+
+                    <option value="فيزياء">
+                        فيزياء
+                    </option>
+
+                    <option value="لغة عربية">
+                        لغة عربية
+                    </option>
+
+                    <option value="لغة فرنسية">
+                        لغة فرنسية
+                    </option>
+
+                    <option value="لغة إنجليزية">
+                        لغة إنجليزية
+                    </option>
+
+                    <option value="إعلام آلي">
+                        إعلام آلي
+                    </option>
+
+                    <option value="تاريخ وجغرافيا">
+                        تاريخ وجغرافيا
+                    </option>
+
+                    <option value="فلسفة">
+                        فلسفة
+                    </option>
+
+                    <option value="أخرى">
+                        أخرى
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="cover">
+                    غلاف الكتاب
+                </label>
+
+                <div class="upload-box">
+
+                    <p>
+                        اختر صورة غلاف الكتاب
+                    </p>
+
+                    <input
+                        type="file"
+                        id="cover"
+                        name="cover"
+                        accept="image/*">
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label for="description">
+                    وصف الكتاب
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="اكتب وصفًا مختصرًا للكتاب..."></textarea>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label for="pdf">
+                    ملف الكتاب PDF
+                </label>
+
+                <div class="upload-box">
+
+                    <p>
+                        اختر ملف الكتاب بصيغة PDF
+                    </p>
+
+                    <input
+                        type="file"
+                        id="pdf"
+                        name="pdf"
+                        accept=".pdf,application/pdf"
+                        required>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn"
+            id="submitBtn">
+
+            📤 إضافة الكتاب
+
+        </button>
+
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- =========================
+     MY BOOKS
+========================= -->
+
+<div
+    class="section"
+    id="myBooks">
+
+    <h2>
+        📚 الكتب التي أضفتها
+    </h2>
+
+    <div id="booksContainer">
+
+        <div class="loading">
+            جاري تحميل الكتب...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     OFFICIAL INFORMATION
+========================= -->
+
+<div class="section official-info">
+
+    <h2>
+        🏫 هوية المؤسسة والنظام
+    </h2>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            المؤسسة
+        </span>
+
+        <span class="info-value">
+            ثانوية مصاص رابح
+        </span>
+
+    </div>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            المنصة
+        </span>
+
+        <span class="info-value">
+            المكتبة الإلكترونية للمؤسسة
+        </span>
+
+    </div>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            مهندس النظام
+        </span>
+
+        <span class="info-value">
+            شراف الدين بوردوسن
+        </span>
+
+    </div>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            الصفة
+        </span>
+
+        <span class="info-value">
+            أستاذ مادة الرياضيات
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            المكتبة الإلكترونية — ثانوية مصاص رابح
+        </strong>
+
+    </div>
+
+    <div>
+
+        مهندس النظام:
+        <span class="footer-engineer">
+            شراف الدين بوردوسن
+        </span>
+
+        — أستاذ مادة الرياضيات
+
+    </div>
+
+    <div>
+
+        جميع الحقوق محفوظة © 2026
+
+    </div>
+
+</footer>
+```
+
+</div>
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let currentUser = null;
+
+
+const userName =
+    document.getElementById("userName");
+
+const dashboardBack =
+    document.getElementById("dashboardBack");
+
+const form =
+    document.getElementById("bookForm");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const message =
+    document.getElementById("message");
+
+const booksContainer =
+    document.getElementById("booksContainer");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+
+/* =========================================
+   التحقق من الأستاذ
+========================================= */
+
+async function checkTeacher() {
+
+    const {
+        data: { user },
+        error
+    } = await supabaseClient.auth.getUser();
+
+
+    if (error || !user) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    currentUser = user;
+
+
+    const {
+        data: profile,
+        error: profileError
+    } = await supabaseClient
+        .from("profiles")
+        .select("full_name, role")
+        .eq("id", user.id)
+        .single();
+
+
+    if (profileError || !profile) {
+
+        alert(
+            "تعذر التحقق من بيانات الحساب."
+        );
+
+        window.location.href =
+            "../index.html";
+
+        return;
+    }
+
+
+    if (profile.role === "programmer") {
+
+        window.location.href =
+            "programmer.html";
+
+        return;
+    }
+
+
+    if (profile.role === "admin") {
+
+        window.location.href =
+            "admin.html";
+
+        return;
+    }
+
+
+    if (profile.role !== "teacher") {
+
+        alert(
+            "ليس لديك صلاحية الدخول إلى لوحة الأستاذ."
+        );
+
+        window.location.href =
+            "../index.html";
+
+        return;
+    }
+
+
+    userName.textContent =
+        "الأستاذ: " +
+        (profile.full_name || "مستخدم");
+
+
+    dashboardBack.href =
+        "teacher.html";
+
+    dashboardBack.textContent =
+        "⬅️ لوحة الأستاذ";
+
+    dashboardBack.style.display =
+        "inline-block";
+
+
+    loadBooks();
+
+}
+
+
+/* =========================================
+   تحميل كتب الأستاذ
+========================================= */
+
+async function loadBooks() {
+
+    booksContainer.innerHTML = `
+        <div class="loading">
+            جاري تحميل الكتب...
+        </div>
+    `;
+
+
+    const {
+        data: books,
+        error
+    } = await supabaseClient
+        .from("books")
+        .select("*")
+        .eq("uploaded_by", currentUser.id)
+        .order("created_at", {
+            ascending: false
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Load books error:",
+            error
+        );
+
+
+        booksContainer.innerHTML = `
+            <div class="empty">
+                ❌ تعذر تحميل الكتب.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    if (!books || books.length === 0) {
+
+        booksContainer.innerHTML = `
+            <div class="empty">
+                لم تقم بإضافة أي كتاب بعد.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = `
+        <table class="books-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>العنوان</th>
+                    <th>المؤلف</th>
+                    <th>التصنيف</th>
+                    <th>التاريخ</th>
+                    <th>الملف</th>
+                    <th>الإجراء</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+    `;
+
+
+    books.forEach(function(book) {
+
+        const date =
+            new Date(book.created_at)
+                .toLocaleDateString("ar-DZ");
+
+
+        html += `
+
+            <tr>
+
+                <td>
+                    ${escapeHtml(book.title)}
+                </td>
+
+                <td>
+                    ${escapeHtml(book.author || "-")}
+                </td>
+
+                <td>
+                    ${escapeHtml(book.category || "-")}
+                </td>
+
+                <td>
+                    ${date}
+                </td>
+
+                <td>
+
+                    ${
+                        book.drive_file_id
+                        ?
+                        `
+                        <a
+                            href="book.html?id=${encodeURIComponent(book.id)}">
+
+                            📖 فتح الكتاب
+
+                        </a>
+                        `
+                        :
+                        "-"
+                    }
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteBook(${book.id})">
+
+                        حذف
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+
+    booksContainer.innerHTML =
+        html;
+
+}
+
+
+/* =========================================
+   إضافة الكتاب
+========================================= */
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const {
+            data: { session }
+        } = await supabaseClient
+            .auth
+            .getSession();
+
+
+        if (!session) {
+
+            showMessage(
+                "يجب تسجيل الدخول أولًا.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const title =
+            document
+                .getElementById("title")
+                .value
+                .trim();
+
+
+        const author =
+            document
+                .getElementById("author")
+                .value
+                .trim();
+
+
+        const category =
+            document
+                .getElementById("category")
+                .value;
+
+
+        const description =
+            document
+                .getElementById("description")
+                .value
+                .trim();
+
+
+        const pdfInput =
+            document.getElementById("pdf");
+
+
+        const pdf =
+            pdfInput.files &&
+            pdfInput.files.length > 0
+                ? pdfInput.files[0]
+                : null;
+
+
+        if (!title || !category || !pdf) {
+
+            showMessage(
+                "يرجى ملء البيانات المطلوبة واختيار ملف PDF.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const fileName =
+            pdf.name.toLowerCase();
+
+
+        if (
+            pdf.type !== "application/pdf" &&
+            !fileName.endsWith(".pdf")
+        ) {
+
+            showMessage(
+                "يجب أن يكون الملف بصيغة PDF.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (
+            pdf.size >
+            100 * 1024 * 1024
+        ) {
+
+            showMessage(
+                "حجم ملف PDF يجب ألا يتجاوز 100 ميغابايت.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        submitBtn.disabled =
+            true;
+
+        submitBtn.textContent =
+            "⏳ جارٍ رفع الكتاب...";
+
+
+        try {
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "title",
+                title
+            );
+
+
+            formData.append(
+                "author",
+                author
+            );
+
+
+            formData.append(
+                "category",
+                category
+            );
+
+
+            formData.append(
+                "description",
+                description
+            );
+
+
+            formData.append(
+                "pdf",
+                pdf,
+                pdf.name
+            );
+
+
+            console.log(
+                "========== بيانات الرفع =========="
+            );
+
+
+            console.log(
+                "title:",
+                title
+            );
+
+
+            console.log(
+                "author:",
+                author
+            );
+
+
+            console.log(
+                "category:",
+                category
+            );
+
+
+            console.log(
+                "description:",
+                description
+            );
+
+
+            console.log(
+                "pdf:",
+                pdf.name,
+                pdf.type,
+                pdf.size
+            );
+
+
+            for (
+                const [key, value]
+                of formData.entries()
+            ) {
+
+                if (
+                    value instanceof File
+                ) {
+
+                    console.log(
+                        key,
+                        "=> FILE:",
+                        value.name,
+                        value.type,
+                        value.size
+                    );
+
+                } else {
+
+                    console.log(
+                        key,
+                        "=>",
+                        value
+                    );
+
+                }
+
+            }
+
+
+            console.log(
+                "=================================="
+            );
+
+
+            const response =
+                await fetch(
+                    "/api/books/upload",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Authorization":
+                                "Bearer " +
+                                session.access_token
+                        },
+
+                        body: formData
+                    }
+                );
+
+
+            const responseText =
+                await response.text();
+
+
+            let result;
+
+
+            try {
+
+                result =
+                    JSON.parse(
+                        responseText
+                    );
+
+            } catch {
+
+                result = {
+                    message:
+                        responseText
+                };
+
+            }
+
+
+            console.log(
+                "Server response:",
+                result
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    result.error ||
+                    "فشل رفع الكتاب."
+                );
+
+            }
+
+
+            showMessage(
+                "✅ تمت إضافة الكتاب ورفعه إلى Google Drive بنجاح.",
+                "success"
+            );
+
+
+            form.reset();
+
+
+            await loadBooks();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Book upload error:",
+                error
+            );
+
+
+            showMessage(
+                "❌ حدث خطأ أثناء إضافة الكتاب: " +
+                error.message,
+                "error"
+            );
+
+        }
+
+        finally {
+
+            submitBtn.disabled =
+                false;
+
+            submitBtn.textContent =
+                "📤 إضافة الكتاب";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   حذف كتاب
+========================================= */
+
+async function deleteBook(id) {
+
+    const confirmed =
+        confirm(
+            "هل أنت متأكد من حذف هذا الكتاب؟"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const {
+            data: { session }
+        } = await supabaseClient
+            .auth
+            .getSession();
+
+
+        if (!session) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        const {
+            error
+        } = await supabaseClient
+            .from("books")
+            .delete()
+            .eq("id", id)
+            .eq(
+                "uploaded_by",
+                currentUser.id
+            );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        showMessage(
+            "✅ تم حذف الكتاب.",
+            "success"
+        );
+
+
+        loadBooks();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Delete book error:",
+            error
+        );
+
+
+        showMessage(
+            "❌ تعذر حذف الكتاب: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   تسجيل الخروج
+========================================= */
+
+logoutBtn.addEventListener(
+    "click",
+    async function() {
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+        window.location.href =
+            "login.html";
+
+    }
+);
+
+
+/* =========================================
+   الرسائل
+========================================= */
+
+function showMessage(
+    text,
+    type
+) {
+
+    message.textContent =
+        text;
+
+
+    message.className =
+        "message " + type;
+
+
+    message.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+/* =========================================
+   حماية النصوص
+========================================= */
+
+function escapeHtml(text) {
+
+    return String(text)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================
+   تشغيل الصفحة
+========================================= */
+
+checkTeacher();
+
+</script>
+
+</body>
+</html>

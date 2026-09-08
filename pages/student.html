@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>لوحة الطالب | مكتبة الثانوية</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Cairo", sans-serif;
+        background: #f4f7fb;
+        color: #172033;
+    }
+
+    header {
+        background: linear-gradient(135deg, #0b1f3a, #123d70);
+        color: white;
+        padding: 18px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .logo {
+        font-size: 23px;
+        font-weight: 800;
+    }
+
+    .top-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .dashboard-back {
+        color: white;
+        text-decoration: none;
+        background: rgba(255,255,255,0.14);
+        padding: 9px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .dashboard-back:hover {
+        background: rgba(255,255,255,0.24);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .user-name {
+        font-weight: 600;
+    }
+
+    .logout {
+        border: none;
+        background: #e85d04;
+        color: white;
+        padding: 9px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+    }
+
+    .logout:hover {
+        background: #d94f00;
+    }
+
+    .container {
+        width: 86%;
+        max-width: 1200px;
+        margin: 40px auto;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #1769aa;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .back:hover {
+        text-decoration: underline;
+    }
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+        margin-bottom: 8px;
+        color: #0b1f3a;
+    }
+
+    .welcome p {
+        color: #667085;
+    }
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+        margin-bottom: 35px;
+    }
+
+    .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 5px 20px rgba(20,40,70,0.07);
+        border: 1px solid #e7ecf3;
+        transition: 0.2s;
+        height: 100%;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(20,40,70,0.12);
+    }
+
+    .card-icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .card h3 {
+        color: #0b1f3a;
+        margin-bottom: 7px;
+    }
+
+    .card p {
+        color: #667085;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .section {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(20,40,70,0.07);
+        margin-bottom: 30px;
+    }
+
+    .section h2 {
+        color: #0b1f3a;
+        margin-bottom: 25px;
+        font-size: 22px;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat {
+        background: #f8fafc;
+        border: 1px solid #e7ecf3;
+        border-radius: 12px;
+        padding: 22px;
+        text-align: center;
+    }
+
+    .stat-icon {
+        font-size: 30px;
+        margin-bottom: 8px;
+    }
+
+    .stat-number {
+        font-size: 28px;
+        font-weight: 800;
+        color: #1769aa;
+    }
+
+    .stat-title {
+        color: #667085;
+        font-size: 14px;
+        margin-top: 4px;
+    }
+
+    .books-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .book {
+        border: 1px solid #e7ecf3;
+        border-radius: 12px;
+        padding: 20px;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        transition: 0.2s;
+    }
+
+    .book:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(20,40,70,0.08);
+    }
+
+    .book-info {
+        min-width: 0;
+    }
+
+    .book-info h3 {
+        color: #0b1f3a;
+        margin-bottom: 8px;
+        font-size: 17px;
+    }
+
+    .book-info p {
+        margin: 4px 0;
+        color: #667085;
+        font-size: 13px;
+    }
+
+    .read-btn {
+        display: inline-block;
+        background: #1769aa;
+        color: white;
+        text-decoration: none;
+        padding: 10px 17px;
+        border-radius: 8px;
+        white-space: nowrap;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .read-btn:hover {
+        background: #12578e;
+    }
+
+    .empty,
+    .loading {
+        text-align: center;
+        padding: 30px;
+        color: #98a2b3;
+    }
+
+    .error {
+        background: #fef3f2;
+        color: #b42318;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .all-books-btn {
+        display: block;
+        width: fit-content;
+        margin: 25px auto 0;
+        background: #0b1f3a;
+        color: white;
+        text-decoration: none;
+        padding: 11px 22px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .all-books-btn:hover {
+        background: #123d70;
+    }
+
+    .badge {
+        display: inline-block;
+        background: #eaf4fb;
+        color: #1769aa;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 1000px) {
+
+        .dashboard {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .books-list {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        header {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .top-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .user-info {
+            flex-direction: column;
+        }
+
+        .dashboard {
+            grid-template-columns: 1fr;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+
+        .book {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .read-btn {
+            text-align: center;
+        }
+
+        .container {
+            width: 92%;
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<div class="logo">
+    📚 مكتبة الثانوية
+</div>
+
+<div class="top-actions">
+
+    <a
+        href="books.html"
+        class="dashboard-back">
+        📚 المكتبة
+    </a>
+
+    <div class="user-info">
+
+        <span
+            class="user-name"
+            id="userName">
+            جاري التحميل...
+        </span>
+
+        <button
+            class="logout"
+            id="logoutBtn">
+            تسجيل الخروج
+        </button>
+
+    </div>
+
+</div>
+```
+
+</header>
+
+<div class="container">
+
+```
+<a
+    href="../index.html"
+    class="back">
+    ← العودة إلى الصفحة الرئيسية
+</a>
+
+
+<div class="welcome">
+
+    <h1>
+        لوحة الطالب
+    </h1>
+
+    <p>
+        مرحبًا بك في مكتبة الثانوية.
+        يمكنك من هنا الوصول بسهولة إلى الكتب والمراجع التعليمية وقراءتها مباشرة.
+    </p>
+
+</div>
+
+
+<!-- بطاقات لوحة الطالب -->
+
+<div class="dashboard">
+
+    <a
+        href="student.html"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                🎓
+            </div>
+
+            <h3>
+                لوحة الطالب
+            </h3>
+
+            <p>
+                الصفحة الرئيسية لحسابك وإمكانية الوصول إلى خدمات المكتبة.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="books.html"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                📚
+            </div>
+
+            <h3>
+                المكتبة الإلكترونية
+            </h3>
+
+            <p>
+                تصفح جميع الكتب التعليمية المتوفرة في مكتبة الثانوية.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="#recentBooks"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                🆕
+            </div>
+
+            <h3>
+                أحدث الكتب
+            </h3>
+
+            <p>
+                الاطلاع على أحدث الكتب التي تمت إضافتها إلى المكتبة.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="../index.html"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                🏠
+            </div>
+
+            <h3>
+                الرئيسية
+            </h3>
+
+            <p>
+                العودة إلى الصفحة الرئيسية لمكتبة الثانوية.
+            </p>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+<!-- الإحصائيات -->
+
+<div class="section">
+
+    <h2>
+        📊 إحصائيات المكتبة
+    </h2>
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+            <div
+                class="stat-number"
+                id="booksCount">
+                -
+            </div>
+
+            <div class="stat-title">
+                عدد الكتب المتاحة
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📖
+            </div>
+
+            <div
+                class="stat-number"
+                id="categoriesCount">
+                -
+            </div>
+
+            <div class="stat-title">
+                عدد التصنيفات
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🎓
+            </div>
+
+            <div
+                class="stat-number">
+                طالب
+            </div>
+
+            <div class="stat-title">
+                نوع الحساب
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- أحدث الكتب -->
+
+<div
+    class="section"
+    id="recentBooks">
+
+    <h2>
+        🆕 أحدث الكتب المضافة
+    </h2>
+
+    <div
+        id="booksList"
+        class="books-list">
+
+        <div class="loading">
+            جاري تحميل الكتب...
+        </div>
+
+    </div>
+
+    <a
+        href="books.html"
+        class="all-books-btn">
+        📚 عرض جميع الكتب
+    </a>
+
+</div>
+```
+
+</div>
+
+<script>
+
+    const SUPABASE_URL =
+        "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+    /*
+     * ضع هنا نفس المفتاح الموجود حاليًا
+     * في ملفات المشروع لديك.
+     * لم يتم تغييره.
+     */
+    const SUPABASE_ANON_KEY =
+        "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+
+    /* =========================================
+       عناصر الصفحة
+    ========================================= */
+
+    const userName =
+        document.getElementById("userName");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    const booksList =
+        document.getElementById("booksList");
+
+    const booksCount =
+        document.getElementById("booksCount");
+
+    const categoriesCount =
+        document.getElementById("categoriesCount");
+
+
+    /* =========================================
+       التحقق من الطالب
+    ========================================= */
+
+    async function checkStudent() {
+
+        const {
+            data: { session },
+            error: sessionError
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if (
+            sessionError ||
+            !session
+        ) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "id, full_name, role"
+                )
+                .eq(
+                    "id",
+                    session.user.id
+                )
+                .single();
+
+
+        if (
+            profileError ||
+            !profile
+        ) {
+
+            alert(
+                "تعذر تحميل بيانات الحساب."
+            );
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        /* =====================================
+           حماية لوحة الطالب
+        ===================================== */
+
+        if (
+            profile.role !== "student"
+        ) {
+
+            if (
+                profile.role ===
+                "programmer"
+            ) {
+
+                window.location.href =
+                    "programmer.html";
+
+            }
+
+            else if (
+                profile.role ===
+                "admin"
+            ) {
+
+                window.location.href =
+                    "admin.html";
+
+            }
+
+            else if (
+                profile.role ===
+                "teacher"
+            ) {
+
+                window.location.href =
+                    "teacher.html";
+
+            }
+
+            else {
+
+                window.location.href =
+                    "../index.html";
+
+            }
+
+            return;
+        }
+
+
+        /* =====================================
+           عرض اسم الطالب
+        ===================================== */
+
+        userName.textContent =
+            "الطالب: " +
+            (
+                profile.full_name ||
+                "مستخدم"
+            );
+
+
+        /* =====================================
+           تحميل الكتب
+        ===================================== */
+
+        loadBooks();
+
+    }
+
+
+    /* =========================================
+       تحميل الكتب من الخادم
+    ========================================= */
+
+    async function loadBooks() {
+
+        booksList.innerHTML = `
+            <div class="loading">
+                جاري تحميل الكتب...
+            </div>
+        `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/books"
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !result.success
+            ) {
+
+                throw new Error(
+                    "فشل تحميل الكتب."
+                );
+
+            }
+
+
+            const books =
+                result.books || [];
+
+
+            /* =====================================
+               الإحصائيات
+            ===================================== */
+
+            booksCount.textContent =
+                books.length;
+
+
+            const categories =
+                new Set(
+                    books
+                        .map(
+                            book =>
+                                book.category
+                        )
+                        .filter(Boolean)
+                );
+
+
+            categoriesCount.textContent =
+                categories.size;
+
+
+            /* =====================================
+               عدم وجود كتب
+            ===================================== */
+
+            if (
+                books.length === 0
+            ) {
+
+                booksList.innerHTML = `
+                    <div class="empty">
+                        لا توجد كتب متاحة حاليًا.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            /* =====================================
+               أحدث الكتب
+            ===================================== */
+
+            const recentBooks =
+                books.slice(
+                    0,
+                    6
+                );
+
+
+            booksList.innerHTML = "";
+
+
+            recentBooks.forEach(
+                function(book) {
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    div.className =
+                        "book";
+
+
+                    div.innerHTML = `
+
+                        <div class="book-info">
+
+                            <h3>
+                                📘
+                                ${escapeHtml(
+                                    book.title
+                                )}
+                            </h3>
+
+                            <p>
+                                المؤلف:
+                                ${escapeHtml(
+                                    book.author ||
+                                    "غير محدد"
+                                )}
+                            </p>
+
+                            <span class="badge">
+
+                                ${escapeHtml(
+                                    book.category ||
+                                    "أخرى"
+                                )}
+
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            class="read-btn"
+                            href="book.html?id=${encodeURIComponent(
+                                book.id
+                            )}">
+
+                            📖 قراءة الكتاب
+
+                        </a>
+
+                    `;
+
+
+                    booksList.appendChild(
+                        div
+                    );
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Load books error:",
+                error
+            );
+
+
+            booksList.innerHTML = `
+                <div class="error">
+                    ❌ حدث خطأ أثناء تحميل الكتب.
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* =========================================
+       حماية النصوص
+    ========================================= */
+
+    function escapeHtml(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =========================================
+       تسجيل الخروج
+    ========================================= */
+
+    logoutBtn.addEventListener(
+        "click",
+        async function() {
+
+            logoutBtn.disabled = true;
+
+            logoutBtn.textContent =
+                "⏳ جاري تسجيل الخروج...";
+
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+    /* =========================================
+       تشغيل الصفحة
+    ========================================= */
+
+    checkStudent();
+
+</script>
+
+</body>
+</html>

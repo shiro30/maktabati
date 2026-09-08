@@ -5,12 +5,17 @@
   "main": "books-data.js",
   "scripts": {
     "start": "node server.js"
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.2.1"
+    "@google-cloud/local-auth": "^3.0.1",
+    "@supabase/supabase-js": "^2.116.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "googleapis": "^178.0.0",
+    "multer": "^2.3.0"
   }
 }

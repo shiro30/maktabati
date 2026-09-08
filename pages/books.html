@@ -1,179 +1,544 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+```
+<title>الكتب | مكتبة ثانوية مصاص رابح</title>
 
-    <title>الكتب | مكتبة الثانوية</title>
+<link rel="stylesheet" href="../style.css">
 
-    <link rel="stylesheet" href="../style.css">
+<style>
+    .dashboard-back-btn {
+        display: none;
+        text-decoration: none;
+        background: #0b1f3a;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: 700;
+        margin-right: 15px;
+        transition: 0.2s;
+    }
+
+    .dashboard-back-btn:hover {
+        background: #16365f;
+    }
+
+    .navbar {
+        gap: 15px;
+    }
+
+    @media (max-width: 800px) {
+        .dashboard-back-btn {
+            padding: 8px 12px;
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        .navbar nav {
+            display: none;
+        }
+    }
+</style>
+```
 
 </head>
 
 <body>
 
-
-<!-- شريط التنقل -->
-
 <header class="navbar">
 
-    <div class="logo">
+```
+<div class="logo">
 
-        <div class="logo-icon">📚</div>
-
-        <div>
-
-            <div class="logo-title">
-                مكتبة الثانوية
-            </div>
-
-            <div class="logo-subtitle">
-                المكتبة الإلكترونية
-            </div>
-
-        </div>
-
+    <div class="logo-icon">
+        📚
     </div>
 
+    <div>
+        <div class="logo-title">
+            مكتبة ثانوية مصاص رابح
+        </div>
 
-    <nav>
+        <div class="logo-subtitle">
+            المكتبة الرقمية للمؤسسة
+        </div>
+    </div>
 
-        <a href="../index.html">
-            الرئيسية
-        </a>
+</div>
 
-        <a href="books.html" class="active">
-            الكتب
-        </a>
+<nav>
 
-        <a href="categories.html">
-            التصنيفات
-        </a>
+    <a href="../index.html">
+        الرئيسية
+    </a>
 
-        <a href="#">
-            عن المكتبة
-        </a>
+    <a href="books.html" class="active">
+        الكتب
+    </a>
 
-    </nav>
+    <a href="categories.html">
+        التصنيفات
+    </a>
 
+    <a href="about.html">
+        عن المكتبة
+    </a>
 
-    <button class="login-btn">
-        تسجيل الدخول
-    </button>
+</nav>
+
+<a
+    href="#"
+    id="dashboardBackBtn"
+    class="dashboard-back-btn">
+</a>
+
+<button
+    class="login-btn"
+    id="loginBtn"
+    onclick="window.location.href='login.html'">
+
+    تسجيل الدخول
+
+</button>
+```
 
 </header>
 
-
-
-<!-- المحتوى الرئيسي -->
-
 <main>
 
-    <section class="section">
+<section class="section">
 
-        <div class="section-heading">
+```
+<div class="section-heading">
 
-            <div>
+    <div>
 
-                <span>
-                    مكتبة الثانوية
-                </span>
+        <span>
+            مكتبة الثانوية
+        </span>
 
-                <h2 id="pageTitle">
-                    جميع الكتب
-                </h2>
+        <h2 id="pageTitle">
+            جميع الكتب
+        </h2>
 
+        <div class="search-box">
 
-                <!-- مربع البحث -->
+            <input
+                type="text"
+                id="bookSearch"
+                placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
+            >
 
-                <div class="search-box">
-
-                    <input
-                        type="text"
-                        id="bookSearch"
-                        placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
-                    >
-
-                    <span>
-                        🔎
-                    </span>
-
-                </div>
-
-
-                <!-- عدد النتائج -->
-
-                <p id="resultsCount"
-                   style="
-                       margin-top: 15px;
-                       color: #64748b;
-                       font-size: 15px;
-                   ">
-                </p>
-
-            </div>
+            <span>
+                🔎
+            </span>
 
         </div>
 
-
-        <!-- قائمة الكتب -->
-
-        <div
-            class="books-container"
-            id="booksContainer">
-
-        </div>
-
-    </section>
-
-</main>
-
-
-
-<!-- الفوتر -->
-
-<footer>
-
-    <div class="copyright">
-
-        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+        <p
+            id="resultsCount"
+            style="
+                margin-top: 15px;
+                color: #64748b;
+                font-size: 15px;
+            ">
+        </p>
 
     </div>
 
+</div>
+
+
+<div
+    class="books-container"
+    id="booksContainer">
+
+    <div style="
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        font-size: 20px;
+        color: #64748b;
+    ">
+        ⏳ جاري تحميل الكتب...
+    </div>
+
+</div>
+```
+
+</section>
+
+</main>
+
+<footer>
+
+<div class="copyright">
+
+```
+<strong>
+    🏫 ثانوية مصاص رابح
+</strong>
+
+<br>
+
+مكتبة الثانوية الرقمية
+
+<br>
+
+<span style="font-size:13px;">
+    مهندس النظام:
+    شراف الدين بوردوسن —
+    أستاذ مادة الرياضيات
+</span>
+
+<br>
+<br>
+
+© 2026 — جميع الحقوق محفوظة
+```
+
+</div>
+
 </footer>
 
-
-
-<!-- بيانات الكتب -->
-
-<script src="../books-data.js"></script>
-
-
-<!-- نظام المكتبة -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-    const booksContainer =
-        document.getElementById("booksContainer");
+    /* ==========================================
+       إعداد Supabase
+    ========================================== */
 
-    const searchInput =
-        document.getElementById("bookSearch");
-
-    const pageTitle =
-        document.getElementById("pageTitle");
-
-    const resultsCount =
-        document.getElementById("resultsCount");
-
-
+    const SUPABASE_URL =
+        "https://xdkluojrvdhdtihblpwy.supabase.co";
 
     /*
-       إنشاء بطاقة كتاب
+       احتفظ بمفتاح Supabase الحالي الموجود
+       في ملفك ولا تغيره.
     */
+
+    const SUPABASE_ANON_KEY =
+        "ضع_هنا_نفس_مفتاح_Supabase_الموجود_حاليًا_في_ملفك";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+
+    /* ==========================================
+       زر العودة للوحة
+    ========================================== */
+
+    async function setupDashboardButton() {
+
+        const backButton =
+            document.getElementById(
+                "dashboardBackBtn"
+            );
+
+        const loginButton =
+            document.getElementById(
+                "loginBtn"
+            );
+
+        try {
+
+            const {
+                data: {
+                    user
+                }
+            } =
+                await supabaseClient.auth.getUser();
+
+
+            if (!user) {
+
+                backButton.style.display =
+                    "none";
+
+                loginButton.style.display =
+                    "block";
+
+                return;
+            }
+
+
+            const {
+                data: profile,
+                error
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select("full_name, role")
+                    .eq("id", user.id)
+                    .single();
+
+
+            if (error || !profile) {
+
+                backButton.style.display =
+                    "none";
+
+                loginButton.style.display =
+                    "block";
+
+                return;
+            }
+
+
+            if (profile.role === "programmer") {
+
+                backButton.href =
+                    "programmer.html";
+
+                backButton.textContent =
+                    "⬅️ لوحة المبرمج";
+
+                backButton.style.display =
+                    "inline-block";
+
+                loginButton.style.display =
+                    "none";
+            }
+
+
+            else if (profile.role === "admin") {
+
+                backButton.href =
+                    "admin.html";
+
+                backButton.textContent =
+                    "⬅️ لوحة المدير";
+
+                backButton.style.display =
+                    "inline-block";
+
+                loginButton.style.display =
+                    "none";
+            }
+
+
+            else if (profile.role === "teacher") {
+
+                backButton.href =
+                    "teacher.html";
+
+                backButton.textContent =
+                    "⬅️ لوحة الأستاذ";
+
+                backButton.style.display =
+                    "inline-block";
+
+                loginButton.style.display =
+                    "none";
+            }
+
+
+            else {
+
+                backButton.style.display =
+                    "none";
+
+                loginButton.style.display =
+                    "block";
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Dashboard button error:",
+                error
+            );
+
+            backButton.style.display =
+                "none";
+        }
+    }
+
+
+    /* ==========================================
+       عناصر الصفحة
+    ========================================== */
+
+    const booksContainer =
+        document.getElementById(
+            "booksContainer"
+        );
+
+    const searchInput =
+        document.getElementById(
+            "bookSearch"
+        );
+
+    const pageTitle =
+        document.getElementById(
+            "pageTitle"
+        );
+
+    const resultsCount =
+        document.getElementById(
+            "resultsCount"
+        );
+
+
+    let booksData = [];
+
+
+    /* ==========================================
+       حماية النصوص
+    ========================================== */
+
+    function escapeHTML(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value == null
+                ? ""
+                : String(value);
+
+        return div.innerHTML;
+    }
+
+
+    /* ==========================================
+       توحيد أسماء التصنيفات
+    ========================================== */
+
+    function normalizeCategory(category) {
+
+        if (!category) {
+            return "";
+        }
+
+        const value =
+            String(category)
+                .trim()
+                .replace(/\s+/g, " ");
+
+
+        /* الرياضيات */
+
+        if (
+            value === "رياضيات" ||
+            value === "الرياضيات"
+        ) {
+            return "الرياضيات";
+        }
+
+
+        /* العلوم الطبيعية */
+
+        if (
+            value === "علوم" ||
+            value === "العلوم" ||
+            value === "علم الطبيعة" ||
+            value === "العلوم الطبيعية"
+        ) {
+            return "العلوم الطبيعية";
+        }
+
+
+        /* العلوم الفيزيائية */
+
+        if (
+            value === "فيزياء" ||
+            value === "الفيزياء" ||
+            value === "كيمياء" ||
+            value === "الكيمياء" ||
+            value === "العلوم الفيزيائية"
+        ) {
+            return "العلوم الفيزيائية";
+        }
+
+
+        /* التاريخ والجغرافيا */
+
+        if (
+            value === "تاريخ" ||
+            value === "التاريخ" ||
+            value === "جغرافيا" ||
+            value === "الجغرافيا" ||
+            value === "التاريخ والجغرافيا"
+        ) {
+            return "التاريخ والجغرافيا";
+        }
+
+
+        /* الفلسفة */
+
+        if (
+            value === "فلسفة" ||
+            value === "الفلسفة"
+        ) {
+            return "الفلسفة";
+        }
+
+
+        /* العلوم الإسلامية */
+
+        if (
+            value === "إسلاميات" ||
+            value === "الإسلاميات" ||
+            value === "العلوم الإسلامية"
+        ) {
+            return "العلوم الإسلامية";
+        }
+
+
+        /* اللغات */
+
+        if (
+            value === "لغة" ||
+            value === "لغات" ||
+            value === "اللغات"
+        ) {
+            return "اللغات";
+        }
+
+
+        /* الإعلام الآلي */
+
+        if (
+            value === "إعلام آلي" ||
+            value === "الإعلام الآلي" ||
+            value === "معلوماتية" ||
+            value === "المعلوماتية"
+        ) {
+            return "الإعلام الآلي";
+        }
+
+
+        /* الاقتصاد والمحاسبة */
+
+        if (
+            value === "اقتصاد" ||
+            value === "الاقتصاد" ||
+            value === "محاسبة" ||
+            value === "المحاسبة" ||
+            value === "الاقتصاد والمحاسبة"
+        ) {
+            return "الاقتصاد والمحاسبة";
+        }
+
+
+        return value;
+    }
+
+
+    /* ==========================================
+       إنشاء بطاقة الكتاب
+    ========================================== */
 
     function createBookCard(book) {
 
@@ -184,73 +549,35 @@
             "book-card";
 
 
-        let coverHTML;
+        let coverHTML = `
+            <div class="book-placeholder">
+                📚
+            </div>
+        `;
 
 
-        /*
-           إذا كان للكتاب غلاف
-        */
-
-        if (book.cover) {
+        if (book.cover_url) {
 
             coverHTML = `
                 <img
-                    src="../covers/${book.cover}"
-                    alt="غلاف ${book.title}">
+                    src="${escapeHTML(book.cover_url)}"
+                    alt="غلاف ${escapeHTML(book.title)}">
             `;
-
-        } else {
-
-            coverHTML = "📚";
-
         }
 
 
+        const readButton = `
 
-        /*
-           إنشاء رابط القراءة
-        */
+            <a
+                href="book.html?id=${encodeURIComponent(book.id)}"
+                class="read-button">
 
-        let readButton;
+                📖 قراءة الكتاب
 
+            </a>
 
-        if (book.pdf) {
+        `;
 
-            const bookIndex =
-                booksData.indexOf(book);
-
-            readButton = `
-                <a
-                    href="book.html?book=${bookIndex}"
-                    class="read-button">
-
-                    📖 قراءة الكتاب
-
-                </a>
-            `;
-
-        } else {
-
-            readButton = `
-                <span
-                    class="read-button"
-                    style="
-                        opacity: 0.5;
-                        cursor: not-allowed;
-                    ">
-
-                    📖 الكتاب غير متوفر
-
-                </span>
-            `;
-
-        }
-
-
-
-        /*
-           بناء البطاقة
-        */
 
         article.innerHTML = `
 
@@ -265,21 +592,30 @@
 
                 <span class="book-category">
 
-                    ${book.category}
+                    ${escapeHTML(
+                        normalizeCategory(
+                            book.category || "عام"
+                        )
+                    )}
 
                 </span>
 
 
                 <h3>
 
-                    ${book.title}
+                    ${escapeHTML(
+                        book.title || "بدون عنوان"
+                    )}
 
                 </h3>
 
 
                 <p>
 
-                    ${book.description}
+                    ${escapeHTML(
+                        book.description ||
+                        "لا يوجد وصف لهذا الكتاب."
+                    )}
 
                 </p>
 
@@ -290,7 +626,10 @@
                     margin-top: 8px;
                 ">
 
-                    ✍️ ${book.author}
+                    ✍️ ${escapeHTML(
+                        book.author ||
+                        "مؤلف غير محدد"
+                    )}
 
                 </p>
 
@@ -303,54 +642,23 @@
 
 
         return article;
-
     }
 
 
-
-    /*
+    /* ==========================================
        عرض الكتب
-    */
+    ========================================== */
 
     function displayBooks(list) {
 
         booksContainer.innerHTML = "";
 
 
-        /*
-           تحديث عدد النتائج
-        */
-
         if (list.length === 0) {
 
             resultsCount.textContent =
                 "لم يتم العثور على أي كتاب.";
 
-        }
-
-        else if (list.length === 1) {
-
-            resultsCount.textContent =
-                "تم العثور على كتاب واحد.";
-
-        }
-
-        else {
-
-            resultsCount.textContent =
-                "تم العثور على " +
-                list.length +
-                " كتب.";
-
-        }
-
-
-
-        /*
-           إذا لم توجد نتائج
-        */
-
-        if (list.length === 0) {
 
             booksContainer.innerHTML = `
 
@@ -369,16 +677,27 @@
             `;
 
             return;
+        }
+
+
+        if (list.length === 1) {
+
+            resultsCount.textContent =
+                "تم العثور على كتاب واحد.";
+
+        }
+
+        else {
+
+            resultsCount.textContent =
+                "تم العثور على " +
+                list.length +
+                " كتب.";
 
         }
 
 
-
-        /*
-           عرض الكتب
-        */
-
-        list.forEach(book => {
+        list.forEach(function(book) {
 
             const card =
                 createBookCard(book);
@@ -386,21 +705,19 @@
             booksContainer.appendChild(card);
 
         });
-
     }
 
 
-
-    /*
+    /* ==========================================
        البحث والتصنيف
-    */
+    ========================================== */
 
     function filterBooks() {
 
         const search =
             searchInput.value
-            .toLowerCase()
-            .trim();
+                .toLowerCase()
+                .trim();
 
 
         const params =
@@ -413,66 +730,192 @@
             params.get("category");
 
 
+        /*
+            توحيد اسم التصنيف القادم من الرابط.
+            مثال:
+
+            الرابط:
+            ?category=الرياضيات
+
+            يصبح:
+            الرياضيات
+        */
+
+        const normalizedSelectedCategory =
+            normalizeCategory(category);
+
 
         const filteredBooks =
-            booksData.filter(book => {
+            booksData.filter(function(book) {
+
+                const title =
+                    (book.title || "")
+                        .toLowerCase();
+
+                const author =
+                    (book.author || "")
+                        .toLowerCase();
+
+                const bookCategory =
+                    (book.category || "")
+                        .toLowerCase();
+
+                const normalizedBookCategory =
+                    normalizeCategory(
+                        book.category || ""
+                    );
+
+
+                const description =
+                    (book.description || "")
+                        .toLowerCase();
 
 
                 const matchesSearch =
 
-                    book.title
+                    title.includes(search) ||
+                    author.includes(search) ||
+                    bookCategory.includes(search) ||
+                    normalizedBookCategory
                         .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    book.author
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    book.category
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    book.description
-                        .toLowerCase()
-                        .includes(search);
+                        .includes(search) ||
+                    description.includes(search);
 
 
+                /*
+                    المقارنة هنا أصبحت بعد توحيد
+                    أسماء التصنيفات.
+
+                    رياضيات == الرياضيات
+                    علوم == العلوم الطبيعية
+                */
 
                 const matchesCategory =
 
-                    !category
-
-                    ||
-
-                    book.category === category;
-
+                    !normalizedSelectedCategory ||
+                    normalizedBookCategory ===
+                        normalizedSelectedCategory;
 
 
                 return (
-                    matchesSearch
-                    &&
+                    matchesSearch &&
                     matchesCategory
                 );
 
             });
 
 
-
         displayBooks(filteredBooks);
-
     }
 
 
+    /* ==========================================
+       تحميل الكتب
+    ========================================== */
 
-    /*
+    async function loadBooks() {
+
+        try {
+
+            resultsCount.textContent =
+                "جاري تحميل الكتب...";
+
+
+            const response =
+                await fetch(
+                    "/api/books"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "HTTP " +
+                    response.status
+                );
+            }
+
+
+            const result =
+                await response.json();
+
+
+            if (!result.success) {
+
+                throw new Error(
+                    result.message ||
+                    "تعذر تحميل الكتب."
+                );
+            }
+
+
+            booksData =
+                Array.isArray(result.books)
+                    ? result.books
+                    : [];
+
+
+            console.log(
+                "تم تحميل الكتب:",
+                booksData
+            );
+
+
+            console.log(
+                "إجمالي الكتب:",
+                booksData.length
+            );
+
+
+            filterBooks();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Books loading error:",
+                error
+            );
+
+
+            resultsCount.textContent =
+                "";
+
+
+            booksContainer.innerHTML = `
+
+                <div style="
+                    grid-column: 1 / -1;
+                    text-align: center;
+                    padding: 60px 20px;
+                    font-size: 20px;
+                    color: #b91c1c;
+                ">
+
+                    ❌ تعذر تحميل الكتب من الخادم.
+
+                    <br><br>
+
+                    <span style="
+                        font-size: 15px;
+                        color: #64748b;
+                    ">
+
+                        تأكد من أن الخادم يعمل.
+
+                    </span>
+
+                </div>
+
+            `;
+        }
+    }
+
+
+    /* ==========================================
        البحث أثناء الكتابة
-    */
+    ========================================== */
 
     searchInput.addEventListener(
         "input",
@@ -480,10 +923,9 @@
     );
 
 
-
-    /*
-       استقبال البحث من الصفحة الرئيسية
-    */
+    /* ==========================================
+       البحث من الصفحة الرئيسية
+    ========================================== */
 
     const params =
         new URLSearchParams(
@@ -499,14 +941,12 @@
 
         searchInput.value =
             searchFromHome;
-
     }
 
 
-
-    /*
-       إظهار اسم التصنيف
-    */
+    /* ==========================================
+       إظهار التصنيف
+    ========================================== */
 
     const category =
         params.get("category");
@@ -514,21 +954,21 @@
 
     if (category) {
 
-        pageTitle.innerText =
-            "كتب " + category;
-
+        pageTitle.textContent =
+            "كتب " +
+            normalizeCategory(category);
     }
 
 
+    /* ==========================================
+       تشغيل الصفحة
+    ========================================== */
 
-    /*
-       تشغيل المكتبة
-    */
+    setupDashboardButton();
 
-    filterBooks();
+    loadBooks();
 
 </script>
-
 
 </body>
 

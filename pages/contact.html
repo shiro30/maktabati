@@ -1,277 +1,615 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>اتصل بنا | مكتبة الثانوية</title>
+```
+<title>اتصل بنا | مكتبة ثانوية مصاص رابح</title>
 
-    <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+    /* =========================================
+       هوية المؤسسة
+    ========================================= */
+
+    .institution-bar {
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .institution-bar strong {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .institution-bar span {
+        font-size: 13px;
+        opacity: 0.9;
+    }
+
+    /* =========================================
+       بطاقة الاتصال
+    ========================================= */
+
+    .contact-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .contact-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 35px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .contact-card h2 {
+        margin-top: 0;
+        color: #172033;
+    }
+
+    .contact-card > p {
+        color: #64748b;
+        line-height: 1.9;
+    }
+
+    /* =========================================
+       معلومات التواصل
+    ========================================= */
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .contact-item {
+        padding: 24px;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        transition: 0.25s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .contact-item.email {
+        background: #eff6ff;
+    }
+
+    .contact-item.phone {
+        background: #f0fdf4;
+    }
+
+    .contact-item.school {
+        background: #fff7ed;
+    }
+
+    .contact-item.programmer {
+        background: #f8fafc;
+    }
+
+    .contact-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .contact-item h3 {
+        color: #172033;
+        margin: 8px 0;
+    }
+
+    .contact-item p {
+        color: #64748b;
+        line-height: 1.8;
+        margin-bottom: 10px;
+    }
+
+    .contact-item a {
+        color: #1d4ed8;
+        font-weight: 700;
+        text-decoration: none;
+        word-break: break-word;
+    }
+
+    .contact-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* =========================================
+       بطاقة الملاحظة
+    ========================================= */
+
+    .contact-note {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border-right: 4px solid #1d4ed8;
+        line-height: 1.9;
+    }
+
+    .contact-note strong {
+        color: #172033;
+    }
+
+    .contact-note span {
+        color: #64748b;
+    }
+
+    /* =========================================
+       هوية النظام
+    ========================================= */
+
+    .system-identity {
+        margin-top: 30px;
+        padding: 24px;
+        background: linear-gradient(135deg, #f8fafc, #eff6ff);
+        border: 1px solid #dbeafe;
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    .system-identity strong {
+        display: block;
+        color: #1e3a8a;
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+
+    .system-identity span {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* =========================================
+       الهاتف
+    ========================================= */
+
+    @media (max-width: 768px) {
+
+        .institution-bar {
+            padding: 12px 10px;
+        }
+
+        .institution-bar strong {
+            font-size: 16px;
+        }
+
+        .institution-bar span {
+            font-size: 12px;
+        }
+
+        .contact-card {
+            padding: 22px;
+        }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+```
+
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+```
+<!-- =========================================
+     الشريط العلوي
+========================================= -->
 
-    <header class="navbar">
+<header class="navbar">
 
-        <div class="logo">
-            <div class="logo-icon">📚</div>
+    <div class="logo">
 
-            <div>
-                <div class="logo-title">مكتبة الثانوية</div>
-                <div class="logo-subtitle">المكتبة الإلكترونية</div>
-            </div>
+        <div class="logo-icon">
+            📚
         </div>
 
-        <nav>
-            <a href="../index.html">الرئيسية</a>
-            <a href="books.html">الكتب</a>
-            <a href="categories.html">التصنيفات</a>
-            <a href="about.html">عن المكتبة</a>
-        </nav>
+        <div>
 
-        <a href="login.html" class="login-btn">
-            تسجيل الدخول
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
+            </div>
+
+            <div class="logo-subtitle">
+                المكتبة الرقمية للمؤسسة
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="../index.html">
+            الرئيسية
         </a>
 
-    </header>
+        <a href="books.html">
+            الكتب
+        </a>
+
+        <a href="categories.html">
+            التصنيفات
+        </a>
+
+        <a href="about.html">
+            عن المكتبة
+        </a>
+
+        <a href="contact.html" class="active">
+            اتصل بنا
+        </a>
+
+    </nav>
 
 
-    <!-- ================= CONTACT ================= -->
+    <a href="login.html" class="login-btn">
+        تسجيل الدخول
+    </a>
 
-    <main>
-
-        <section class="section">
-
-            <div class="section-heading">
-
-                <div>
-                    <span>نحن هنا لمساعدتك</span>
-                    <h2>اتصل بنا</h2>
-                </div>
-
-            </div>
+</header>
 
 
-            <div style="
-                max-width: 850px;
-                margin: 0 auto;
-            ">
+<!-- =========================================
+     هوية المؤسسة
+========================================= -->
 
-                <div style="
-                    background: white;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 16px;
-                    padding: 35px;
-                    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-                ">
+<div class="institution-bar">
 
-                    <h2 style="
-                        margin-top: 0;
-                        color: #172033;
-                    ">
-                        تواصل مع إدارة المكتبة
-                    </h2>
+    <strong>
+        🏫 ثانوية مصاص رابح
+    </strong>
 
-                    <p style="
-                        color: #64748b;
-                        line-height: 1.9;
-                    ">
-                        إذا كانت لديك استفسارات أو اقتراحات أو واجهت
-                        مشكلة أثناء استخدام المكتبة الإلكترونية،
-                        يمكنك التواصل معنا عبر المعلومات التالية.
-                    </p>
+    <span>
+        المكتبة الرقمية للمؤسسة
+    </span>
+
+</div>
 
 
-                    <div style="
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                        gap: 20px;
-                        margin-top: 30px;
-                    ">
+<!-- =========================================
+     المحتوى الرئيسي
+========================================= -->
 
-                        <div style="
-                            background: #eff6ff;
-                            padding: 22px;
-                            border-radius: 12px;
-                        ">
+<main>
 
-                            <div style="font-size: 30px;">
-                                📧
-                            </div>
+    <section class="section">
 
-                            <h3>
-                                البريد الإلكتروني
-                            </h3>
-
-                            <p style="color:#64748b;">
-                                البريد الرسمي للمكتبة
-                            </p>
-
-                        </div>
-
-
-                        <div style="
-                            background: #f0fdf4;
-                            padding: 22px;
-                            border-radius: 12px;
-                        ">
-
-                            <div style="font-size: 30px;">
-                                🏫
-                            </div>
-
-                            <h3>
-                                المؤسسة
-                            </h3>
-
-                            <p style="color:#64748b;">
-                                مكتبة الثانوية
-                            </p>
-
-                        </div>
-
-
-                        <div style="
-                            background: #fff7ed;
-                            padding: 22px;
-                            border-radius: 12px;
-                        ">
-
-                            <div style="font-size: 30px;">
-                                💬
-                            </div>
-
-                            <h3>
-                                الاقتراحات
-                            </h3>
-
-                            <p style="color:#64748b;">
-                                نرحب باقتراحاتكم لتطوير المكتبة
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div style="
-                        margin-top: 30px;
-                        padding: 18px;
-                        background: #f8fafc;
-                        border-radius: 10px;
-                        border-right: 4px solid #1d4ed8;
-                    ">
-
-                        <strong>
-                            ملاحظة:
-                        </strong>
-
-                        <span style="color:#64748b;">
-                            سيتم إضافة وسائل التواصل الرسمية
-                            للمؤسسة هنا عند توفرها.
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer>
-
-        <div class="footer-content">
+        <div class="section-heading">
 
             <div>
 
-                <div class="logo">
+                <span>
+                    نحن هنا لمساعدتك
+                </span>
 
-                    <div class="logo-icon">
-                        📚
-                    </div>
-
-                    <div>
-
-                        <div class="logo-title">
-                            مكتبة الثانوية
-                        </div>
-
-                        <div class="logo-subtitle">
-                            المكتبة الإلكترونية
-                        </div>
-
-                    </div>
-
-                </div>
+                <h2>
+                    اتصل بنا
+                </h2>
 
                 <p>
-                    منصة إلكترونية للقراءة والتعلم
-                    والوصول إلى المعرفة.
+                    يمكنك التواصل معنا للاستفسارات والاقتراحات
+                    والمساعدة المتعلقة بالمكتبة الإلكترونية.
                 </p>
 
             </div>
 
-
-            <div class="footer-links">
-
-                <h3>
-                    روابط
-                </h3>
-
-                <a href="../index.html">
-                    الرئيسية
-                </a>
-
-                <a href="books.html">
-                    الكتب
-                </a>
-
-                <a href="categories.html">
-                    التصنيفات
-                </a>
-
-                <a href="about.html">
-                    عن المكتبة
-                </a>
-
-            </div>
+        </div>
 
 
-            <div class="footer-links">
+        <div class="contact-wrapper">
 
-                <h3>
-                    المساعدة
-                </h3>
+            <div class="contact-card">
 
-                <a href="contact.html">
-                    اتصل بنا
-                </a>
+                <h2>
+                    📞 تواصل معنا
+                </h2>
 
-                <a href="#">
-                    كيفية استخدام المكتبة
-                </a>
+                <p>
+                    إذا كانت لديك استفسارات أو اقتراحات أو واجهت
+                    مشكلة أثناء استخدام المكتبة الإلكترونية،
+                    يمكنك التواصل معنا عبر المعلومات التالية.
+                </p>
+
+
+                <!-- =================================
+                     بطاقات التواصل
+                ================================== -->
+
+                <div class="contact-grid">
+
+
+                    <!-- البريد الإلكتروني -->
+
+                    <div class="contact-item email">
+
+                        <div class="contact-icon">
+                            📧
+                        </div>
+
+                        <h3>
+                            البريد الإلكتروني
+                        </h3>
+
+                        <p>
+                            يمكنك مراسلتنا عبر البريد الإلكتروني:
+                        </p>
+
+                        <a href="mailto:charafeddin147@gmail.com">
+                            charafeddin147@gmail.com
+                        </a>
+
+                    </div>
+
+
+                    <!-- الهاتف -->
+
+                    <div class="contact-item phone">
+
+                        <div class="contact-icon">
+                            📞
+                        </div>
+
+                        <h3>
+                            رقم الهاتف
+                        </h3>
+
+                        <p>
+                            للتواصل والاستفسارات:
+                        </p>
+
+                        <a href="tel:0696183217" dir="ltr">
+                            0696183217
+                        </a>
+
+                    </div>
+
+
+                    <!-- المؤسسة -->
+
+                    <div class="contact-item school">
+
+                        <div class="contact-icon">
+                            🏫
+                        </div>
+
+                        <h3>
+                            المؤسسة
+                        </h3>
+
+                        <p>
+                            المؤسسة التعليمية التي تنتمي إليها
+                            المكتبة الرقمية:
+                        </p>
+
+                        <strong>
+                            ثانوية مصاص رابح
+                        </strong>
+
+                    </div>
+
+
+                    <!-- مهندس النظام -->
+
+                    <div class="contact-item programmer">
+
+                        <div class="contact-icon">
+                            👨‍💻
+                        </div>
+
+                        <h3>
+                            مهندس النظام
+                        </h3>
+
+                        <p>
+                            المسؤول عن تطوير وبرمجة النظام:
+                        </p>
+
+                        <strong>
+                            شراف الدين بوردوسن
+                        </strong>
+
+                        <p>
+                            أستاذ مادة الرياضيات
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================
+                     ملاحظة
+                ================================== -->
+
+                <div class="contact-note">
+
+                    <strong>
+                        💡 ملاحظة:
+                    </strong>
+
+                    <span>
+                        نرحب بجميع الاستفسارات والاقتراحات التي
+                        تساعد على تطوير المكتبة الرقمية وتحسين
+                        تجربة التلاميذ والأساتذة.
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     هوية النظام
+                ================================== -->
+
+                <div class="system-identity">
+
+                    <strong>
+                        🏫 مكتبة ثانوية مصاص رابح
+                    </strong>
+
+                    <span>
+                        مهندس النظام: شراف الدين بوردوسن —
+                        أستاذ مادة الرياضيات
+                    </span>
+
+                </div>
 
             </div>
 
         </div>
 
+    </section>
 
-        <div class="copyright">
+</main>
 
-            © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+
+<!-- =========================================
+     التذييل
+========================================= -->
+
+<footer>
+
+    <div class="footer-content">
+
+        <div>
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <div class="logo-title">
+                        مكتبة ثانوية مصاص رابح
+                    </div>
+
+                    <div class="logo-subtitle">
+                        المكتبة الرقمية للمؤسسة
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+                منصة إلكترونية للقراءة والتعلم
+                والوصول إلى المعرفة.
+            </p>
 
         </div>
 
-    </footer>
+
+        <div class="footer-links">
+
+            <h3>
+                روابط
+            </h3>
+
+            <a href="../index.html">
+                الرئيسية
+            </a>
+
+            <a href="books.html">
+                الكتب
+            </a>
+
+            <a href="categories.html">
+                التصنيفات
+            </a>
+
+            <a href="about.html">
+                عن المكتبة
+            </a>
+
+            <a href="contact.html">
+                اتصل بنا
+            </a>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                المساعدة
+            </h3>
+
+            <a href="contact.html">
+                اتصل بنا
+            </a>
+
+            <a href="guide.html">
+                كيفية استخدام المكتبة
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <br>
+
+        مكتبة الثانوية الرقمية
+
+        <br>
+
+        <span style="font-size:13px;">
+
+            مهندس النظام:
+            شراف الدين بوردوسن —
+            أستاذ مادة الرياضيات
+
+        </span>
+
+        <br><br>
+
+        📧
+        <a href="mailto:charafeddin147@gmail.com">
+            charafeddin147@gmail.com
+        </a>
+
+        &nbsp; | &nbsp;
+
+        📞
+        <a href="tel:0696183217">
+            0696183217
+        </a>
+
+        <br><br>
+
+        © 2026 — جميع الحقوق محفوظة
+
+    </div>
+
+</footer>
+```
 
 </body>
 

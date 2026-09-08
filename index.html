@@ -1,291 +1,671 @@
+```html
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>مكتبة الثانوية | المكتبة الإلكترونية</title>
+    <title>مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية</title>
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 
-<link rel="stylesheet" href="style.css">
-```
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        /* =====================================================
+           الإعدادات العلوية
+        ===================================================== */
+
+        .top-settings {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .settings-btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.12);
+            color: inherit;
+            padding: 8px 11px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-1px);
+        }
+
+        /* =====================================================
+           الوضع الداكن
+        ===================================================== */
+
+        body.dark-mode {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .section,
+        body.dark-mode .books-section {
+            background: #0f172a;
+        }
+
+        body.dark-mode .category-card,
+        body.dark-mode .identity-item,
+        body.dark-mode .book-card {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .category-card h3,
+        body.dark-mode .identity-item h3,
+        body.dark-mode .book-card h3 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .category-card p,
+        body.dark-mode .identity-item p,
+        body.dark-mode .book-card p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .search-box {
+            background: #1e293b;
+        }
+
+        body.dark-mode .search-box input {
+            background: #1e293b;
+            color: white;
+        }
+
+        body.dark-mode .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        body.dark-mode footer {
+            background: #020617;
+        }
+
+        /* =====================================================
+           الشاشات الصغيرة
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .top-settings {
+                margin-right: 0;
+                margin-top: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .settings-btn {
+                font-size: 13px;
+                padding: 7px 9px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-```
-<!-- ================= NAVBAR ================= -->
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
     <div class="logo">
-        <div class="logo-icon">📚</div>
+
+        <div class="logo-icon">
+            📚
+        </div>
 
         <div>
-            <div class="logo-title">مكتبة الثانوية</div>
-            <div class="logo-subtitle">المكتبة الإلكترونية</div>
+
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
+            </div>
+
+            <div class="logo-subtitle">
+                المكتبة الإلكترونية
+            </div>
+
         </div>
+
     </div>
 
+
     <nav>
-        <a href="#" class="active">الرئيسية</a>
-        <a href="pages/books.html">الكتب</a>
-        <a href="pages/categories.html">التصنيفات</a>
-        <a href="pages/about.html">عن المكتبة</a>
+
+        <a href="#" class="active">
+            الرئيسية
+        </a>
+
+        <a href="pages/books.html">
+            الكتب
+        </a>
+
+        <a href="pages/categories.html">
+            التصنيفات
+        </a>
+
+        <a href="pages/about.html">
+            عن المكتبة
+        </a>
+
+        <a href="pages/contact.html">
+            التواصل
+        </a>
+
     </nav>
 
-    <a href="pages/login.html" class="login-btn">
+
+    <!-- =====================================================
+         الإعدادات العامة
+    ===================================================== -->
+
+    <div class="top-settings">
+
+        <!-- Dark -->
+
+        <button
+            class="settings-btn"
+            id="darkButton"
+            title="الوضع الداكن">
+
+            🌙 الوضع الداكن
+
+        </button>
+
+
+        <!-- Light -->
+
+        <button
+            class="settings-btn"
+            id="lightButton"
+            title="الوضع الفاتح">
+
+            ☀️ الوضع الفاتح
+
+        </button>
+
+
+        <!-- Sound -->
+
+        <button
+            class="settings-btn"
+            id="soundButton"
+            title="صوت النقر">
+
+            🔊 الصوت
+
+        </button>
+
+    </div>
+
+
+    <!-- ACCOUNT -->
+
+    <a
+        href="pages/login.html"
+        class="login-btn"
+        id="accountButton">
+
         تسجيل الدخول
+
     </a>
 
 </header>
 
 
-<!-- ================= HERO ================= -->
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <main>
 
-    <section class="hero">
+<section class="hero">
 
-        <div class="hero-content">
+    <div class="hero-content">
 
-            <div class="welcome">
-                أهلاً بكم في مكتبة الثانوية
+        <div class="welcome">
+            🏫 ثانوية مصاص رابح
+        </div>
+
+
+        <h1>
+
+            <span>
+                المعرفة بين
+            </span>
+
+            <br>
+
+            <span>
+                يديك
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            مرحبًا بكم في المكتبة الإلكترونية لثانوية مصاص رابح،
+            فضاء رقمي للقراءة والتعلم والبحث والوصول إلى الكتب
+            والمراجع التعليمية.
+
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
+            >
+
+            <button onclick="searchBooks()">
+
+                🔍
+                بحث
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO CARD -->
+
+    <div class="hero-card">
+
+        <div class="book-symbol">
+            📖
+        </div>
+
+        <h2>
+            مكتبة ثانوية مصاص رابح
+        </h2>
+
+        <p>
+            اقرأ، تعلّم، واكتشف
+        </p>
+
+
+        <div class="hero-stat">
+
+            <div>
+
+                <strong id="heroBooksCount">
+                    —
+                </strong>
+
+                <span>
+                    كتاب
+                </span>
+
             </div>
 
-            <h1>
-                المعرفة بين<br>
-                <span>يديك</span>
-            </h1>
 
-            <p>
-                اكتشف مجموعة واسعة من الكتب والمراجع التعليمية
-                التي تساعدك على التعلم والبحث وتطوير معارفك.
-            </p>
+            <div>
 
-            <!-- SEARCH -->
+                <strong id="heroCategoriesCount">
+                    —
+                </strong>
 
-            <div class="search-box">
-
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
-                >
-
-                <button onclick="searchBooks()">
-                    🔍 بحث
-                </button>
+                <span>
+                    تصنيف
+                </span>
 
             </div>
 
         </div>
 
+    </div>
 
-        <!-- HERO CARD -->
+</section>
 
-        <div class="hero-card">
 
-            <div class="book-symbol">
-                📖
-            </div>
+<!-- =====================================================
+     SCHOOL IDENTITY
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                هويتنا
+            </span>
 
             <h2>
-                مكتبة المعرفة
+                عن المكتبة
             </h2>
 
+        </div>
+
+    </div>
+
+
+    <div class="school-identity">
+
+        <div class="identity-item">
+
+            <div class="identity-icon">
+                🏫
+            </div>
+
+            <div>
+
+                <h3>
+                    المؤسسة التعليمية
+                </h3>
+
+                <p>
+                    ثانوية مصاص رابح
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="identity-item">
+
+            <div class="identity-icon">
+                📚
+            </div>
+
+            <div>
+
+                <h3>
+                    المنصة
+                </h3>
+
+                <p>
+                    مكتبة الثانوية الإلكترونية
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="identity-item">
+
+            <div class="identity-icon">
+                👨‍💻
+            </div>
+
+            <div>
+
+                <h3>
+                    مهندس النظام
+                </h3>
+
+                <p>
+                    شراف الدين بوردوسن
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="identity-item">
+
+            <div class="identity-icon">
+                📐
+            </div>
+
+            <div>
+
+                <h3>
+                    الصفة
+                </h3>
+
+                <p>
+                    أستاذ مادة الرياضيات
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CATEGORIES
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                تصفح المكتبة
+            </span>
+
+            <h2>
+                التصنيفات
+            </h2>
+
+        </div>
+
+
+        <a
+            href="pages/categories.html">
+
+            جميع التصنيفات ←
+
+        </a>
+
+    </div>
+
+
+    <div class="categories">
+
+
+        <a
+            href="pages/books.html?category=رياضيات"
+            class="category-card">
+
+            <div class="category-icon">
+                📐
+            </div>
+
+            <h3>
+                الرياضيات
+            </h3>
+
             <p>
-                اقرأ، تعلّم، واكتشف
+                الكتب والمراجع الرياضية
             </p>
 
-            <div class="hero-stat">
+        </a>
 
-                <div>
-                    <strong>+500</strong>
-                    <span>كتاب</span>
-                </div>
 
-                <div>
-                    <strong>+50</strong>
-                    <span>مادة</span>
-                </div>
+        <a
+            href="pages/books.html?category=علوم"
+            class="category-card">
 
+            <div class="category-icon">
+                🔬
             </div>
 
-        </div>
+            <h3>
+                العلوم
+            </h3>
 
-    </section>
+            <p>
+                العلوم الطبيعية والتجريبية
+            </p>
+
+        </a>
 
 
-    <!-- ================= CATEGORIES ================= -->
+        <a
+            href="pages/books.html?category=إعلام آلي"
+            class="category-card">
 
-    <section class="section">
-
-        <div class="section-heading">
-
-            <div>
-                <span>تصفح المكتبة</span>
-                <h2>التصنيفات</h2>
+            <div class="category-icon">
+                💻
             </div>
 
-            <a href="pages/categories.html">
-                جميع التصنيفات ←
-            </a>
+            <h3>
+                الإعلام الآلي
+            </h3>
 
-        </div>
+            <p>
+                البرمجة والتكنولوجيا
+            </p>
 
-
-        <div class="categories">
-
-            <a href="pages/books.html?category=رياضيات"
-               class="category-card">
-
-                <div class="category-icon">
-                    📐
-                </div>
-
-                <h3>
-                    الرياضيات
-                </h3>
-
-                <p>
-                    الكتب والمراجع الرياضية
-                </p>
-
-            </a>
+        </a>
 
 
-            <a href="pages/books.html?category=علوم"
-               class="category-card">
+        <a
+            href="pages/books.html?category=لغات"
+            class="category-card">
 
-                <div class="category-icon">
-                    🔬
-                </div>
-
-                <h3>
-                    العلوم
-                </h3>
-
-                <p>
-                    العلوم الطبيعية والتجريبية
-                </p>
-
-            </a>
-
-
-            <a href="pages/books.html?category=إعلام آلي"
-               class="category-card">
-
-                <div class="category-icon">
-                    💻
-                </div>
-
-                <h3>
-                    الإعلام الآلي
-                </h3>
-
-                <p>
-                    البرمجة والتكنولوجيا
-                </p>
-
-            </a>
-
-
-            <a href="pages/books.html?category=لغات"
-               class="category-card">
-
-                <div class="category-icon">
-                    📚
-                </div>
-
-                <h3>
-                    اللغات
-                </h3>
-
-                <p>
-                    العربية والفرنسية والإنجليزية
-                </p>
-
-            </a>
-
-
-            <a href="pages/books.html?category=تاريخ"
-               class="category-card">
-
-                <div class="category-icon">
-                    🌍
-                </div>
-
-                <h3>
-                    التاريخ والجغرافيا
-                </h3>
-
-                <p>
-                    الحضارات والعالم
-                </p>
-
-            </a>
-
-
-            <a href="pages/books.html?category=فلسفة"
-               class="category-card">
-
-                <div class="category-icon">
-                    🧠
-                </div>
-
-                <h3>
-                    الفلسفة
-                </h3>
-
-                <p>
-                    الفكر والفلسفة
-                </p>
-
-            </a>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= BOOKS ================= -->
-
-    <section class="section books-section">
-
-        <div class="section-heading">
-
-            <div>
-                <span>مكتبتنا</span>
-                <h2>أحدث الكتب</h2>
+            <div class="category-icon">
+                📚
             </div>
 
-            <a href="pages/books.html">
-                عرض جميع الكتب ←
-            </a>
+            <h3>
+                اللغات
+            </h3>
+
+            <p>
+                العربية والفرنسية والإنجليزية
+            </p>
+
+        </a>
+
+
+        <a
+            href="pages/books.html?category=تاريخ"
+            class="category-card">
+
+            <div class="category-icon">
+                🌍
+            </div>
+
+            <h3>
+                التاريخ والجغرافيا
+            </h3>
+
+            <p>
+                الحضارات والعالم
+            </p>
+
+        </a>
+
+
+        <a
+            href="pages/books.html?category=فلسفة"
+            class="category-card">
+
+            <div class="category-icon">
+                🧠
+            </div>
+
+            <h3>
+                الفلسفة
+            </h3>
+
+            <p>
+                الفكر والفلسفة
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     BOOKS
+===================================================== -->
+
+<section class="section books-section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                مكتبتنا
+            </span>
+
+            <h2>
+                أحدث الكتب
+            </h2>
 
         </div>
 
 
-        <div class="books-container" id="latestBooksContainer">
-            <!-- سيتم تحميل الكتب تلقائيًا من books-data.js -->
-        </div>
+        <a
+            href="pages/books.html">
 
-    </section>
+            عرض جميع الكتب ←
+
+        </a>
+
+    </div>
+
+
+    <div
+        class="books-container"
+        id="latestBooksContainer">
+
+        <p>
+            جار تحميل الكتب...
+        </p>
+
+    </div>
+
+</section>
 
 </main>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
     <div class="footer-content">
+
+
+        <!-- BRAND -->
 
         <div>
 
@@ -298,7 +678,7 @@
                 <div>
 
                     <div class="logo-title">
-                        مكتبة الثانوية
+                        مكتبة ثانوية مصاص رابح
                     </div>
 
                     <div class="logo-subtitle">
@@ -309,13 +689,19 @@
 
             </div>
 
+
             <p>
+
                 منصة إلكترونية للقراءة والتعلم
-                والوصول إلى المعرفة.
+                والوصول إلى المعرفة لأسرة
+                ثانوية مصاص رابح.
+
             </p>
 
         </div>
 
+
+        <!-- LINKS -->
 
         <div class="footer-links">
 
@@ -342,13 +728,15 @@
         </div>
 
 
+        <!-- HELP -->
+
         <div class="footer-links">
 
             <h3>
                 المساعدة
             </h3>
 
-            <a href="#">
+            <a href="pages/guide.html">
                 كيفية استخدام المكتبة
             </a>
 
@@ -358,159 +746,756 @@
 
         </div>
 
+
+        <!-- SYSTEM ENGINEER -->
+
+        <div class="footer-links">
+
+            <h3>
+                النظام
+            </h3>
+
+            <p
+                style="
+                    color:#cbd5e1;
+                    line-height:1.9;
+                    font-size:13px;
+                ">
+
+                مهندس النظام
+
+                <br>
+
+                <strong
+                    style="
+                        color:white;
+                        font-size:14px;
+                    ">
+
+                    شراف الدين بوردوسن
+
+                </strong>
+
+                <br>
+
+                أستاذ مادة الرياضيات
+
+            </p>
+
+        </div>
+
     </div>
 
 
     <div class="copyright">
 
-        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+        <strong>
+            ثانوية مصاص رابح
+        </strong>
+
+        <br>
+
+        مكتبة الثانوية الإلكترونية
+
+        <br>
+
+        مهندس النظام:
+        شراف الدين بوردوسن —
+
+        أستاذ مادة الرياضيات
+
+        <br>
+
+        © 2026
+        جميع الحقوق محفوظة
 
     </div>
 
 </footer>
 
 
-<!-- ================= SCRIPTS ================= -->
+<!-- =====================================================
+     SCRIPTS
+===================================================== -->
 
 <script src="books-data.js"></script>
 <script src="script.js"></script>
 
 <script>
 
-    const latestBooksContainer =
-        document.getElementById("latestBooksContainer");
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+/*
+   ⚠️ أبقِ مفتاح Supabase الحالي الموجود
+   في ملفك كما هو.
+*/
+
+const SUPABASE_ANON_KEY =
+    "  sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK    ";
 
 
-    function createLatestBookCard(book, index) {
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
-        const article =
-            document.createElement("article");
 
-        article.className = "book-card";
+/* =====================================================
+   ACCOUNT BUTTON
+===================================================== */
+
+const accountButton =
+    document.getElementById(
+        "accountButton"
+    );
 
 
-        let coverHTML;
+function getDashboardByRole(role) {
 
-        if (book.cover) {
+    switch (role) {
 
-            coverHTML = `
-                <img
-                    src="covers/${book.cover}"
-                    alt="غلاف ${book.title}"
-                >
-            `;
+        case "programmer":
+            return "pages/programmer.html";
 
-        } else {
+        case "admin":
+            return "pages/admin.html";
 
-            coverHTML = "📚";
+        case "teacher":
+            return "pages/teacher.html";
 
+        case "student":
+            return "pages/student.html";
+
+        default:
+            return "pages/login.html";
+    }
+
+}
+
+
+async function loadUserAccount() {
+
+    try {
+
+        const {
+            data: { session },
+            error: sessionError
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if (
+            sessionError ||
+            !session
+        ) {
+
+            accountButton.textContent =
+                "تسجيل الدخول";
+
+            accountButton.href =
+                "pages/login.html";
+
+            return;
         }
 
 
-        let buttonHTML;
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select("full_name, role")
+                .eq(
+                    "id",
+                    session.user.id
+                )
+                .single();
 
-        if (book.pdf) {
 
-            buttonHTML = `
-                <a
-                    href="pages/book.html?book=${index}"
-                    class="read-button"
-                >
-                    📖 قراءة الكتاب
-                </a>
-            `;
+        if (
+            profileError ||
+            !profile
+        ) {
 
-        } else {
+            accountButton.textContent =
+                "حسابي";
 
-            buttonHTML = `
-                <span
-                    class="read-button"
-                    style="
-                        opacity:0.5;
-                        cursor:not-allowed;
-                    "
-                >
-                    📖 الكتاب غير متوفر
-                </span>
-            `;
+            accountButton.href =
+                "pages/login.html";
 
+            return;
         }
 
 
-        article.innerHTML = `
+        const name =
+            profile.full_name ||
+            "المستخدم";
 
-            <div class="book-cover">
-                ${coverHTML}
-            </div>
 
-            <div class="book-info">
+        accountButton.textContent =
+            "👤 " + name;
 
-                <span class="book-category">
-                    ${book.category}
-                </span>
 
-                <h3>
-                    ${book.title}
-                </h3>
+        const dashboard =
+            getDashboardByRole(
+                profile.role
+            );
 
-                <p>
-                    ${book.description}
-                </p>
 
-                <p style="
-                    color:#64748b;
-                    font-size:14px;
-                    margin-top:8px;
-                ">
-                    ✍️ ${book.author}
-                </p>
+        accountButton.href =
+            dashboard;
 
-                ${buttonHTML}
 
-            </div>
+        accountButton.onclick =
+            function() {
+
+                window.location.href =
+                    dashboard;
+
+                return false;
+            };
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Account loading error:",
+            error
+        );
+
+
+        accountButton.textContent =
+            "تسجيل الدخول";
+
+        accountButton.href =
+            "pages/login.html";
+    }
+
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+    function() {
+        loadUserAccount();
+    }
+);
+
+
+loadUserAccount();
+
+
+/* =====================================================
+   الإعدادات العامة
+===================================================== */
+
+const darkButton =
+    document.getElementById(
+        "darkButton"
+    );
+
+
+const lightButton =
+    document.getElementById(
+        "lightButton"
+    );
+
+
+const soundButton =
+    document.getElementById(
+        "soundButton"
+    );
+
+
+/* =====================================================
+   الإعدادات المحفوظة
+===================================================== */
+
+let darkMode =
+    localStorage.getItem(
+        "maktabati_dark_mode"
+    ) === "true";
+
+
+let soundEnabled =
+    localStorage.getItem(
+        "maktabati_sound"
+    ) !== "false";
+
+
+/* =====================================================
+   تطبيق الوضع
+===================================================== */
+
+function applyTheme() {
+
+    if (darkMode) {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+    }
+
+    else {
+
+        document.body.classList.remove(
+            "dark-mode"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   صوت النقر
+===================================================== */
+
+function playClickSound() {
+
+    if (!soundEnabled) {
+        return;
+    }
+
+
+    try {
+
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+
+        if (!AudioContext) {
+            return;
+        }
+
+
+        const audioContext =
+            new AudioContext();
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type =
+            "sine";
+
+
+        oscillator.frequency.value =
+            700;
+
+
+        gain.gain.setValueAtTime(
+            0.04,
+            audioContext.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + 0.06
+        );
+
+
+        oscillator.connect(gain);
+
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start();
+
+
+        oscillator.stop(
+            audioContext.currentTime + 0.06
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Sound unavailable"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   Dark
+===================================================== */
+
+darkButton.addEventListener(
+    "click",
+    function() {
+
+        darkMode = true;
+
+
+        localStorage.setItem(
+            "maktabati_dark_mode",
+            "true"
+        );
+
+
+        applyTheme();
+
+
+        playClickSound();
+
+    }
+);
+
+
+/* =====================================================
+   Light
+===================================================== */
+
+lightButton.addEventListener(
+    "click",
+    function() {
+
+        darkMode = false;
+
+
+        localStorage.setItem(
+            "maktabati_dark_mode",
+            "false"
+        );
+
+
+        applyTheme();
+
+
+        playClickSound();
+
+    }
+);
+
+
+/* =====================================================
+   الصوت
+===================================================== */
+
+soundButton.addEventListener(
+    "click",
+    function() {
+
+        soundEnabled =
+            !soundEnabled;
+
+
+        localStorage.setItem(
+            "maktabati_sound",
+            soundEnabled
+        );
+
+
+        soundButton.textContent =
+            soundEnabled
+                ? "🔊 الصوت"
+                : "🔇 الصوت";
+
+
+        if (soundEnabled) {
+            playClickSound();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   تطبيق الإعدادات عند فتح الصفحة
+===================================================== */
+
+applyTheme();
+
+
+soundButton.textContent =
+    soundEnabled
+        ? "🔊 الصوت"
+        : "🔇 الصوت";
+
+
+/* =====================================================
+   أحدث الكتب
+===================================================== */
+
+const latestBooksContainer =
+    document.getElementById(
+        "latestBooksContainer"
+    );
+
+
+function createLatestBookCard(
+    book,
+    index
+) {
+
+    const article =
+        document.createElement(
+            "article"
+        );
+
+
+    article.className =
+        "book-card";
+
+
+    let coverHTML;
+
+
+    if (book.cover) {
+
+        coverHTML = `
+
+            <img
+                src="covers/${book.cover}"
+                alt="غلاف ${book.title}"
+            >
 
         `;
 
+    }
 
-        return article;
+    else {
+
+        coverHTML =
+            "📚";
 
     }
 
 
-    function displayLatestBooks() {
-
-        latestBooksContainer.innerHTML = "";
+    let buttonHTML;
 
 
-        /*
-            نعرض آخر الكتب الموجودة في قاعدة البيانات
-            الحالية، مع الاحتفاظ بترتيبها.
-        */
+    if (book.pdf) {
 
-        const latestBooks =
-            booksData.slice(-4).reverse();
+        buttonHTML = `
+
+            <a
+                href="pages/book.html?book=${index}"
+                class="read-button"
+            >
+
+                📖 قراءة الكتاب
+
+            </a>
+
+        `;
+
+    }
+
+    else {
+
+        buttonHTML = `
+
+            <span
+                class="read-button"
+                style="
+                    opacity:0.5;
+                    cursor:not-allowed;
+                "
+            >
+
+                📖 الكتاب غير متوفر
+
+            </span>
+
+        `;
+
+    }
 
 
-        latestBooks.forEach(book => {
+    article.innerHTML = `
+
+        <div class="book-cover">
+
+            ${coverHTML}
+
+        </div>
+
+
+        <div class="book-info">
+
+            <span class="book-category">
+
+                ${book.category || ""}
+
+            </span>
+
+
+            <h3>
+
+                ${book.title || ""}
+
+            </h3>
+
+
+            <p>
+
+                ${book.description || ""}
+
+            </p>
+
+
+            <p
+                style="
+                    color:#64748b;
+                    font-size:14px;
+                    margin-top:8px;
+                "
+            >
+
+                ✍️ ${book.author || "غير محدد"}
+
+            </p>
+
+
+            ${buttonHTML}
+
+        </div>
+
+    `;
+
+
+    return article;
+
+}
+
+
+/* =====================================================
+   عرض أحدث الكتب
+===================================================== */
+
+function displayLatestBooks() {
+
+    latestBooksContainer.innerHTML =
+        "";
+
+
+    if (
+        typeof booksData ===
+        "undefined"
+    ) {
+
+        latestBooksContainer.innerHTML = `
+
+            <p>
+                لا توجد بيانات كتب محلية.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    const latestBooks =
+        booksData
+            .slice(-4)
+            .reverse();
+
+
+    latestBooks.forEach(
+        function(book) {
 
             const index =
-                booksData.indexOf(book);
+                booksData.indexOf(
+                    book
+                );
+
 
             const card =
-                createLatestBookCard(book, index);
+                createLatestBookCard(
+                    book,
+                    index
+                );
 
-            latestBooksContainer.appendChild(card);
 
-        });
+            latestBooksContainer
+                .appendChild(card);
+
+        }
+    );
+
+
+    /* عدد الكتب */
+
+    const booksCount =
+        document.getElementById(
+            "heroBooksCount"
+        );
+
+
+    if (booksCount) {
+
+        booksCount.textContent =
+            booksData.length;
 
     }
 
 
-    displayLatestBooks();
+    /* عدد التصنيفات */
+
+    const categoriesCount =
+        document.getElementById(
+            "heroCategoriesCount"
+        );
+
+
+    if (categoriesCount) {
+
+        const categories =
+            new Set(
+
+                booksData
+                    .map(
+                        function(book) {
+
+                            return book.category;
+
+                        }
+                    )
+                    .filter(Boolean)
+
+            );
+
+
+        categoriesCount.textContent =
+            categories.size;
+
+    }
+
+}
+
+
+displayLatestBooks();
 
 </script>
-```
 
 </body>
 
 </html>
+```

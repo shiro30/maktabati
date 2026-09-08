@@ -1,42 +1,204 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>التصنيفات | مكتبة الثانوية</title>
+```
+<title>التصنيفات | مكتبة ثانوية مصاص رابح</title>
 
-    <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+    .institution-bar {
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .institution-bar strong {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .institution-bar span {
+        font-size: 13px;
+        opacity: 0.9;
+    }
+
+    .programmer-info {
+        max-width: 800px;
+        margin: 40px auto 0;
+        padding: 22px;
+        text-align: center;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+    }
+
+    .programmer-info strong {
+        display: block;
+        color: #1e3a8a;
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .programmer-info span {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .categories-page {
+        min-height: 600px;
+    }
+
+    .category-card {
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .account-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        background: #1e3a8a;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .account-btn:hover {
+        background: #172554;
+        transform: translateY(-1px);
+    }
+
+    .loading-message {
+        text-align: center;
+        padding: 20px;
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .error-message {
+        text-align: center;
+        padding: 20px;
+        color: #b91c1c;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+
+    @media (max-width: 768px) {
+        .institution-bar {
+            padding: 12px 10px;
+        }
+
+        .institution-bar strong {
+            font-size: 16px;
+        }
+
+        .institution-bar span {
+            font-size: 12px;
+        }
+
+        .account-btn {
+            padding: 9px 12px;
+            font-size: 13px;
+        }
+    }
+</style>
+```
+
 </head>
 
 <body>
 
+```
+<!-- الشريط العلوي -->
 <header class="navbar">
 
     <div class="logo">
-        <div class="logo-icon">📚</div>
+
+        <div class="logo-icon">
+            📚
+        </div>
 
         <div>
-            <div class="logo-title">مكتبة الثانوية</div>
-            <div class="logo-subtitle">المكتبة الإلكترونية</div>
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
+            </div>
+
+            <div class="logo-subtitle">
+                المكتبة الرقمية للمؤسسة
+            </div>
         </div>
+
     </div>
 
     <nav>
-        <a href="../index.html">الرئيسية</a>
-        <a href="books.html">الكتب</a>
-        <a href="categories.html" class="active">التصنيفات</a>
-        <a href="about.html">عن المكتبة</a>
+        <a href="../index.html">
+            الرئيسية
+        </a>
+
+        <a href="books.html">
+            الكتب
+        </a>
+
+        <a href="categories.html" class="active">
+            التصنيفات
+        </a>
+
+        <a href="about.html">
+            عن المكتبة
+        </a>
     </nav>
 
-    <a href="login.html" class="login-btn">
-        تسجيل الدخول
+    <a
+        href="login.html"
+        class="account-btn"
+        id="accountButton">
+        🔐 تسجيل الدخول
     </a>
 
 </header>
 
 
+<!-- هوية المؤسسة -->
+<div class="institution-bar">
+
+    <strong>
+        🏫 ثانوية مصاص رابح
+    </strong>
+
+    <span>
+        المكتبة الرقمية للمؤسسة
+    </span>
+
+</div>
+
+
+<!-- المحتوى -->
 <main>
 
     <section class="section categories-page">
@@ -45,9 +207,13 @@
 
             <div>
 
-                <span>مكتبة الثانوية</span>
+                <span>
+                    المكتبة الرقمية للمؤسسة
+                </span>
 
-                <h2>تصنيفات الكتب</h2>
+                <h2>
+                    تصنيفات الكتب
+                </h2>
 
                 <p>
                     تصفح الكتب والمراجع التعليمية حسب المادة الدراسية.
@@ -58,13 +224,14 @@
         </div>
 
 
+        <!-- التصنيفات -->
         <div class="categories-container">
 
 
             <!-- الرياضيات -->
-
-            <a href="books.html?category=رياضيات"
-               class="category-card">
+            <a
+                href="books.html?category=الرياضيات"
+                class="category-card">
 
                 <div class="category-icon">
                     📐
@@ -78,43 +245,189 @@
                     كتب ومراجع الرياضيات
                 </p>
 
-                <span class="category-count"
-                      data-category="رياضيات">
+                <span
+                    class="category-count"
+                    data-category="الرياضيات">
+
                     جاري الحساب...
+
                 </span>
 
             </a>
 
 
-            <!-- العلوم -->
-
-            <a href="books.html?category=علوم"
-               class="category-card">
+            <!-- العلوم الطبيعية -->
+            <a
+                href="books.html?category=العلوم الطبيعية"
+                class="category-card">
 
                 <div class="category-icon">
-                    🔬
+                    🧬
                 </div>
 
                 <h3>
-                    العلوم
+                    العلوم الطبيعية
                 </h3>
 
                 <p>
-                    كتب العلوم والمراجع العلمية
+                    كتب ومراجع العلوم الطبيعية
                 </p>
 
-                <span class="category-count"
-                      data-category="علوم">
+                <span
+                    class="category-count"
+                    data-category="العلوم الطبيعية">
+
                     جاري الحساب...
+
+                </span>
+
+            </a>
+
+
+            <!-- العلوم الفيزيائية -->
+            <a
+                href="books.html?category=العلوم الفيزيائية"
+                class="category-card">
+
+                <div class="category-icon">
+                    ⚛️
+                </div>
+
+                <h3>
+                    العلوم الفيزيائية
+                </h3>
+
+                <p>
+                    كتب ومراجع الفيزياء والكيمياء
+                </p>
+
+                <span
+                    class="category-count"
+                    data-category="العلوم الفيزيائية">
+
+                    جاري الحساب...
+
+                </span>
+
+            </a>
+
+
+            <!-- التاريخ والجغرافيا -->
+            <a
+                href="books.html?category=التاريخ والجغرافيا"
+                class="category-card">
+
+                <div class="category-icon">
+                    🌍
+                </div>
+
+                <h3>
+                    التاريخ والجغرافيا
+                </h3>
+
+                <p>
+                    كتب التاريخ والجغرافيا والحضارات
+                </p>
+
+                <span
+                    class="category-count"
+                    data-category="التاريخ والجغرافيا">
+
+                    جاري الحساب...
+
+                </span>
+
+            </a>
+
+
+            <!-- الفلسفة -->
+            <a
+                href="books.html?category=الفلسفة"
+                class="category-card">
+
+                <div class="category-icon">
+                    🤔
+                </div>
+
+                <h3>
+                    الفلسفة
+                </h3>
+
+                <p>
+                    كتب ومراجع الفلسفة
+                </p>
+
+                <span
+                    class="category-count"
+                    data-category="الفلسفة">
+
+                    جاري الحساب...
+
+                </span>
+
+            </a>
+
+
+            <!-- العلوم الإسلامية -->
+            <a
+                href="books.html?category=العلوم الإسلامية"
+                class="category-card">
+
+                <div class="category-icon">
+                    ☪️
+                </div>
+
+                <h3>
+                    العلوم الإسلامية
+                </h3>
+
+                <p>
+                    كتب ومراجع العلوم الإسلامية
+                </p>
+
+                <span
+                    class="category-count"
+                    data-category="العلوم الإسلامية">
+
+                    جاري الحساب...
+
+                </span>
+
+            </a>
+
+
+            <!-- اللغات -->
+            <a
+                href="books.html?category=اللغات"
+                class="category-card">
+
+                <div class="category-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    اللغات
+                </h3>
+
+                <p>
+                    كتب ومراجع اللغات
+                </p>
+
+                <span
+                    class="category-count"
+                    data-category="اللغات">
+
+                    جاري الحساب...
+
                 </span>
 
             </a>
 
 
             <!-- الإعلام الآلي -->
-
-            <a href="books.html?category=إعلام آلي"
-               class="category-card">
+            <a
+                href="books.html?category=الإعلام الآلي"
+                class="category-card">
 
                 <div class="category-icon">
                     💻
@@ -128,88 +441,67 @@
                     البرمجة والحاسوب والتكنولوجيا
                 </p>
 
-                <span class="category-count"
-                      data-category="إعلام آلي">
+                <span
+                    class="category-count"
+                    data-category="الإعلام الآلي">
+
                     جاري الحساب...
+
                 </span>
 
             </a>
 
 
-            <!-- الأدب -->
-
-            <a href="books.html?category=أدب"
-               class="category-card">
+            <!-- الاقتصاد والمحاسبة -->
+            <a
+                href="books.html?category=الاقتصاد والمحاسبة"
+                class="category-card">
 
                 <div class="category-icon">
-                    📚
+                    📊
                 </div>
 
                 <h3>
-                    الأدب
+                    الاقتصاد والمحاسبة
                 </h3>
 
                 <p>
-                    النصوص والكتب الأدبية
+                    كتب الاقتصاد والمحاسبة والتسيير
                 </p>
 
-                <span class="category-count"
-                      data-category="أدب">
+                <span
+                    class="category-count"
+                    data-category="الاقتصاد والمحاسبة">
+
                     جاري الحساب...
+
                 </span>
 
             </a>
 
-
-            <!-- اللغات -->
-
-            <a href="books.html?category=لغات"
-               class="category-card">
-
-                <div class="category-icon">
-                    🌍
-                </div>
-
-                <h3>
-                    اللغات
-                </h3>
-
-                <p>
-                    كتب ومراجع اللغات
-                </p>
-
-                <span class="category-count"
-                      data-category="لغات">
-                    جاري الحساب...
-                </span>
-
-            </a>
+        </div>
 
 
-            <!-- التاريخ -->
+        <!-- حالة التحميل -->
+        <div
+            id="categoriesStatus"
+            class="loading-message">
 
-            <a href="books.html?category=تاريخ"
-               class="category-card">
+            جاري تحميل بيانات الكتب...
 
-                <div class="category-icon">
-                    🏛️
-                </div>
+        </div>
 
-                <h3>
-                    التاريخ
-                </h3>
 
-                <p>
-                    كتب التاريخ والحضارات
-                </p>
+        <!-- معلومات النظام -->
+        <div class="programmer-info">
 
-                <span class="category-count"
-                      data-category="تاريخ">
-                    جاري الحساب...
-                </span>
+            <strong>
+                👨‍💻 مهندس النظام: شراف الدين بوردوسن
+            </strong>
 
-            </a>
-
+            <span>
+                أستاذ مادة الرياضيات
+            </span>
 
         </div>
 
@@ -218,76 +510,455 @@
 </main>
 
 
+<!-- التذييل -->
 <footer>
 
     <div class="copyright">
-        © 2026 مكتبة الثانوية — جميع الحقوق محفوظة
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <br>
+
+        مكتبة الثانوية الرقمية
+
+        <br>
+
+        <span style="font-size:13px;">
+
+            مهندس النظام:
+            شراف الدين بوردوسن —
+            أستاذ مادة الرياضيات
+
+        </span>
+
+        <br>
+        <br>
+
+        © 2026 — جميع الحقوق محفوظة
+
     </div>
 
 </footer>
 
 
-<script src="../books-data.js"></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
-    /*
-       حساب عدد الكتب في كل تصنيف
-    */
+    /* =========================================
+       إعداد Supabase
+    ========================================== */
 
-    const categoryCounts = {};
-
-
-    booksData.forEach(book => {
-
-        if (!categoryCounts[book.category]) {
-
-            categoryCounts[book.category] = 0;
-
-        }
-
-        categoryCounts[book.category]++;
-
-    });
-
+    const SUPABASE_URL =
+        "https://xdkluojrvdhdtihblpwy.supabase.co";
 
     /*
-       عرض العدد داخل كل بطاقة
+        احتفظ بمفتاح Supabase الحالي
+        الموجود في ملفك.
     */
 
-    document.querySelectorAll(".category-count").forEach(element => {
-
-        const category =
-            element.getAttribute("data-category");
-
-        const count =
-            categoryCounts[category] || 0;
+    const SUPABASE_ANON_KEY =
+        "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
 
 
-        if (count === 0) {
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
 
-            element.textContent =
-                "لا توجد كتب";
+
+    /* =========================================
+       زر الحساب
+    ========================================== */
+
+    const accountButton =
+        document.getElementById(
+            "accountButton"
+        );
+
+
+    /* =========================================
+       تحديد لوحة المستخدم
+    ========================================== */
+
+    function getDashboard(role) {
+
+        switch (role) {
+
+            case "programmer":
+                return "programmer.html";
+
+            case "admin":
+                return "admin.html";
+
+            case "teacher":
+                return "teacher.html";
+
+            case "student":
+                return "student.html";
+
+            default:
+                return "login.html";
+        }
+    }
+
+
+    /* =========================================
+       تحديث زر الحساب
+    ========================================== */
+
+    async function updateAccountButton() {
+
+        try {
+
+            const {
+                data: {
+                    session
+                }
+            } =
+                await supabaseClient.auth.getSession();
+
+
+            if (!session) {
+
+                accountButton.href =
+                    "login.html";
+
+                accountButton.textContent =
+                    "🔐 تسجيل الدخول";
+
+                return;
+            }
+
+
+            const user =
+                session.user;
+
+
+            const {
+                data: profile,
+                error
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select("full_name, role")
+                    .eq("id", user.id)
+                    .single();
+
+
+            if (error || !profile) {
+
+                accountButton.href =
+                    "login.html";
+
+                accountButton.textContent =
+                    "👤 حسابي";
+
+                return;
+            }
+
+
+            accountButton.href =
+                getDashboard(
+                    profile.role
+                );
+
+
+            accountButton.textContent =
+                "👤 " + profile.full_name;
 
         }
 
-        else if (count === 1) {
+        catch (error) {
 
-            element.textContent =
-                "كتاب واحد";
+            console.error(
+                "خطأ في تحميل الحساب:",
+                error
+            );
+
+            accountButton.href =
+                "login.html";
+
+            accountButton.textContent =
+                "🔐 تسجيل الدخول";
+        }
+    }
+
+
+    /* =========================================
+       متابعة حالة تسجيل الدخول
+    ========================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+        function () {
+            updateAccountButton();
+        }
+    );
+
+
+    updateAccountButton();
+
+
+    /* =========================================
+       توحيد أسماء التصنيفات القديمة والجديدة
+    ========================================== */
+
+    function normalizeCategory(category) {
+
+        if (!category) {
+            return "";
+        }
+
+        const value =
+            String(category)
+                .trim()
+                .replace(/\s+/g, " ");
+
+
+        /*
+            الرياضيات:
+            رياضيات
+            الرياضيات
+        */
+
+        if (
+            value === "رياضيات" ||
+            value === "الرياضيات"
+        ) {
+            return "الرياضيات";
+        }
+
+
+        /*
+            العلوم الطبيعية:
+            علوم
+            علم الطبيعة
+            العلوم الطبيعية
+            العلوم
+        */
+
+        if (
+            value === "علوم" ||
+            value === "العلوم" ||
+            value === "علم الطبيعة" ||
+            value === "العلوم الطبيعية"
+        ) {
+            return "العلوم الطبيعية";
+        }
+
+
+        /*
+            باقي التصنيفات
+        */
+
+        return value;
+    }
+
+
+    /* =========================================
+       تحميل أعداد الكتب من قاعدة البيانات
+    ========================================== */
+
+    async function loadCategoryCounts() {
+
+        const status =
+            document.getElementById(
+                "categoriesStatus"
+            );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/books"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "الخادم لم يرجع استجابة صحيحة."
+                );
+            }
+
+
+            const result =
+                await response.json();
+
+
+            console.log(
+                "استجابة /api/books:",
+                result
+            );
+
+
+            if (
+                !result.success ||
+                !Array.isArray(result.books)
+            ) {
+
+                throw new Error(
+                    "بيانات الكتب القادمة من الخادم غير صالحة."
+                );
+            }
+
+
+            const books =
+                result.books;
+
+
+            console.log(
+                "عدد الكتب:",
+                books.length
+            );
+
+
+            /* =====================================
+               حساب عدد الكتب لكل تصنيف
+            ====================================== */
+
+            const categoryCounts = {};
+
+
+            books.forEach(
+                function (book) {
+
+                    if (
+                        !book ||
+                        !book.category
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                        توحيد التصنيف قبل الحساب
+                    */
+
+                    const category =
+                        normalizeCategory(
+                            book.category
+                        );
+
+
+                    if (
+                        !categoryCounts[category]
+                    ) {
+
+                        categoryCounts[category] =
+                            0;
+                    }
+
+
+                    categoryCounts[category]++;
+                }
+            );
+
+
+            console.log(
+                "أعداد الكتب حسب التصنيف:",
+                categoryCounts
+            );
+
+
+            /* =====================================
+               عرض الأعداد داخل البطاقات
+            ====================================== */
+
+            document
+                .querySelectorAll(
+                    ".category-count"
+                )
+                .forEach(
+                    function (element) {
+
+                        const category =
+                            element.getAttribute(
+                                "data-category"
+                            );
+
+
+                        const count =
+                            categoryCounts[
+                                category
+                            ] || 0;
+
+
+                        if (count === 0) {
+
+                            element.textContent =
+                                "لا توجد كتب";
+
+                        }
+
+                        else if (count === 1) {
+
+                            element.textContent =
+                                "كتاب واحد";
+
+                        }
+
+                        else {
+
+                            element.textContent =
+                                count + " كتب";
+                        }
+
+                    }
+                );
+
+
+            /* =====================================
+               عرض إجمالي الكتب في وحدة التحكم
+            ====================================== */
+
+            console.log(
+                "إجمالي الكتب في المكتبة:",
+                books.length
+            );
+
+
+            /* =====================================
+               إخفاء رسالة التحميل
+            ====================================== */
+
+            status.style.display =
+                "none";
 
         }
 
-        else {
+        catch (error) {
 
-            element.textContent =
-                count + " كتب";
+            console.error(
+                "خطأ في تحميل بيانات التصنيفات:",
+                error
+            );
 
+
+            status.className =
+                "error-message";
+
+
+            status.textContent =
+                "تعذر تحميل بيانات الكتب. تأكد من تشغيل الخادم.";
         }
+    }
 
-    });
+
+    /* =========================================
+       تشغيل تحميل التصنيفات
+    ========================================== */
+
+    loadCategoryCounts();
 
 </script>
+```
 
 </body>
 
