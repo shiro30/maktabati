@@ -60,17 +60,9 @@ let drive = null;
 
 /* =========================================================
    قراءة بيانات Google OAuth
-   تعمل بالطريقتين:
-   1. Render باستخدام Environment Variables
-   2. الجهاز المحلي باستخدام الملفات
 ========================================================= */
 
 function getOAuthClientData() {
-
-    /* ---------------------------------------------
-       الطريقة الأولى: Environment Variables
-       تستخدم على Render
-    --------------------------------------------- */
 
     if (
         process.env.GOOGLE_CLIENT_ID &&
@@ -93,11 +85,6 @@ function getOAuthClientData() {
 
         };
     }
-
-    /* ---------------------------------------------
-       الطريقة الثانية: google-oauth.json
-       تستخدم محليًا
-    --------------------------------------------- */
 
     if (!fs.existsSync(GOOGLE_OAUTH_FILE)) {
 
@@ -139,7 +126,7 @@ async function authorizeGoogleDrive() {
 
     /* ---------------------------------------------
        Render:
-       استخدام Refresh Token من Environment
+       استخدام Refresh Token
     --------------------------------------------- */
 
     if (
@@ -166,10 +153,6 @@ async function authorizeGoogleDrive() {
                 process.env.GOOGLE_REFRESH_TOKEN
 
         });
-
-        /* ---------------------------------------------
-           اختبار الاتصال فعليًا
-        --------------------------------------------- */
 
         await oauth2Client.getAccessToken();
 
@@ -2149,6 +2132,384 @@ app.post(
 
                     error:
                         error.message
+
+                });
+        }
+    }
+);
+
+/* =========================================================
+   حذف كتاب
+   المبرمج والمدير:
+   يستطيعان حذف أي كتاب.
+
+   الأستاذ:
+   يستطيع حذف الكتب التي رفعها هو فقط.
+
+   الطالب:
+   ممنوع.
+========================================================= */
+
+app.delete(
+    "/api/books/:id",
+    async function (
+        req,
+        res
+    ) {
+
+        try {
+
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "بدأ طلب حذف كتاب"
+            );
+
+            console.log(
+                "Book ID:",
+                req.params.id
+            );
+
+            console.log(
+                "================================="
+            );
+
+            /* ---------------------------------------------
+               التحقق من المستخدم
+            --------------------------------------------- */
+
+            const verification =
+                await verifyUser(req);
+
+            if (
+                !verification.success
+            ) {
+
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            verification.message
+
+                    });
+            }
+
+            const currentUser =
+                verification.user;
+
+            const currentRole =
+                verification.profile.role;
+
+            /* ---------------------------------------------
+               منع الطالب
+            --------------------------------------------- */
+
+            if (
+                currentRole !== "programmer" &&
+                currentRole !== "admin" &&
+                currentRole !== "teacher"
+            ) {
+
+                return res
+                    .status(403)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "ليس لديك صلاحية حذف الكتب."
+
+                    });
+            }
+
+            const bookId =
+                req.params.id;
+
+            if (!bookId) {
+
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "معرف الكتاب غير صالح."
+
+                    });
+            }
+
+            /* ---------------------------------------------
+               جلب الكتاب
+            --------------------------------------------- */
+
+            const bookResult =
+                await supabase
+                    .from("books")
+                    .select(
+                        "id, title, drive_file_id, uploaded_by"
+                    )
+                    .eq(
+                        "id",
+                        bookId
+                    )
+                    .single();
+
+            if (
+                bookResult.error ||
+                !bookResult.data
+            ) {
+
+                console.error(
+                    "Get book for deletion error:",
+                    bookResult.error
+                );
+
+                return res
+                    .status(404)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "الكتاب غير موجود."
+
+                    });
+            }
+
+            const book =
+                bookResult.data;
+
+            /* ---------------------------------------------
+               الأستاذ يستطيع حذف كتابه فقط
+            --------------------------------------------- */
+
+            if (
+                currentRole === "teacher" &&
+                book.uploaded_by !== currentUser.id
+            ) {
+
+                return res
+                    .status(403)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "يمكن للأستاذ حذف الكتب التي رفعها بنفسه فقط."
+
+                    });
+            }
+
+            /* ---------------------------------------------
+               التأكد من Google Drive
+            --------------------------------------------- */
+
+            if (
+                book.drive_file_id &&
+                !drive
+            ) {
+
+                return res
+                    .status(500)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Google Drive غير متصل بالخادم، لم يتم حذف الكتاب."
+
+                    });
+            }
+
+            /* ---------------------------------------------
+               حذف ملف PDF من Google Drive
+            --------------------------------------------- */
+
+            let driveDeleted =
+                false;
+
+            if (
+                book.drive_file_id &&
+                drive
+            ) {
+
+                try {
+
+                    console.log(
+                        "جاري حذف ملف PDF من Google Drive..."
+                    );
+
+                    await drive.files.delete({
+
+                        fileId:
+                            book.drive_file_id
+
+                    });
+
+                    driveDeleted =
+                        true;
+
+                    console.log(
+                        "تم حذف ملف PDF من Google Drive."
+                    );
+
+                } catch (driveError) {
+
+                    /* -----------------------------------------
+                       إذا كان الملف غير موجود أصلًا في Drive
+                       نكمل حذف السجل من Supabase.
+                    ----------------------------------------- */
+
+                    const driveStatus =
+                        driveError &&
+                        driveError.response
+                            ? driveError.response.status
+                            : null;
+
+                    if (
+                        driveStatus === 404
+                    ) {
+
+                        console.log(
+                            "ملف PDF غير موجود في Google Drive، سيتم حذف سجل الكتاب."
+                        );
+
+                        driveDeleted =
+                            true;
+
+                    } else {
+
+                        console.error(
+                            "خطأ أثناء حذف ملف Google Drive:",
+                            driveError
+                        );
+
+                        return res
+                            .status(500)
+                            .json({
+
+                                success:
+                                    false,
+
+                                message:
+                                    "تعذر حذف ملف الكتاب من Google Drive، لذلك لم يتم حذف الكتاب من المكتبة."
+
+                            });
+                    }
+                }
+            }
+
+            /* ---------------------------------------------
+               حذف سجل الكتاب من Supabase
+            --------------------------------------------- */
+
+            console.log(
+                "جاري حذف سجل الكتاب من Supabase..."
+            );
+
+            const deleteBookResult =
+                await supabase
+                    .from("books")
+                    .delete()
+                    .eq(
+                        "id",
+                        bookId
+                    );
+
+            if (
+                deleteBookResult.error
+            ) {
+
+                console.error(
+                    "Delete book from Supabase error:",
+                    deleteBookResult.error
+                );
+
+                /*
+                   في هذه الحالة قد يكون ملف Google Drive
+                   قد حذف بالفعل.
+                   نبلغ الخادم بوضوح حتى يمكن معالجة الحالة
+                   إذا حدث خطأ نادر.
+                */
+
+                return res
+                    .status(500)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            driveDeleted
+                                ? "تم حذف ملف الكتاب من Google Drive لكن حدث خطأ أثناء حذف سجل الكتاب من قاعدة البيانات."
+                                : "حدث خطأ أثناء حذف الكتاب."
+
+                    });
+            }
+
+            console.log(
+                "تم حذف الكتاب من Supabase بنجاح."
+            );
+
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "اكتمل حذف الكتاب:",
+                book.title
+            );
+
+            console.log(
+                "================================="
+            );
+
+            return res.json({
+
+                success:
+                    true,
+
+                message:
+                    "تم حذف الكتاب بنجاح.",
+
+                bookId:
+                    book.id,
+
+                title:
+                    book.title
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Delete book error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        "حدث خطأ داخلي أثناء حذف الكتاب."
 
                 });
         }
