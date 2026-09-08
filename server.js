@@ -21,14 +21,14 @@ const PORT = process.env.PORT || 3000;
 
 if (!process.env.SUPABASE_URL) {
     console.error(
-        "خطأ: SUPABASE_URL غير موجود في ملف .env"
+        "خطأ: SUPABASE_URL غير موجود في متغيرات البيئة."
     );
     process.exit(1);
 }
 
 if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.error(
-        "خطأ: SUPABASE_SERVICE_ROLE_KEY غير موجود في ملف .env"
+        "خطأ: SUPABASE_SERVICE_ROLE_KEY غير موجود في متغيرات البيئة."
     );
     process.exit(1);
 }
@@ -39,7 +39,7 @@ const supabase = createClient(
 );
 
 /* =========================================================
-   GOOGLE DRIVE - OAuth
+   GOOGLE DRIVE
 ========================================================= */
 
 const GOOGLE_SCOPES = [
@@ -59,29 +59,67 @@ const GOOGLE_TOKEN_FILE = path.join(
 let drive = null;
 
 /* =========================================================
-   قراءة بيانات OAuth
+   قراءة بيانات Google OAuth
+   تعمل بالطريقتين:
+   1. Render باستخدام Environment Variables
+   2. الجهاز المحلي باستخدام الملفات
 ========================================================= */
 
 function getOAuthClientData() {
 
+    /* ---------------------------------------------
+       الطريقة الأولى: Environment Variables
+       تستخدم على Render
+    --------------------------------------------- */
+
+    if (
+        process.env.GOOGLE_CLIENT_ID &&
+        process.env.GOOGLE_CLIENT_SECRET
+    ) {
+
+        console.log(
+            "استخدام بيانات Google OAuth من متغيرات البيئة."
+        );
+
+        return {
+
+            client_id:
+                process.env.GOOGLE_CLIENT_ID,
+
+            client_secret:
+                process.env.GOOGLE_CLIENT_SECRET,
+
+            redirect_uris: []
+
+        };
+    }
+
+    /* ---------------------------------------------
+       الطريقة الثانية: google-oauth.json
+       تستخدم محليًا
+    --------------------------------------------- */
+
     if (!fs.existsSync(GOOGLE_OAUTH_FILE)) {
+
         throw new Error(
-            "ملف google-oauth.json غير موجود داخل مجلد المشروع."
+            "بيانات Google OAuth غير موجودة. أضف GOOGLE_CLIENT_ID و GOOGLE_CLIENT_SECRET في Render."
         );
     }
 
-    const credentials = JSON.parse(
-        fs.readFileSync(
-            GOOGLE_OAUTH_FILE,
-            "utf8"
-        )
-    );
+    const credentials =
+        JSON.parse(
+            fs.readFileSync(
+                GOOGLE_OAUTH_FILE,
+                "utf8"
+            )
+        );
 
     const config =
         credentials.installed ||
         credentials.web;
 
     if (!config) {
+
         throw new Error(
             "ملف google-oauth.json غير صالح."
         );
@@ -96,13 +134,73 @@ function getOAuthClientData() {
 
 async function authorizeGoogleDrive() {
 
-    const config = getOAuthClientData();
+    const config =
+        getOAuthClientData();
 
     /* ---------------------------------------------
-       استخدام الجلسة المحفوظة
+       Render:
+       استخدام Refresh Token من Environment
     --------------------------------------------- */
 
-    if (fs.existsSync(GOOGLE_TOKEN_FILE)) {
+    if (
+        process.env.GOOGLE_REFRESH_TOKEN
+    ) {
+
+        console.log(
+            "جاري الاتصال بـ Google Drive باستخدام Refresh Token..."
+        );
+
+        const oauth2Client =
+            new google.auth.OAuth2(
+                config.client_id,
+                config.client_secret,
+                config.redirect_uris &&
+                config.redirect_uris.length > 0
+                    ? config.redirect_uris[0]
+                    : undefined
+            );
+
+        oauth2Client.setCredentials({
+
+            refresh_token:
+                process.env.GOOGLE_REFRESH_TOKEN
+
+        });
+
+        /* ---------------------------------------------
+           اختبار الاتصال فعليًا
+        --------------------------------------------- */
+
+        await oauth2Client.getAccessToken();
+
+        drive =
+            google.drive({
+
+                version:
+                    "v3",
+
+                auth:
+                    oauth2Client
+
+            });
+
+        console.log(
+            "تم الاتصال بـ Google Drive بنجاح."
+        );
+
+        return;
+    }
+
+    /* ---------------------------------------------
+       التشغيل المحلي:
+       استخدام token.json
+    --------------------------------------------- */
+
+    if (
+        fs.existsSync(
+            GOOGLE_TOKEN_FILE
+        )
+    ) {
 
         try {
 
@@ -116,21 +214,31 @@ async function authorizeGoogleDrive() {
 
             const oauth2Client =
                 new google.auth.OAuth2(
+
                     config.client_id,
+
                     config.client_secret,
+
                     config.redirect_uris
                         ? config.redirect_uris[0]
                         : undefined
+
                 );
 
             oauth2Client.setCredentials(
                 savedCredentials
             );
 
-            drive = google.drive({
-                version: "v3",
-                auth: oauth2Client
-            });
+            drive =
+                google.drive({
+
+                    version:
+                        "v3",
+
+                    auth:
+                        oauth2Client
+
+                });
 
             console.log(
                 "تم تحميل جلسة Google Drive المحفوظة."
@@ -151,7 +259,7 @@ async function authorizeGoogleDrive() {
     }
 
     /* ---------------------------------------------
-       تسجيل الدخول لأول مرة
+       تسجيل الدخول لأول مرة محليًا
     --------------------------------------------- */
 
     console.log(
@@ -164,8 +272,13 @@ async function authorizeGoogleDrive() {
 
     const auth =
         await authenticate({
-            scopes: GOOGLE_SCOPES,
-            keyfilePath: GOOGLE_OAUTH_FILE
+
+            scopes:
+                GOOGLE_SCOPES,
+
+            keyfilePath:
+                GOOGLE_OAUTH_FILE
+
         });
 
     /* ---------------------------------------------
@@ -178,12 +291,19 @@ async function authorizeGoogleDrive() {
     ) {
 
         fs.writeFileSync(
+
             GOOGLE_TOKEN_FILE,
+
             JSON.stringify(
+
                 auth.credentials,
+
                 null,
+
                 2
+
             )
+
         );
 
         console.log(
@@ -191,10 +311,16 @@ async function authorizeGoogleDrive() {
         );
     }
 
-    drive = google.drive({
-        version: "v3",
-        auth: auth
-    });
+    drive =
+        google.drive({
+
+            version:
+                "v3",
+
+            auth:
+                auth
+
+        });
 
     console.log(
         "تم الاتصال بـ Google Drive بنجاح."
@@ -203,70 +329,78 @@ async function authorizeGoogleDrive() {
 
 /* =========================================================
    MULTER
-   استقبال ملفات PDF
 ========================================================= */
 
-const upload = multer({
+const upload =
+    multer({
 
-    storage:
-        multer.memoryStorage(),
+        storage:
+            multer.memoryStorage(),
 
-    limits: {
-        fileSize:
-            100 * 1024 * 1024
-    },
+        limits: {
 
-    fileFilter:
-        function (req, file, cb) {
+            fileSize:
+                100 * 1024 * 1024
 
-            console.log(
-                "================================="
-            );
+        },
 
-            console.log(
-                "استقبال ملف جديد"
-            );
+        fileFilter:
+            function (
+                req,
+                file,
+                cb
+            ) {
 
-            console.log(
-                "اسم الملف:",
-                file.originalname
-            );
-
-            console.log(
-                "نوع الملف:",
-                file.mimetype
-            );
-
-            console.log(
-                "================================="
-            );
-
-            const fileName =
-                file.originalname
-                    .toLowerCase();
-
-            const isPdf =
-                file.mimetype ===
-                    "application/pdf" ||
-                fileName.endsWith(".pdf");
-
-            if (isPdf) {
-
-                cb(
-                    null,
-                    true
+                console.log(
+                    "================================="
                 );
 
-            } else {
-
-                cb(
-                    new Error(
-                        "الملف المختار ليس ملف PDF صالحًا."
-                    )
+                console.log(
+                    "استقبال ملف جديد"
                 );
+
+                console.log(
+                    "اسم الملف:",
+                    file.originalname
+                );
+
+                console.log(
+                    "نوع الملف:",
+                    file.mimetype
+                );
+
+                console.log(
+                    "================================="
+                );
+
+                const fileName =
+                    file.originalname
+                        .toLowerCase();
+
+                const isPdf =
+                    file.mimetype ===
+                        "application/pdf" ||
+                    fileName.endsWith(
+                        ".pdf"
+                    );
+
+                if (isPdf) {
+
+                    cb(
+                        null,
+                        true
+                    );
+
+                } else {
+
+                    cb(
+                        new Error(
+                            "الملف المختار ليس ملف PDF صالحًا."
+                        )
+                    );
+                }
             }
-        }
-});
+    });
 
 /* =========================================================
    EXPRESS
@@ -294,7 +428,10 @@ app.use(
 
 app.get(
     "/",
-    function (req, res) {
+    function (
+        req,
+        res
+    ) {
 
         res.sendFile(
             path.join(
@@ -319,10 +456,16 @@ async function verifyUser(req) {
         if (!authorization) {
 
             return {
-                success: false,
-                status: 401,
+
+                success:
+                    false,
+
+                status:
+                    401,
+
                 message:
                     "يجب تسجيل الدخول أولًا."
+
             };
         }
 
@@ -337,10 +480,16 @@ async function verifyUser(req) {
         if (!token) {
 
             return {
-                success: false,
-                status: 401,
+
+                success:
+                    false,
+
+                status:
+                    401,
+
                 message:
                     "جلسة تسجيل الدخول غير صالحة."
+
             };
         }
 
@@ -361,10 +510,16 @@ async function verifyUser(req) {
         ) {
 
             return {
-                success: false,
-                status: 401,
+
+                success:
+                    false,
+
+                status:
+                    401,
+
                 message:
                     "جلسة تسجيل الدخول غير صالحة."
+
             };
         }
 
@@ -392,17 +547,30 @@ async function verifyUser(req) {
         ) {
 
             return {
-                success: false,
-                status: 403,
+
+                success:
+                    false,
+
+                status:
+                    403,
+
                 message:
                     "لم يتم العثور على ملف المستخدم."
+
             };
         }
 
         return {
-            success: true,
-            user: user,
-            profile: profile
+
+            success:
+                true,
+
+            user:
+                user,
+
+            profile:
+                profile
+
         };
 
     } catch (error) {
@@ -413,10 +581,16 @@ async function verifyUser(req) {
         );
 
         return {
-            success: false,
-            status: 500,
+
+            success:
+                false,
+
+            status:
+                500,
+
             message:
                 "حدث خطأ أثناء التحقق من المستخدم."
+
         };
     }
 }
@@ -433,6 +607,7 @@ async function verifyProgrammer(req) {
     if (
         !verification.success
     ) {
+
         return verification;
     }
 
@@ -442,10 +617,16 @@ async function verifyProgrammer(req) {
     ) {
 
         return {
-            success: false,
-            status: 403,
+
+            success:
+                false,
+
+            status:
+                403,
+
             message:
                 "ليس لديك صلاحية لتنفيذ هذه العملية."
+
         };
     }
 
@@ -464,6 +645,7 @@ async function verifyAccountManager(req) {
     if (
         !verification.success
     ) {
+
         return verification;
     }
 
@@ -476,10 +658,16 @@ async function verifyAccountManager(req) {
     ) {
 
         return {
-            success: false,
-            status: 403,
+
+            success:
+                false,
+
+            status:
+                403,
+
             message:
                 "ليس لديك صلاحية لإدارة الحسابات."
+
         };
     }
 
@@ -487,12 +675,15 @@ async function verifyAccountManager(req) {
 }
 
 /* =========================================================
-   اختبار الاتصال بـ SUPABASE
+   اختبار Supabase
 ========================================================= */
 
 app.get(
     "/api/test-supabase",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
 
@@ -507,32 +698,42 @@ app.get(
                 return res
                     .status(500)
                     .json({
-                        success: false,
+
+                        success:
+                            false,
+
                         message:
                             result.error.message
+
                     });
             }
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 message:
                     "تم الاتصال بـ Supabase بنجاح."
+
             });
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                error
+            );
 
             return res
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         error.message
+
                 });
         }
     }
@@ -544,7 +745,10 @@ app.get(
 
 app.post(
     "/api/admin/create-user",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
 
@@ -566,10 +770,12 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "يرجى ملء جميع الحقول."
+
                     });
             }
 
@@ -581,10 +787,12 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل."
+
                     });
             }
 
@@ -600,10 +808,12 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "نوع الحساب غير مسموح."
+
                     });
             }
 
@@ -622,10 +832,12 @@ app.post(
                     )
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             verification.message
+
                     });
             }
 
@@ -643,6 +855,7 @@ app.post(
 
                         email_confirm:
                             true
+
                     });
 
             if (result.error) {
@@ -651,10 +864,12 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             result.error.message
+
                     });
             }
 
@@ -674,6 +889,7 @@ app.post(
 
                         role:
                             role
+
                     });
 
             if (
@@ -689,16 +905,19 @@ app.post(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تم إنشاء الحساب لكن حدث خطأ أثناء حفظ بياناته."
+
                     });
             }
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 message:
                     "تم إنشاء الحساب بنجاح.",
@@ -716,7 +935,9 @@ app.post(
 
                     role:
                         role
+
                 }
+
             });
 
         } catch (error) {
@@ -730,10 +951,12 @@ app.post(
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ داخلي في الخادم."
+
                 });
         }
     }
@@ -745,7 +968,10 @@ app.post(
 
 app.get(
     "/api/admin/users",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
 
@@ -764,10 +990,12 @@ app.get(
                     )
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             verification.message
+
                     });
             }
 
@@ -775,9 +1003,12 @@ app.get(
                 await supabase.auth.admin
                     .listUsers({
 
-                        page: 1,
+                        page:
+                            1,
 
-                        perPage: 1000
+                        perPage:
+                            1000
+
                     });
 
             if (result.error) {
@@ -786,10 +1017,12 @@ app.get(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             result.error.message
+
                     });
             }
 
@@ -811,10 +1044,12 @@ app.get(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             profilesResult.error.message
+
                     });
             }
 
@@ -824,11 +1059,15 @@ app.get(
 
             const users =
                 usersData.map(
-                    function (user) {
+                    function (
+                        user
+                    ) {
 
                         const profile =
                             profiles.find(
-                                function (p) {
+                                function (
+                                    p
+                                ) {
 
                                     return (
                                         p.id ===
@@ -862,16 +1101,19 @@ app.get(
 
                             emailConfirmed:
                                 !!user.email_confirmed_at
+
                         };
                     }
                 );
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 users:
                     users
+
             });
 
         } catch (error) {
@@ -885,10 +1127,12 @@ app.get(
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ داخلي في الخادم."
+
                 });
         }
     }
@@ -900,7 +1144,10 @@ app.get(
 
 app.put(
     "/api/admin/users/:id",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
 
@@ -929,10 +1176,12 @@ app.put(
                     )
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             verification.message
+
                     });
             }
 
@@ -957,10 +1206,12 @@ app.put(
                     .status(404)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "الحساب غير موجود."
+
                     });
             }
 
@@ -976,10 +1227,12 @@ app.put(
                     .status(403)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "حساب المبرمج محمي ولا يمكن تعديله."
+
                     });
             }
 
@@ -991,10 +1244,12 @@ app.put(
                     .status(403)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "لا يمكن إنشاء أو تحويل حساب إلى مبرمج."
+
                     });
             }
 
@@ -1011,10 +1266,12 @@ app.put(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "نوع الحساب غير مسموح."
+
                     });
             }
 
@@ -1047,10 +1304,12 @@ app.put(
                         .status(400)
                         .json({
 
-                            success: false,
+                            success:
+                                false,
 
                             message:
                                 "كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل."
+
                         });
                 }
 
@@ -1079,12 +1338,14 @@ app.put(
                         .status(400)
                         .json({
 
-                            success: false,
+                            success:
+                                false,
 
                             message:
                                 updateAuthResult
                                     .error
                                     .message
+
                         });
                 }
             }
@@ -1131,22 +1392,26 @@ app.put(
                         .status(500)
                         .json({
 
-                            success: false,
+                            success:
+                                false,
 
                             message:
                                 updateProfileResult
                                     .error
                                     .message
+
                         });
                 }
             }
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 message:
                     "تم تعديل الحساب بنجاح."
+
             });
 
         } catch (error) {
@@ -1160,10 +1425,12 @@ app.put(
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ داخلي في الخادم."
+
                 });
         }
     }
@@ -1175,7 +1442,10 @@ app.put(
 
 app.delete(
     "/api/admin/users/:id",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
 
@@ -1197,10 +1467,12 @@ app.delete(
                     )
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             verification.message
+
                     });
             }
 
@@ -1213,10 +1485,12 @@ app.delete(
                     .status(403)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "لا يمكنك حذف حسابك الحالي."
+
                     });
             }
 
@@ -1241,10 +1515,12 @@ app.delete(
                     .status(404)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "الحساب غير موجود."
+
                     });
             }
 
@@ -1260,10 +1536,12 @@ app.delete(
                     .status(403)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "لا يمكن حذف حساب المبرمج."
+
                     });
             }
 
@@ -1284,12 +1562,14 @@ app.delete(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             deleteProfileResult
                                 .error
                                 .message
+
                     });
             }
 
@@ -1307,19 +1587,23 @@ app.delete(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تم حذف بيانات الحساب لكن حدث خطأ أثناء حذف حساب تسجيل الدخول."
+
                     });
             }
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 message:
                     "تم حذف الحساب بنجاح."
+
             });
 
         } catch (error) {
@@ -1333,10 +1617,12 @@ app.delete(
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ داخلي في الخادم."
+
                 });
         }
     }
@@ -1344,21 +1630,20 @@ app.delete(
 
 /* =========================================================
    رفع كتاب PDF
-   Google Drive + Supabase
 ========================================================= */
 
 app.post(
     "/api/books/upload",
     upload.single("pdf"),
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
-        let uploadedFileId = null;
+        let uploadedFileId =
+            null;
 
         try {
-
-            /* ---------------------------------------------
-               معلومات تشخيصية
-            --------------------------------------------- */
 
             console.log(
                 "================================="
@@ -1372,12 +1657,16 @@ app.post(
                 "REQ FILE:",
                 req.file
                     ? {
+
                         name:
                             req.file.originalname,
+
                         mimetype:
                             req.file.mimetype,
+
                         size:
                             req.file.size
+
                     }
                     : null
             );
@@ -1391,26 +1680,20 @@ app.post(
                 "================================="
             );
 
-            /* ---------------------------------------------
-               التحقق من Google Drive
-            --------------------------------------------- */
-
             if (!drive) {
 
                 return res
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "Google Drive غير متصل بالخادم."
+
                     });
             }
-
-            /* ---------------------------------------------
-               التحقق من المستخدم
-            --------------------------------------------- */
 
             const verification =
                 await verifyUser(req);
@@ -1425,16 +1708,14 @@ app.post(
                     )
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             verification.message
+
                     });
             }
-
-            /* ---------------------------------------------
-               الصلاحيات
-            --------------------------------------------- */
 
             const role =
                 verification.profile.role;
@@ -1449,16 +1730,14 @@ app.post(
                     .status(403)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "ليس لديك صلاحية لرفع الكتب."
+
                     });
             }
-
-            /* ---------------------------------------------
-               بيانات الكتاب
-            --------------------------------------------- */
 
             const title =
                 req.body.title
@@ -1486,10 +1765,12 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "يرجى إدخال عنوان الكتاب."
+
                     });
             }
 
@@ -1499,16 +1780,14 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "يرجى اختيار تصنيف الكتاب."
+
                     });
             }
-
-            /* ---------------------------------------------
-               التحقق من الملف
-            --------------------------------------------- */
 
             if (!req.file) {
 
@@ -1516,10 +1795,12 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "يرجى اختيار ملف PDF."
+
                     });
             }
 
@@ -1530,7 +1811,9 @@ app.post(
             const isPdf =
                 req.file.mimetype ===
                     "application/pdf" ||
-                uploadedFileName.endsWith(".pdf");
+                uploadedFileName.endsWith(
+                    ".pdf"
+                );
 
             if (!isPdf) {
 
@@ -1538,16 +1821,14 @@ app.post(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "يسمح برفع ملفات PDF فقط."
+
                     });
             }
-
-            /* ---------------------------------------------
-               مجلد Google Drive
-            --------------------------------------------- */
 
             const folderId =
                 process.env
@@ -1559,25 +1840,19 @@ app.post(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "لم يتم إعداد مجلد Google Drive في الخادم."
+
                     });
             }
-
-            /* ---------------------------------------------
-               اسم الملف
-            --------------------------------------------- */
 
             const safeFileName =
                 path.basename(
                     req.file.originalname
                 );
-
-            /* ---------------------------------------------
-               بيانات الملف
-            --------------------------------------------- */
 
             const fileMetadata = {
 
@@ -1587,11 +1862,8 @@ app.post(
                 parents: [
                     folderId
                 ]
-            };
 
-            /* ---------------------------------------------
-               محتوى الملف
-            --------------------------------------------- */
+            };
 
             const media = {
 
@@ -1602,11 +1874,8 @@ app.post(
                     Readable.from(
                         req.file.buffer
                     )
-            };
 
-            /* ---------------------------------------------
-               رفع الملف إلى Google Drive
-            --------------------------------------------- */
+            };
 
             console.log(
                 "بدء رفع الملف إلى Google Drive..."
@@ -1623,6 +1892,7 @@ app.post(
 
                     fields:
                         "id,name,webViewLink,webContentLink"
+
                 });
 
             uploadedFileId =
@@ -1634,10 +1904,12 @@ app.post(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تم رفع الملف لكن لم يتم الحصول على معرفه."
+
                     });
             }
 
@@ -1645,10 +1917,6 @@ app.post(
                 "تم رفع الملف. ID:",
                 uploadedFileId
             );
-
-            /* ---------------------------------------------
-               جعل الملف قابلًا للقراءة
-            --------------------------------------------- */
 
             try {
 
@@ -1664,10 +1932,12 @@ app.post(
 
                         type:
                             "anyone"
+
                     },
 
                     fields:
                         "id"
+
                 });
 
             } catch (permissionError) {
@@ -1680,8 +1950,10 @@ app.post(
                 try {
 
                     await drive.files.delete({
+
                         fileId:
                             uploadedFileId
+
                     });
 
                 } catch (deleteError) {
@@ -1692,32 +1964,27 @@ app.post(
                     );
                 }
 
-                uploadedFileId = null;
+                uploadedFileId =
+                    null;
 
                 return res
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تم رفع الكتاب لكن تعذر إعداد رابط القراءة."
+
                     });
             }
-
-            /* ---------------------------------------------
-               رابط Google Drive
-            --------------------------------------------- */
 
             const webViewLink =
                 uploadedFile.data.webViewLink ||
                 "https://drive.google.com/file/d/" +
                 uploadedFileId +
                 "/view";
-
-            /* ---------------------------------------------
-               حفظ بيانات الكتاب في Supabase
-            --------------------------------------------- */
 
             console.log(
                 "جاري حفظ بيانات الكتاب في Supabase..."
@@ -1751,13 +2018,10 @@ app.post(
 
                         uploaded_by:
                             verification.user.id
+
                     })
                     .select()
                     .single();
-
-            /* ---------------------------------------------
-               إذا فشل Supabase
-            --------------------------------------------- */
 
             if (
                 bookResult.error ||
@@ -1772,8 +2036,10 @@ app.post(
                 try {
 
                     await drive.files.delete({
+
                         fileId:
                             uploadedFileId
+
                     });
 
                     console.log(
@@ -1788,25 +2054,24 @@ app.post(
                     );
                 }
 
-                uploadedFileId = null;
+                uploadedFileId =
+                    null;
 
                 return res
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تم رفع الملف لكن حدث خطأ أثناء حفظ بيانات الكتاب في قاعدة البيانات."
+
                     });
             }
 
             const book =
                 bookResult.data;
-
-            /* ---------------------------------------------
-               نجاح كامل
-            --------------------------------------------- */
 
             console.log(
                 "تم حفظ الكتاب في Supabase بنجاح. ID:",
@@ -1832,6 +2097,7 @@ app.post(
 
                 webViewLink:
                     webViewLink
+
             });
 
         } catch (error) {
@@ -1844,10 +2110,6 @@ app.post(
                 error
             );
 
-            /* ---------------------------------------------
-               تنظيف الملف إذا حدث خطأ بعد الرفع
-            --------------------------------------------- */
-
             if (
                 uploadedFileId &&
                 drive
@@ -1856,8 +2118,10 @@ app.post(
                 try {
 
                     await drive.files.delete({
+
                         fileId:
                             uploadedFileId
+
                     });
 
                     console.log(
@@ -1877,25 +2141,30 @@ app.post(
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ أثناء رفع الكتاب.",
 
                     error:
                         error.message
+
                 });
         }
     }
 );
 
 /* =========================================================
-   جلب جميع الكتب من Supabase
+   جلب جميع الكتب
 ========================================================= */
 
 app.get(
     "/api/books",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
 
@@ -1920,7 +2189,8 @@ app.get(
                     .order(
                         "created_at",
                         {
-                            ascending: false
+                            ascending:
+                                false
                         }
                     );
 
@@ -1935,19 +2205,23 @@ app.get(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تعذر جلب الكتب من قاعدة البيانات."
+
                     });
             }
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 books:
                     result.data || []
+
             });
 
         } catch (error) {
@@ -1961,24 +2235,56 @@ app.get(
                 .status(500)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ أثناء جلب الكتب."
+
                 });
         }
     }
 );
 
 /* =========================================================
-   فتح PDF داخل موقع المكتبة
+   فتح PDF
+   محمي بتسجيل الدخول من الخادم
 ========================================================= */
 
 app.get(
     "/api/books/:id/pdf",
-    async function (req, res) {
+    async function (
+        req,
+        res
+    ) {
 
         try {
+
+            /* ---------------------------------------------
+               التحقق من تسجيل الدخول
+            --------------------------------------------- */
+
+            const verification =
+                await verifyUser(req);
+
+            if (
+                !verification.success
+            ) {
+
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            verification.message
+
+                    });
+            }
 
             const bookId =
                 req.params.id;
@@ -1989,16 +2295,14 @@ app.get(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "معرف الكتاب غير صالح."
+
                     });
             }
-
-            /* ---------------------------------------------
-               جلب بيانات الكتاب
-            --------------------------------------------- */
 
             const bookResult =
                 await supabase
@@ -2021,10 +2325,12 @@ app.get(
                     .status(404)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "الكتاب غير موجود."
+
                     });
             }
 
@@ -2039,10 +2345,12 @@ app.get(
                     .status(404)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "ملف PDF غير مرتبط بهذا الكتاب."
+
                     });
             }
 
@@ -2052,16 +2360,14 @@ app.get(
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "Google Drive غير متصل بالخادم."
+
                     });
             }
-
-            /* ---------------------------------------------
-               جلب PDF من Google Drive
-            --------------------------------------------- */
 
             console.log(
                 "جاري إرسال PDF:",
@@ -2076,15 +2382,13 @@ app.get(
 
                     alt:
                         "media"
+
                 }, {
 
                     responseType:
                         "stream"
-                });
 
-            /* ---------------------------------------------
-               إعداد استجابة PDF
-            --------------------------------------------- */
+                });
 
             res.setHeader(
                 "Content-Type",
@@ -2098,34 +2402,38 @@ app.get(
 
             res.setHeader(
                 "Cache-Control",
-                "public, max-age=3600"
+                "private, max-age=3600"
             );
 
-            /* ---------------------------------------------
-               إرسال الملف للمستخدم
-            --------------------------------------------- */
-
-            driveResponse.data.pipe(res);
+            driveResponse.data.pipe(
+                res
+            );
 
             driveResponse.data.on(
                 "error",
-                function (error) {
+                function (
+                    error
+                ) {
 
                     console.error(
                         "PDF stream error:",
                         error
                     );
 
-                    if (!res.headersSent) {
+                    if (
+                        !res.headersSent
+                    ) {
 
                         res
                             .status(500)
                             .json({
 
-                                success: false,
+                                success:
+                                    false,
 
                                 message:
                                     "حدث خطأ أثناء قراءة ملف PDF."
+
                             });
 
                     } else {
@@ -2142,19 +2450,23 @@ app.get(
                 error
             );
 
-            if (!res.headersSent) {
+            if (
+                !res.headersSent
+            ) {
 
                 return res
                     .status(500)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "تعذر فتح ملف PDF.",
 
                         error:
                             error.message
+
                     });
             }
 
@@ -2189,10 +2501,12 @@ app.use(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         message:
                             "حجم ملف PDF يتجاوز 100 ميغابايت."
+
                     });
             }
 
@@ -2200,10 +2514,12 @@ app.use(
                 .status(400)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         "حدث خطأ أثناء استقبال ملف PDF."
+
                 });
         }
 
@@ -2218,11 +2534,13 @@ app.use(
                 .status(400)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     message:
                         error.message ||
                         "حدث خطأ داخلي في الخادم."
+
                 });
         }
 
