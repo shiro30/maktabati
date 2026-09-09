@@ -763,6 +763,7 @@ app.post(
 
             return res.json({
                 success: true,
+
                 message:
                     "تم إنشاء الحساب بنجاح.",
 
@@ -2627,7 +2628,9 @@ app.get(
 
 /* =========================================================
 فتح PDF
-محمي بتسجيل الدخول من الخادم
+محمي بتسجيل الدخول
+يدعم HTTP RANGE REQUESTS
+لتحميل PDF بشكل تدريجي مع PDF.js
 ========================================================= */
 
 app.get(
@@ -2636,6 +2639,8 @@ app.get(
         req,
         res
     ) {
+        let driveStream = null;
+
         try {
             /* ---------------------------------------------
                التحقق من تسجيل الدخول
@@ -2658,6 +2663,10 @@ app.get(
                     });
             }
 
+            /* ---------------------------------------------
+               التحقق من معرف الكتاب
+            --------------------------------------------- */
+
             const bookId =
                 req.params.id;
 
@@ -2670,6 +2679,10 @@ app.get(
                             "معرف الكتاب غير صالح."
                     });
             }
+
+            /* ---------------------------------------------
+               جلب بيانات الكتاب
+            --------------------------------------------- */
 
             const bookResult =
                 await supabase
@@ -2711,6 +2724,10 @@ app.get(
                     });
             }
 
+            /* ---------------------------------------------
+               التأكد من Google Drive
+            --------------------------------------------- */
+
             if (!drive) {
                 return res
                     .status(500)
@@ -2722,9 +2739,333 @@ app.get(
             }
 
             console.log(
-                "جاري إرسال PDF:",
+                "================================="
+            );
+
+            console.log(
+                "طلب PDF للكتاب:",
                 book.title
             );
+
+            console.log(
+                "Range:",
+                req.headers.range || "بدون Range"
+            );
+
+            /* ---------------------------------------------
+               الحصول على حجم ملف PDF
+            --------------------------------------------- */
+
+            const metadataResponse =
+                await drive.files.get({
+                    fileId:
+                        book.drive_file_id,
+
+                    fields:
+                        "id,name,size,mimeType"
+                });
+
+            const fileSize =
+                Number(
+                    metadataResponse.data.size
+                );
+
+            if (
+                !Number.isFinite(fileSize) ||
+                fileSize <= 0
+            ) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "تعذر معرفة حجم ملف PDF."
+                    });
+            }
+
+            /* ---------------------------------------------
+               اسم آمن للملف
+            --------------------------------------------- */
+
+            const safeTitle =
+                (
+                    book.title ||
+                    "book"
+                )
+                    .replace(
+                        /[\/\\:*?"<>|]/g,
+                        "_"
+                    )
+                    .trim() ||
+                "book";
+
+            /* ---------------------------------------------
+               إعداد رؤوس الاستجابة
+            --------------------------------------------- */
+
+            res.setHeader(
+                "Content-Type",
+                "application/pdf"
+            );
+
+            res.setHeader(
+                "Content-Disposition",
+                `inline; filename*=UTF-8''${encodeURIComponent(
+                    safeTitle
+                )}.pdf`
+            );
+
+            res.setHeader(
+                "Accept-Ranges",
+                "bytes"
+            );
+
+            res.setHeader(
+                "Cache-Control",
+                "private, max-age=3600"
+            );
+
+            /* =================================================
+               لا يوجد Range
+               إرسال الملف كاملًا كـ Stream
+            ================================================= */
+
+            if (!req.headers.range) {
+                console.log(
+                    "إرسال PDF كاملًا:"
+                );
+
+                console.log(
+                    "الحجم:",
+                    fileSize,
+                    "bytes"
+                );
+
+                res.setHeader(
+                    "Content-Length",
+                    String(fileSize)
+                );
+
+                const driveResponse =
+                    await drive.files.get(
+                        {
+                            fileId:
+                                book.drive_file_id,
+
+                            alt:
+                                "media"
+                        },
+                        {
+                            responseType:
+                                "stream"
+                        }
+                    );
+
+                driveStream =
+                    driveResponse.data;
+
+                driveStream.on(
+                    "error",
+                    function (
+                        error
+                    ) {
+                        console.error(
+                            "PDF stream error:",
+                            error
+                        );
+
+                        if (
+                            !res.headersSent
+                        ) {
+                            res
+                                .status(500)
+                                .end();
+                        } else {
+                            res.end();
+                        }
+                    }
+                );
+
+                req.on(
+                    "close",
+                    function () {
+                        if (
+                            driveStream &&
+                            !driveStream.destroyed
+                        ) {
+                            driveStream.destroy();
+                        }
+                    }
+                );
+
+                driveStream.pipe(
+                    res
+                );
+
+                return;
+            }
+
+            /* =================================================
+               يوجد Range
+            ================================================= */
+
+            const rangeHeader =
+                req.headers.range;
+
+            const rangeMatch =
+                rangeHeader.match(
+                    /^bytes=(\d*)-(\d*)$/
+                );
+
+            if (!rangeMatch) {
+                res.setHeader(
+                    "Content-Range",
+                    `bytes */${fileSize}`
+                );
+
+                return res
+                    .status(416)
+                    .end();
+            }
+
+            let start =
+                rangeMatch[1] !== ""
+                    ? Number(
+                        rangeMatch[1]
+                    )
+                    : null;
+
+            let end =
+                rangeMatch[2] !== ""
+                    ? Number(
+                        rangeMatch[2]
+                    )
+                    : null;
+
+            /* ---------------------------------------------
+               Range من النهاية
+               مثال: bytes=-500000
+            --------------------------------------------- */
+
+            if (
+                start === null &&
+                end !== null
+            ) {
+                const suffixLength =
+                    end;
+
+                if (
+                    suffixLength <= 0
+                ) {
+                    res.setHeader(
+                        "Content-Range",
+                        `bytes */${fileSize}`
+                    );
+
+                    return res
+                        .status(416)
+                        .end();
+                }
+
+                start =
+                    Math.max(
+                        fileSize -
+                            suffixLength,
+                        0
+                    );
+
+                end =
+                    fileSize - 1;
+            }
+
+            /* ---------------------------------------------
+               Range مفتوح
+               مثال: bytes=500000-
+            --------------------------------------------- */
+
+            if (
+                start !== null &&
+                end === null
+            ) {
+                end =
+                    fileSize - 1;
+            }
+
+            /* ---------------------------------------------
+               التحقق من الحدود
+            --------------------------------------------- */
+
+            if (
+                start === null ||
+                end === null ||
+                !Number.isInteger(start) ||
+                !Number.isInteger(end) ||
+                start < 0 ||
+                end < 0 ||
+                start >= fileSize ||
+                start > end
+            ) {
+                res.setHeader(
+                    "Content-Range",
+                    `bytes */${fileSize}`
+                );
+
+                return res
+                    .status(416)
+                    .end();
+            }
+
+            /* ---------------------------------------------
+               منع تجاوز نهاية الملف
+            --------------------------------------------- */
+
+            if (
+                end >= fileSize
+            ) {
+                end =
+                    fileSize - 1;
+            }
+
+            const chunkSize =
+                end - start + 1;
+
+            console.log(
+                "إرسال Range:",
+                start,
+                "-",
+                end
+            );
+
+            console.log(
+                "حجم الجزء:",
+                chunkSize,
+                "bytes"
+            );
+
+            /* ---------------------------------------------
+               إعداد استجابة 206
+            --------------------------------------------- */
+
+            res.status(206);
+
+            res.setHeader(
+                "Content-Range",
+                `bytes ${start}-${end}/${fileSize}`
+            );
+
+            res.setHeader(
+                "Content-Length",
+                String(chunkSize)
+            );
+
+            res.setHeader(
+                "Accept-Ranges",
+                "bytes"
+            );
+
+            /* ---------------------------------------------
+               طلب الجزء المطلوب من Google Drive
+            --------------------------------------------- */
 
             const driveResponse =
                 await drive.files.get(
@@ -2737,36 +3078,29 @@ app.get(
                     },
                     {
                         responseType:
-                            "stream"
+                            "stream",
+
+                        headers: {
+                            Range:
+                                `bytes=${start}-${end}`
+                        }
                     }
                 );
 
-            res.setHeader(
-                "Content-Type",
-                "application/pdf"
-            );
+            driveStream =
+                driveResponse.data;
 
-            res.setHeader(
-                "Content-Disposition",
-                'inline; filename="book.pdf"'
-            );
+            /* ---------------------------------------------
+               مراقبة أخطاء Stream
+            --------------------------------------------- */
 
-            res.setHeader(
-                "Cache-Control",
-                "private, max-age=3600"
-            );
-
-            driveResponse.data.pipe(
-                res
-            );
-
-            driveResponse.data.on(
+            driveStream.on(
                 "error",
                 function (
                     error
                 ) {
                     console.error(
-                        "PDF stream error:",
+                        "Google Drive Range stream error:",
                         error
                     );
 
@@ -2775,15 +3109,36 @@ app.get(
                     ) {
                         res
                             .status(500)
-                            .json({
-                                success: false,
-                                message:
-                                    "حدث خطأ أثناء قراءة ملف PDF."
-                            });
+                            .end();
                     } else {
                         res.end();
                     }
                 }
+            );
+
+            /* ---------------------------------------------
+               إذا أغلق العميل الاتصال
+               نوقف تحميل الجزء من Google Drive
+            --------------------------------------------- */
+
+            req.on(
+                "close",
+                function () {
+                    if (
+                        driveStream &&
+                        !driveStream.destroyed
+                    ) {
+                        driveStream.destroy();
+                    }
+                }
+            );
+
+            /* ---------------------------------------------
+               إرسال الجزء للمتصفح
+            --------------------------------------------- */
+
+            driveStream.pipe(
+                res
             );
 
         } catch (error) {
@@ -2791,6 +3146,13 @@ app.get(
                 "PDF reader error:",
                 error
             );
+
+            if (
+                driveStream &&
+                !driveStream.destroyed
+            ) {
+                driveStream.destroy();
+            }
 
             if (
                 !res.headersSent
@@ -2919,6 +3281,14 @@ async function startServer() {
 
                 console.log(
                     "نظام أغلفة الكتب: مفعّل"
+                );
+
+                console.log(
+                    "نظام تحميل PDF التدريجي: مفعّل"
+                );
+
+                console.log(
+                    "HTTP Range Requests: مفعّل"
                 );
 
                 console.log(
