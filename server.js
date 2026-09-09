@@ -10,19 +10,17 @@ const { authenticate } = require("@google-cloud/local-auth");
 
 const multer = require("multer");
 const { Readable } = require("stream");
+const crypto = require("crypto");
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
 /* =========================================================
-SUPABASE
+   SUPABASE
 ========================================================= */
 
 if (!process.env.SUPABASE_URL) {
-    console.error(
-        "خطأ: SUPABASE_URL غير موجود في متغيرات البيئة."
-    );
+    console.error("خطأ: SUPABASE_URL غير موجود في متغيرات البيئة.");
     process.exit(1);
 }
 
@@ -39,7 +37,7 @@ const supabase = createClient(
 );
 
 /* =========================================================
-GOOGLE DRIVE
+   GOOGLE DRIVE
 ========================================================= */
 
 const GOOGLE_SCOPES = [
@@ -59,7 +57,7 @@ const GOOGLE_TOKEN_FILE = path.join(
 let drive = null;
 
 /* =========================================================
-قراءة بيانات Google OAuth
+   قراءة بيانات Google OAuth
 ========================================================= */
 
 function getOAuthClientData() {
@@ -85,10 +83,7 @@ function getOAuthClientData() {
     }
 
     const credentials = JSON.parse(
-        fs.readFileSync(
-            GOOGLE_OAUTH_FILE,
-            "utf8"
-        )
+        fs.readFileSync(GOOGLE_OAUTH_FILE, "utf8")
     );
 
     const config =
@@ -105,16 +100,11 @@ function getOAuthClientData() {
 }
 
 /* =========================================================
-الاتصال بـ Google Drive
+   الاتصال بـ Google Drive
 ========================================================= */
 
 async function authorizeGoogleDrive() {
     const config = getOAuthClientData();
-
-    /* ---------------------------------------------
-       Render:
-       استخدام Refresh Token
-    --------------------------------------------- */
 
     if (process.env.GOOGLE_REFRESH_TOKEN) {
         console.log(
@@ -150,16 +140,7 @@ async function authorizeGoogleDrive() {
         return;
     }
 
-    /* ---------------------------------------------
-       التشغيل المحلي:
-       استخدام token.json
-    --------------------------------------------- */
-
-    if (
-        fs.existsSync(
-            GOOGLE_TOKEN_FILE
-        )
-    ) {
+    if (fs.existsSync(GOOGLE_TOKEN_FILE)) {
         try {
             const savedCredentials =
                 JSON.parse(
@@ -203,10 +184,6 @@ async function authorizeGoogleDrive() {
         }
     }
 
-    /* ---------------------------------------------
-       تسجيل الدخول لأول مرة محليًا
-    --------------------------------------------- */
-
     console.log(
         "لم يتم العثور على جلسة Google محفوظة."
     );
@@ -220,10 +197,6 @@ async function authorizeGoogleDrive() {
             scopes: GOOGLE_SCOPES,
             keyfilePath: GOOGLE_OAUTH_FILE
         });
-
-    /* ---------------------------------------------
-       حفظ جلسة OAuth
-    --------------------------------------------- */
 
     if (
         auth.credentials &&
@@ -254,8 +227,8 @@ async function authorizeGoogleDrive() {
 }
 
 /* =========================================================
-MULTER
-استقبال PDF + صورة الغلاف
+   MULTER
+   PDF + صورة الغلاف
 ========================================================= */
 
 const upload = multer({
@@ -302,10 +275,6 @@ const upload = multer({
         const fileName =
             file.originalname.toLowerCase();
 
-        /* ---------------------------------------------
-           ملف PDF
-        --------------------------------------------- */
-
         if (
             file.fieldname === "pdf"
         ) {
@@ -326,10 +295,6 @@ const upload = multer({
 
             return;
         }
-
-        /* ---------------------------------------------
-           صورة الغلاف
-        --------------------------------------------- */
 
         if (
             file.fieldname === "cover"
@@ -367,7 +332,7 @@ const upload = multer({
 });
 
 /* =========================================================
-EXPRESS
+   EXPRESS
 ========================================================= */
 
 app.use(
@@ -387,15 +352,12 @@ app.use(
 );
 
 /* =========================================================
-الصفحة الرئيسية
+   الصفحة الرئيسية
 ========================================================= */
 
 app.get(
     "/",
-    function (
-        req,
-        res
-    ) {
+    function (req, res) {
         res.sendFile(
             path.join(
                 __dirname,
@@ -406,7 +368,7 @@ app.get(
 );
 
 /* =========================================================
-التحقق من المستخدم
+   التحقق من المستخدم
 ========================================================= */
 
 async function verifyUser(req) {
@@ -515,16 +477,14 @@ async function verifyUser(req) {
 }
 
 /* =========================================================
-التحقق من المبرمج
+   التحقق من المبرمج
 ========================================================= */
 
 async function verifyProgrammer(req) {
     const verification =
         await verifyUser(req);
 
-    if (
-        !verification.success
-    ) {
+    if (!verification.success) {
         return verification;
     }
 
@@ -544,16 +504,14 @@ async function verifyProgrammer(req) {
 }
 
 /* =========================================================
-التحقق من المبرمج أو المدير
+   التحقق من المبرمج أو المدير
 ========================================================= */
 
 async function verifyAccountManager(req) {
     const verification =
         await verifyUser(req);
 
-    if (
-        !verification.success
-    ) {
+    if (!verification.success) {
         return verification;
     }
 
@@ -576,15 +534,34 @@ async function verifyAccountManager(req) {
 }
 
 /* =========================================================
-اختبار Supabase
+   إنشاء رقم وثيقة رسمي
+========================================================= */
+
+function generateDocumentNumber() {
+    const year =
+        new Date().getFullYear();
+
+    const randomPart =
+        crypto
+            .randomBytes(5)
+            .toString("hex")
+            .toUpperCase();
+
+    return (
+        "MKT-" +
+        year +
+        "-" +
+        randomPart
+    );
+}
+
+/* =========================================================
+   اختبار Supabase
 ========================================================= */
 
 app.get(
     "/api/test-supabase",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             const result =
                 await supabase
@@ -623,15 +600,12 @@ app.get(
 );
 
 /* =========================================================
-إنشاء مستخدم
+   إنشاء مستخدم + إصدار وثيقة تسجيل
 ========================================================= */
 
 app.post(
     "/api/admin/create-user",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             const {
                 fullName,
@@ -639,6 +613,10 @@ app.post(
                 password,
                 role
             } = req.body;
+
+            /* ---------------------------------------------
+               التحقق من البيانات
+            --------------------------------------------- */
 
             if (
                 !fullName ||
@@ -655,8 +633,31 @@ app.post(
                     });
             }
 
+            const cleanFullName =
+                String(fullName).trim();
+
+            const cleanEmail =
+                String(email)
+                    .trim()
+                    .toLowerCase();
+
+            const cleanPassword =
+                String(password);
+
             if (
-                password.length < 6
+                cleanFullName.length < 2
+            ) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "الاسم غير صالح."
+                    });
+            }
+
+            if (
+                cleanPassword.length < 6
             ) {
                 return res
                     .status(400)
@@ -683,14 +684,16 @@ app.post(
                     });
             }
 
+            /* ---------------------------------------------
+               التحقق من المدير أو المبرمج
+            --------------------------------------------- */
+
             const verification =
                 await verifyAccountManager(
                     req
                 );
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -702,16 +705,18 @@ app.post(
                     });
             }
 
+            /* ---------------------------------------------
+               إنشاء حساب Supabase
+            --------------------------------------------- */
+
             const result =
                 await supabase.auth.admin
                     .createUser({
                         email:
-                            email
-                                .trim()
-                                .toLowerCase(),
+                            cleanEmail,
 
                         password:
-                            password,
+                            cleanPassword,
 
                         email_confirm:
                             true
@@ -730,6 +735,10 @@ app.post(
             const newUser =
                 result.data.user;
 
+            /* ---------------------------------------------
+               إنشاء Profile
+            --------------------------------------------- */
+
             const profileResult =
                 await supabase
                     .from("profiles")
@@ -738,15 +747,13 @@ app.post(
                             newUser.id,
 
                         full_name:
-                            fullName.trim(),
+                            cleanFullName,
 
                         role:
                             role
                     });
 
-            if (
-                profileResult.error
-            ) {
+            if (profileResult.error) {
                 await supabase.auth.admin
                     .deleteUser(
                         newUser.id
@@ -761,11 +768,129 @@ app.post(
                     });
             }
 
+            /* ---------------------------------------------
+               إنشاء وثيقة التسجيل
+            --------------------------------------------- */
+
+            let documentNumber =
+                generateDocumentNumber();
+
+            let documentResult = null;
+
+            /*
+               نحاول أكثر من مرة في حالة نادرة
+               لتجنب تكرار رقم الوثيقة.
+            */
+
+            for (
+                let attempt = 0;
+                attempt < 5;
+                attempt++
+            ) {
+                documentNumber =
+                    generateDocumentNumber();
+
+                documentResult =
+                    await supabase
+                        .from(
+                            "registration_documents"
+                        )
+                        .insert({
+                            user_id:
+                                newUser.id,
+
+                            document_number:
+                                documentNumber,
+
+                            issued_by:
+                                verification.user.id,
+
+                            status:
+                                "issued"
+                        })
+                        .select(
+                            "id, user_id, document_number, issued_by, issued_at, status, created_at"
+                        )
+                        .single();
+
+                if (
+                    !documentResult.error
+                ) {
+                    break;
+                }
+
+                /*
+                   إذا كان الخطأ ليس بسبب
+                   التكرار، نتوقف.
+                */
+
+                const errorMessage =
+                    documentResult.error
+                        .message || "";
+
+                if (
+                    !errorMessage
+                        .toLowerCase()
+                        .includes("duplicate")
+                ) {
+                    break;
+                }
+            }
+
+            if (
+                !documentResult ||
+                documentResult.error ||
+                !documentResult.data
+            ) {
+                console.error(
+                    "Registration document error:",
+                    documentResult
+                        ? documentResult.error
+                        : "Unknown error"
+                );
+
+                /*
+                   حذف الحساب إذا فشل إصدار الوثيقة.
+                */
+
+                await supabase
+                    .from("profiles")
+                    .delete()
+                    .eq(
+                        "id",
+                        newUser.id
+                    );
+
+                await supabase.auth.admin
+                    .deleteUser(
+                        newUser.id
+                    );
+
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "تعذر إصدار وثيقة التسجيل، لذلك لم يتم إنشاء الحساب."
+                    });
+            }
+
+            const registrationDocument =
+                documentResult.data;
+
+            /* ---------------------------------------------
+               بيانات الوثيقة
+               
+               ملاحظة أمنية:
+               password تُرسل فقط في هذه الاستجابة.
+               لا يتم تخزينها في Supabase.
+            --------------------------------------------- */
+
             return res.json({
                 success: true,
 
                 message:
-                    "تم إنشاء الحساب بنجاح.",
+                    "تم إنشاء الحساب وإصدار وثيقة التسجيل بنجاح.",
 
                 user: {
                     id:
@@ -775,10 +900,46 @@ app.post(
                         newUser.email,
 
                     fullName:
-                        fullName.trim(),
+                        cleanFullName,
 
                     role:
                         role
+                },
+
+                registrationDocument: {
+                    id:
+                        registrationDocument.id,
+
+                    documentNumber:
+                        registrationDocument
+                            .document_number,
+
+                    issuedAt:
+                        registrationDocument
+                            .issued_at,
+
+                    status:
+                        registrationDocument
+                            .status,
+
+                    fullName:
+                        cleanFullName,
+
+                    email:
+                        cleanEmail,
+
+                    password:
+                        cleanPassword,
+
+                    role:
+                        role,
+
+                    issuedBy:
+                        verification.profile
+                            .full_name,
+
+                    libraryUrl:
+                        "https://maktabati-1-rpeo.onrender.com"
                 }
             });
 
@@ -800,24 +961,19 @@ app.post(
 );
 
 /* =========================================================
-جلب المستخدمين
+   جلب المستخدمين
 ========================================================= */
 
 app.get(
     "/api/admin/users",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             const verification =
                 await verifyAccountManager(
                     req
                 );
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -856,32 +1012,27 @@ app.get(
                         "id, full_name, role, created_at"
                     );
 
-            if (
-                profilesResult.error
-            ) {
+            if (profilesResult.error) {
                 return res
                     .status(500)
                     .json({
                         success: false,
                         message:
-                            profilesResult.error.message
+                            profilesResult
+                                .error
+                                .message
                     });
             }
 
             const profiles =
-                profilesResult.data ||
-                [];
+                profilesResult.data || [];
 
             const users =
                 usersData.map(
-                    function (
-                        user
-                    ) {
+                    function (user) {
                         const profile =
                             profiles.find(
-                                function (
-                                    p
-                                ) {
+                                function (p) {
                                     return (
                                         p.id ===
                                         user.id
@@ -919,7 +1070,8 @@ app.get(
 
             return res.json({
                 success: true,
-                users: users
+                users:
+                    users
             });
 
         } catch (error) {
@@ -940,15 +1092,181 @@ app.get(
 );
 
 /* =========================================================
-تعديل مستخدم
+   معلومات وثيقة مستخدم
+   لا تحتوي على كلمة المرور
+========================================================= */
+
+app.get(
+    "/api/admin/users/:id/registration-document",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyAccountManager(
+                    req
+                );
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            const userId =
+                req.params.id;
+
+            const documentResult =
+                await supabase
+                    .from(
+                        "registration_documents"
+                    )
+                    .select(
+                        `
+                        id,
+                        user_id,
+                        document_number,
+                        issued_by,
+                        issued_at,
+                        status,
+                        created_at
+                        `
+                    )
+                    .eq(
+                        "user_id",
+                        userId
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending:
+                                false
+                        }
+                    )
+                    .limit(1)
+                    .maybeSingle();
+
+            if (
+                documentResult.error
+            ) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            documentResult
+                                .error
+                                .message
+                    });
+            }
+
+            if (
+                !documentResult.data
+            ) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message:
+                            "لا توجد وثيقة تسجيل لهذا الحساب."
+                    });
+            }
+
+            const profileResult =
+                await supabase
+                    .from("profiles")
+                    .select(
+                        "id, full_name, role"
+                    )
+                    .eq(
+                        "id",
+                        userId
+                    )
+                    .single();
+
+            if (
+                profileResult.error ||
+                !profileResult.data
+            ) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message:
+                            "لم يتم العثور على بيانات المستخدم."
+                    });
+            }
+
+            const authResult =
+                await supabase.auth.admin
+                    .getUserById(
+                        userId
+                    );
+
+            if (authResult.error) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            authResult
+                                .error
+                                .message
+                    });
+            }
+
+            return res.json({
+                success: true,
+
+                document:
+                    documentResult.data,
+
+                user: {
+                    id:
+                        userId,
+
+                    fullName:
+                        profileResult.data
+                            .full_name,
+
+                    email:
+                        authResult.data.user
+                            .email,
+
+                    role:
+                        profileResult.data
+                            .role
+                }
+            });
+
+        } catch (error) {
+            console.error(
+                "Get registration document error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message:
+                        "حدث خطأ أثناء جلب وثيقة التسجيل."
+                });
+        }
+    }
+);
+
+/* =========================================================
+   تعديل مستخدم
 ========================================================= */
 
 app.put(
     "/api/admin/users/:id",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             const userId =
                 req.params.id;
@@ -965,9 +1283,7 @@ app.put(
                     req
                 );
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -1181,15 +1497,12 @@ app.put(
 );
 
 /* =========================================================
-حذف مستخدم
+   حذف مستخدم
 ========================================================= */
 
 app.delete(
     "/api/admin/users/:id",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             const userId =
                 req.params.id;
@@ -1199,9 +1512,7 @@ app.delete(
                     req
                 );
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -1266,6 +1577,12 @@ app.delete(
                             "لا يمكن حذف حساب المبرمج."
                     });
             }
+
+            /*
+               registration_documents مرتبط بـ auth.users
+               بـ ON DELETE CASCADE، لذلك سيُحذف تلقائيًا
+               مع الحساب.
+            */
 
             const deleteProfileResult =
                 await supabase
@@ -1332,7 +1649,7 @@ app.delete(
 );
 
 /* =========================================================
-رفع كتاب PDF + غلاف
+   رفع كتاب PDF + غلاف
 ========================================================= */
 
 app.post(
@@ -1349,10 +1666,7 @@ app.post(
         }
     ]),
 
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         let uploadedPdfId = null;
         let uploadedCoverId = null;
 
@@ -1414,10 +1728,6 @@ app.post(
                 req.body
             );
 
-            /* ---------------------------------------------
-               التحقق من Google Drive
-            --------------------------------------------- */
-
             if (!drive) {
                 return res
                     .status(500)
@@ -1428,16 +1738,10 @@ app.post(
                     });
             }
 
-            /* ---------------------------------------------
-               التحقق من المستخدم
-            --------------------------------------------- */
-
             const verification =
                 await verifyUser(req);
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -1465,10 +1769,6 @@ app.post(
                             "ليس لديك صلاحية لرفع الكتب."
                     });
             }
-
-            /* ---------------------------------------------
-               البيانات
-            --------------------------------------------- */
 
             const title =
                 req.body.title
@@ -1510,10 +1810,6 @@ app.post(
                     });
             }
 
-            /* ---------------------------------------------
-               التأكد من وجود PDF
-            --------------------------------------------- */
-
             if (!pdfFile) {
                 return res
                     .status(400)
@@ -1523,10 +1819,6 @@ app.post(
                             "يرجى اختيار ملف PDF."
                     });
             }
-
-            /* ---------------------------------------------
-               التأكد من وجود الغلاف
-            --------------------------------------------- */
 
             if (!coverFile) {
                 return res
@@ -1538,20 +1830,13 @@ app.post(
                     });
             }
 
-            /* ---------------------------------------------
-               التحقق من PDF
-            --------------------------------------------- */
-
             const uploadedFileName =
-                pdfFile.originalname
-                    .toLowerCase();
+                pdfFile.originalname.toLowerCase();
 
             const isPdf =
                 pdfFile.mimetype ===
                     "application/pdf" ||
-                uploadedFileName.endsWith(
-                    ".pdf"
-                );
+                uploadedFileName.endsWith(".pdf");
 
             if (!isPdf) {
                 return res
@@ -1562,10 +1847,6 @@ app.post(
                             "يسمح برفع ملفات PDF فقط."
                     });
             }
-
-            /* ---------------------------------------------
-               حجم PDF
-            --------------------------------------------- */
 
             const MAX_PDF_SIZE =
                 100 *
@@ -1584,10 +1865,6 @@ app.post(
                             "حجم ملف PDF يتجاوز 100 ميغابايت."
                     });
             }
-
-            /* ---------------------------------------------
-               التحقق من الغلاف
-            --------------------------------------------- */
 
             const allowedCoverTypes = [
                 "image/jpeg",
@@ -1609,10 +1886,6 @@ app.post(
                     });
             }
 
-            /* ---------------------------------------------
-               حجم الغلاف
-            --------------------------------------------- */
-
             const MAX_COVER_SIZE =
                 10 *
                 1024 *
@@ -1630,10 +1903,6 @@ app.post(
                             "حجم صورة الغلاف يتجاوز 10 ميغابايت."
                     });
             }
-
-            /* ---------------------------------------------
-               مجلد Google Drive
-            --------------------------------------------- */
 
             const folderId =
                 process.env
@@ -1710,10 +1979,6 @@ app.post(
                 "تم رفع PDF. ID:",
                 uploadedPdfId
             );
-
-            /* ---------------------------------------------
-               جعل PDF قابلًا للقراءة
-            --------------------------------------------- */
 
             try {
                 await drive.permissions.create({
@@ -1846,10 +2111,6 @@ app.post(
                 uploadedCoverId
             );
 
-            /* ---------------------------------------------
-               جعل الغلاف قابلًا للعرض
-            --------------------------------------------- */
-
             try {
                 await drive.permissions.create({
                     fileId:
@@ -1908,10 +2169,6 @@ app.post(
                             "تم رفع الكتاب والغلاف لكن تعذر إعداد صلاحيات الغلاف."
                     });
             }
-
-            /* ---------------------------------------------
-               رابط الغلاف
-            --------------------------------------------- */
 
             const coverUrl =
                 "https://drive.google.com/thumbnail?id=" +
@@ -1986,10 +2243,6 @@ app.post(
                             fileId:
                                 uploadedCoverId
                         });
-
-                        console.log(
-                            "تم حذف الغلاف بعد فشل حفظ الكتاب."
-                        );
                     } catch (deleteCoverError) {
                         console.error(
                             "تعذر حذف الغلاف:",
@@ -2007,10 +2260,6 @@ app.post(
                             fileId:
                                 uploadedPdfId
                         });
-
-                        console.log(
-                            "تم حذف PDF بعد فشل حفظ الكتاب."
-                        );
                     } catch (deletePdfError) {
                         console.error(
                             "تعذر حذف PDF:",
@@ -2084,13 +2333,7 @@ app.post(
                 "Google Drive / Supabase upload error:"
             );
 
-            console.error(
-                error
-            );
-
-            /* ---------------------------------------------
-               تنظيف PDF
-            --------------------------------------------- */
+            console.error(error);
 
             if (
                 uploadedPdfId &&
@@ -2101,11 +2344,6 @@ app.post(
                         fileId:
                             uploadedPdfId
                     });
-
-                    console.log(
-                        "تم حذف PDF بعد حدوث الخطأ."
-                    );
-
                 } catch (deleteError) {
                     console.error(
                         "تعذر حذف PDF بعد الخطأ:",
@@ -2113,10 +2351,6 @@ app.post(
                     );
                 }
             }
-
-            /* ---------------------------------------------
-               تنظيف الغلاف
-            --------------------------------------------- */
 
             if (
                 uploadedCoverId &&
@@ -2127,11 +2361,6 @@ app.post(
                         fileId:
                             uploadedCoverId
                     });
-
-                    console.log(
-                        "تم حذف الغلاف بعد حدوث الخطأ."
-                    );
-
                 } catch (deleteError) {
                     console.error(
                         "تعذر حذف الغلاف بعد الخطأ:",
@@ -2156,15 +2385,12 @@ app.post(
 );
 
 /* =========================================================
-حذف كتاب + غلاف
+   حذف كتاب + غلاف
 ========================================================= */
 
 app.delete(
     "/api/books/:id",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             console.log(
                 "================================="
@@ -2183,16 +2409,10 @@ app.delete(
                 "================================="
             );
 
-            /* ---------------------------------------------
-               التحقق من المستخدم
-            --------------------------------------------- */
-
             const verification =
                 await verifyUser(req);
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -2209,10 +2429,6 @@ app.delete(
 
             const currentRole =
                 verification.profile.role;
-
-            /* ---------------------------------------------
-               منع الطالب
-            --------------------------------------------- */
 
             if (
                 currentRole !== "programmer" &&
@@ -2241,10 +2457,6 @@ app.delete(
                     });
             }
 
-            /* ---------------------------------------------
-               جلب الكتاب
-            --------------------------------------------- */
-
             const bookResult =
                 await supabase
                     .from("books")
@@ -2261,11 +2473,6 @@ app.delete(
                 bookResult.error ||
                 !bookResult.data
             ) {
-                console.error(
-                    "Get book for deletion error:",
-                    bookResult.error
-                );
-
                 return res
                     .status(404)
                     .json({
@@ -2277,10 +2484,6 @@ app.delete(
 
             const book =
                 bookResult.data;
-
-            /* ---------------------------------------------
-               الأستاذ يستطيع حذف كتابه فقط
-            --------------------------------------------- */
 
             if (
                 currentRole === "teacher" &&
@@ -2295,10 +2498,6 @@ app.delete(
                             "يمكن للأستاذ حذف الكتب التي رفعها بنفسه فقط."
                     });
             }
-
-            /* ---------------------------------------------
-               التأكد من Google Drive
-            --------------------------------------------- */
 
             if (
                 (
@@ -2316,10 +2515,6 @@ app.delete(
                     });
             }
 
-            /* ---------------------------------------------
-               حذف PDF
-            --------------------------------------------- */
-
             let pdfDeleted = false;
 
             if (
@@ -2327,20 +2522,12 @@ app.delete(
                 drive
             ) {
                 try {
-                    console.log(
-                        "جاري حذف ملف PDF من Google Drive..."
-                    );
-
                     await drive.files.delete({
                         fileId:
                             book.drive_file_id
                     });
 
                     pdfDeleted = true;
-
-                    console.log(
-                        "تم حذف ملف PDF من Google Drive."
-                    );
 
                 } catch (driveError) {
                     const driveStatus =
@@ -2352,15 +2539,10 @@ app.delete(
                     if (
                         driveStatus === 404
                     ) {
-                        console.log(
-                            "ملف PDF غير موجود في Google Drive."
-                        );
-
                         pdfDeleted = true;
-
                     } else {
                         console.error(
-                            "خطأ أثناء حذف ملف PDF:",
+                            "خطأ أثناء حذف PDF:",
                             driveError
                         );
 
@@ -2375,15 +2557,9 @@ app.delete(
                 }
             }
 
-            /* ---------------------------------------------
-               استخراج ID الغلاف
-            --------------------------------------------- */
-
             let coverFileId = null;
 
-            if (
-                book.cover_url
-            ) {
+            if (book.cover_url) {
                 try {
                     const coverUrl =
                         new URL(
@@ -2401,10 +2577,6 @@ app.delete(
                 }
             }
 
-            /* ---------------------------------------------
-               حذف الغلاف
-            --------------------------------------------- */
-
             let coverDeleted = false;
 
             if (
@@ -2412,20 +2584,12 @@ app.delete(
                 drive
             ) {
                 try {
-                    console.log(
-                        "جاري حذف غلاف الكتاب من Google Drive..."
-                    );
-
                     await drive.files.delete({
                         fileId:
                             coverFileId
                     });
 
                     coverDeleted = true;
-
-                    console.log(
-                        "تم حذف غلاف الكتاب من Google Drive."
-                    );
 
                 } catch (coverError) {
                     const coverStatus =
@@ -2437,12 +2601,7 @@ app.delete(
                     if (
                         coverStatus === 404
                     ) {
-                        console.log(
-                            "غلاف الكتاب غير موجود في Google Drive."
-                        );
-
                         coverDeleted = true;
-
                     } else {
                         console.error(
                             "خطأ أثناء حذف الغلاف:",
@@ -2460,14 +2619,6 @@ app.delete(
                 }
             }
 
-            /* ---------------------------------------------
-               حذف سجل الكتاب من Supabase
-            --------------------------------------------- */
-
-            console.log(
-                "جاري حذف سجل الكتاب من Supabase..."
-            );
-
             const deleteBookResult =
                 await supabase
                     .from("books")
@@ -2480,11 +2631,6 @@ app.delete(
             if (
                 deleteBookResult.error
             ) {
-                console.error(
-                    "Delete book from Supabase error:",
-                    deleteBookResult.error
-                );
-
                 return res
                     .status(500)
                     .json({
@@ -2493,33 +2639,6 @@ app.delete(
                             "تم حذف ملفات الكتاب من Google Drive لكن حدث خطأ أثناء حذف سجل الكتاب من قاعدة البيانات."
                     });
             }
-
-            console.log(
-                "تم حذف الكتاب من Supabase بنجاح."
-            );
-
-            console.log(
-                "================================="
-            );
-
-            console.log(
-                "اكتمل حذف الكتاب:",
-                book.title
-            );
-
-            console.log(
-                "PDF deleted:",
-                pdfDeleted
-            );
-
-            console.log(
-                "Cover deleted:",
-                coverDeleted
-            );
-
-            console.log(
-                "================================="
-            );
 
             return res.json({
                 success: true,
@@ -2531,7 +2650,13 @@ app.delete(
                     book.id,
 
                 title:
-                    book.title
+                    book.title,
+
+                pdfDeleted:
+                    pdfDeleted,
+
+                coverDeleted:
+                    coverDeleted
             });
 
         } catch (error) {
@@ -2552,15 +2677,12 @@ app.delete(
 );
 
 /* =========================================================
-جلب جميع الكتب
+   جلب جميع الكتب
 ========================================================= */
 
 app.get(
     "/api/books",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         try {
             const result =
                 await supabase
@@ -2627,31 +2749,21 @@ app.get(
 );
 
 /* =========================================================
-فتح PDF
-محمي بتسجيل الدخول
-يدعم HTTP RANGE REQUESTS
-لتحميل PDF بشكل تدريجي مع PDF.js
+   فتح PDF
+   محمي بتسجيل الدخول
+   يدعم HTTP RANGE REQUESTS
 ========================================================= */
 
 app.get(
     "/api/books/:id/pdf",
-    async function (
-        req,
-        res
-    ) {
+    async function (req, res) {
         let driveStream = null;
 
         try {
-            /* ---------------------------------------------
-               التحقق من تسجيل الدخول
-            --------------------------------------------- */
-
             const verification =
                 await verifyUser(req);
 
-            if (
-                !verification.success
-            ) {
+            if (!verification.success) {
                 return res
                     .status(
                         verification.status
@@ -2662,10 +2774,6 @@ app.get(
                             verification.message
                     });
             }
-
-            /* ---------------------------------------------
-               التحقق من معرف الكتاب
-            --------------------------------------------- */
 
             const bookId =
                 req.params.id;
@@ -2679,10 +2787,6 @@ app.get(
                             "معرف الكتاب غير صالح."
                     });
             }
-
-            /* ---------------------------------------------
-               جلب بيانات الكتاب
-            --------------------------------------------- */
 
             const bookResult =
                 await supabase
@@ -2712,9 +2816,7 @@ app.get(
             const book =
                 bookResult.data;
 
-            if (
-                !book.drive_file_id
-            ) {
+            if (!book.drive_file_id) {
                 return res
                     .status(404)
                     .json({
@@ -2723,10 +2825,6 @@ app.get(
                             "ملف PDF غير مرتبط بهذا الكتاب."
                     });
             }
-
-            /* ---------------------------------------------
-               التأكد من Google Drive
-            --------------------------------------------- */
 
             if (!drive) {
                 return res
@@ -2752,9 +2850,9 @@ app.get(
                 req.headers.range || "بدون Range"
             );
 
-            /* ---------------------------------------------
-               الحصول على حجم ملف PDF
-            --------------------------------------------- */
+            console.log(
+                "================================="
+            );
 
             const metadataResponse =
                 await drive.files.get({
@@ -2783,10 +2881,6 @@ app.get(
                     });
             }
 
-            /* ---------------------------------------------
-               اسم آمن للملف
-            --------------------------------------------- */
-
             const safeTitle =
                 (
                     book.title ||
@@ -2798,10 +2892,6 @@ app.get(
                     )
                     .trim() ||
                 "book";
-
-            /* ---------------------------------------------
-               إعداد رؤوس الاستجابة
-            --------------------------------------------- */
 
             res.setHeader(
                 "Content-Type",
@@ -2825,22 +2915,7 @@ app.get(
                 "private, max-age=3600"
             );
 
-            /* =================================================
-               لا يوجد Range
-               إرسال الملف كاملًا كـ Stream
-            ================================================= */
-
             if (!req.headers.range) {
-                console.log(
-                    "إرسال PDF كاملًا:"
-                );
-
-                console.log(
-                    "الحجم:",
-                    fileSize,
-                    "bytes"
-                );
-
                 res.setHeader(
                     "Content-Length",
                     String(fileSize)
@@ -2866,17 +2941,13 @@ app.get(
 
                 driveStream.on(
                     "error",
-                    function (
-                        error
-                    ) {
+                    function (error) {
                         console.error(
                             "PDF stream error:",
                             error
                         );
 
-                        if (
-                            !res.headersSent
-                        ) {
+                        if (!res.headersSent) {
                             res
                                 .status(500)
                                 .end();
@@ -2904,10 +2975,6 @@ app.get(
 
                 return;
             }
-
-            /* =================================================
-               يوجد Range
-            ================================================= */
 
             const rangeHeader =
                 req.headers.range;
@@ -2942,11 +3009,6 @@ app.get(
                     )
                     : null;
 
-            /* ---------------------------------------------
-               Range من النهاية
-               مثال: bytes=-500000
-            --------------------------------------------- */
-
             if (
                 start === null &&
                 end !== null
@@ -2978,11 +3040,6 @@ app.get(
                     fileSize - 1;
             }
 
-            /* ---------------------------------------------
-               Range مفتوح
-               مثال: bytes=500000-
-            --------------------------------------------- */
-
             if (
                 start !== null &&
                 end === null
@@ -2990,10 +3047,6 @@ app.get(
                 end =
                     fileSize - 1;
             }
-
-            /* ---------------------------------------------
-               التحقق من الحدود
-            --------------------------------------------- */
 
             if (
                 start === null ||
@@ -3014,10 +3067,6 @@ app.get(
                     .status(416)
                     .end();
             }
-
-            /* ---------------------------------------------
-               منع تجاوز نهاية الملف
-            --------------------------------------------- */
 
             if (
                 end >= fileSize
@@ -3042,10 +3091,6 @@ app.get(
                 "bytes"
             );
 
-            /* ---------------------------------------------
-               إعداد استجابة 206
-            --------------------------------------------- */
-
             res.status(206);
 
             res.setHeader(
@@ -3062,10 +3107,6 @@ app.get(
                 "Accept-Ranges",
                 "bytes"
             );
-
-            /* ---------------------------------------------
-               طلب الجزء المطلوب من Google Drive
-            --------------------------------------------- */
 
             const driveResponse =
                 await drive.files.get(
@@ -3090,23 +3131,15 @@ app.get(
             driveStream =
                 driveResponse.data;
 
-            /* ---------------------------------------------
-               مراقبة أخطاء Stream
-            --------------------------------------------- */
-
             driveStream.on(
                 "error",
-                function (
-                    error
-                ) {
+                function (error) {
                     console.error(
                         "Google Drive Range stream error:",
                         error
                     );
 
-                    if (
-                        !res.headersSent
-                    ) {
+                    if (!res.headersSent) {
                         res
                             .status(500)
                             .end();
@@ -3115,11 +3148,6 @@ app.get(
                     }
                 }
             );
-
-            /* ---------------------------------------------
-               إذا أغلق العميل الاتصال
-               نوقف تحميل الجزء من Google Drive
-            --------------------------------------------- */
 
             req.on(
                 "close",
@@ -3132,10 +3160,6 @@ app.get(
                     }
                 }
             );
-
-            /* ---------------------------------------------
-               إرسال الجزء للمتصفح
-            --------------------------------------------- */
 
             driveStream.pipe(
                 res
@@ -3154,9 +3178,7 @@ app.get(
                 driveStream.destroy();
             }
 
-            if (
-                !res.headersSent
-            ) {
+            if (!res.headersSent) {
                 return res
                     .status(500)
                     .json({
@@ -3174,7 +3196,7 @@ app.get(
 );
 
 /* =========================================================
-معالجة أخطاء MULTER
+   معالجة أخطاء MULTER
 ========================================================= */
 
 app.use(
@@ -3244,7 +3266,7 @@ app.use(
 );
 
 /* =========================================================
-تشغيل الخادم
+   تشغيل الخادم
 ========================================================= */
 
 async function startServer() {
@@ -3289,6 +3311,10 @@ async function startServer() {
 
                 console.log(
                     "HTTP Range Requests: مفعّل"
+                );
+
+                console.log(
+                    "نظام وثائق التسجيل: مفعّل"
                 );
 
                 console.log(
