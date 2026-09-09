@@ -1,440 +1,501 @@
-```html
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>إضافة كتاب | مكتبة الثانوية</title>
+<title>إضافة كتاب | مكتبة الثانوية</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #222;
-        }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+        color: #222;
+    }
+
+    header {
+        background: #12355b;
+        color: white;
+        padding: 22px 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 26px;
+    }
+
+    header p {
+        margin: 8px 0 0;
+        opacity: 0.9;
+    }
+
+    .dashboard-btn {
+        display: none;
+        color: white;
+        text-decoration: none;
+        background: rgba(255,255,255,0.15);
+        padding: 11px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.2s;
+        white-space: nowrap;
+    }
+
+    .dashboard-btn:hover {
+        background: rgba(255,255,255,0.25);
+    }
+
+    .container {
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 14px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: #12355b;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #d5dbe3;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: inherit;
+    }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #12355b;
+    }
+
+    .file-box {
+        border: 2px dashed #b8c2ce;
+        border-radius: 10px;
+        padding: 25px;
+        text-align: center;
+        background: #fafbfc;
+    }
+
+    .file-box input {
+        border: none;
+        padding: 10px;
+    }
+
+    .file-help {
+        margin: 8px 0 0;
+        color: #687586;
+        font-size: 13px;
+    }
+
+    .cover-preview {
+        display: none;
+        margin-top: 18px;
+        text-align: center;
+    }
+
+    .cover-preview.show {
+        display: block;
+    }
+
+    .cover-preview img {
+        width: 180px;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+        border: 1px solid #d5dbe3;
+    }
+
+    .cover-preview p {
+        margin: 10px 0 0;
+        color: #12355b;
+        font-weight: bold;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        background: #12355b;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #0d2947;
+    }
+
+    button:disabled {
+        background: #8995a3;
+        cursor: not-allowed;
+    }
+
+    #message {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 8px;
+        display: none;
+        text-align: center;
+    }
+
+    .success {
+        display: block !important;
+        background: #dff5e5;
+        color: #176b2c;
+    }
+
+    .error {
+        display: block !important;
+        background: #fde2e2;
+        color: #9b1c1c;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #12355b;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .user-info {
+        margin-bottom: 20px;
+        padding: 12px 15px;
+        background: #eef4f9;
+        border-radius: 8px;
+        color: #12355b;
+        font-weight: bold;
+    }
+
+    .required {
+        color: #c0392b;
+    }
+
+    @media (max-width: 700px) {
 
         header {
-            background: #12355b;
-            color: white;
-            padding: 22px 40px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-        header p {
-            margin: 8px 0 0;
-            opacity: 0.9;
+            padding: 20px;
+            flex-direction: column;
+            align-items: stretch;
         }
 
         .dashboard-btn {
-            display: none;
-            color: white;
-            text-decoration: none;
-            background: rgba(255,255,255,0.15);
-            padding: 11px 18px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-
-        .dashboard-btn:hover {
-            background: rgba(255,255,255,0.25);
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 0 20px;
+            text-align: center;
         }
 
         .card {
-            background: white;
-            border-radius: 14px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 22px;
         }
 
-        .card h2 {
-            margin-top: 0;
-            color: #12355b;
+        .cover-preview img {
+            width: 150px;
+            height: 205px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #d5dbe3;
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: inherit;
-        }
-
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #12355b;
-        }
-
-        .file-box {
-            border: 2px dashed #b8c2ce;
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            background: #fafbfc;
-        }
-
-        .file-box input {
-            border: none;
-            padding: 10px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            background: #12355b;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0d2947;
-        }
-
-        button:disabled {
-            background: #8995a3;
-            cursor: not-allowed;
-        }
-
-        #message {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 8px;
-            display: none;
-            text-align: center;
-        }
-
-        .success {
-            display: block !important;
-            background: #dff5e5;
-            color: #176b2c;
-        }
-
-        .error {
-            display: block !important;
-            background: #fde2e2;
-            color: #9b1c1c;
-        }
-
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #12355b;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .user-info {
-            margin-bottom: 20px;
-            padding: 12px 15px;
-            background: #eef4f9;
-            border-radius: 8px;
-            color: #12355b;
-            font-weight: bold;
-        }
-
-        @media (max-width: 700px) {
-
-            header {
-                padding: 20px;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .dashboard-btn {
-                text-align: center;
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
-
 <body>
-
 
 <header>
 
-    <div>
-
-        <h1>
-            مكتبة الثانوية
-        </h1>
-
-        <p>
-            إضافة كتاب جديد إلى المكتبة
-        </p>
-
-    </div>
-
-
-    <!-- زر لوحة التحكم -->
-
-    <a
-        id="dashboardButton"
-        class="dashboard-btn"
-        href="#">
-
-        ⬅️ لوحة التحكم
-
-    </a>
-
-
-</header>
-
-
-
-<div class="container">
-
-
-    <a
-        href="books.html"
-        class="back">
-
-        ← العودة إلى الكتب
-
-    </a>
-
-
-
-    <div class="card">
-
-
-        <h2>
-            إضافة كتاب جديد
-        </h2>
-
-
-        <!-- معلومات المستخدم -->
-
-        <div
-            id="userInfo"
-            class="user-info"
-            style="display:none;">
-
-        </div>
-
-
-
-        <form id="bookForm">
-
-
-            <div class="form-group">
-
-                <label for="title">
-                    عنوان الكتاب
-                </label>
-
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="أدخل عنوان الكتاب"
-                    required>
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label for="author">
-                    المؤلف
-                </label>
-
-                <input
-                    type="text"
-                    id="author"
-                    placeholder="اسم المؤلف">
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label for="category">
-                    التصنيف
-                </label>
-
-
-                <select
-                    id="category"
-                    required>
-
-                    <option value="">
-                        اختر التصنيف
-                    </option>
-
-                    <option value="رياضيات">
-                        رياضيات
-                    </option>
-
-                    <option value="فيزياء">
-                        فيزياء
-                    </option>
-
-                    <option value="علوم">
-                        علوم
-                    </option>
-
-                    <option value="لغة عربية">
-                        لغة عربية
-                    </option>
-
-                    <option value="لغة فرنسية">
-                        لغة فرنسية
-                    </option>
-
-                    <option value="لغة إنجليزية">
-                        لغة إنجليزية
-                    </option>
-
-                    <option value="تاريخ وجغرافيا">
-                        تاريخ وجغرافيا
-                    </option>
-
-                    <option value="فلسفة">
-                        فلسفة
-                    </option>
-
-                    <option value="إعلام آلي">
-                        إعلام آلي
-                    </option>
-
-                    <option value="كتب أخرى">
-                        كتب أخرى
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label for="description">
-                    وصف الكتاب
-                </label>
-
-
-                <textarea
-                    id="description"
-                    placeholder="اكتب وصفًا مختصرًا للكتاب...">
-                </textarea>
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label for="pdf">
-                    ملف الكتاب PDF
-                </label>
-
-
-                <div class="file-box">
-
-                    <p>
-                        اختر ملف الكتاب من جهازك
-                    </p>
-
-
-                    <input
-                        type="file"
-                        id="pdf"
-                        accept="application/pdf,.pdf"
-                        required>
-
-                </div>
-
-            </div>
-
-
-
-            <button
-                type="submit"
-                id="uploadButton">
-
-                📚 رفع الكتاب
-
-            </button>
-
-
-            <div id="message"></div>
-
-
-        </form>
-
-
-    </div>
-
+<div>
+
+    <h1>
+        مكتبة الثانوية
+    </h1>
+
+    <p>
+        إضافة كتاب جديد إلى المكتبة
+    </p>
 
 </div>
 
+<a
+    id="dashboardButton"
+    class="dashboard-btn"
+    href="#">
 
+    ⬅️ لوحة التحكم
 
-<!-- Supabase -->
+</a>
+
+</header>
+
+<div class="container">
+
+<a
+    href="books.html"
+    class="back">
+
+    ← العودة إلى الكتب
+
+</a>
+
+<div class="card">
+
+    <h2>
+        إضافة كتاب جديد
+    </h2>
+
+    <div
+        id="userInfo"
+        class="user-info"
+        style="display:none;">
+
+    </div>
+
+    <form id="bookForm">
+
+        <div class="form-group">
+
+            <label for="title">
+                عنوان الكتاب
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                placeholder="أدخل عنوان الكتاب"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="author">
+                المؤلف
+            </label>
+
+            <input
+                type="text"
+                id="author"
+                placeholder="اسم المؤلف">
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="category">
+                التصنيف
+            </label>
+
+            <select
+                id="category"
+                required>
+
+                <option value="">
+                    اختر التصنيف
+                </option>
+
+                <option value="رياضيات">
+                    رياضيات
+                </option>
+
+                <option value="فيزياء">
+                    فيزياء
+                </option>
+
+                <option value="علوم">
+                    علوم
+                </option>
+
+                <option value="لغة عربية">
+                    لغة عربية
+                </option>
+
+                <option value="لغة فرنسية">
+                    لغة فرنسية
+                </option>
+
+                <option value="لغة إنجليزية">
+                    لغة إنجليزية
+                </option>
+
+                <option value="تاريخ وجغرافيا">
+                    تاريخ وجغرافيا
+                </option>
+
+                <option value="فلسفة">
+                    فلسفة
+                </option>
+
+                <option value="إعلام آلي">
+                    إعلام آلي
+                </option>
+
+                <option value="كتب أخرى">
+                    كتب أخرى
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="description">
+                وصف الكتاب
+            </label>
+
+            <textarea
+                id="description"
+                placeholder="اكتب وصفًا مختصرًا للكتاب..."></textarea>
+
+        </div>
+
+        <!-- غلاف الكتاب -->
+
+        <div class="form-group">
+
+            <label for="cover">
+
+                غلاف الكتاب
+
+                <span class="required">*</span>
+
+            </label>
+
+            <div class="file-box">
+
+                <p>
+                    🖼️ اختر صورة غلاف الكتاب
+                </p>
+
+                <input
+                    type="file"
+                    id="cover"
+                    accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                    required>
+
+                <p class="file-help">
+                    الصيغ المسموحة: JPG / PNG / WebP
+                </p>
+
+                <p class="file-help">
+                    الحد الأقصى لحجم الغلاف: 10 MB
+                </p>
+
+            </div>
+
+            <div
+                id="coverPreview"
+                class="cover-preview">
+
+                <img
+                    id="coverPreviewImage"
+                    src=""
+                    alt="معاينة غلاف الكتاب">
+
+                <p>
+                    معاينة الغلاف
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ملف الكتاب PDF -->
+
+        <div class="form-group">
+
+            <label for="pdf">
+
+                ملف الكتاب PDF
+
+                <span class="required">*</span>
+
+            </label>
+
+            <div class="file-box">
+
+                <p>
+                    📄 اختر ملف الكتاب من جهازك
+                </p>
+
+                <input
+                    type="file"
+                    id="pdf"
+                    accept="application/pdf,.pdf"
+                    required>
+
+                <p class="file-help">
+                    الحد الأقصى لحجم الكتاب: 100 MB
+                </p>
+
+            </div>
+
+        </div>
+
+        <button
+            type="submit"
+            id="uploadButton">
+
+            📚 رفع الكتاب والغلاف
+
+        </button>
+
+        <div id="message"></div>
+
+    </form>
+
+</div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
-
 <script>
-
 
     /* =========================================
        إعداد Supabase
@@ -443,17 +504,14 @@
     const SUPABASE_URL =
         "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-
     const SUPABASE_ANON_KEY =
         "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
-
 
     const supabaseClient =
         window.supabase.createClient(
             SUPABASE_URL,
             SUPABASE_ANON_KEY
         );
-
 
 
     /* =========================================
@@ -465,36 +523,45 @@
             "bookForm"
         );
 
-
     const pdfInput =
         document.getElementById(
             "pdf"
         );
 
+    const coverInput =
+        document.getElementById(
+            "cover"
+        );
+
+    const coverPreview =
+        document.getElementById(
+            "coverPreview"
+        );
+
+    const coverPreviewImage =
+        document.getElementById(
+            "coverPreviewImage"
+        );
 
     const button =
         document.getElementById(
             "uploadButton"
         );
 
-
     const message =
         document.getElementById(
             "message"
         );
-
 
     const dashboardButton =
         document.getElementById(
             "dashboardButton"
         );
 
-
     const userInfo =
         document.getElementById(
             "userInfo"
         );
-
 
 
     /* =========================================
@@ -515,6 +582,104 @@
     }
 
 
+    /* =========================================
+       معاينة الغلاف
+    ========================================= */
+
+    coverInput.addEventListener(
+        "change",
+        function() {
+
+            const cover =
+                coverInput.files[0];
+
+            if (!cover) {
+
+                coverPreview.classList.remove(
+                    "show"
+                );
+
+                coverPreviewImage.src =
+                    "";
+
+                return;
+
+            }
+
+            const allowedTypes = [
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            ];
+
+            if (
+                !allowedTypes.includes(
+                    cover.type
+                )
+            ) {
+
+                showMessage(
+                    "❌ يجب أن يكون الغلاف بصيغة JPG أو PNG أو WebP.",
+                    "error"
+                );
+
+                coverInput.value =
+                    "";
+
+                coverPreview.classList.remove(
+                    "show"
+                );
+
+                return;
+
+            }
+
+            const MAX_COVER_SIZE =
+                10 * 1024 * 1024;
+
+            if (
+                cover.size >
+                MAX_COVER_SIZE
+            ) {
+
+                showMessage(
+                    "❌ حجم صورة الغلاف كبير جدًا. الحد الأقصى هو 10 MB.",
+                    "error"
+                );
+
+                coverInput.value =
+                    "";
+
+                coverPreview.classList.remove(
+                    "show"
+                );
+
+                return;
+
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function(event) {
+
+                    coverPreviewImage.src =
+                        event.target.result;
+
+                    coverPreview.classList.add(
+                        "show"
+                    );
+
+                };
+
+            reader.readAsDataURL(
+                cover
+            );
+
+        }
+    );
+
 
     /* =========================================
        التحقق من الحساب وتحديد لوحة التحكم
@@ -524,13 +689,11 @@
 
         try {
 
-
             const {
                 data,
                 error
             } =
                 await supabaseClient.auth.getSession();
-
 
             if (
                 error ||
@@ -549,15 +712,8 @@
 
             }
 
-
             const user =
                 data.session.user;
-
-
-
-            /* =================================
-               الحصول على بيانات الحساب
-            ================================= */
 
             const {
                 data: profile,
@@ -573,8 +729,6 @@
                         user.id
                     )
                     .single();
-
-
 
             if (
                 profileError ||
@@ -593,18 +747,11 @@
 
             }
 
-
-
-            /* =================================
-               التحقق من الصلاحية
-            ================================= */
-
             const allowedRoles = [
                 "programmer",
                 "admin",
                 "teacher"
             ];
-
 
             if (
                 !allowedRoles.includes(
@@ -624,12 +771,6 @@
 
             }
 
-
-
-            /* =================================
-               تحديد لوحة التحكم
-            ================================= */
-
             if (
                 profile.role ===
                 "programmer"
@@ -642,7 +783,6 @@
                     "⬅️ لوحة المبرمج";
 
             }
-
 
             else if (
                 profile.role ===
@@ -657,7 +797,6 @@
 
             }
 
-
             else if (
                 profile.role ===
                 "teacher"
@@ -671,15 +810,8 @@
 
             }
 
-
             dashboardButton.style.display =
                 "inline-block";
-
-
-
-            /* =================================
-               عرض اسم المستخدم
-            ================================= */
 
             userInfo.textContent =
                 "👤 المستخدم: " +
@@ -690,15 +822,12 @@
                     profile.role
                 );
 
-
             userInfo.style.display =
                 "block";
-
 
             return data.session;
 
         }
-
 
         catch (error) {
 
@@ -722,7 +851,6 @@
     }
 
 
-
     /* =========================================
        ترجمة الصلاحيات
     ========================================= */
@@ -740,7 +868,6 @@
 
         }
 
-
         if (
             role ===
             "admin"
@@ -749,7 +876,6 @@
             return "المدير";
 
         }
-
 
         if (
             role ===
@@ -760,7 +886,6 @@
 
         }
 
-
         if (
             role ===
             "student"
@@ -770,33 +895,23 @@
 
         }
 
-
         return role;
 
     }
 
 
-
     /* =========================================
-       رفع الكتاب
+       رفع الكتاب والغلاف
     ========================================= */
 
     form.addEventListener(
         "submit",
         async function(event) {
 
-
             event.preventDefault();
-
-
-
-            /* ================================
-               التأكد من تسجيل الدخول والصلاحية
-            ================================= */
 
             const session =
                 await checkUser();
-
 
             if (!session) {
 
@@ -805,14 +920,12 @@
             }
 
 
-
             /* =================================
-               الملف
+               ملف PDF
             ================================= */
 
             const file =
                 pdfInput.files[0];
-
 
             if (!file) {
 
@@ -824,12 +937,6 @@
                 return;
 
             }
-
-
-
-            /* =================================
-               التحقق من نوع الملف
-            ================================= */
 
             if (
                 file.type !==
@@ -845,15 +952,8 @@
 
             }
 
-
-
-            /* =================================
-               حجم الملف
-            ================================= */
-
             const MAX_FILE_SIZE =
                 100 * 1024 * 1024;
-
 
             if (
                 file.size >
@@ -861,7 +961,7 @@
             ) {
 
                 showMessage(
-                    "حجم الملف كبير جدًا. الحد الأقصى هو 100 MB.",
+                    "حجم ملف الكتاب كبير جدًا. الحد الأقصى هو 100 MB.",
                     "error"
                 );
 
@@ -870,18 +970,72 @@
             }
 
 
+            /* =================================
+               صورة الغلاف
+            ================================= */
+
+            const cover =
+                coverInput.files[0];
+
+            if (!cover) {
+
+                showMessage(
+                    "اختر صورة غلاف الكتاب.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            const allowedCoverTypes = [
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            ];
+
+            if (
+                !allowedCoverTypes.includes(
+                    cover.type
+                )
+            ) {
+
+                showMessage(
+                    "يسمح فقط بصور JPG أو PNG أو WebP للغلاف.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            const MAX_COVER_SIZE =
+                10 * 1024 * 1024;
+
+            if (
+                cover.size >
+                MAX_COVER_SIZE
+            ) {
+
+                showMessage(
+                    "حجم صورة الغلاف كبير جدًا. الحد الأقصى هو 10 MB.",
+                    "error"
+                );
+
+                return;
+
+            }
+
 
             /* =================================
-               تعطيل الزر أثناء الرفع
+               تعطيل الزر
             ================================= */
 
             button.disabled =
                 true;
 
-
             button.textContent =
-                "⏳ جارٍ رفع الكتاب...";
-
+                "⏳ جارٍ رفع الكتاب والغلاف...";
 
 
             /* =================================
@@ -891,14 +1045,12 @@
             const formData =
                 new FormData();
 
-
             formData.append(
                 "title",
                 document.getElementById(
                     "title"
                 ).value.trim()
             );
-
 
             formData.append(
                 "author",
@@ -907,14 +1059,12 @@
                 ).value.trim()
             );
 
-
             formData.append(
                 "category",
                 document.getElementById(
                     "category"
                 ).value
             );
-
 
             formData.append(
                 "description",
@@ -923,20 +1073,22 @@
                 ).value.trim()
             );
 
-
             formData.append(
                 "pdf",
                 file
             );
 
+            formData.append(
+                "cover",
+                cover
+            );
 
 
             /* =================================
-               إرسال الكتاب إلى الخادم
+               إرسال البيانات للخادم
             ================================= */
 
             try {
-
 
                 const response =
                     await fetch(
@@ -959,15 +1111,26 @@
                         }
                     );
 
+                let result;
 
+                try {
 
-                const result =
-                    await response.json();
+                    result =
+                        await response.json();
 
+                }
 
+                catch (jsonError) {
+
+                    throw new Error(
+                        "استجاب الخادم برد غير صالح."
+                    );
+
+                }
 
                 if (
-                    !response.ok
+                    !response.ok ||
+                    !result.success
                 ) {
 
                     throw new Error(
@@ -978,32 +1141,32 @@
                 }
 
 
-
                 /* =================================
-                   نجاح الرفع
+                   نجاح
                 ================================= */
 
                 showMessage(
-                    "✅ تم رفع الكتاب بنجاح إلى Google Drive وإضافته إلى المكتبة.",
+                    "✅ تم رفع الكتاب والغلاف بنجاح وإضافتهما إلى المكتبة.",
                     "success"
                 );
 
-
                 form.reset();
 
+                coverPreview.classList.remove(
+                    "show"
+                );
 
+                coverPreviewImage.src =
+                    "";
 
             }
 
-
             catch (error) {
-
 
                 console.error(
                     "Upload error:",
                     error
                 );
-
 
                 showMessage(
                     "❌ " +
@@ -1011,20 +1174,15 @@
                     "error"
                 );
 
-
             }
 
-
             finally {
-
 
                 button.disabled =
                     false;
 
-
                 button.textContent =
-                    "📚 رفع الكتاب";
-
+                    "📚 رفع الكتاب والغلاف";
 
             }
 
@@ -1032,18 +1190,14 @@
     );
 
 
-
     /* =========================================
-       تشغيل التحقق عند فتح الصفحة
+       تشغيل التحقق
     ========================================= */
 
     checkUser();
 
-
 </script>
-
 
 </body>
 
 </html>
-```
