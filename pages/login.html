@@ -403,8 +403,11 @@
         const SUPABASE_URL =
             "https://xdkluojrvdhdtihblpwy.supabase.co";
 
+        /*
+         * المفتاح الصحيح من Supabase
+         */
         const SUPABASE_ANON_KEY =
-            "sb_publishable_znxrXQ3DJxs8D5O5--_TCcQ_6tXDfpFK";
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
 
 
         const supabaseClient =
@@ -430,6 +433,7 @@
 
                 event.preventDefault();
 
+
                 const email =
                     document
                         .getElementById("email")
@@ -452,10 +456,6 @@
 
                 try {
 
-                    /*
-                     * تسجيل الدخول في Supabase
-                     */
-
                     const {
                         data,
                         error
@@ -466,10 +466,6 @@
                         });
 
 
-                    /*
-                     * إذا كان الخطأ من Supabase
-                     */
-
                     if (error) {
 
                         console.error(
@@ -477,17 +473,9 @@
                             error
                         );
 
-                        throw new Error(
-                            error.message ||
-                            "فشل تسجيل الدخول."
-                        );
-
+                        throw error;
                     }
 
-
-                    /*
-                     * التأكد من وجود المستخدم
-                     */
 
                     const user =
                         data.user;
@@ -496,7 +484,7 @@
                     if (!user) {
 
                         throw new Error(
-                            "تم تسجيل الدخول ولكن لم يتم العثور على بيانات المستخدم."
+                            "لم يتم العثور على المستخدم."
                         );
 
                     }
@@ -530,7 +518,7 @@
                         );
 
                         throw new Error(
-                            "تم تسجيل الدخول بنجاح، لكن لم يتم العثور على ملف صلاحية الحساب."
+                            "تم تسجيل الدخول بنجاح، لكن لم يتم العثور على صلاحية الحساب."
                         );
 
                     }
@@ -545,6 +533,13 @@
                     }
 
 
+                    loginMessage.style.color =
+                        "#15803d";
+
+                    loginMessage.textContent =
+                        "تم تسجيل الدخول بنجاح ✓";
+
+
                     console.log(
                         "المستخدم:",
                         profile.full_name
@@ -556,17 +551,10 @@
                     );
 
 
-                    loginMessage.style.color =
-                        "#15803d";
-
-                    loginMessage.textContent =
-                        "تم تسجيل الدخول بنجاح ✓";
-
-
                     /*
                      * التوجيه حسب الصلاحية
                      *
-                     * login.html موجود داخل pages
+                     * لأن login.html موجود داخل pages
                      */
 
                     setTimeout(
@@ -628,6 +616,7 @@
                         },
                         700
                     );
+
 
                 }
 
