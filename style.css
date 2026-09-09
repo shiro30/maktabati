@@ -1,3 +1,4 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 
 /* =====================================================
@@ -56,15 +57,12 @@ body {
 .navbar {
     min-height: 82px;
     padding: 12px 7%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 25px;
-
     background: var(--black);
     border-bottom: 3px solid var(--blue);
-
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -77,7 +75,7 @@ body {
 }
 
 /* =====================================================
-   شعار المكتبة - داخل الشريط العلوي فقط
+   شعار المكتبة
    ===================================================== */
 
 .logo-icon {
@@ -85,20 +83,14 @@ body {
     height: 46px;
     min-width: 46px;
     max-width: 46px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 12px;
-
     background: var(--blue);
     color: white;
-
     font-size: 23px;
-
     box-shadow: 0 5px 15px rgba(29, 78, 216, 0.35);
-
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -108,9 +100,7 @@ body {
     height: 100%;
     max-width: 100%;
     max-height: 100%;
-
     object-fit: cover;
-
     display: block;
 }
 
@@ -148,27 +138,17 @@ nav a.active {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid var(--orange);
-
     background: transparent;
-
     color: var(--orange);
-
     padding: 9px 20px;
-
     border-radius: 9px;
-
     font-family: inherit;
     font-size: 13px;
     font-weight: 700;
-
     text-decoration: none;
-
     cursor: pointer;
-
     transition: 0.3s ease;
-
     white-space: nowrap;
 }
 
@@ -183,15 +163,11 @@ nav a.active {
 
 .hero {
     min-height: 570px;
-
     padding: 80px 10%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 70px;
-
     background:
         radial-gradient(
             circle at 75% 40%,
@@ -203,7 +179,6 @@ nav a.active {
             #111827,
             #172554
         );
-
     color: white;
 }
 
@@ -213,20 +188,13 @@ nav a.active {
 
 .welcome {
     display: inline-block;
-
     color: #93c5fd;
-
     background: rgba(29, 78, 216, 0.18);
-
     border: 1px solid rgba(96, 165, 250, 0.35);
-
     padding: 6px 15px;
-
     border-radius: 20px;
-
     font-size: 13px;
     font-weight: 600;
-
     margin-bottom: 20px;
 }
 
@@ -243,11 +211,8 @@ nav a.active {
 
 .hero p {
     color: #cbd5e1;
-
     font-size: 17px;
-
     max-width: 620px;
-
     margin-bottom: 30px;
 }
 
@@ -257,36 +222,23 @@ nav a.active {
 
 .search-box {
     max-width: 650px;
-
     display: flex;
-
     padding: 6px;
-
     background: white;
-
     border: 1px solid #dbeafe;
-
     border-radius: 13px;
-
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
 }
 
 .search-box input {
     flex: 1;
-
     min-width: 0;
-
     border: none;
     outline: none;
-
     background: transparent;
-
     color: var(--text);
-
     padding: 14px;
-
     font-family: inherit;
-
     font-size: 14px;
 }
 
@@ -296,21 +248,13 @@ nav a.active {
 
 .search-box button {
     border: none;
-
     background: var(--orange);
-
     color: white;
-
     padding: 0 28px;
-
     border-radius: 9px;
-
     font-family: inherit;
-
     font-weight: 700;
-
     cursor: pointer;
-
     transition: 0.3s ease;
 }
 
@@ -325,40 +269,26 @@ nav a.active {
 .hero-card {
     width: 300px;
     flex-shrink: 0;
-
     padding: 40px 30px;
-
     text-align: center;
-
     border-radius: 25px;
-
     background: white;
-
     color: var(--text);
-
     border: 1px solid #dbeafe;
-
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
 }
 
 .book-symbol {
     width: 100px;
     height: 100px;
-
     margin: auto;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: var(--blue-light);
-
     color: var(--blue);
-
     font-size: 50px;
-
     border: 4px solid #dbeafe;
 }
 
@@ -369,35 +299,26 @@ nav a.active {
 
 .hero-card p {
     margin: 5px 0 25px;
-
     font-size: 14px;
-
     color: var(--text-light);
 }
 
 .hero-stat {
     display: flex;
-
     justify-content: center;
-
     gap: 45px;
-
     border-top: 1px solid var(--border);
-
     padding-top: 20px;
 }
 
 .hero-stat strong {
     display: block;
-
     color: var(--blue);
-
     font-size: 22px;
 }
 
 .hero-stat span {
     color: #858d99;
-
     font-size: 12px;
 }
 
@@ -411,40 +332,29 @@ nav a.active {
 
 .section-heading {
     display: flex;
-
     align-items: end;
-
     justify-content: space-between;
-
     gap: 20px;
-
     margin-bottom: 30px;
 }
 
 .section-heading span {
     color: var(--blue);
-
     font-size: 13px;
-
     font-weight: 700;
 }
 
 .section-heading h2 {
     font-size: 28px;
-
     color: var(--black);
-
     font-weight: 800;
 }
 
 .section-heading a {
     color: var(--blue);
-
     text-decoration: none;
-
     font-size: 14px;
     font-weight: 700;
-
     white-space: nowrap;
 }
 
@@ -458,60 +368,55 @@ nav a.active {
 
 .categories {
     display: grid;
-
     grid-template-columns: repeat(6, 1fr);
-
     gap: 14px;
 }
 
 .category-card {
     padding: 25px 10px;
-
     text-align: center;
-
     background: white;
-
     border: 1px solid var(--border);
-
     border-radius: 15px;
-
     transition: 0.3s ease;
-
     cursor: pointer;
-
     text-decoration: none;
-
     color: var(--text);
-
     box-shadow: var(--shadow);
 }
 
 .category-card:hover {
     transform: translateY(-6px);
-
     border-color: var(--blue);
-
     box-shadow: var(--shadow-hover);
 }
 
+/* حجم صور التصنيفات في الصفحة الرئيسية */
 .category-icon {
     width: 72px;
     height: 72px;
-
     margin: 0 auto 15px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     border-radius: 18px;
-
     font-size: 38px;
-
     transition: 0.3s ease;
+    overflow: hidden;
 }
 
+/* صورة التصنيف */
+.category-icon img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+}
+
+/* ألوان خلفية التصنيفات */
 .category-card:nth-child(1) .category-icon {
     background: #dbeafe;
 }
@@ -536,22 +441,31 @@ nav a.active {
     background: #ede9fe;
 }
 
+.category-card:nth-child(7) .category-icon {
+    background: #fce7f3;
+}
+
+.category-card:nth-child(8) .category-icon {
+    background: #fef3c7;
+}
+
+.category-card:nth-child(9) .category-icon {
+    background: #d1fae5;
+}
+
 .category-card:hover .category-icon {
     transform: scale(1.08);
 }
 
 .category-card h3 {
     font-size: 15px;
-
     margin-bottom: 5px;
-
     color: var(--black);
     font-weight: 800;
 }
 
 .category-card p {
     color: var(--text-light);
-
     font-size: 10px;
 }
 
@@ -565,30 +479,21 @@ nav a.active {
 
 .books-container {
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
-
     gap: 22px;
-
     align-items: stretch;
 }
 
 .book-card {
     background: white;
-
     border: 1px solid var(--border);
-
     border-radius: 17px;
-
     overflow: hidden;
-
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease,
         border-color 0.3s ease;
-
     box-shadow: var(--shadow);
-
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -596,40 +501,27 @@ nav a.active {
 
 .book-card:hover {
     transform: translateY(-8px);
-
     border-color: var(--blue);
-
     box-shadow: var(--shadow-hover);
 }
 
 .book-cover {
     position: relative;
-
     height: 260px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 70px;
-
     overflow: hidden;
-
     background: #f1f5f9;
 }
 
 .book-cover img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-
     padding: 10px;
-
     display: block;
-
     transition: transform 0.4s ease;
 }
 
@@ -659,72 +551,47 @@ nav a.active {
 
 .book-info {
     padding: 20px;
-
     display: flex;
     flex-direction: column;
-
     flex: 1;
 }
 
 .book-category {
     display: inline-block;
-
     width: fit-content;
-
     padding: 4px 10px;
-
     border-radius: 20px;
-
     background: var(--blue-light);
-
     color: var(--blue);
-
     font-size: 11px;
-
     font-weight: 700;
 }
 
 .book-info h3 {
     font-size: 17px;
-
     margin: 7px 0;
-
     color: var(--black);
-
     font-weight: 800;
-
     min-height: 30px;
 }
 
 .book-info p {
     color: var(--text-light);
-
     font-size: 12px;
-
     margin-bottom: 8px;
-
     line-height: 1.7;
 }
 
 .book-info button {
     width: 100%;
-
     padding: 10px;
-
     margin-top: auto;
-
     background: var(--black);
-
     border: none;
-
     color: white;
-
     border-radius: 8px;
-
     font-family: inherit;
-
     cursor: pointer;
-
     transition: 0.3s ease;
 }
 
@@ -738,45 +605,27 @@ nav a.active {
 
 .read-button {
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     width: 100%;
-
     padding: 11px 15px;
-
     margin-top: auto;
-
     border-radius: 9px;
-
     text-decoration: none;
-
     text-align: center;
-
     font-size: 14px;
-
     font-weight: 700;
-
     background: var(--blue);
-
     color: white;
-
     border: none;
-
     transition: all 0.25s ease;
-
     box-sizing: border-box;
 }
 
 .read-button:hover {
     background: var(--orange);
-
     color: white;
-
     transform: translateY(-2px);
-
     box-shadow: 0 7px 18px rgba(249, 115, 22, 0.25);
 }
 
@@ -786,88 +635,69 @@ nav a.active {
 
 .categories-page {
     max-width: 1100px;
-
     margin: 50px auto;
-
     padding: 0 20px;
 }
 
 .categories-page .section-heading p {
     margin-top: 10px;
-
     color: var(--text-light);
 }
 
 .categories-container {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
     gap: 25px;
-
     margin-top: 40px;
 }
 
 .categories-page .category-card {
     padding: 0;
-
     background: white;
-
     border-radius: 18px;
-
     border: 1px solid var(--border);
-
     box-shadow: var(--shadow);
-
     transition: 0.3s ease;
 }
 
 .categories-page .category-card:hover {
     transform: translateY(-7px);
-
     border-color: var(--blue);
-
     box-shadow: var(--shadow-hover);
 }
 
 .categories-page .category-icon {
     width: 85px;
     height: 85px;
-
     font-size: 45px;
-
     margin-bottom: 18px;
+}
+
+.categories-page .category-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .categories-page .category-card h3 {
     font-size: 21px;
-
     margin-bottom: 10px;
 }
 
 .categories-page .category-card p {
     color: var(--text-light);
-
     font-size: 14px;
 }
 
 .category-count {
     display: inline-block;
-
     margin-top: 15px;
-
     padding: 5px 12px;
-
     border-radius: 20px;
-
     font-size: 13px;
-
     font-weight: 700;
-
     background: var(--green-light);
-
     color: var(--green);
-
     border: 1px solid #bbf7d0;
 }
 
@@ -877,17 +707,11 @@ nav a.active {
 
 .book-details {
     display: grid;
-
     grid-template-columns: 260px 1fr;
-
     gap: 50px;
-
     align-items: center;
-
     max-width: 1000px;
-
     margin: 50px auto;
-
     padding: 35px;
 }
 
@@ -895,17 +719,11 @@ nav a.active {
 .large-book-cover {
     width: 240px;
     height: 340px;
-
     margin: 0 auto;
-
     overflow: hidden;
-
     border-radius: 14px;
-
     background: #dbeafe;
-
     border: 1px solid var(--border);
-
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
 }
 
@@ -913,50 +731,36 @@ nav a.active {
 .large-book-cover img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-
     display: block;
 }
 
 .book-details-info {
     background: #ffffff;
-
     border: 1px solid var(--border);
-
     border-radius: 18px;
-
     padding: 30px;
-
     box-shadow: var(--shadow);
 }
 
 .book-details-info h1,
 .book-details-content h1 {
     font-size: 32px;
-
     margin: 15px 0 10px;
-
     color: var(--text);
-
     font-weight: 800;
 }
 
 .book-author {
     color: #64748b;
-
     font-size: 16px;
-
     margin-bottom: 20px;
 }
 
 .book-description {
     color: #475569;
-
     line-height: 1.9;
-
     font-size: 16px;
-
     margin-bottom: 25px;
 }
 
@@ -966,33 +770,23 @@ nav a.active {
 
 .book-details-content h3 {
     font-size: 18px;
-
     margin-bottom: 20px;
-
     color: var(--text-light);
 }
 
 .book-details-content p {
     font-size: 17px;
-
     line-height: 2;
-
     color: #475569;
 }
 
 .book-details-content .book-category {
     display: inline-block;
-
     padding: 6px 14px;
-
     border-radius: 20px;
-
     font-size: 14px;
-
     font-weight: 700;
-
     background: var(--blue-light);
-
     color: var(--blue);
 }
 
@@ -1002,45 +796,31 @@ nav a.active {
 
 .book-meta {
     display: flex;
-
     gap: 15px;
-
     margin: 25px 0;
-
     flex-wrap: wrap;
 }
 
 .book-meta > div {
     flex: 1;
-
     min-width: 120px;
-
     padding: 15px;
-
     border-radius: 12px;
-
     background: #f8fafc;
-
     border: 1px solid var(--border);
-
     box-shadow: none;
-
     text-align: center;
 }
 
 .book-meta span {
     display: block;
-
     color: #64748b;
-
     font-size: 13px;
-
     margin-bottom: 6px;
 }
 
 .book-meta strong {
     color: var(--text);
-
     font-size: 15px;
 }
 
@@ -1050,11 +830,8 @@ nav a.active {
 
 .book-actions {
     display: flex;
-
     gap: 12px;
-
     align-items: center;
-
     flex-wrap: wrap;
 }
 
@@ -1062,59 +839,44 @@ nav a.active {
 .secondary-button,
 .favorite-button {
     padding: 12px 20px;
-
     border-radius: 8px;
-
     font-size: 15px;
-
     font-weight: 700;
-
     text-decoration: none;
-
     cursor: pointer;
-
     transition: 0.3s ease;
-
     font-family: inherit;
 }
 
 .primary-button {
     background: var(--blue);
-
     color: white;
 }
 
 .secondary-button {
     background: var(--black);
-
     color: white;
 }
 
 .favorite-button {
     background: white;
-
     border: 1px solid var(--orange);
-
     color: var(--orange);
 }
 
 .primary-button:hover {
     background: var(--blue-dark);
-
     transform: translateY(-3px);
 }
 
 .secondary-button:hover {
     background: #374151;
-
     transform: translateY(-3px);
 }
 
 .favorite-button:hover {
     background: var(--orange);
-
     color: white;
-
     transform: translateY(-3px);
 }
 
@@ -1124,33 +886,21 @@ nav a.active {
 
 .download-button {
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 12px 20px;
-
     border-radius: 10px;
-
     text-decoration: none;
-
     text-align: center;
-
     font-weight: 700;
-
     background: var(--green);
-
     color: white;
-
     transition: 0.2s;
-
     margin-left: 8px;
 }
 
 .download-button:hover {
     transform: translateY(-2px);
-
     opacity: 0.9;
 }
 
@@ -1160,33 +910,21 @@ nav a.active {
 
 .back-button {
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 12px 20px;
-
     border-radius: 10px;
-
     text-decoration: none;
-
     text-align: center;
-
     font-weight: 700;
-
     background: #e2e8f0;
-
     color: #334155;
-
     transition: 0.2s;
-
     margin-left: 8px;
 }
 
 .back-button:hover {
     background: #cbd5e1;
-
     color: var(--black);
 }
 
@@ -1197,41 +935,28 @@ nav a.active {
 .pdf-section,
 .pdf-reader {
     max-width: 1100px;
-
     margin: 45px auto 60px;
-
     padding: 25px 30px;
-
     background: white;
-
     border-radius: 18px;
-
     border: 1px solid var(--border);
-
     box-shadow: var(--shadow);
 }
 
 .pdf-section h2,
 .pdf-reader h2 {
     margin-bottom: 20px;
-
     font-size: 26px;
-
     color: var(--black);
-
     font-weight: 800;
 }
 
 .pdf-section iframe,
 .pdf-reader iframe {
     width: 100%;
-
     height: 700px;
-
     border: none;
-
     border-radius: 10px;
-
     background: #f1f5f9;
 }
 
@@ -1241,53 +966,39 @@ nav a.active {
 
 footer {
     background: var(--black);
-
     padding: 55px 10% 20px;
-
     color: white;
 }
 
 .footer-content {
     display: grid;
-
     grid-template-columns: 2fr 1fr 1fr;
-
     gap: 70px;
-
     padding-bottom: 40px;
 }
 
 footer p {
     color: #94a3b8;
-
     font-size: 13px;
-
     margin-top: 15px;
-
     max-width: 400px;
 }
 
 .footer-links {
     display: flex;
-
     flex-direction: column;
-
     gap: 7px;
 }
 
 .footer-links h3 {
     margin-bottom: 10px;
-
     font-size: 16px;
 }
 
 .footer-links a {
     color: #94a3b8;
-
     text-decoration: none;
-
     font-size: 13px;
-
     transition: 0.3s ease;
 }
 
@@ -1297,23 +1008,16 @@ footer p {
 
 .copyright {
     padding-top: 20px;
-
     border-top: 1px solid #374151;
-
     color: #64748b;
-
     text-align: center;
-
     font-size: 11px;
 }
 
 .footer-credit {
     margin-top: 8px;
-
     color: #94a3b8;
-
     text-align: center;
-
     font-size: 11px;
 }
 
@@ -1346,8 +1050,11 @@ footer p {
     .books-container {
         grid-template-columns: repeat(2, 1fr);
     }
-
 }
+
+/* =====================================================
+   RESPONSIVE - 900px
+   ===================================================== */
 
 @media (max-width: 900px) {
 
@@ -1357,9 +1064,7 @@ footer p {
 
     .hero {
         flex-direction: column;
-
         text-align: center;
-
         gap: 45px;
     }
 
@@ -1378,18 +1083,14 @@ footer p {
 
     .book-details {
         grid-template-columns: 1fr;
-
         gap: 30px;
-
         max-width: 700px;
-
         text-align: center;
     }
 
     .book-details-info {
         text-align: right;
     }
-
 }
 
 /* =====================================================
@@ -1400,9 +1101,7 @@ footer p {
 
     .navbar {
         min-height: 70px;
-
         padding: 10px 4%;
-
         gap: 10px;
     }
 
@@ -1415,7 +1114,6 @@ footer p {
         height: 40px;
         min-width: 40px;
         max-width: 40px;
-
         font-size: 20px;
     }
 
@@ -1429,13 +1127,11 @@ footer p {
 
     .login-btn {
         padding: 8px 12px;
-
         font-size: 11px;
     }
 
     .hero {
         padding: 60px 6%;
-
         min-height: auto;
     }
 
@@ -1449,7 +1145,6 @@ footer p {
 
     .search-box {
         width: 100%;
-
         margin-top: 20px;
     }
 
@@ -1467,9 +1162,7 @@ footer p {
 
     .section-heading {
         align-items: center;
-
         flex-direction: column;
-
         text-align: center;
     }
 
@@ -1479,7 +1172,6 @@ footer p {
 
     .books-container {
         grid-template-columns: 1fr;
-
         gap: 25px;
     }
 
@@ -1497,7 +1189,6 @@ footer p {
 
     .categories-container {
         grid-template-columns: 1fr;
-
         padding: 10px;
     }
 
@@ -1507,14 +1198,12 @@ footer p {
 
     .book-details {
         margin: 30px auto;
-
         padding: 20px;
     }
 
     .book-details-cover,
     .large-book-cover {
         width: 220px;
-
         height: 310px;
     }
 
@@ -1547,7 +1236,6 @@ footer p {
     .pdf-section,
     .pdf-reader {
         margin: 20px 10px 40px;
-
         padding: 15px;
     }
 
@@ -1558,14 +1246,12 @@ footer p {
 
     .footer-content {
         grid-template-columns: 1fr;
-
         gap: 35px;
     }
 
     footer {
         padding: 45px 7% 20px;
     }
-
 }
 
 /* =====================================================
@@ -1592,15 +1278,12 @@ footer p {
 
     .hero-card {
         max-width: 310px;
-
         padding: 30px 20px;
     }
 
     .search-box {
         flex-direction: column;
-
         gap: 5px;
-
         padding: 5px;
     }
 
@@ -1614,7 +1297,6 @@ footer p {
 
     .categories {
         grid-template-columns: repeat(2, 1fr);
-
         gap: 10px;
     }
 
@@ -1625,7 +1307,6 @@ footer p {
     .category-icon {
         width: 60px;
         height: 60px;
-
         font-size: 31px;
     }
 
@@ -1644,10 +1325,8 @@ footer p {
     .book-details-cover,
     .large-book-cover {
         width: 200px;
-
         height: 285px;
     }
-
 }
 
 /* =====================================================
@@ -1656,15 +1335,12 @@ footer p {
 
 .dashboard-page {
     min-height: 100vh;
-
     background: var(--background);
 }
 
 .dashboard-container {
     width: 92%;
-
     max-width: 1200px;
-
     margin: 40px auto;
 }
 
@@ -1674,83 +1350,60 @@ footer p {
         #0b1f3a,
         #173b8f
     );
-
     color: white;
-
     border-radius: 20px;
-
     padding: 30px;
-
     margin-bottom: 25px;
-
     box-shadow: var(--shadow);
 }
 
 .dashboard-header h1 {
     font-size: 30px;
-
     font-weight: 800;
 }
 
 .dashboard-header p {
     margin-top: 7px;
-
     color: #dbeafe;
 }
 
 .dashboard-grid {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
     gap: 20px;
 }
 
 .dashboard-card {
     background: white;
-
     border: 1px solid var(--border);
-
     border-radius: 16px;
-
     padding: 25px;
-
     text-decoration: none;
-
     color: var(--text);
-
     box-shadow: var(--shadow);
-
     transition: 0.3s ease;
 }
 
 .dashboard-card:hover {
     transform: translateY(-5px);
-
     border-color: var(--blue);
-
     box-shadow: var(--shadow-hover);
 }
 
 .dashboard-card-icon {
     font-size: 34px;
-
     margin-bottom: 12px;
 }
 
 .dashboard-card h2 {
     color: var(--black);
-
     font-size: 18px;
-
     margin-bottom: 7px;
 }
 
 .dashboard-card p {
     color: var(--text-light);
-
     font-size: 13px;
-
     line-height: 1.8;
 }
 
@@ -1760,41 +1413,29 @@ footer p {
 
 .stats-grid {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
     gap: 18px;
-
     margin-bottom: 25px;
 }
 
 .stat-card {
     background: white;
-
     border: 1px solid var(--border);
-
     border-radius: 15px;
-
     padding: 22px;
-
     box-shadow: var(--shadow);
-
     text-align: center;
 }
 
 .stat-card strong {
     display: block;
-
     font-size: 30px;
-
     color: var(--blue);
-
     font-weight: 800;
 }
 
 .stat-card span {
     color: var(--text-light);
-
     font-size: 13px;
 }
 
@@ -1804,45 +1445,31 @@ footer p {
 
 .admin-table-container {
     width: 100%;
-
     overflow-x: auto;
-
     background: white;
-
     border-radius: 16px;
-
     border: 1px solid var(--border);
-
     box-shadow: var(--shadow);
 }
 
 .admin-table {
     width: 100%;
-
     border-collapse: collapse;
-
     min-width: 700px;
 }
 
 .admin-table th {
     background: #eff6ff;
-
     color: var(--black);
-
     font-weight: 800;
-
     padding: 14px;
-
     text-align: right;
 }
 
 .admin-table td {
     padding: 13px 14px;
-
     border-top: 1px solid var(--border);
-
     color: var(--text);
-
     font-size: 13px;
 }
 
@@ -1856,27 +1483,16 @@ footer p {
 
 .action-button {
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     border: none;
-
     border-radius: 8px;
-
     padding: 9px 14px;
-
     font-family: inherit;
-
     font-size: 12px;
-
     font-weight: 700;
-
     cursor: pointer;
-
     text-decoration: none;
-
     transition: 0.25s ease;
 }
 
@@ -1886,31 +1502,26 @@ footer p {
 
 .action-blue {
     background: var(--blue);
-
     color: white;
 }
 
 .action-green {
     background: var(--green);
-
     color: white;
 }
 
 .action-orange {
     background: var(--orange);
-
     color: white;
 }
 
 .action-red {
     background: #dc2626;
-
     color: white;
 }
 
 .action-dark {
     background: var(--black);
-
     color: white;
 }
 
@@ -1920,17 +1531,11 @@ footer p {
 
 .form-card {
     max-width: 800px;
-
     margin: 40px auto;
-
     padding: 30px;
-
     background: white;
-
     border: 1px solid var(--border);
-
     border-radius: 18px;
-
     box-shadow: var(--shadow);
 }
 
@@ -1940,13 +1545,9 @@ footer p {
 
 .form-group label {
     display: block;
-
     margin-bottom: 7px;
-
     color: var(--black);
-
     font-size: 13px;
-
     font-weight: 700;
 }
 
@@ -1954,29 +1555,19 @@ footer p {
 .form-group select,
 .form-group textarea {
     width: 100%;
-
     border: 1px solid var(--border);
-
     outline: none;
-
     border-radius: 9px;
-
     padding: 11px 13px;
-
     font-family: inherit;
-
     font-size: 13px;
-
     background: #f8fafc;
-
     color: var(--text);
-
     transition: 0.2s ease;
 }
 
 .form-group textarea {
     min-height: 120px;
-
     resize: vertical;
 }
 
@@ -1984,9 +1575,7 @@ footer p {
 .form-group select:focus,
 .form-group textarea:focus {
     border-color: var(--blue);
-
     background: white;
-
     box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.08);
 }
 
@@ -1996,37 +1585,27 @@ footer p {
 
 .message {
     padding: 12px 15px;
-
     border-radius: 9px;
-
     margin-bottom: 18px;
-
     font-size: 13px;
-
     font-weight: 600;
 }
 
 .message-success {
     background: #dcfce7;
-
     color: #166534;
-
     border: 1px solid #bbf7d0;
 }
 
 .message-error {
     background: #fee2e2;
-
     color: #991b1b;
-
     border: 1px solid #fecaca;
 }
 
 .message-info {
     background: #dbeafe;
-
     color: #1e40af;
-
     border: 1px solid #bfdbfe;
 }
 
@@ -2036,25 +1615,17 @@ footer p {
 
 .loading {
     min-height: 70vh;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
     text-align: center;
-
     padding: 30px;
 }
 
 .loading h1 {
     color: var(--black);
-
     margin-bottom: 10px;
-
     font-weight: 800;
 }
 
@@ -2063,34 +1634,24 @@ footer p {
 }
 
 /* =====================================================
-   تعريف المؤسسة في الصفحات
+   تعريف المؤسسة
    ===================================================== */
 
 .institution-badge {
     display: inline-block;
-
     padding: 6px 14px;
-
     border-radius: 20px;
-
     background: var(--blue-light);
-
     color: var(--blue);
-
     border: 1px solid #bfdbfe;
-
     font-size: 12px;
-
     font-weight: 700;
-
     margin-bottom: 12px;
 }
 
 .system-credit {
     margin-top: 10px;
-
     color: var(--text-light);
-
     font-size: 12px;
 }
 
@@ -2111,20 +1672,17 @@ footer p {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-
 }
 
 @media (max-width: 600px) {
 
     .dashboard-container {
         width: 94%;
-
         margin: 25px auto;
     }
 
     .dashboard-header {
         padding: 22px;
-
         border-radius: 15px;
     }
 
@@ -2142,8 +1700,7 @@ footer p {
 
     .form-card {
         margin: 25px 10px;
-
         padding: 20px;
     }
-
 }
+```
