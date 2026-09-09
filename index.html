@@ -1,15 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية</title>
 
-    <!-- أيقونة مكتبة ثانوية مصاص رابح -->
     <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="style.css">
@@ -19,7 +18,7 @@
     <style>
 
         /* =====================================================
-           شعار المكتبة في الواجهة
+           شعار المكتبة
         ===================================================== */
 
         .logo-icon {
@@ -147,7 +146,6 @@
                 height: 50px;
                 min-width: 50px;
             }
-
         }
 
     </style>
@@ -167,10 +165,12 @@
     <div class="logo">
 
         <div class="logo-icon">
+
             <img
                 src="favicon.png"
                 alt="شعار مكتبة ثانوية مصاص رابح"
             >
+
         </div>
 
         <div>
@@ -213,13 +213,9 @@
     </nav>
 
 
-    <!-- =====================================================
-         الإعدادات العامة
-    ===================================================== -->
+    <!-- الإعدادات -->
 
     <div class="top-settings">
-
-        <!-- Dark -->
 
         <button
             class="settings-btn"
@@ -231,8 +227,6 @@
         </button>
 
 
-        <!-- Light -->
-
         <button
             class="settings-btn"
             id="lightButton"
@@ -242,8 +236,6 @@
 
         </button>
 
-
-        <!-- Sound -->
 
         <button
             class="settings-btn"
@@ -532,15 +524,23 @@
     </div>
 
 
+
     <div class="categories">
 
+
+        <!-- الرياضيات -->
 
         <a
             href="pages/books.html?category=رياضيات"
             class="category-card">
 
             <div class="category-icon">
-                📐
+
+                <img
+                    src="covers/mathematics.jpg"
+                    alt="الرياضيات"
+                >
+
             </div>
 
             <h3>
@@ -555,16 +555,23 @@
 
 
 
+        <!-- العلوم الطبيعية -->
+
         <a
             href="pages/books.html?category=علوم"
             class="category-card">
 
             <div class="category-icon">
-                🔬
+
+                <img
+                    src="covers/natural-sciences.jpg"
+                    alt="العلوم الطبيعية"
+                >
+
             </div>
 
             <h3>
-                العلوم
+                العلوم الطبيعية
             </h3>
 
             <p>
@@ -575,52 +582,46 @@
 
 
 
+        <!-- الفيزياء -->
+
         <a
-            href="pages/books.html?category=إعلام آلي"
+            href="pages/books.html?category=فيزياء"
             class="category-card">
 
             <div class="category-icon">
-                💻
+
+                <img
+                    src="covers/physics.jpg"
+                    alt="الفيزياء"
+                >
+
             </div>
 
             <h3>
-                الإعلام الآلي
+                الفيزياء
             </h3>
 
             <p>
-                البرمجة والتكنولوجيا
+                الفيزياء والتجارب العلمية
             </p>
 
         </a>
 
 
 
-        <a
-            href="pages/books.html?category=لغات"
-            class="category-card">
-
-            <div class="category-icon">
-                📚
-            </div>
-
-            <h3>
-                اللغات
-            </h3>
-
-            <p>
-                العربية والفرنسية والإنجليزية
-            </p>
-
-        </a>
-
-
+        <!-- التاريخ والجغرافيا -->
 
         <a
             href="pages/books.html?category=تاريخ"
             class="category-card">
 
             <div class="category-icon">
-                🌍
+
+                <img
+                    src="covers/history-geography.jpg"
+                    alt="التاريخ والجغرافيا"
+                >
+
             </div>
 
             <h3>
@@ -635,12 +636,19 @@
 
 
 
+        <!-- الفلسفة -->
+
         <a
             href="pages/books.html?category=فلسفة"
             class="category-card">
 
             <div class="category-icon">
-                🧠
+
+                <img
+                    src="covers/philosophy.jpg"
+                    alt="الفلسفة"
+                >
+
             </div>
 
             <h3>
@@ -652,6 +660,115 @@
             </p>
 
         </a>
+
+
+
+        <!-- العلوم الإسلامية -->
+
+        <a
+            href="pages/books.html?category=علوم إسلامية"
+            class="category-card">
+
+            <div class="category-icon">
+
+                <img
+                    src="covers/islamic-studies.jpg"
+                    alt="العلوم الإسلامية"
+                >
+
+            </div>
+
+            <h3>
+                العلوم الإسلامية
+            </h3>
+
+            <p>
+                القرآن والحديث والفقه
+            </p>
+
+        </a>
+
+
+
+        <!-- اللغات -->
+
+        <a
+            href="pages/books.html?category=لغات"
+            class="category-card">
+
+            <div class="category-icon">
+
+                <img
+                    src="covers/languages.jpg"
+                    alt="اللغات"
+                >
+
+            </div>
+
+            <h3>
+                اللغات
+            </h3>
+
+            <p>
+                العربية والفرنسية والإنجليزية
+            </p>
+
+        </a>
+
+
+
+        <!-- الإعلام الآلي -->
+
+        <a
+            href="pages/books.html?category=إعلام آلي"
+            class="category-card">
+
+            <div class="category-icon">
+
+                <img
+                    src="covers/informatics.jpg"
+                    alt="الإعلام الآلي"
+                >
+
+            </div>
+
+            <h3>
+                الإعلام الآلي
+            </h3>
+
+            <p>
+                البرمجة والتكنولوجيا
+            </p>
+
+        </a>
+
+
+
+        <!-- الاقتصاد -->
+
+        <a
+            href="pages/books.html?category=اقتصاد"
+            class="category-card">
+
+            <div class="category-icon">
+
+                <img
+                    src="covers/economics.jpg"
+                    alt="الاقتصاد"
+                >
+
+            </div>
+
+            <h3>
+                الاقتصاد
+            </h3>
+
+            <p>
+                الاقتصاد والتسيير
+            </p>
+
+        </a>
+
 
     </div>
 
@@ -876,7 +993,6 @@
 ===================================================== -->
 
 <script src="books-data.js"></script>
-
 <script src="script.js"></script>
 
 
@@ -889,7 +1005,6 @@
 
 const SUPABASE_URL =
     "https://xdkluojrvdhdtihblpwy.supabase.co";
-
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
@@ -908,9 +1023,7 @@ const supabaseClient =
 ===================================================== */
 
 const accountButton =
-    document.getElementById(
-        "accountButton"
-    );
+    document.getElementById("accountButton");
 
 
 function getDashboardByRole(role) {
@@ -931,7 +1044,6 @@ function getDashboardByRole(role) {
 
         default:
             return "pages/login.html";
-
     }
 
 }
@@ -943,13 +1055,9 @@ async function loadUserAccount() {
     try {
 
         const {
-
             data: { session },
-
             error: sessionError
-
         } =
-
             await supabaseClient
                 .auth
                 .getSession();
@@ -967,19 +1075,14 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-
         }
 
 
 
         const {
-
             data: profile,
-
             error: profileError
-
         } =
-
             await supabaseClient
                 .from("profiles")
                 .select("full_name, role")
@@ -988,7 +1091,6 @@ async function loadUserAccount() {
                     session.user.id
                 )
                 .single();
-
 
 
         if (
@@ -1003,7 +1105,6 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-
         }
 
 
@@ -1034,7 +1135,6 @@ async function loadUserAccount() {
                     dashboard;
 
                 return false;
-
             };
 
     }
@@ -1490,15 +1590,12 @@ function displayLatestBooks() {
         latestBooksContainer.innerHTML = `
 
             <p>
-
                 لا توجد بيانات كتب محلية.
-
             </p>
 
         `;
 
         return;
-
     }
 
 
@@ -1592,3 +1689,4 @@ displayLatestBooks();
 </body>
 
 </html>
+```
