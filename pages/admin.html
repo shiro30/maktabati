@@ -1,952 +1,958 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>لوحة المدير | المكتبة الإلكترونية - ثانوية مصاص رابح</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet">
-
-<style>
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-family: "Cairo", sans-serif;
-        background: #f4f7fb;
-        color: #172033;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    .header {
-        background: linear-gradient(135deg, #071b35, #0d3b70);
-        color: white;
-        padding: 18px 6%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
-    }
-
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .brand-icon {
-        width: 54px;
-        height: 54px;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 27px;
-        flex-shrink: 0;
-    }
-
-    .brand-text h1 {
-        font-size: 21px;
-        font-weight: 800;
-    }
-
-    .brand-text p {
-        color: #c8d9ec;
-        font-size: 12px;
-        margin-top: 2px;
-    }
-
-    .institution-name {
-        color: #ffffff;
-        font-size: 11px;
-        margin-top: 3px;
-        opacity: 0.85;
-    }
-
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .user-name {
-        color: #e1ebf7;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .logout {
-        border: none;
-        background: #b42318;
-        color: white;
-        padding: 9px 16px;
-        border-radius: 9px;
-        font-family: inherit;
-        cursor: pointer;
-        font-weight: 700;
-        transition: 0.2s;
-    }
-
-    .logout:hover {
-        background: #8f1d14;
-        transform: translateY(-1px);
-    }
-
-    /* =========================
-       CONTAINER
-    ========================= */
-
-    .container {
-        width: 92%;
-        max-width: 1200px;
-        margin: 38px auto 60px;
-    }
-
-    /* =========================
-       WELCOME
-    ========================= */
-
-    .welcome {
-        margin-bottom: 28px;
-    }
-
-    .welcome h2 {
-        color: #0b1f3a;
-        font-size: 29px;
-        font-weight: 800;
-    }
-
-    .welcome p {
-        color: #667085;
-        margin-top: 7px;
-        line-height: 1.8;
-    }
-
-    /* =========================
-       OFFICIAL IDENTITY
-    ========================= */
-
-    .official-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 12px;
-        padding: 7px 13px;
-        border-radius: 30px;
-        background: #eaf3ff;
-        color: #1264c4;
-        font-size: 12px;
-        font-weight: 700;
-        border: 1px solid #d5e7fb;
-    }
-
-    /* =========================
-       STATS
-    ========================= */
-
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
-        margin-bottom: 28px;
-    }
-
-    .stat {
-        background: white;
-        border-radius: 15px;
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
-        border: 1px solid #edf1f6;
-    }
-
-    .stat-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 13px;
-        background: #edf5ff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 25px;
-        flex-shrink: 0;
-    }
-
-    .stat-number {
-        font-size: 25px;
-        font-weight: 800;
-        color: #0b1f3a;
-    }
-
-    .stat-label {
-        color: #667085;
-        font-size: 13px;
-        margin-top: 1px;
-    }
-
-    /* =========================
-       SECTION TITLE
-    ========================= */
-
-    .section-title {
-        color: #0b1f3a;
-        font-size: 20px;
-        font-weight: 800;
-        margin-bottom: 17px;
-    }
-
-    /* =========================
-       CARDS
-    ========================= */
-
-    .cards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-
-    .card {
-        background: white;
-        border-radius: 15px;
-        padding: 24px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
-        text-decoration: none;
-        color: inherit;
-        transition: 0.22s;
-        border: 1px solid transparent;
-    }
-
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.10);
-        border-color: #dbe8f7;
-    }
-
-    .icon {
-        width: 54px;
-        height: 54px;
-        border-radius: 13px;
-        background: #edf5ff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 27px;
-        margin-bottom: 16px;
-    }
-
-    .card h3 {
-        color: #0b1f3a;
-        font-size: 18px;
-        margin-bottom: 7px;
-        font-weight: 800;
-    }
-
-    .card p {
-        color: #667085;
-        font-size: 13px;
-        line-height: 1.9;
-    }
-
-    .arrow {
-        display: inline-block;
-        margin-top: 13px;
-        color: #1264c4;
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-    /* =========================
-       SCHOOL INFO
-    ========================= */
-
-    .school {
-        margin-top: 30px;
-        background: linear-gradient(135deg, #ffffff, #f8fbff);
-        border-radius: 16px;
-        padding: 25px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
-        border-right: 4px solid #1264c4;
-    }
-
-    .school h2 {
-        color: #0b1f3a;
-        font-size: 19px;
-        margin-bottom: 17px;
-    }
-
-    .school-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 11px 0;
-        border-bottom: 1px solid #edf0f5;
-    }
-
-    .school-row:last-child {
-        border-bottom: none;
-    }
-
-    .school-label {
-        color: #667085;
-    }
-
-    .school-value {
-        color: #172033;
-        font-weight: 700;
-        text-align: left;
-    }
-
-    /* =========================
-       ACCOUNT INFO
-    ========================= */
-
-    .info {
-        margin-top: 30px;
-        background: white;
-        border-radius: 16px;
-        padding: 25px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
-    }
-
-    .info h2 {
-        color: #0b1f3a;
-        font-size: 19px;
-        margin-bottom: 15px;
-    }
-
-    .info-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 0;
-        border-bottom: 1px solid #edf0f5;
-        gap: 20px;
-    }
-
-    .info-row:last-child {
-        border-bottom: none;
-    }
-
-    .label {
-        color: #667085;
-    }
-
-    .value {
-        font-weight: 700;
-        color: #172033;
-        text-align: left;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    .footer {
-        text-align: center;
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid #e3e8ef;
-        color: #7b8494;
-        font-size: 12px;
-        line-height: 2;
-    }
-
-    .footer strong {
-        color: #0b1f3a;
-    }
-
-    .footer-engineer {
-        color: #1264c4;
-        font-weight: 700;
-    }
-
-    /* =========================
-       LOADING / UNAUTHORIZED
-    ========================= */
-
-    .loading {
-        text-align: center;
-        padding: 100px 20px;
-    }
-
-    .loading h1 {
-        color: #0b1f3a;
-        margin-bottom: 10px;
-    }
-
-    .loading p {
-        color: #667085;
-    }
-
-    .login-link {
-        display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
-        background: #1264c4;
-        color: white;
-        text-decoration: none;
-        border-radius: 9px;
-        font-weight: 700;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 900px) {
-
-        .cards {
-            grid-template-columns: repeat(2, 1fr);
+    <title>لوحة المدير | المكتبة الإلكترونية - ثانوية مصاص رابح</title>
+
+    <link rel="icon" type="image/png" href="../favicone.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .stats {
-            grid-template-columns: repeat(3, 1fr);
+        body {
+            font-family: "Cairo", sans-serif;
+            background: #f4f7fb;
+            color: #172033;
         }
 
-    }
-
-    @media (max-width: 650px) {
+        /* =========================
+           HEADER
+        ========================= */
 
         .header {
-            padding: 14px 4%;
+            background: linear-gradient(135deg, #071b35, #0d3b70);
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
         .brand-icon {
-            width: 45px;
-            height: 45px;
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
         }
 
         .brand-text h1 {
-            font-size: 17px;
+            font-size: 21px;
+            font-weight: 800;
         }
 
-        .brand-text p,
+        .brand-text p {
+            color: #c8d9ec;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
         .institution-name {
-            font-size: 10px;
+            color: #ffffff;
+            font-size: 11px;
+            margin-top: 3px;
+            opacity: 0.85;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
         .user-name {
-            display: none;
+            color: #e1ebf7;
+            font-size: 14px;
+            font-weight: 600;
         }
 
+        .logout {
+            border: none;
+            background: #b42318;
+            color: white;
+            padding: 9px 16px;
+            border-radius: 9px;
+            font-family: inherit;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .logout:hover {
+            background: #8f1d14;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
         .container {
-            width: 94%;
-            margin-top: 28px;
+            width: 92%;
+            max-width: 1200px;
+            margin: 38px auto 60px;
+        }
+
+        /* =========================
+           WELCOME
+        ========================= */
+
+        .welcome {
+            margin-bottom: 28px;
         }
 
         .welcome h2 {
-            font-size: 24px;
+            color: #0b1f3a;
+            font-size: 29px;
+            font-weight: 800;
         }
+
+        .welcome p {
+            color: #667085;
+            margin-top: 7px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           OFFICIAL IDENTITY
+        ========================= */
+
+        .official-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: #eaf3ff;
+            color: #1264c4;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid #d5e7fb;
+        }
+
+        /* =========================
+           STATS
+        ========================= */
 
         .stats {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
         }
+
+        .stat {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
+            border: 1px solid #edf1f6;
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 13px;
+            background: #edf5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            flex-shrink: 0;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 800;
+            color: #0b1f3a;
+        }
+
+        .stat-label {
+            color: #667085;
+            font-size: 13px;
+            margin-top: 1px;
+        }
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+            color: #0b1f3a;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 17px;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
 
         .cards {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        .school-row,
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 24px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+            border: 1px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 27px rgba(0, 0, 0, 0.10);
+            border-color: #dbe8f7;
+        }
+
+        .icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 13px;
+            background: #edf5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            color: #0b1f3a;
+            font-size: 18px;
+            margin-bottom: 7px;
+            font-weight: 800;
+        }
+
+        .card p {
+            color: #667085;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .arrow {
+            display: inline-block;
+            margin-top: 13px;
+            color: #1264c4;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           SCHOOL INFO
+        ========================= */
+
+        .school {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #ffffff, #f8fbff);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
+            border-right: 4px solid #1264c4;
+        }
+
+        .school h2 {
+            color: #0b1f3a;
+            font-size: 19px;
+            margin-bottom: 17px;
+        }
+
+        .school-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 11px 0;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .school-row:last-child {
+            border-bottom: none;
+        }
+
+        .school-label {
+            color: #667085;
+        }
+
+        .school-value {
+            color: #172033;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        /* =========================
+           ACCOUNT INFO
+        ========================= */
+
+        .info {
+            margin-top: 30px;
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.055);
+        }
+
+        .info h2 {
+            color: #0b1f3a;
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
         .info-row {
-            flex-direction: column;
-            gap: 4px;
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf0f5;
+            gap: 20px;
         }
 
-        .school-value,
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #667085;
+        }
+
         .value {
-            text-align: right;
+            font-weight: 700;
+            color: #172033;
+            text-align: left;
         }
 
-    }
+        /* =========================
+           FOOTER
+        ========================= */
 
-</style>
-```
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e3e8ef;
+            color: #7b8494;
+            font-size: 12px;
+            line-height: 2;
+        }
 
+        .footer strong {
+            color: #0b1f3a;
+        }
+
+        .footer-engineer {
+            color: #1264c4;
+            font-weight: 700;
+        }
+
+        /* =========================
+           LOADING / UNAUTHORIZED
+        ========================= */
+
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .loading h1 {
+            color: #0b1f3a;
+            margin-bottom: 10px;
+        }
+
+        .loading p {
+            color: #667085;
+        }
+
+        .login-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #1264c4;
+            color: white;
+            text-decoration: none;
+            border-radius: 9px;
+            font-weight: 700;
+        }
+
+        .login-link:hover {
+            background: #0d54a6;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 14px 4%;
+            }
+
+            .brand-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .brand-text h1 {
+                font-size: 17px;
+            }
+
+            .brand-text p,
+            .institution-name {
+                font-size: 10px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 28px;
+            }
+
+            .welcome h2 {
+                font-size: 24px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .school-row,
+            .info-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .school-value,
+            .value {
+                text-align: right;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div id="pageContent">
 
-```
-<!-- =========================
-     HEADER
-========================= -->
-
-<header class="header">
-
-    <div class="brand">
-
-        <div class="brand-icon">
-            📚
-        </div>
-
-        <div class="brand-text">
-
-            <h1>
-                المكتبة الإلكترونية
-            </h1>
-
-            <p>
-                ثانوية مصاص رابح
-            </p>
-
-            <div class="institution-name">
-                المنصة الرقمية للمكتبة المدرسية
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="header-right">
-
-        <span
-            class="user-name"
-            id="userName">
-            جار التحميل...
-        </span>
-
-        <button
-            class="logout"
-            id="logoutBtn">
-
-            تسجيل الخروج
-
-        </button>
-
-    </div>
-
-</header>
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main class="container">
-
-    <section class="welcome">
-
-        <h2>
-            لوحة المدير 👋
-        </h2>
-
-        <p>
-            مرحبًا بك في لوحة إدارة المكتبة الإلكترونية
-            لثانوية مصاص رابح.
-            من هنا يمكنك إدارة الحسابات والكتب وتنظيم محتوى
-            المكتبة بسهولة.
-        </p>
-
-        <div class="official-badge">
-            🏫 ثانوية مصاص رابح — المكتبة الإلكترونية
-        </div>
-
-    </section>
-
-
     <!-- =========================
-         STATISTICS
+         HEADER
     ========================= -->
 
-    <section class="stats">
+    <header class="header">
 
-        <div class="stat">
+        <div class="brand">
 
-            <div class="stat-icon">
-                📚
+            <div class="brand-icon">
+                <img
+                    src="../favicone.png"
+                    alt="شعار المكتبة"
+                >
             </div>
 
-            <div>
+            <div class="brand-text">
 
-                <div
-                    class="stat-number"
-                    id="booksCount">
-                    ...
-                </div>
+                <h1>
+                    المكتبة الإلكترونية
+                </h1>
 
-                <div class="stat-label">
-                    عدد الكتب
-                </div>
+                <p>
+                    ثانوية مصاص رابح
+                </p>
 
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-icon">
-                👥
-            </div>
-
-            <div>
-
-                <div
-                    class="stat-number"
-                    id="usersCount">
-                    ...
-                </div>
-
-                <div class="stat-label">
-                    عدد الحسابات
+                <div class="institution-name">
+                    المنصة الرقمية للمكتبة المدرسية
                 </div>
 
             </div>
 
         </div>
 
-
-        <div class="stat">
-
-            <div class="stat-icon">
-                🏫
-            </div>
-
-            <div>
-
-                <div class="stat-number">
-                    4
-                </div>
-
-                <div class="stat-label">
-                    أنواع الحسابات
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         MANAGEMENT
-    ========================= -->
-
-    <h2 class="section-title">
-        ⚙️ إدارة المكتبة
-    </h2>
-
-
-    <section class="cards">
-
-        <a
-            href="manage-users.html"
-            class="card">
-
-            <div class="icon">
-                👥
-            </div>
-
-            <h3>
-                إدارة الحسابات
-            </h3>
-
-            <p>
-                إنشاء وتعديل وحذف حسابات الأساتذة والتلاميذ
-                والمديرين ومتابعة المستخدمين في النظام.
-            </p>
-
-            <span class="arrow">
-                فتح إدارة الحسابات ←
-            </span>
-
-        </a>
-
-
-        <a
-            href="books.html"
-            class="card">
-
-            <div class="icon">
-                📚
-            </div>
-
-            <h3>
-                إدارة الكتب
-            </h3>
-
-            <p>
-                الاطلاع على الكتب الموجودة في المكتبة والوصول
-                إلى صفحات القراءة والملفات الرقمية.
-            </p>
-
-            <span class="arrow">
-                فتح المكتبة ←
-            </span>
-
-        </a>
-
-
-        <a
-            href="categories.html"
-            class="card">
-
-            <div class="icon">
-                🗂️
-            </div>
-
-            <h3>
-                التصنيفات
-            </h3>
-
-            <p>
-                تصفح الكتب وتنظيمها حسب المواد والتخصصات
-                والمجالات الدراسية المختلفة.
-            </p>
-
-            <span class="arrow">
-                عرض التصنيفات ←
-            </span>
-
-        </a>
-
-
-        <a
-            href="add-book.html"
-            class="card">
-
-            <div class="icon">
-                ➕
-            </div>
-
-            <h3>
-                إضافة كتاب
-            </h3>
-
-            <p>
-                رفع كتاب جديد إلى المكتبة الرقمية وإدخال
-                بياناته الأساسية بسهولة.
-            </p>
-
-            <span class="arrow">
-                إضافة كتاب جديد ←
-            </span>
-
-        </a>
-
-
-        <a
-            href="about.html"
-            class="card">
-
-            <div class="icon">
-                ℹ️
-            </div>
-
-            <h3>
-                معلومات المكتبة
-            </h3>
-
-            <p>
-                الاطلاع على تعريف المكتبة ورسالتها ومعلومات
-                المؤسسة التعليمية.
-            </p>
-
-            <span class="arrow">
-                عرض المعلومات ←
-            </span>
-
-        </a>
-
-
-        <a
-            href="contact.html"
-            class="card">
-
-            <div class="icon">
-                📞
-            </div>
-
-            <h3>
-                التواصل
-            </h3>
-
-            <p>
-                الاطلاع على معلومات التواصل الخاصة بالثانوية
-                والمكتبة الرقمية.
-            </p>
-
-            <span class="arrow">
-                معلومات التواصل ←
-            </span>
-
-        </a>
-
-    </section>
-
-
-    <!-- =========================
-         SCHOOL INFORMATION
-    ========================= -->
-
-    <section class="school">
-
-        <h2>
-            🏫 هوية المؤسسة والنظام
-        </h2>
-
-
-        <div class="school-row">
-
-            <span class="school-label">
-                المؤسسة
-            </span>
-
-            <span class="school-value">
-                ثانوية مصاص رابح
-            </span>
-
-        </div>
-
-
-        <div class="school-row">
-
-            <span class="school-label">
-                المنصة
-            </span>
-
-            <span class="school-value">
-                المكتبة الإلكترونية للمؤسسة
-            </span>
-
-        </div>
-
-
-        <div class="school-row">
-
-            <span class="school-label">
-                مهندس النظام
-            </span>
-
-            <span class="school-value">
-                شراف الدين بوردوسن
-            </span>
-
-        </div>
-
-
-        <div class="school-row">
-
-            <span class="school-label">
-                الصفة
-            </span>
-
-            <span class="school-value">
-                أستاذ مادة الرياضيات
-            </span>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         ACCOUNT INFORMATION
-    ========================= -->
-
-    <section class="info">
-
-        <h2>
-            👤 معلومات حساب المدير
-        </h2>
-
-
-        <div class="info-row">
-
-            <span class="label">
-                الاسم
-            </span>
+        <div class="header-right">
 
             <span
-                class="value"
-                id="profileName">
-                -
+                class="user-name"
+                id="userName">
+                جار التحميل...
             </span>
+
+            <button
+                type="button"
+                class="logout"
+                id="logoutBtn">
+
+                تسجيل الخروج
+
+            </button>
 
         </div>
 
-
-        <div class="info-row">
-
-            <span class="label">
-                نوع الحساب
-            </span>
-
-            <span class="value">
-                مدير
-            </span>
-
-        </div>
-
-
-        <div class="info-row">
-
-            <span class="label">
-                الصلاحية
-            </span>
-
-            <span class="value">
-                إدارة المكتبة والحسابات
-            </span>
-
-        </div>
-
-    </section>
+    </header>
 
 
     <!-- =========================
-         FOOTER
+         MAIN
     ========================= -->
 
-    <footer class="footer">
+    <main class="container">
 
-        <div>
-            <strong>
-                المكتبة الإلكترونية — ثانوية مصاص رابح
-            </strong>
-        </div>
+        <section class="welcome">
 
-        <div>
-            مهندس النظام:
-            <span class="footer-engineer">
-                شراف الدين بوردوسن
-            </span>
-            — أستاذ مادة الرياضيات
-        </div>
+            <h2>
+                لوحة المدير 👋
+            </h2>
 
-        <div>
-            جميع الحقوق محفوظة © 2026
-        </div>
+            <p>
+                مرحبًا بك في لوحة إدارة المكتبة الإلكترونية
+                لثانوية مصاص رابح.
+                من هنا يمكنك إدارة الحسابات والكتب وتنظيم محتوى
+                المكتبة بسهولة.
+            </p>
 
-    </footer>
+            <div class="official-badge">
+                🏫 ثانوية مصاص رابح — المكتبة الإلكترونية
+            </div>
 
-</main>
-```
+        </section>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================= -->
+
+        <section class="stats">
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <div
+                        class="stat-number"
+                        id="booksCount">
+                        ...
+                    </div>
+
+                    <div class="stat-label">
+                        عدد الكتب
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div>
+
+                    <div
+                        class="stat-number"
+                        id="usersCount">
+                        ...
+                    </div>
+
+                    <div class="stat-label">
+                        عدد الحسابات
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    🏫
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        4
+                    </div>
+
+                    <div class="stat-label">
+                        أنواع الحسابات
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MANAGEMENT
+        ========================= -->
+
+        <h2 class="section-title">
+            ⚙️ إدارة المكتبة
+        </h2>
+
+        <section class="cards">
+
+            <a
+                href="manage-users.html"
+                class="card">
+
+                <div class="icon">
+                    👥
+                </div>
+
+                <h3>
+                    إدارة الحسابات
+                </h3>
+
+                <p>
+                    إنشاء وتعديل وحذف حسابات الأساتذة والتلاميذ
+                    والمديرين ومتابعة المستخدمين في النظام.
+                </p>
+
+                <span class="arrow">
+                    فتح إدارة الحسابات ←
+                </span>
+
+            </a>
+
+
+            <a
+                href="books.html"
+                class="card">
+
+                <div class="icon">
+                    📚
+                </div>
+
+                <h3>
+                    إدارة الكتب
+                </h3>
+
+                <p>
+                    الاطلاع على الكتب الموجودة في المكتبة والوصول
+                    إلى صفحات القراءة والملفات الرقمية.
+                </p>
+
+                <span class="arrow">
+                    فتح المكتبة ←
+                </span>
+
+            </a>
+
+
+            <a
+                href="categories.html"
+                class="card">
+
+                <div class="icon">
+                    🗂️
+                </div>
+
+                <h3>
+                    التصنيفات
+                </h3>
+
+                <p>
+                    تصفح الكتب وتنظيمها حسب المواد والتخصصات
+                    والمجالات الدراسية المختلفة.
+                </p>
+
+                <span class="arrow">
+                    عرض التصنيفات ←
+                </span>
+
+            </a>
+
+
+            <a
+                href="add-book.html"
+                class="card">
+
+                <div class="icon">
+                    ➕
+                </div>
+
+                <h3>
+                    إضافة كتاب
+                </h3>
+
+                <p>
+                    رفع كتاب جديد إلى المكتبة الرقمية وإدخال
+                    بياناته الأساسية بسهولة.
+                </p>
+
+                <span class="arrow">
+                    إضافة كتاب جديد ←
+                </span>
+
+            </a>
+
+
+            <a
+                href="about.html"
+                class="card">
+
+                <div class="icon">
+                    ℹ️
+                </div>
+
+                <h3>
+                    معلومات المكتبة
+                </h3>
+
+                <p>
+                    الاطلاع على تعريف المكتبة ورسالتها ومعلومات
+                    المؤسسة التعليمية.
+                </p>
+
+                <span class="arrow">
+                    عرض المعلومات ←
+                </span>
+
+            </a>
+
+
+            <a
+                href="contact.html"
+                class="card">
+
+                <div class="icon">
+                    📞
+                </div>
+
+                <h3>
+                    التواصل
+                </h3>
+
+                <p>
+                    الاطلاع على معلومات التواصل الخاصة بالثانوية
+                    والمكتبة الرقمية.
+                </p>
+
+                <span class="arrow">
+                    معلومات التواصل ←
+                </span>
+
+            </a>
+
+        </section>
+
+
+        <!-- =========================
+             SCHOOL INFORMATION
+        ========================= -->
+
+        <section class="school">
+
+            <h2>
+                🏫 هوية المؤسسة والنظام
+            </h2>
+
+            <div class="school-row">
+
+                <span class="school-label">
+                    المؤسسة
+                </span>
+
+                <span class="school-value">
+                    ثانوية مصاص رابح
+                </span>
+
+            </div>
+
+
+            <div class="school-row">
+
+                <span class="school-label">
+                    المنصة
+                </span>
+
+                <span class="school-value">
+                    المكتبة الإلكترونية للمؤسسة
+                </span>
+
+            </div>
+
+
+            <div class="school-row">
+
+                <span class="school-label">
+                    مهندس النظام
+                </span>
+
+                <span class="school-value">
+                    شراف الدين بوردوسن
+                </span>
+
+            </div>
+
+
+            <div class="school-row">
+
+                <span class="school-label">
+                    الصفة
+                </span>
+
+                <span class="school-value">
+                    أستاذ مادة الرياضيات
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACCOUNT INFORMATION
+        ========================= -->
+
+        <section class="info">
+
+            <h2>
+                👤 معلومات حساب المدير
+            </h2>
+
+            <div class="info-row">
+
+                <span class="label">
+                    الاسم
+                </span>
+
+                <span
+                    class="value"
+                    id="profileName">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    نوع الحساب
+                </span>
+
+                <span class="value">
+                    مدير
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    الصلاحية
+                </span>
+
+                <span class="value">
+                    إدارة المكتبة والحسابات
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FOOTER
+        ========================= -->
+
+        <footer class="footer">
+
+            <div>
+                <strong>
+                    المكتبة الإلكترونية — ثانوية مصاص رابح
+                </strong>
+            </div>
+
+            <div>
+                مهندس النظام:
+                <span class="footer-engineer">
+                    شراف الدين بوردوسن
+                </span>
+                — أستاذ مادة الرياضيات
+            </div>
+
+            <div>
+                جميع الحقوق محفوظة © 2026
+            </div>
+
+        </footer>
+
+    </main>
 
 </div>
+
 
 <!-- =========================
      SUPABASE
@@ -963,12 +969,8 @@
     const SUPABASE_URL =
         "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-
-    // احتفظ بمفتاح Supabase الموجود لديك حالياً.
-
     const SUPABASE_ANON_KEY =
         "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
-
 
     const supabaseClient =
         window.supabase.createClient(
@@ -989,7 +991,8 @@
                 data: {
                     user
                 }
-            } = await supabaseClient.auth.getUser();
+            } =
+                await supabaseClient.auth.getUser();
 
 
             // لا يوجد تسجيل دخول
@@ -1011,13 +1014,17 @@
             const {
                 data: profile,
                 error
-            } = await supabaseClient
-                .from("profiles")
-                .select(
-                    "full_name, role"
-                )
-                .eq("id", user.id)
-                .single();
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select(
+                        "full_name, role"
+                    )
+                    .eq(
+                        "id",
+                        user.id
+                    )
+                    .single();
 
 
             if (
@@ -1039,7 +1046,8 @@
             // ========================================
 
             if (
-                profile.role !== "admin"
+                profile.role !==
+                "admin"
             ) {
 
                 // المبرمج → لوحة المبرمج
@@ -1103,13 +1111,14 @@
             document.getElementById(
                 "userName"
             ).textContent =
-                profile.full_name;
-
+                profile.full_name ||
+                "المدير";
 
             document.getElementById(
                 "profileName"
             ).textContent =
-                profile.full_name;
+                profile.full_name ||
+                "المدير";
 
 
             // ========================================
@@ -1195,7 +1204,9 @@
 
 
             if (!accessToken) {
+
                 return;
+
             }
 
 
@@ -1266,9 +1277,12 @@
 
     function showUnauthorized(message) {
 
-        document.getElementById(
-            "pageContent"
-        ).innerHTML = `
+        const pageContent =
+            document.getElementById(
+                "pageContent"
+            );
+
+        pageContent.innerHTML = `
 
             <div class="loading">
 
@@ -1305,7 +1319,21 @@
         "click",
         async function() {
 
-            await supabaseClient.auth.signOut();
+            const {
+                error
+            } =
+                await supabaseClient.auth.signOut();
+
+            if (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+                return;
+
+            }
 
             window.location.href =
                 "login.html";

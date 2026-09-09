@@ -7,6 +7,8 @@
 
     <title>إدارة الحسابات | مكتبة الثانوية</title>
 
+    <link rel="icon" type="image/png" href="favicone.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -29,15 +31,28 @@
         .header {
             background: #0b1f3a;
             color: white;
-            padding: 18px 6%;
+            padding: 14px 6%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 22px;
             font-weight: 800;
+        }
+
+        .logo img {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: white;
+            padding: 3px;
         }
 
         .back-btn {
@@ -46,6 +61,12 @@
             background: #16365f;
             padding: 9px 16px;
             border-radius: 8px;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            background: #214978;
         }
 
         .container {
@@ -105,11 +126,13 @@
             font-family: inherit;
             font-size: 15px;
             outline: none;
+            background: white;
         }
 
         .field input:focus,
         .field select:focus {
             border-color: #2474d8;
+            box-shadow: 0 0 0 3px rgba(36, 116, 216, 0.08);
         }
 
         .main-btn {
@@ -122,10 +145,21 @@
             font-family: inherit;
             font-weight: 700;
             cursor: pointer;
+            transition: background 0.3s ease, transform 0.15s ease;
         }
 
         .main-btn:hover {
             background: #0d54a6;
+        }
+
+        .main-btn:active {
+            transform: translateY(1px);
+        }
+
+        .main-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .refresh-btn {
@@ -210,6 +244,11 @@
             cursor: pointer;
             font-weight: 700;
             white-space: nowrap;
+            transition: background 0.25s ease;
+        }
+
+        .action-btn:hover {
+            filter: brightness(0.96);
         }
 
         .edit-btn {
@@ -241,6 +280,7 @@
             padding: 12px;
             border-radius: 8px;
             display: none;
+            line-height: 1.7;
         }
 
         .success {
@@ -310,6 +350,11 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
+            transition: background 0.25s ease;
+        }
+
+        .close-btn:hover {
+            background: #e2e6eb;
         }
 
         .modal-grid {
@@ -321,11 +366,16 @@
             display: flex;
             gap: 10px;
             margin-top: 22px;
+            flex-wrap: wrap;
         }
 
         .cancel-btn {
             background: #e9edf3;
             color: #344054;
+        }
+
+        .cancel-btn:hover {
+            background: #dce2e9;
         }
 
         /* =========================
@@ -346,6 +396,7 @@
         .document-info-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             gap: 20px;
             padding: 11px 0;
             border-bottom: 1px solid #e2e8f0;
@@ -364,6 +415,7 @@
             color: #172033;
             text-align: left;
             direction: ltr;
+            word-break: break-word;
         }
 
         .warning-box {
@@ -493,7 +545,11 @@
             border: 1px solid #d7deea;
             border-radius: 10px;
             padding: 11px 13px;
-            background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+            background: linear-gradient(
+                135deg,
+                #f8fbff 0%,
+                #ffffff 100%
+            );
         }
 
         .registration-rights h3 {
@@ -606,20 +662,45 @@
         }
 
         @media (max-width: 700px) {
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
 
             .header {
-                padding: 15px 4%;
+                padding: 14px 4%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .logo img {
+                width: 40px;
+                height: 40px;
             }
 
             .container {
                 width: 94%;
+                margin-top: 25px;
+            }
+
+            .page-title h1 {
+                font-size: 25px;
             }
 
             .card {
                 padding: 18px;
+            }
+
+            .modal-box {
+                padding: 20px;
+            }
+
+            .document-info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
             }
 
             .registration-paper {
@@ -630,9 +711,18 @@
                 padding: 18px;
                 overflow: visible;
             }
+
+            .qr-section {
+                flex-direction: column;
+            }
+
+            .qr-info {
+                text-align: center;
+            }
         }
 
         @media print {
+
             body * {
                 visibility: hidden !important;
             }
@@ -682,11 +772,24 @@
     <header class="header">
 
         <div class="logo">
-            📚 مكتبة الثانوية
+
+            <img
+                src="favicone.png"
+                alt="شعار مكتبة الثانوية">
+
+            <span>
+                مكتبة الثانوية
+            </span>
+
         </div>
 
-        <a href="admin.html" class="back-btn" id="backBtn">
+        <a
+            href="admin.html"
+            class="back-btn"
+            id="backBtn">
+
             العودة إلى اللوحة
+
         </a>
 
     </header>
@@ -731,6 +834,7 @@
                             type="text"
                             id="fullName"
                             required
+                            autocomplete="name"
                             placeholder="أدخل الاسم الكامل">
 
                     </div>
@@ -746,6 +850,7 @@
                             type="email"
                             id="email"
                             required
+                            autocomplete="email"
                             placeholder="example@email.com">
 
                     </div>
@@ -762,6 +867,7 @@
                             id="password"
                             required
                             minlength="6"
+                            autocomplete="new-password"
                             placeholder="6 أحرف على الأقل">
 
                     </div>
@@ -773,7 +879,9 @@
                             نوع الحساب
                         </label>
 
-                        <select id="role" required>
+                        <select
+                            id="role"
+                            required>
 
                             <option value="">
                                 اختر نوع الحساب
@@ -838,6 +946,7 @@
                 </h2>
 
                 <button
+                    type="button"
                     class="main-btn refresh-btn"
                     id="refreshBtn"
                     style="margin:0;">
@@ -930,8 +1039,10 @@
                 </h2>
 
                 <button
+                    type="button"
                     class="close-btn"
-                    id="closeModalBtn">
+                    id="closeModalBtn"
+                    aria-label="إغلاق">
 
                     ×
 
@@ -958,7 +1069,8 @@
                         <input
                             type="text"
                             id="editFullName"
-                            required>
+                            required
+                            autocomplete="name">
 
                     </div>
 
@@ -972,7 +1084,8 @@
                         <input
                             type="email"
                             id="editEmail"
-                            required>
+                            required
+                            autocomplete="email">
 
                     </div>
 
@@ -987,6 +1100,7 @@
                             type="password"
                             id="editPassword"
                             minlength="6"
+                            autocomplete="new-password"
                             placeholder="اتركها فارغة إذا لم ترد تغييرها">
 
                     </div>
@@ -998,7 +1112,9 @@
                             نوع الحساب
                         </label>
 
-                        <select id="editRole" required>
+                        <select
+                            id="editRole"
+                            required>
 
                             <option value="admin">
                                 مدير
@@ -1071,8 +1187,10 @@
                 </h2>
 
                 <button
+                    type="button"
                     class="close-btn"
-                    id="closeDocumentModalBtn">
+                    id="closeDocumentModalBtn"
+                    aria-label="إغلاق">
 
                     ×
 
@@ -1256,7 +1374,6 @@
 
                     <li>
                         -
-
                     </li>
 
                 </ul>
@@ -1266,15 +1383,23 @@
 
             <div class="qr-section">
 
-                <strong>
-                    رمز الدخول إلى المكتبة
-                </strong>
+                <div class="qr-info">
+
+                    <strong>
+                        رمز الدخول إلى المكتبة
+                    </strong>
+
+                    <span>
+                        امسح الرمز للوصول إلى المكتبة الإلكترونية.
+                    </span>
+
+                    <div class="qr-url">
+                        https://maktabati-1-rpeo.onrender.com
+                    </div>
+
+                </div>
 
                 <div id="registrationQr"></div>
-
-                <div class="qr-url">
-                    https://maktabati-1-rpeo.onrender.com
-                </div>
 
             </div>
 
@@ -1299,6 +1424,7 @@
             <div class="print-actions">
 
                 <button
+                    type="button"
                     onclick="window.print()">
 
                     🖨️ طباعة / حفظ PDF
@@ -1314,7 +1440,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- مكتبة QR Code -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 
@@ -1350,59 +1475,37 @@
         // ============================================
 
         const usersTableBody =
-            document.getElementById(
-                "usersTableBody"
-            );
+            document.getElementById("usersTableBody");
 
         const createUserForm =
-            document.getElementById(
-                "createUserForm"
-            );
+            document.getElementById("createUserForm");
 
         const createMessage =
-            document.getElementById(
-                "createMessage"
-            );
+            document.getElementById("createMessage");
 
         const createUserBtn =
-            document.getElementById(
-                "createUserBtn"
-            );
+            document.getElementById("createUserBtn");
 
         const refreshBtn =
-            document.getElementById(
-                "refreshBtn"
-            );
+            document.getElementById("refreshBtn");
 
         const editModal =
-            document.getElementById(
-                "editModal"
-            );
+            document.getElementById("editModal");
 
         const editUserForm =
-            document.getElementById(
-                "editUserForm"
-            );
+            document.getElementById("editUserForm");
 
         const editMessage =
-            document.getElementById(
-                "editMessage"
-            );
+            document.getElementById("editMessage");
 
         const backBtn =
-            document.getElementById(
-                "backBtn"
-            );
+            document.getElementById("backBtn");
 
         const documentModal =
-            document.getElementById(
-                "documentModal"
-            );
+            document.getElementById("documentModal");
 
         const documentModalContent =
-            document.getElementById(
-                "documentModalContent"
-            );
+            document.getElementById("documentModalContent");
 
 
         // ============================================
@@ -1467,14 +1570,12 @@
                 data: {
                     user
                 }
-            } =
-                await supabaseClient.auth.getUser();
+            } = await supabaseClient.auth.getUser();
 
 
             if (!user) {
 
-                window.location.href =
-                    "login.html";
+                window.location.href = "login.html";
 
                 return false;
 
@@ -1484,21 +1585,11 @@
             const {
                 data: profile,
                 error
-            } =
-                await supabaseClient
-
-                    .from("profiles")
-
-                    .select(
-                        "role, full_name"
-                    )
-
-                    .eq(
-                        "id",
-                        user.id
-                    )
-
-                    .single();
+            } = await supabaseClient
+                .from("profiles")
+                .select("role, full_name")
+                .eq("id", user.id)
+                .single();
 
 
             if (error || !profile) {
@@ -1508,6 +1599,7 @@
                     <div style="
                         text-align:center;
                         margin-top:100px;
+                        padding:20px;
                         font-family:Cairo,sans-serif;
                     ">
 
@@ -1538,6 +1630,7 @@
                     <div style="
                         text-align:center;
                         margin-top:100px;
+                        padding:20px;
                         font-family:Cairo,sans-serif;
                     ">
 
@@ -1558,21 +1651,16 @@
             }
 
 
-            if (
-                profile.role ===
-                "programmer"
-            ) {
+            if (profile.role === "programmer") {
 
-                backBtn.href =
-                    "programmer.html";
+                backBtn.href = "programmer.html";
 
                 backBtn.textContent =
                     "العودة إلى لوحة المبرمج";
 
             } else {
 
-                backBtn.href =
-                    "admin.html";
+                backBtn.href = "admin.html";
 
                 backBtn.textContent =
                     "العودة إلى لوحة المدير";
@@ -1593,8 +1681,7 @@
 
             const {
                 data
-            } =
-                await supabaseClient.auth.getSession();
+            } = await supabaseClient.auth.getSession();
 
             return data.session?.access_token;
 
@@ -1611,8 +1698,7 @@
             type
         ) {
 
-            element.textContent =
-                message;
+            element.textContent = message;
 
             element.className =
                 "message " + type;
@@ -1667,8 +1753,7 @@
                             headers: {
 
                                 "Authorization":
-                                    "Bearer " +
-                                    token
+                                    "Bearer " + token
 
                             }
 
@@ -1758,7 +1843,6 @@
 
 
             usersTableBody.innerHTML =
-
                 users.map(
                     (user, index) => {
 
@@ -1768,33 +1852,25 @@
 
 
                         const roleClass =
-                            role ===
-                                "programmer"
-
+                            role === "programmer"
                                 ? "programmer"
-
                                 : role;
 
 
                         const date =
                             user.createdAt
-
                                 ? new Date(
                                     user.createdAt
                                 ).toLocaleDateString(
                                     "ar-DZ"
                                 )
-
                                 : "-";
 
 
                         let actions = "";
 
 
-                        if (
-                            role ===
-                            "programmer"
-                        ) {
+                        if (role === "programmer") {
 
                             actions = `
 
@@ -1808,13 +1884,22 @@
 
                         } else {
 
+                            const userJson =
+                                safeJsonAttribute(user);
+
+                            const nameAttribute =
+                                escapeAttribute(
+                                    user.fullName
+                                );
+
                             actions = `
 
                                 <div class="actions">
 
                                     <button
+                                        type="button"
                                         class="action-btn document-btn"
-                                        onclick='viewRegistrationDocument(${JSON.stringify(user)})'>
+                                        onclick='viewRegistrationDocument(${userJson})'>
 
                                         📄 الوثيقة
 
@@ -1822,8 +1907,9 @@
 
 
                                     <button
+                                        type="button"
                                         class="action-btn edit-btn"
-                                        onclick='openEditModal(${JSON.stringify(user)})'>
+                                        onclick='openEditModal(${userJson})'>
 
                                         ✏️ تعديل
 
@@ -1831,10 +1917,11 @@
 
 
                                     <button
+                                        type="button"
                                         class="action-btn delete-btn"
                                         onclick="deleteUser(
-                                            '${user.id}',
-                                            '${escapeAttribute(user.fullName)}'
+                                            '${escapeAttribute(user.id)}',
+                                            '${nameAttribute}'
                                         )">
 
                                         🗑️ حذف
@@ -1874,7 +1961,9 @@
                                 <td>
 
                                     <span
-                                        class="badge ${roleClass}">
+                                        class="badge ${escapeHtml(
+                                            roleClass
+                                        )}">
 
                                         ${escapeHtml(
                                             roleNames[role] ||
@@ -1887,7 +1976,7 @@
 
 
                                 <td>
-                                    ${date}
+                                    ${escapeHtml(date)}
                                 </td>
 
 
@@ -2015,8 +2104,7 @@
 
                 try {
 
-                    createUserBtn.disabled =
-                        true;
+                    createUserBtn.disabled = true;
 
                     createUserBtn.textContent =
                         "⏳ جار إنشاء الحساب...";
@@ -2048,8 +2136,7 @@
                                         "application/json",
 
                                     "Authorization":
-                                        "Bearer " +
-                                        token
+                                        "Bearer " + token
 
                                 },
 
@@ -2094,15 +2181,6 @@
                     );
 
 
-                    /*
-                       مهم:
-
-                       كلمة المرور متوفرة الآن فقط لأن
-                       المدير أدخلها لحظة إنشاء الحساب.
-
-                       الخادم لا يخزنها في جدول الوثائق.
-                    */
-
                     if (
                         result.registrationDocument
                     ) {
@@ -2126,15 +2204,13 @@
 
                     showMessage(
                         createMessage,
-                        "❌ " +
-                        error.message,
+                        "❌ " + error.message,
                         "error"
                     );
 
                 } finally {
 
-                    createUserBtn.disabled =
-                        false;
+                    createUserBtn.disabled = false;
 
                     createUserBtn.textContent =
                         "إنشاء الحساب وإصدار الوثيقة";
@@ -2156,29 +2232,25 @@
             document.getElementById(
                 "printDocumentNumber"
             ).textContent =
-                documentData.documentNumber ||
-                "-";
+                documentData.documentNumber || "-";
 
 
             document.getElementById(
                 "printFullName"
             ).textContent =
-                documentData.fullName ||
-                "-";
+                documentData.fullName || "-";
 
 
             document.getElementById(
                 "printEmail"
             ).textContent =
-                documentData.email ||
-                "-";
+                documentData.email || "-";
 
 
             document.getElementById(
                 "printPassword"
             ).textContent =
-                documentData.password ||
-                "-";
+                documentData.password || "-";
 
 
             document.getElementById(
@@ -2214,8 +2286,7 @@
             const rights =
                 roleRights[
                     documentData.role
-                ] ||
-                [];
+                ] || [];
 
 
             rightsList.innerHTML =
@@ -2229,11 +2300,6 @@
 
             createQRCode();
 
-
-            /*
-                ننتظر قليلا حتى يتم إنشاء QR
-                ثم نفتح نافذة الطباعة.
-            */
 
             setTimeout(
                 function() {
@@ -2259,8 +2325,7 @@
                 );
 
 
-            qrContainer.innerHTML =
-                "";
+            qrContainer.innerHTML = "";
 
 
             if (
@@ -2290,8 +2355,7 @@
                 qrContainer,
                 {
 
-                    text:
-                        LIBRARY_URL,
+                    text: LIBRARY_URL,
 
                     width: 105,
 
@@ -2357,8 +2421,7 @@
                             headers: {
 
                                 "Authorization":
-                                    "Bearer " +
-                                    token
+                                    "Bearer " + token
 
                             }
 
@@ -2383,7 +2446,7 @@
                 }
 
 
-                const document =
+                const documentData =
                     result.document;
 
 
@@ -2392,9 +2455,9 @@
 
 
                 const issuedDate =
-                    document.issued_at
+                    documentData.issued_at
                         ? new Date(
-                            document.issued_at
+                            documentData.issued_at
                         ).toLocaleString(
                             "ar-DZ"
                         )
@@ -2413,7 +2476,7 @@
 
                             <span class="document-info-value">
                                 ${escapeHtml(
-                                    document.document_number
+                                    documentData.document_number
                                 )}
                             </span>
 
@@ -2492,11 +2555,9 @@
                             <span>
 
                                 ${
-                                    document.status ===
+                                    documentData.status ===
                                     "issued"
-
                                         ? "🟢 صالحة"
-
                                         : "🔴 ملغاة"
                                 }
 
@@ -2624,15 +2685,13 @@
             document.getElementById(
                 "editFullName"
             ).value =
-                user.fullName ||
-                "";
+                user.fullName || "";
 
 
             document.getElementById(
                 "editEmail"
             ).value =
-                user.email ||
-                "";
+                user.email || "";
 
 
             document.getElementById(
@@ -2644,7 +2703,6 @@
             document.getElementById(
                 "editRole"
             ).value =
-
                 [
                     "admin",
                     "teacher",
@@ -2652,9 +2710,7 @@
                 ].includes(
                     user.role
                 )
-
                     ? user.role
-
                     : "student";
 
 
@@ -2766,6 +2822,48 @@
                     ).value;
 
 
+                if (!fullName) {
+
+                    showMessage(
+                        editMessage,
+                        "يرجى إدخال الاسم الكامل.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!email) {
+
+                    showMessage(
+                        editMessage,
+                        "يرجى إدخال البريد الإلكتروني.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    password &&
+                    password.length < 6
+                ) {
+
+                    showMessage(
+                        editMessage,
+                        "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
                 try {
 
                     const token =
@@ -2797,8 +2895,7 @@
                                         "application/json",
 
                                     "Authorization":
-                                        "Bearer " +
-                                        token
+                                        "Bearer " + token
 
                                 },
 
@@ -2858,8 +2955,7 @@
 
                     showMessage(
                         editMessage,
-                        "❌ " +
-                        error.message,
+                        "❌ " + error.message,
                         "error"
                     );
 
@@ -2880,13 +2976,9 @@
 
             const confirmed =
                 confirm(
-
                     "هل أنت متأكد من حذف الحساب:\n\n" +
-
                     userName +
-
                     "\n\nلا يمكن التراجع عن هذه العملية."
-
                 );
 
 
@@ -2925,8 +3017,7 @@
                             headers: {
 
                                 "Authorization":
-                                    "Bearer " +
-                                    token
+                                    "Bearer " + token
 
                             }
 
@@ -2992,27 +3083,22 @@
             return String(
                 value ?? ""
             )
-
                 .replace(
                     /&/g,
                     "&amp;"
                 )
-
                 .replace(
                     /</g,
                     "&lt;"
                 )
-
                 .replace(
                     />/g,
                     "&gt;"
                 )
-
                 .replace(
                     /"/g,
                     "&quot;"
                 )
-
                 .replace(
                     /'/g,
                     "&#039;"
@@ -3026,25 +3112,42 @@
             return String(
                 value ?? ""
             )
-
                 .replace(
                     /\\/g,
                     "\\\\"
                 )
-
                 .replace(
                     /'/g,
                     "\\'"
                 )
-
                 .replace(
-                    /"/g,
-                    "&quot;"
-                )
-
-                .replace(
-                    /\n/g,
+                    /\r?\n/g,
                     " "
+                );
+
+        }
+
+
+        function safeJsonAttribute(value) {
+
+            return JSON.stringify(
+                value
+            )
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
                 );
 
         }

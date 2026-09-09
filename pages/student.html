@@ -1,629 +1,646 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>لوحة الطالب | مكتبة الثانوية</title>
+    <title>لوحة الطالب | مكتبة الثانوية</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../favicone.png">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    body {
-        font-family: "Cairo", sans-serif;
-        background: #f4f7fb;
-        color: #172033;
-    }
-
-    header {
-        background: linear-gradient(135deg, #0b1f3a, #123d70);
-        color: white;
-        padding: 18px 7%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-    }
-
-    .logo {
-        font-size: 23px;
-        font-weight: 800;
-    }
-
-    .top-actions {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .dashboard-back {
-        color: white;
-        text-decoration: none;
-        background: rgba(255,255,255,0.14);
-        padding: 9px 15px;
-        border-radius: 8px;
-        font-weight: 600;
-    }
-
-    .dashboard-back:hover {
-        background: rgba(255,255,255,0.24);
-    }
-
-    .user-info {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .user-name {
-        font-weight: 600;
-    }
-
-    .logout {
-        border: none;
-        background: #e85d04;
-        color: white;
-        padding: 9px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-family: inherit;
-        font-weight: 600;
-    }
-
-    .logout:hover {
-        background: #d94f00;
-    }
-
-    .container {
-        width: 86%;
-        max-width: 1200px;
-        margin: 40px auto;
-    }
-
-    .back {
-        display: inline-block;
-        margin-bottom: 25px;
-        color: #1769aa;
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .back:hover {
-        text-decoration: underline;
-    }
-
-    .welcome {
-        margin-bottom: 30px;
-    }
-
-    .welcome h1 {
-        font-size: 30px;
-        margin-bottom: 8px;
-        color: #0b1f3a;
-    }
-
-    .welcome p {
-        color: #667085;
-    }
-
-    .dashboard {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 22px;
-        margin-bottom: 35px;
-    }
-
-    .card-link {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .card {
-        background: white;
-        padding: 25px;
-        border-radius: 14px;
-        box-shadow: 0 5px 20px rgba(20,40,70,0.07);
-        border: 1px solid #e7ecf3;
-        transition: 0.2s;
-        height: 100%;
-    }
-
-    .card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(20,40,70,0.12);
-    }
-
-    .card-icon {
-        font-size: 32px;
-        margin-bottom: 12px;
-    }
-
-    .card h3 {
-        color: #0b1f3a;
-        margin-bottom: 7px;
-    }
-
-    .card p {
-        color: #667085;
-        font-size: 14px;
-        line-height: 1.8;
-    }
-
-    .section {
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(20,40,70,0.07);
-        margin-bottom: 30px;
-    }
-
-    .section h2 {
-        color: #0b1f3a;
-        margin-bottom: 25px;
-        font-size: 22px;
-    }
-
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-
-    .stat {
-        background: #f8fafc;
-        border: 1px solid #e7ecf3;
-        border-radius: 12px;
-        padding: 22px;
-        text-align: center;
-    }
-
-    .stat-icon {
-        font-size: 30px;
-        margin-bottom: 8px;
-    }
-
-    .stat-number {
-        font-size: 28px;
-        font-weight: 800;
-        color: #1769aa;
-    }
-
-    .stat-title {
-        color: #667085;
-        font-size: 14px;
-        margin-top: 4px;
-    }
-
-    .books-list {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-    }
-
-    .book {
-        border: 1px solid #e7ecf3;
-        border-radius: 12px;
-        padding: 20px;
-        background: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        transition: 0.2s;
-    }
-
-    .book:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(20,40,70,0.08);
-    }
-
-    .book-info {
-        min-width: 0;
-    }
-
-    .book-info h3 {
-        color: #0b1f3a;
-        margin-bottom: 8px;
-        font-size: 17px;
-    }
-
-    .book-info p {
-        margin: 4px 0;
-        color: #667085;
-        font-size: 13px;
-    }
-
-    .read-btn {
-        display: inline-block;
-        background: #1769aa;
-        color: white;
-        text-decoration: none;
-        padding: 10px 17px;
-        border-radius: 8px;
-        white-space: nowrap;
-        font-weight: 600;
-        font-size: 14px;
-    }
-
-    .read-btn:hover {
-        background: #12578e;
-    }
-
-    .empty,
-    .loading {
-        text-align: center;
-        padding: 30px;
-        color: #98a2b3;
-    }
-
-    .error {
-        background: #fef3f2;
-        color: #b42318;
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .all-books-btn {
-        display: block;
-        width: fit-content;
-        margin: 25px auto 0;
-        background: #0b1f3a;
-        color: white;
-        text-decoration: none;
-        padding: 11px 22px;
-        border-radius: 8px;
-        font-weight: 600;
-    }
-
-    .all-books-btn:hover {
-        background: #123d70;
-    }
-
-    .badge {
-        display: inline-block;
-        background: #eaf4fb;
-        color: #1769aa;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-
-    @media (max-width: 1000px) {
-
-        .dashboard {
-            grid-template-columns: repeat(2, 1fr);
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .books-list {
-            grid-template-columns: 1fr;
+        body {
+            font-family: "Cairo", sans-serif;
+            background: #f4f7fb;
+            color: #172033;
         }
-
-    }
-
-    @media (max-width: 700px) {
 
         header {
-            flex-direction: column;
-            gap: 15px;
-            text-align: center;
+            background: linear-gradient(135deg, #0b1f3a, #123d70);
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .top-actions {
-            flex-direction: column;
-            width: 100%;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dashboard-back {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.14);
+            padding: 9px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .dashboard-back:hover {
+            background: rgba(255, 255, 255, 0.24);
         }
 
         .user-info {
-            flex-direction: column;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .dashboard {
-            grid-template-columns: 1fr;
+        .user-name {
+            font-weight: 600;
         }
 
-        .stats {
-            grid-template-columns: 1fr;
+        .logout {
+            border: none;
+            background: #e85d04;
+            color: white;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: background 0.2s ease;
         }
 
-        .book {
-            flex-direction: column;
-            align-items: stretch;
+        .logout:hover {
+            background: #d94f00;
         }
 
-        .read-btn {
-            text-align: center;
+        .logout:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         .container {
-            width: 92%;
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #1769aa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            color: #0b1f3a;
+        }
+
+        .welcome p {
+            color: #667085;
+            line-height: 1.8;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-bottom: 35px;
+        }
+
+        .card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(20, 40, 70, 0.07);
+            border: 1px solid #e7ecf3;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(20, 40, 70, 0.12);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            color: #0b1f3a;
+            margin-bottom: 7px;
+        }
+
+        .card p {
+            color: #667085;
+            font-size: 14px;
+            line-height: 1.8;
         }
 
         .section {
-            padding: 20px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(20, 40, 70, 0.07);
+            margin-bottom: 30px;
         }
 
-    }
+        .section h2 {
+            color: #0b1f3a;
+            margin-bottom: 25px;
+            font-size: 22px;
+        }
 
-</style>
-```
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
+        .stat {
+            background: #f8fafc;
+            border: 1px solid #e7ecf3;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1769aa;
+        }
+
+        .stat-title {
+            color: #667085;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .books-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .book {
+            border: 1px solid #e7ecf3;
+            border-radius: 12px;
+            padding: 20px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(20, 40, 70, 0.08);
+        }
+
+        .book-info {
+            min-width: 0;
+        }
+
+        .book-info h3 {
+            color: #0b1f3a;
+            margin-bottom: 8px;
+            font-size: 17px;
+            overflow-wrap: anywhere;
+        }
+
+        .book-info p {
+            margin: 4px 0;
+            color: #667085;
+            font-size: 13px;
+        }
+
+        .read-btn {
+            display: inline-block;
+            background: #1769aa;
+            color: white;
+            text-decoration: none;
+            padding: 10px 17px;
+            border-radius: 8px;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .read-btn:hover {
+            background: #12578e;
+        }
+
+        .empty,
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #98a2b3;
+            grid-column: 1 / -1;
+        }
+
+        .error {
+            background: #fef3f2;
+            color: #b42318;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .all-books-btn {
+            display: block;
+            width: fit-content;
+            margin: 25px auto 0;
+            background: #0b1f3a;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .all-books-btn:hover {
+            background: #123d70;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #eaf4fb;
+            color: #1769aa;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 1000px) {
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .books-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .top-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .dashboard-back {
+                width: 100%;
+                text-align: center;
+            }
+
+            .user-info {
+                flex-direction: column;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .book {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .read-btn {
+                text-align: center;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
 
-```
-<div class="logo">
-    📚 مكتبة الثانوية
-</div>
-
-<div class="top-actions">
-
-    <a
-        href="books.html"
-        class="dashboard-back">
-        📚 المكتبة
-    </a>
-
-    <div class="user-info">
-
-        <span
-            class="user-name"
-            id="userName">
-            جاري التحميل...
-        </span>
-
-        <button
-            class="logout"
-            id="logoutBtn">
-            تسجيل الخروج
-        </button>
-
+    <div class="logo">
+        <img src="../favicone.png" alt="شعار المكتبة">
+        <span>مكتبة الثانوية</span>
     </div>
 
-</div>
-```
+    <div class="top-actions">
+
+        <a
+            href="books.html"
+            class="dashboard-back">
+            📚 المكتبة
+        </a>
+
+        <div class="user-info">
+
+            <span
+                class="user-name"
+                id="userName">
+                جاري التحميل...
+            </span>
+
+            <button
+                class="logout"
+                id="logoutBtn"
+                type="button">
+                تسجيل الخروج
+            </button>
+
+        </div>
+
+    </div>
 
 </header>
 
 <div class="container">
 
-```
-<a
-    href="../index.html"
-    class="back">
-    ← العودة إلى الصفحة الرئيسية
-</a>
-
-
-<div class="welcome">
-
-    <h1>
-        لوحة الطالب
-    </h1>
-
-    <p>
-        مرحبًا بك في مكتبة الثانوية.
-        يمكنك من هنا الوصول بسهولة إلى الكتب والمراجع التعليمية وقراءتها مباشرة.
-    </p>
-
-</div>
-
-
-<!-- بطاقات لوحة الطالب -->
-
-<div class="dashboard">
-
-    <a
-        href="student.html"
-        class="card-link">
-
-        <div class="card">
-
-            <div class="card-icon">
-                🎓
-            </div>
-
-            <h3>
-                لوحة الطالب
-            </h3>
-
-            <p>
-                الصفحة الرئيسية لحسابك وإمكانية الوصول إلى خدمات المكتبة.
-            </p>
-
-        </div>
-
-    </a>
-
-
-    <a
-        href="books.html"
-        class="card-link">
-
-        <div class="card">
-
-            <div class="card-icon">
-                📚
-            </div>
-
-            <h3>
-                المكتبة الإلكترونية
-            </h3>
-
-            <p>
-                تصفح جميع الكتب التعليمية المتوفرة في مكتبة الثانوية.
-            </p>
-
-        </div>
-
-    </a>
-
-
-    <a
-        href="#recentBooks"
-        class="card-link">
-
-        <div class="card">
-
-            <div class="card-icon">
-                🆕
-            </div>
-
-            <h3>
-                أحدث الكتب
-            </h3>
-
-            <p>
-                الاطلاع على أحدث الكتب التي تمت إضافتها إلى المكتبة.
-            </p>
-
-        </div>
-
-    </a>
-
-
     <a
         href="../index.html"
-        class="card-link">
-
-        <div class="card">
-
-            <div class="card-icon">
-                🏠
-            </div>
-
-            <h3>
-                الرئيسية
-            </h3>
-
-            <p>
-                العودة إلى الصفحة الرئيسية لمكتبة الثانوية.
-            </p>
-
-        </div>
-
+        class="back">
+        ← العودة إلى الصفحة الرئيسية
     </a>
 
-</div>
+    <div class="welcome">
 
+        <h1>
+            لوحة الطالب
+        </h1>
 
-<!-- الإحصائيات -->
+        <p>
+            مرحبًا بك في مكتبة الثانوية.
+            يمكنك من هنا الوصول بسهولة إلى الكتب والمراجع التعليمية وقراءتها مباشرة.
+        </p>
 
-<div class="section">
+    </div>
 
-    <h2>
-        📊 إحصائيات المكتبة
-    </h2>
+    <!-- بطاقات لوحة الطالب -->
 
-    <div class="stats">
+    <div class="dashboard">
 
-        <div class="stat">
+        <a
+            href="student.html"
+            class="card-link">
 
-            <div class="stat-icon">
-                📚
+            <div class="card">
+
+                <div class="card-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    لوحة الطالب
+                </h3>
+
+                <p>
+                    الصفحة الرئيسية لحسابك وإمكانية الوصول إلى خدمات المكتبة.
+                </p>
+
             </div>
 
-            <div
-                class="stat-number"
-                id="booksCount">
-                -
+        </a>
+
+        <a
+            href="books.html"
+            class="card-link">
+
+            <div class="card">
+
+                <div class="card-icon">
+                    📚
+                </div>
+
+                <h3>
+                    المكتبة الإلكترونية
+                </h3>
+
+                <p>
+                    تصفح جميع الكتب التعليمية المتوفرة في مكتبة الثانوية.
+                </p>
+
             </div>
 
-            <div class="stat-title">
-                عدد الكتب المتاحة
+        </a>
+
+        <a
+            href="#recentBooks"
+            class="card-link">
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🆕
+                </div>
+
+                <h3>
+                    أحدث الكتب
+                </h3>
+
+                <p>
+                    الاطلاع على أحدث الكتب التي تمت إضافتها إلى المكتبة.
+                </p>
+
             </div>
 
-        </div>
+        </a>
 
+        <a
+            href="../index.html"
+            class="card-link">
 
-        <div class="stat">
+            <div class="card">
 
-            <div class="stat-icon">
-                📖
+                <div class="card-icon">
+                    🏠
+                </div>
+
+                <h3>
+                    الرئيسية
+                </h3>
+
+                <p>
+                    العودة إلى الصفحة الرئيسية لمكتبة الثانوية.
+                </p>
+
             </div>
 
-            <div
-                class="stat-number"
-                id="categoriesCount">
-                -
+        </a>
+
+    </div>
+
+    <!-- الإحصائيات -->
+
+    <div class="section">
+
+        <h2>
+            📊 إحصائيات المكتبة
+        </h2>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    📚
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="booksCount">
+                    -
+                </div>
+
+                <div class="stat-title">
+                    عدد الكتب المتاحة
+                </div>
+
             </div>
 
-            <div class="stat-title">
-                عدد التصنيفات
+            <div class="stat">
+
+                <div class="stat-icon">
+                    📖
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="categoriesCount">
+                    -
+                </div>
+
+                <div class="stat-title">
+                    عدد التصنيفات
+                </div>
+
             </div>
 
-        </div>
+            <div class="stat">
 
+                <div class="stat-icon">
+                    🎓
+                </div>
 
-        <div class="stat">
+                <div class="stat-number">
+                    طالب
+                </div>
 
-            <div class="stat-icon">
-                🎓
-            </div>
+                <div class="stat-title">
+                    نوع الحساب
+                </div>
 
-            <div
-                class="stat-number">
-                طالب
-            </div>
-
-            <div class="stat-title">
-                نوع الحساب
             </div>
 
         </div>
 
     </div>
 
-</div>
-
-
-<!-- أحدث الكتب -->
-
-<div
-    class="section"
-    id="recentBooks">
-
-    <h2>
-        🆕 أحدث الكتب المضافة
-    </h2>
+    <!-- أحدث الكتب -->
 
     <div
-        id="booksList"
-        class="books-list">
+        class="section"
+        id="recentBooks">
 
-        <div class="loading">
-            جاري تحميل الكتب...
+        <h2>
+            🆕 أحدث الكتب المضافة
+        </h2>
+
+        <div
+            id="booksList"
+            class="books-list">
+
+            <div class="loading">
+                جاري تحميل الكتب...
+            </div>
+
         </div>
 
+        <a
+            href="books.html"
+            class="all-books-btn">
+            📚 عرض جميع الكتب
+        </a>
+
     </div>
-
-    <a
-        href="books.html"
-        class="all-books-btn">
-        📚 عرض جميع الكتب
-    </a>
-
-</div>
-```
 
 </div>
 
@@ -632,14 +649,8 @@
     const SUPABASE_URL =
         "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-    /*
-     * ضع هنا نفس المفتاح الموجود حاليًا
-     * في ملفات المشروع لديك.
-     * لم يتم تغييره.
-     */
     const SUPABASE_ANON_KEY =
         "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
-
 
     const supabaseClient =
         window.supabase.createClient(
@@ -674,130 +685,137 @@
 
     async function checkStudent() {
 
-        const {
-            data: { session },
-            error: sessionError
-        } =
-            await supabaseClient
-                .auth
-                .getSession();
+        try {
 
+            const {
+                data: { session },
+                error: sessionError
+            } =
+                await supabaseClient
+                    .auth
+                    .getSession();
 
-        if (
-            sessionError ||
-            !session
-        ) {
-
-            window.location.href =
-                "login.html";
-
-            return;
-        }
-
-
-        const {
-            data: profile,
-            error: profileError
-        } =
-            await supabaseClient
-                .from("profiles")
-                .select(
-                    "id, full_name, role"
-                )
-                .eq(
-                    "id",
-                    session.user.id
-                )
-                .single();
-
-
-        if (
-            profileError ||
-            !profile
-        ) {
-
-            alert(
-                "تعذر تحميل بيانات الحساب."
-            );
-
-            await supabaseClient
-                .auth
-                .signOut();
-
-            window.location.href =
-                "login.html";
-
-            return;
-        }
-
-
-        /* =====================================
-           حماية لوحة الطالب
-        ===================================== */
-
-        if (
-            profile.role !== "student"
-        ) {
 
             if (
-                profile.role ===
-                "programmer"
+                sessionError ||
+                !session
             ) {
 
                 window.location.href =
-                    "programmer.html";
+                    "login.html";
 
+                return;
             }
 
-            else if (
-                profile.role ===
-                "admin"
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select(
+                        "id, full_name, role"
+                    )
+                    .eq(
+                        "id",
+                        session.user.id
+                    )
+                    .single();
+
+
+            if (
+                profileError ||
+                !profile
             ) {
 
-                window.location.href =
-                    "admin.html";
+                alert(
+                    "تعذر تحميل بيانات الحساب."
+                );
 
-            }
-
-            else if (
-                profile.role ===
-                "teacher"
-            ) {
+                await supabaseClient
+                    .auth
+                    .signOut();
 
                 window.location.href =
-                    "teacher.html";
+                    "login.html";
 
+                return;
             }
 
-            else {
 
-                window.location.href =
-                    "../index.html";
+            /* =====================================
+               حماية لوحة الطالب
+            ===================================== */
 
+            const role =
+                String(
+                    profile.role || ""
+                ).toLowerCase();
+
+
+            if (role !== "student") {
+
+                if (
+                    role === "programmer"
+                ) {
+
+                    window.location.href =
+                        "programmer.html";
+
+                } else if (
+                    role === "admin" ||
+                    role === "administrator"
+                ) {
+
+                    window.location.href =
+                        "admin.html";
+
+                } else if (
+                    role === "teacher"
+                ) {
+
+                    window.location.href =
+                        "teacher.html";
+
+                } else {
+
+                    window.location.href =
+                        "../index.html";
+                }
+
+                return;
             }
 
-            return;
-        }
+
+            /* =====================================
+               عرض اسم الطالب
+            ===================================== */
+
+            userName.textContent =
+                "الطالب: " +
+                (
+                    profile.full_name ||
+                    "مستخدم"
+                );
 
 
-        /* =====================================
-           عرض اسم الطالب
-        ===================================== */
+            /* =====================================
+               تحميل الكتب
+            ===================================== */
 
-        userName.textContent =
-            "الطالب: " +
-            (
-                profile.full_name ||
-                "مستخدم"
+            await loadBooks();
+
+        } catch (error) {
+
+            console.error(
+                "Student authentication error:",
+                error
             );
 
-
-        /* =====================================
-           تحميل الكتب
-        ===================================== */
-
-        loadBooks();
-
+            window.location.href =
+                "login.html";
+        }
     }
 
 
@@ -822,24 +840,25 @@
                 );
 
 
-            const result =
-                await response.json();
-
-
-            if (
-                !response.ok ||
-                !result.success
-            ) {
+            if (!response.ok) {
 
                 throw new Error(
                     "فشل تحميل الكتب."
                 );
-
             }
 
 
+            const result =
+                await response.json();
+
+
             const books =
-                result.books || [];
+                Array.isArray(result)
+                    ? result
+                    : (
+                        result.books ||
+                        []
+                    );
 
 
             /* =====================================
@@ -894,7 +913,8 @@
                 );
 
 
-            booksList.innerHTML = "";
+            booksList.innerHTML =
+                "";
 
 
             recentBooks.forEach(
@@ -910,41 +930,50 @@
                         "book";
 
 
+                    const title =
+                        book.title ||
+                        book.name ||
+                        "بدون عنوان";
+
+
+                    const author =
+                        book.author ||
+                        "غير محدد";
+
+
+                    const category =
+                        book.category ||
+                        "أخرى";
+
+
+                    const bookId =
+                        book.id;
+
+
                     div.innerHTML = `
 
                         <div class="book-info">
 
                             <h3>
                                 📘
-                                ${escapeHtml(
-                                    book.title
-                                )}
+                                ${escapeHtml(title)}
                             </h3>
 
                             <p>
                                 المؤلف:
-                                ${escapeHtml(
-                                    book.author ||
-                                    "غير محدد"
-                                )}
+                                ${escapeHtml(author)}
                             </p>
 
                             <span class="badge">
-
-                                ${escapeHtml(
-                                    book.category ||
-                                    "أخرى"
-                                )}
-
+                                ${escapeHtml(category)}
                             </span>
 
                         </div>
 
-
                         <a
                             class="read-btn"
                             href="book.html?id=${encodeURIComponent(
-                                book.id
+                                bookId
                             )}">
 
                             📖 قراءة الكتاب
@@ -961,9 +990,7 @@
                 }
             );
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Load books error:",
@@ -988,28 +1015,25 @@
 
     function escapeHtml(value) {
 
-        return String(value)
-
+        return String(
+            value ?? ""
+        )
             .replace(
                 /&/g,
                 "&amp;"
             )
-
             .replace(
                 /</g,
                 "&lt;"
             )
-
             .replace(
                 />/g,
                 "&gt;"
             )
-
             .replace(
                 /"/g,
                 "&quot;"
             )
-
             .replace(
                 /'/g,
                 "&#039;"
@@ -1026,19 +1050,31 @@
         "click",
         async function() {
 
-            logoutBtn.disabled = true;
+            logoutBtn.disabled =
+                true;
 
             logoutBtn.textContent =
                 "⏳ جاري تسجيل الخروج...";
 
 
-            await supabaseClient
-                .auth
-                .signOut();
+            try {
 
+                await supabaseClient
+                    .auth
+                    .signOut();
 
-            window.location.href =
-                "login.html";
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            } finally {
+
+                window.location.href =
+                    "login.html";
+            }
 
         }
     );

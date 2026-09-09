@@ -1,7 +1,5 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,6 +56,21 @@
             font-size: 20px;
             font-weight: 800;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .programmer-logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .programmer-logo-text {
+            display: block;
         }
 
         .programmer-logo span {
@@ -586,6 +599,10 @@
             font-weight: 700;
         }
 
+        .close-settings-button:hover {
+            background: #173b8f;
+        }
+
         /* =========================================
            DARK MODE
         ========================================= */
@@ -684,6 +701,11 @@
                 padding: 15px 0;
             }
 
+            .programmer-logo {
+                white-space: normal;
+                text-align: center;
+            }
+
             .programmer-nav-links {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -730,48 +752,27 @@
 <body>
 
     <!-- HEADER -->
-
     <header class="programmer-header">
-
         <div class="programmer-nav">
 
-            <a
-                href="../index.html"
-                class="programmer-logo"
-            >
-                📚 مكتبة ثانوية مصاص رابح
+            <a href="../index.html" class="programmer-logo">
+                <img src="../favicone.png" alt="شعار المكتبة">
 
-                <span>
-                    المكتبة الرقمية للمؤسسة
+                <span class="programmer-logo-text">
+                    مكتبة ثانوية مصاص رابح
+                    <span>
+                        المكتبة الرقمية للمؤسسة
+                    </span>
                 </span>
             </a>
 
             <nav class="programmer-nav-links">
-
-                <a href="../index.html">
-                    الرئيسية
-                </a>
-
-                <a href="books.html">
-                    الكتب
-                </a>
-
-                <a href="categories.html">
-                    التصنيفات
-                </a>
-
-                <a href="about.html">
-                    عن المكتبة
-                </a>
-
-                <a href="contact.html">
-                    اتصل بنا
-                </a>
-
-                <a href="guide.html">
-                    دليل الاستخدام
-                </a>
-
+                <a href="../index.html">الرئيسية</a>
+                <a href="books.html">الكتب</a>
+                <a href="categories.html">التصنيفات</a>
+                <a href="about.html">عن المكتبة</a>
+                <a href="contact.html">اتصل بنا</a>
+                <a href="guide.html">دليل الاستخدام</a>
             </nav>
 
             <a
@@ -783,41 +784,27 @@
             </a>
 
         </div>
-
     </header>
 
-
     <!-- INSTITUTION -->
-
     <div class="institution-bar">
-
-        <strong>
-            🏫 ثانوية مصاص رابح
-        </strong>
+        <strong>🏫 ثانوية مصاص رابح</strong>
 
         <span>
             مهندس النظام: شراف الدين بوردوسن — أستاذ مادة الرياضيات
         </span>
-
     </div>
 
-
     <!-- MAIN -->
-
     <main class="dashboard">
 
         <div id="pageMessage">
             جار التحقق من صلاحيات الحساب...
         </div>
 
-
-        <div
-            id="dashboardContent"
-            style="display: none;"
-        >
+        <div id="dashboardContent" style="display: none;">
 
             <!-- WELCOME -->
-
             <section class="dashboard-header">
 
                 <h1>
@@ -832,7 +819,6 @@
                 <div id="userInfo"></div>
 
                 <div class="system-identity">
-
                     <strong>
                         🏫 ثانوية مصاص رابح
                     </strong>
@@ -841,24 +827,19 @@
                         النظام من تطوير مهندس النظام
                         شراف الدين بوردوسن — أستاذ مادة الرياضيات.
                     </span>
-
                 </div>
 
             </section>
 
-
             <!-- STATS -->
-
             <section class="stats-grid">
 
                 <div class="stat-card">
-
                     <div class="stat-icon">
                         📚
                     </div>
 
                     <div>
-
                         <div
                             class="stat-number"
                             id="booksCount"
@@ -869,20 +850,15 @@
                         <div class="stat-title">
                             الكتب الموجودة
                         </div>
-
                     </div>
-
                 </div>
 
-
                 <div class="stat-card">
-
                     <div class="stat-icon">
                         👥
                     </div>
 
                     <div>
-
                         <div
                             class="stat-number"
                             id="usersCount"
@@ -893,20 +869,15 @@
                         <div class="stat-title">
                             حسابات المستخدمين
                         </div>
-
                     </div>
-
                 </div>
 
-
                 <div class="stat-card">
-
                     <div class="stat-icon">
                         🔐
                     </div>
 
                     <div>
-
                         <div class="stat-number">
                             4
                         </div>
@@ -914,21 +885,15 @@
                         <div class="stat-title">
                             مستويات الصلاحيات
                         </div>
-
                     </div>
-
                 </div>
 
             </section>
 
-
             <!-- DASHBOARD CARDS -->
-
             <section class="dashboard-grid">
 
-
                 <!-- ACCOUNT MANAGEMENT -->
-
                 <div class="dashboard-card">
 
                     <div class="card-icon">
@@ -953,9 +918,7 @@
 
                 </div>
 
-
                 <!-- BOOK LIBRARY -->
-
                 <div class="dashboard-card">
 
                     <div class="card-icon">
@@ -980,9 +943,7 @@
 
                 </div>
 
-
                 <!-- ADD BOOK -->
-
                 <div class="dashboard-card">
 
                     <div class="card-icon">
@@ -1007,9 +968,7 @@
 
                 </div>
 
-
                 <!-- STUDENTS -->
-
                 <div class="dashboard-card">
 
                     <div class="card-icon">
@@ -1034,9 +993,7 @@
 
                 </div>
 
-
                 <!-- GOOGLE DRIVE -->
-
                 <div class="dashboard-card">
 
                     <div class="card-icon">
@@ -1063,9 +1020,7 @@
 
                 </div>
 
-
                 <!-- SETTINGS -->
-
                 <div class="dashboard-card">
 
                     <div class="card-icon">
@@ -1093,13 +1048,10 @@
 
             </section>
 
-
             <!-- BOTTOM ACTIONS -->
-
             <section class="bottom-actions">
 
                 <div>
-
                     <h3>
                         🔐 جلسة المبرمج
                     </h3>
@@ -1108,12 +1060,12 @@
                         أنت مسجل الدخول بصلاحية المبرمج
                         ويمكنك إدارة النظام بالكامل.
                     </p>
-
                 </div>
 
                 <button
                     id="logoutButton"
                     class="danger-button"
+                    type="button"
                 >
                     🚪 تسجيل الخروج
                 </button>
@@ -1121,12 +1073,9 @@
             </section>
 
         </div>
-
     </main>
 
-
     <!-- SETTINGS MODAL -->
-
     <div
         class="settings-overlay"
         id="settingsOverlay"
@@ -1156,11 +1105,9 @@
 
             </div>
 
-
             <div class="settings-body">
 
                 <!-- THEME -->
-
                 <div class="setting-item">
 
                     <div class="setting-title">
@@ -1190,12 +1137,9 @@
                         </button>
 
                     </div>
-
                 </div>
 
-
                 <!-- SOUND -->
-
                 <div class="setting-item">
 
                     <div class="toggle-row">
@@ -1212,7 +1156,6 @@
 
                         </div>
 
-
                         <label class="toggle">
 
                             <input
@@ -1225,11 +1168,9 @@
                         </label>
 
                     </div>
-
                 </div>
 
             </div>
-
 
             <div class="settings-footer">
 
@@ -1252,12 +1193,9 @@
             </div>
 
         </div>
-
     </div>
 
-
     <!-- FOOTER -->
-
     <footer class="programmer-footer">
 
         <strong>
@@ -1282,14 +1220,10 @@
 
     </footer>
 
-
     <!-- SUPABASE -->
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
     <script>
-
         /* =========================================
            SUPABASE
         ========================================= */
@@ -1297,22 +1231,14 @@
         const SUPABASE_URL =
             "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-        /*
-            مهم:
-            اترك مفتاح Supabase الحالي الموجود
-            في ملفك كما هو.
-        */
-
         const SUPABASE_ANON_KEY =
             "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
-
 
         const supabaseClient =
             window.supabase.createClient(
                 SUPABASE_URL,
                 SUPABASE_ANON_KEY
             );
-
 
         /* =========================================
            ELEMENTS
@@ -1339,7 +1265,6 @@
         const usersCount =
             document.getElementById("usersCount");
 
-
         /* =========================================
            SETTINGS ELEMENTS
         ========================================= */
@@ -1365,7 +1290,6 @@
         const themeOptions =
             document.querySelectorAll(".theme-option");
 
-
         /* =========================================
            DEFAULT SETTINGS
         ========================================= */
@@ -1375,26 +1299,21 @@
             clickSound: true
         };
 
-
         /* =========================================
            GET SETTINGS
         ========================================= */
 
         function getSettings() {
-
             try {
-
                 const saved =
                     localStorage.getItem(
                         "maktabati_settings"
                     );
 
                 if (!saved) {
-
                     return {
                         ...DEFAULT_SETTINGS
                     };
-
                 }
 
                 const parsed =
@@ -1404,11 +1323,8 @@
                     ...DEFAULT_SETTINGS,
                     ...parsed
                 };
-
             }
-
             catch (error) {
-
                 console.error(
                     "خطأ في قراءة الإعدادات:",
                     error
@@ -1417,25 +1333,19 @@
                 return {
                     ...DEFAULT_SETTINGS
                 };
-
             }
-
         }
-
 
         /* =========================================
            SAVE SETTINGS
         ========================================= */
 
         function saveSettings(settings) {
-
             localStorage.setItem(
                 "maktabati_settings",
                 JSON.stringify(settings)
             );
-
         }
-
 
         /* =========================================
            APPLY THEME
@@ -1444,35 +1354,25 @@
         function applyTheme(theme) {
 
             if (theme === "dark") {
-
                 document.body.classList.add(
                     "dark-mode"
                 );
-
             }
-
             else {
-
                 document.body.classList.remove(
                     "dark-mode"
                 );
-
             }
-
 
             themeOptions.forEach(
                 function(button) {
-
                     button.classList.toggle(
                         "active",
                         button.dataset.theme === theme
                     );
-
                 }
             );
-
         }
-
 
         /* =========================================
            APPLY SETTINGS
@@ -1489,35 +1389,27 @@
 
             clickSoundToggle.checked =
                 settings.clickSound;
-
         }
-
 
         /* =========================================
            OPEN SETTINGS
         ========================================= */
 
         function openSettings() {
-
             settingsOverlay.classList.add(
                 "active"
             );
-
         }
-
 
         /* =========================================
            CLOSE SETTINGS
         ========================================= */
 
         function closeSettings() {
-
             settingsOverlay.classList.remove(
                 "active"
             );
-
         }
-
 
         /* =========================================
            CHANGE THEME
@@ -1545,16 +1437,13 @@
                         );
 
                         playClickSound();
-
                     }
                 );
-
             }
         );
 
-
         /* =========================================
-           CLICK SOUND
+           CLICK SOUND TOGGLE
         ========================================= */
 
         clickSoundToggle.addEventListener(
@@ -1570,10 +1459,8 @@
                 saveSettings(
                     settings
                 );
-
             }
         );
-
 
         /* =========================================
            RESET SETTINGS
@@ -1592,17 +1479,14 @@
                 applySettings();
 
                 playClickSound();
-
             }
         );
-
 
         /* =========================================
            CLICK SOUND ENGINE
         ========================================= */
 
         let audioContext = null;
-
 
         function playClickSound() {
 
@@ -1622,19 +1506,14 @@
                             window.AudioContext ||
                             window.webkitAudioContext
                         )();
-
                 }
-
 
                 if (
                     audioContext.state ===
                     "suspended"
                 ) {
-
                     audioContext.resume();
-
                 }
-
 
                 const oscillator =
                     audioContext.createOscillator();
@@ -1642,31 +1521,26 @@
                 const gainNode =
                     audioContext.createGain();
 
-
                 oscillator.type =
                     "sine";
 
                 oscillator.frequency.value =
                     520;
 
-
                 gainNode.gain.setValueAtTime(
                     0.0001,
                     audioContext.currentTime
                 );
-
 
                 gainNode.gain.exponentialRampToValueAtTime(
                     0.045,
                     audioContext.currentTime + 0.01
                 );
 
-
                 gainNode.gain.exponentialRampToValueAtTime(
                     0.0001,
                     audioContext.currentTime + 0.08
                 );
-
 
                 oscillator.connect(
                     gainNode
@@ -1676,26 +1550,18 @@
                     audioContext.destination
                 );
 
-
                 oscillator.start();
-
 
                 oscillator.stop(
                     audioContext.currentTime + 0.08
                 );
-
             }
-
             catch (error) {
-
                 console.log(
                     "الصوت غير متاح."
                 );
-
             }
-
         }
-
 
         /* =========================================
            ADD CLICK SOUND
@@ -1714,7 +1580,6 @@
                     return;
                 }
 
-
                 if (
                     target ===
                     clickSoundToggle
@@ -1722,12 +1587,9 @@
                     return;
                 }
 
-
                 playClickSound();
-
             }
         );
-
 
         /* =========================================
            SETTINGS EVENTS
@@ -1738,18 +1600,15 @@
             openSettings
         );
 
-
         settingsClose.addEventListener(
             "click",
             closeSettings
         );
 
-
         closeSettingsButton.addEventListener(
             "click",
             closeSettings
         );
-
 
         settingsOverlay.addEventListener(
             "click",
@@ -1759,14 +1618,10 @@
                     event.target ===
                     settingsOverlay
                 ) {
-
                     closeSettings();
-
                 }
-
             }
         );
-
 
         document.addEventListener(
             "keydown",
@@ -1776,14 +1631,10 @@
                     event.key ===
                     "Escape"
                 ) {
-
                     closeSettings();
-
                 }
-
             }
         );
-
 
         /* =========================================
            DASHBOARD URL BY ROLE
@@ -1808,9 +1659,7 @@
             }
 
             return "login.html";
-
         }
-
 
         /* =========================================
            ACCOUNT BUTTON
@@ -1829,7 +1678,6 @@
                         .auth
                         .getSession();
 
-
                 if (!session) {
 
                     accountButton.textContent =
@@ -1839,9 +1687,7 @@
                         "login.html";
 
                     return;
-
                 }
-
 
                 const {
                     data: profile,
@@ -1856,7 +1702,6 @@
                         )
                         .single();
 
-
                 if (
                     error ||
                     !profile
@@ -1869,9 +1714,7 @@
                         "login.html";
 
                     return;
-
                 }
-
 
                 accountButton.textContent =
                     "👤 " +
@@ -1880,25 +1723,19 @@
                         "المبرمج"
                     );
 
-
                 accountButton.href =
                     getDashboard(
                         profile.role
                     );
-
             }
-
             catch (error) {
 
                 console.error(
                     "خطأ في زر الحساب:",
                     error
                 );
-
             }
-
         }
-
 
         /* =========================================
            CHECK PROGRAMMER
@@ -1918,7 +1755,6 @@
                         .auth
                         .getUser();
 
-
                 if (
                     userError ||
                     !user
@@ -1928,9 +1764,7 @@
                         "login.html";
 
                     return;
-
                 }
-
 
                 const {
                     data: profile,
@@ -1947,7 +1781,6 @@
                         )
                         .single();
 
-
                 if (
                     profileError ||
                     !profile
@@ -1960,9 +1793,7 @@
                         "تعذر العثور على بيانات الحساب.";
 
                     return;
-
                 }
-
 
                 if (
                     profile.role !==
@@ -1975,9 +1806,7 @@
                         );
 
                     return;
-
                 }
-
 
                 pageMessage.style.display =
                     "none";
@@ -1985,30 +1814,23 @@
                 dashboardContent.style.display =
                     "block";
 
-
                 const name =
                     profile.full_name ||
                     "المبرمج";
-
 
                 userInfo.textContent =
                     "الحساب: " +
                     name +
                     " — الصلاحية: المبرمج";
 
-
                 accountButton.textContent =
                     "👤 " + name;
-
 
                 accountButton.href =
                     "programmer.html";
 
-
                 await loadStatistics();
-
             }
-
             catch (error) {
 
                 console.error(
@@ -2016,18 +1838,13 @@
                     error
                 );
 
-
                 pageMessage.className =
                     "error";
 
-
                 pageMessage.textContent =
                     "حدث خطأ أثناء التحقق من الحساب.";
-
             }
-
         }
-
 
         /* =========================================
            STATISTICS
@@ -2042,14 +1859,12 @@
                         "/api/books"
                     );
 
-
                 if (
                     booksResponse.ok
                 ) {
 
                     const booksData =
                         await booksResponse.json();
-
 
                     if (
                         booksData.success &&
@@ -2060,25 +1875,18 @@
 
                         booksCount.textContent =
                             booksData.books.length;
-
                     }
-
                     else {
 
                         booksCount.textContent =
                             "0";
-
                     }
-
                 }
-
                 else {
 
                     booksCount.textContent =
                         "—";
-
                 }
-
 
                 const {
                     data: {
@@ -2089,7 +1897,6 @@
                         .auth
                         .getSession();
 
-
                 if (session) {
 
                     const response =
@@ -2097,7 +1904,6 @@
                             "/api/admin/users",
                             {
                                 method: "GET",
-
                                 headers: {
                                     "Authorization":
                                         "Bearer " +
@@ -2106,14 +1912,12 @@
                             }
                         );
 
-
                     if (
                         response.ok
                     ) {
 
                         const result =
                             await response.json();
-
 
                         if (
                             result.success &&
@@ -2124,36 +1928,25 @@
 
                             usersCount.textContent =
                                 result.users.length;
-
                         }
-
                         else {
 
                             usersCount.textContent =
                                 "0";
-
                         }
-
                     }
-
                     else {
 
                         usersCount.textContent =
                             "—";
-
                     }
-
                 }
-
                 else {
 
                     usersCount.textContent =
                         "—";
-
                 }
-
             }
-
             catch (error) {
 
                 console.error(
@@ -2166,11 +1959,8 @@
 
                 usersCount.textContent =
                     "—";
-
             }
-
         }
-
 
         /* =========================================
            LOGOUT
@@ -2186,14 +1976,12 @@
                 logoutButton.textContent =
                     "⏳ جار تسجيل الخروج...";
 
-
                 const {
                     error
                 } =
                     await supabaseClient
                         .auth
                         .signOut();
-
 
                 if (error) {
 
@@ -2202,25 +1990,19 @@
                         error
                     );
 
-
                     logoutButton.disabled =
                         false;
-
 
                     logoutButton.textContent =
                         "🚪 تسجيل الخروج";
 
                     return;
-
                 }
-
 
                 window.location.href =
                     "login.html";
-
             }
         );
-
 
         /* =========================================
            AUTH STATE
@@ -2230,12 +2012,9 @@
             .auth
             .onAuthStateChange(
                 function() {
-
                     updateAccountButton();
-
                 }
             );
-
 
         /* =========================================
            INITIALIZE
@@ -2246,10 +2025,7 @@
         updateAccountButton();
 
         checkProgrammer();
-
     </script>
 
 </body>
-
 </html>
-```

@@ -1,650 +1,922 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<title>
-    الكتب | مكتبة ثانوية مصاص رابح
-</title>
+    <title>الكتب | مكتبة ثانوية مصاص رابح</title>
 
-<link
-    rel="icon"
-    type="image/png"
-    href="../favicon.png">
+    <link
+        rel="icon"
+        type="image/png"
+        href="../favicone.png">
 
-<link
-    rel="stylesheet"
-    href="../style.css">
+    <link
+        rel="stylesheet"
+        href="../style.css">
 
-<style>
+    <style>
 
-    .dashboard-back-btn {
-        display: none;
-        text-decoration: none;
-        background: #0b1f3a;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 8px;
-        font-weight: 700;
-        margin-right: 15px;
-        transition: 0.2s;
-    }
-
-    .dashboard-back-btn:hover {
-        background: #16365f;
-    }
-
-    .navbar {
-        gap: 15px;
-    }
-
-    .book-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-    }
-
-    .book-actions .read-button {
-        margin-top: 0;
-    }
-
-    .delete-button {
-        border: none;
-        cursor: pointer;
-        background: #dc2626;
-        color: white;
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-weight: 700;
-        font-size: 14px;
-        transition: 0.2s;
-    }
-
-    .delete-button:hover {
-        background: #b91c1c;
-        transform: translateY(-1px);
-    }
-
-    .delete-button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .book-cover {
-        min-height: 280px;
-        background: #eef2f7;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .book-cover img {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        border-radius: 10px;
-        display: block;
-        background: #eef2f7;
-    }
-
-    .book-placeholder {
-        width: 100%;
-        height: 280px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #eef2f7;
-        border-radius: 10px;
-        font-size: 70px;
-    }
-
-    .loading-books {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 60px 20px;
-        font-size: 20px;
-        color: #64748b;
-    }
-
-    @media (max-width: 800px) {
+        /* =====================================================
+           زر العودة إلى لوحة التحكم
+        ===================================================== */
 
         .dashboard-back-btn {
-            padding: 8px 12px;
-            font-size: 13px;
-            margin-right: 5px;
+            display: none;
+            text-decoration: none;
+            background: #0b1f3a;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-right: 15px;
+            transition: background 0.2s, transform 0.2s;
         }
 
-        .navbar nav {
-            display: none;
+        .dashboard-back-btn:hover {
+            background: #16365f;
+            transform: translateY(-1px);
         }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           شعار المكتبة
+        ===================================================== */
+
+        .logo-icon {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 3px;
+            display: block;
+        }
+
+
+        /* =====================================================
+           أزرار الكتاب
+        ===================================================== */
 
         .book-actions {
-            flex-direction: column;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
         }
 
-        .book-actions .read-button,
-        .book-actions .delete-button {
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
+        .book-actions .read-button {
+            margin-top: 0;
         }
+
+
+        /* =====================================================
+           زر حذف الكتاب
+        ===================================================== */
+
+        .delete-button {
+            border: none;
+            cursor: pointer;
+            background: #dc2626;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.2s, opacity 0.2s;
+        }
+
+        .delete-button:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+
+        .delete-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        /* =====================================================
+           غلاف الكتاب
+        ===================================================== */
 
         .book-cover {
-            min-height: 240px;
+            min-height: 280px;
+            background: #eef2f7;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .book-cover img,
+        .book-cover img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+            background: #eef2f7;
+        }
+
         .book-placeholder {
-            height: 240px;
+            width: 100%;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2f7;
+            border-radius: 10px;
+            font-size: 70px;
         }
 
-    }
 
-</style>
+        /* =====================================================
+           تحميل الكتب
+        ===================================================== */
+
+        .loading-books {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 20px;
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           حالة عدم وجود نتائج
+        ===================================================== */
+
+        .no-books {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 20px;
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           حالة الخطأ
+        ===================================================== */
+
+        .books-error {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 20px;
+            color: #b91c1c;
+        }
+
+        .books-error span {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 15px;
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           الشاشات الصغيرة
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .dashboard-back-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+                margin-right: 5px;
+            }
+
+            .navbar nav {
+                display: none;
+            }
+
+            .book-actions {
+                flex-direction: column;
+            }
+
+            .book-actions .read-button,
+            .book-actions .delete-button {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .book-cover {
+                min-height: 240px;
+            }
+
+            .book-cover img,
+            .book-placeholder {
+                height: 240px;
+            }
+
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
-<div class="logo">
 
-    <div class="logo-icon">
-        📚
-    </div>
+    <div class="logo">
 
-    <div>
+        <div class="logo-icon">
 
-        <div class="logo-title">
-            مكتبة ثانوية مصاص رابح
+            <img
+                src="../favicone.png"
+                alt="شعار مكتبة ثانوية مصاص رابح">
+
         </div>
 
-        <div class="logo-subtitle">
-            المكتبة الرقمية للمؤسسة
+
+        <div>
+
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
+            </div>
+
+            <div class="logo-subtitle">
+                المكتبة الرقمية للمؤسسة
+            </div>
+
         </div>
 
     </div>
 
-</div>
 
-<nav>
+    <nav>
 
-    <a href="../index.html">
-        الرئيسية
-    </a>
+        <a href="../index.html">
+            الرئيسية
+        </a>
+
+        <a
+            href="books.html"
+            class="active">
+            الكتب
+        </a>
+
+        <a href="categories.html">
+            التصنيفات
+        </a>
+
+        <a href="about.html">
+            عن المكتبة
+        </a>
+
+    </nav>
+
+
+    <!-- زر لوحة التحكم -->
 
     <a
-        href="books.html"
-        class="active">
-        الكتب
+        href="#"
+        id="dashboardBackBtn"
+        class="dashboard-back-btn">
     </a>
 
-    <a href="categories.html">
-        التصنيفات
-    </a>
 
-    <a href="about.html">
-        عن المكتبة
-    </a>
+    <!-- تسجيل الدخول -->
 
-</nav>
+    <button
+        class="login-btn"
+        id="loginBtn"
+        onclick="window.location.href='login.html'">
 
-<a
-    href="#"
-    id="dashboardBackBtn"
-    class="dashboard-back-btn">
-</a>
+        تسجيل الدخول
 
-<button
-    class="login-btn"
-    id="loginBtn"
-    onclick="window.location.href='login.html'">
-
-    تسجيل الدخول
-
-</button>
+    </button>
 
 </header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <main>
 
 <section class="section">
 
-<div class="section-heading">
 
-    <div>
+    <div class="section-heading">
 
-        <span>
-            مكتبة الثانوية
-        </span>
-
-        <h2 id="pageTitle">
-            جميع الكتب
-        </h2>
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="bookSearch"
-                placeholder="ابحث عن كتاب أو مؤلف أو مادة...">
+        <div>
 
             <span>
-                🔎
+                مكتبة الثانوية
             </span>
+
+            <h2 id="pageTitle">
+                جميع الكتب
+            </h2>
+
+
+            <!-- البحث -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="bookSearch"
+                    placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
+                    autocomplete="off">
+
+                <span>
+                    🔎
+                </span>
+
+            </div>
+
+
+            <!-- عدد النتائج -->
+
+            <p
+                id="resultsCount"
+                style="
+                    margin-top: 15px;
+                    color: #64748b;
+                    font-size: 15px;
+                ">
+            </p>
 
         </div>
 
-        <p
-            id="resultsCount"
-            style="
-                margin-top: 15px;
-                color: #64748b;
-                font-size: 15px;
-            ">
-        </p>
+    </div>
+
+
+    <!-- الكتب -->
+
+    <div
+        class="books-container"
+        id="booksContainer">
+
+        <div class="loading-books">
+
+            ⏳ جاري تحميل الكتب...
+
+        </div>
 
     </div>
 
-</div>
-
-<div
-    class="books-container"
-    id="booksContainer">
-
-    <div class="loading-books">
-        ⏳ جاري تحميل الكتب...
-    </div>
-
-</div>
 
 </section>
 
 </main>
 
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
 <footer>
 
-<div class="copyright">
+    <div class="copyright">
 
-    <strong>
-        🏫 ثانوية مصاص رابح
-    </strong>
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
 
-    <br>
+        <br>
 
-    مكتبة الثانوية الرقمية
+        مكتبة الثانوية الرقمية
 
-    <br>
+        <br>
 
-    <span style="font-size:13px;">
+        <span style="font-size:13px;">
 
-        مهندس النظام:
-        شراف الدين بوردوسن —
-        أستاذ مادة الرياضيات
+            مهندس النظام:
+            شراف الدين بوردوسن —
+            أستاذ مادة الرياضيات
 
-    </span>
+        </span>
 
-    <br>
-    <br>
+        <br>
+        <br>
 
-    © 2026 — جميع الحقوق محفوظة
+        © 2026 — جميع الحقوق محفوظة
 
-</div>
+    </div>
 
 </footer>
 
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
-    const SUPABASE_URL =
-        "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-    const SUPABASE_ANON_KEY =
-        "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
+const SUPABASE_URL =
+    "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+
+/* =====================================================
+   حالة المستخدم
+===================================================== */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+
+
+/* =====================================================
+   عناصر الصفحة
+===================================================== */
+
+const booksContainer =
+    document.getElementById(
+        "booksContainer"
+    );
+
+
+const searchInput =
+    document.getElementById(
+        "bookSearch"
+    );
+
+
+const pageTitle =
+    document.getElementById(
+        "pageTitle"
+    );
+
+
+const resultsCount =
+    document.getElementById(
+        "resultsCount"
+    );
+
+
+
+/* =====================================================
+   بيانات الكتب
+===================================================== */
+
+let booksData = [];
+
+
+
+/* =====================================================
+   حماية النصوص من HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
         );
 
 
-    let currentUser = null;
-    let currentProfile = null;
-
-    const booksContainer =
-        document.getElementById(
-            "booksContainer"
-        );
-
-    const searchInput =
-        document.getElementById(
-            "bookSearch"
-        );
-
-    const pageTitle =
-        document.getElementById(
-            "pageTitle"
-        );
-
-    const resultsCount =
-        document.getElementById(
-            "resultsCount"
-        );
-
-    let booksData = [];
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
 
 
-    function escapeHTML(value) {
+    return div.innerHTML;
+}
 
-        const div =
-            document.createElement(
-                "div"
-            );
 
-        div.textContent =
-            value == null
-                ? ""
-                : String(value);
 
-        return div.innerHTML;
+/* =====================================================
+   توحيد أسماء التصنيفات
+===================================================== */
 
+function normalizeCategory(category) {
+
+    if (!category) {
+        return "";
     }
 
 
-    function normalizeCategory(category) {
+    const value =
+        String(category)
+            .trim()
+            .replace(
+                /\s+/g,
+                " "
+            );
 
-        if (!category) {
-            return "";
-        }
 
-        const value =
-            String(category)
-                .trim()
-                .replace(
-                    /\s+/g,
-                    " "
-                );
+    if (
+        value === "رياضيات" ||
+        value === "الرياضيات"
+    ) {
 
-        if (
-            value === "رياضيات" ||
-            value === "الرياضيات"
-        ) {
-            return "الرياضيات";
-        }
-
-        if (
-            value === "علوم" ||
-            value === "العلوم" ||
-            value === "علم الطبيعة" ||
-            value === "العلوم الطبيعية"
-        ) {
-            return "العلوم الطبيعية";
-        }
-
-        if (
-            value === "فيزياء" ||
-            value === "الفيزياء" ||
-            value === "كيمياء" ||
-            value === "الكيمياء" ||
-            value === "العلوم الفيزيائية"
-        ) {
-            return "العلوم الفيزيائية";
-        }
-
-        if (
-            value === "تاريخ" ||
-            value === "التاريخ" ||
-            value === "جغرافيا" ||
-            value === "الجغرافيا" ||
-            value === "التاريخ والجغرافيا"
-        ) {
-            return "التاريخ والجغرافيا";
-        }
-
-        if (
-            value === "فلسفة" ||
-            value === "الفلسفة"
-        ) {
-            return "الفلسفة";
-        }
-
-        if (
-            value === "إسلاميات" ||
-            value === "الإسلاميات" ||
-            value === "العلوم الإسلامية"
-        ) {
-            return "العلوم الإسلامية";
-        }
-
-        if (
-            value === "لغة" ||
-            value === "لغات" ||
-            value === "اللغات"
-        ) {
-            return "اللغات";
-        }
-
-        if (
-            value === "إعلام آلي" ||
-            value === "الإعلام الآلي" ||
-            value === "معلوماتية" ||
-            value === "المعلوماتية"
-        ) {
-            return "الإعلام الآلي";
-        }
-
-        if (
-            value === "اقتصاد" ||
-            value === "الاقتصاد" ||
-            value === "محاسبة" ||
-            value === "المحاسبة" ||
-            value === "الاقتصاد والمحاسبة"
-        ) {
-            return "الاقتصاد والمحاسبة";
-        }
-
-        return value;
-
+        return "الرياضيات";
     }
 
 
-    function canDeleteBook(book) {
+    if (
+        value === "علوم" ||
+        value === "العلوم" ||
+        value === "علم الطبيعة" ||
+        value === "العلوم الطبيعية"
+    ) {
 
-        if (
-            !currentUser ||
-            !currentProfile
-        ) {
-            return false;
-        }
+        return "العلوم الطبيعية";
+    }
 
-        const role =
-            currentProfile.role;
 
-        if (role === "programmer") {
-            return true;
-        }
+    if (
+        value === "فيزياء" ||
+        value === "الفيزياء" ||
+        value === "كيمياء" ||
+        value === "الكيمياء" ||
+        value === "العلوم الفيزيائية"
+    ) {
 
-        if (role === "admin") {
-            return true;
-        }
+        return "العلوم الفيزيائية";
+    }
 
-        if (role === "teacher") {
-            return (
-                book.uploaded_by ===
-                currentUser.id
-            );
-        }
+
+    if (
+        value === "تاريخ" ||
+        value === "التاريخ" ||
+        value === "جغرافيا" ||
+        value === "الجغرافيا" ||
+        value === "التاريخ والجغرافيا"
+    ) {
+
+        return "التاريخ والجغرافيا";
+    }
+
+
+    if (
+        value === "فلسفة" ||
+        value === "الفلسفة"
+    ) {
+
+        return "الفلسفة";
+    }
+
+
+    if (
+        value === "إسلاميات" ||
+        value === "الإسلاميات" ||
+        value === "العلوم الإسلامية"
+    ) {
+
+        return "العلوم الإسلامية";
+    }
+
+
+    if (
+        value === "لغة" ||
+        value === "لغات" ||
+        value === "اللغات"
+    ) {
+
+        return "اللغات";
+    }
+
+
+    if (
+        value === "إعلام آلي" ||
+        value === "الإعلام الآلي" ||
+        value === "معلوماتية" ||
+        value === "المعلوماتية"
+    ) {
+
+        return "الإعلام الآلي";
+    }
+
+
+    if (
+        value === "اقتصاد" ||
+        value === "الاقتصاد" ||
+        value === "محاسبة" ||
+        value === "المحاسبة" ||
+        value === "الاقتصاد والمحاسبة"
+    ) {
+
+        return "الاقتصاد والمحاسبة";
+    }
+
+
+    return value;
+}
+
+
+
+/* =====================================================
+   التحقق من صلاحية حذف الكتاب
+===================================================== */
+
+function canDeleteBook(book) {
+
+    if (
+        !currentUser ||
+        !currentProfile
+    ) {
 
         return false;
-
     }
 
 
-    async function setupDashboardButton() {
+    const role =
+        currentProfile.role;
 
-        const backButton =
-            document.getElementById(
-                "dashboardBackBtn"
-            );
 
-        const loginButton =
-            document.getElementById(
-                "loginBtn"
-            );
+    /* المبرمج */
 
-        try {
+    if (
+        role === "programmer"
+    ) {
 
-            const {
-                data: {
-                    user
-                }
-            } =
-                await supabaseClient.auth.getUser();
+        return true;
+    }
 
-            currentUser =
-                user || null;
 
-            if (!user) {
+    /* المدير */
 
-                currentProfile = null;
+    if (
+        role === "admin"
+    ) {
 
-                backButton.style.display =
-                    "none";
+        return true;
+    }
 
-                loginButton.style.display =
-                    "block";
 
-                return;
+    /* الأستاذ */
 
+    if (
+        role === "teacher"
+    ) {
+
+        return (
+            String(book.uploaded_by) ===
+            String(currentUser.id)
+        );
+    }
+
+
+    return false;
+}
+
+
+
+/* =====================================================
+   إعداد زر لوحة التحكم
+===================================================== */
+
+async function setupDashboardButton() {
+
+    const backButton =
+        document.getElementById(
+            "dashboardBackBtn"
+        );
+
+
+    const loginButton =
+        document.getElementById(
+            "loginBtn"
+        );
+
+
+    try {
+
+        const {
+            data: {
+                user
             }
+        } =
+            await supabaseClient.auth.getUser();
 
-            const {
-                data: profile,
-                error
-            } =
-                await supabaseClient
-                    .from("profiles")
-                    .select(
-                        "full_name, role"
-                    )
-                    .eq(
-                        "id",
-                        user.id
-                    )
-                    .single();
 
-            if (
-                error ||
-                !profile
-            ) {
+        currentUser =
+            user || null;
 
-                currentProfile = null;
 
-                backButton.style.display =
-                    "none";
+        /* المستخدم غير مسجل */
 
-                loginButton.style.display =
-                    "block";
-
-                return;
-
-            }
+        if (!user) {
 
             currentProfile =
-                profile;
+                null;
 
-            if (
-                profile.role ===
-                "programmer"
-            ) {
-
-                backButton.href =
-                    "programmer.html";
-
-                backButton.textContent =
-                    "⬅️ لوحة المبرمج";
-
-                backButton.style.display =
-                    "inline-block";
-
-                loginButton.style.display =
-                    "none";
-
-            }
-
-            else if (
-                profile.role ===
-                "admin"
-            ) {
-
-                backButton.href =
-                    "admin.html";
-
-                backButton.textContent =
-                    "⬅️ لوحة المدير";
-
-                backButton.style.display =
-                    "inline-block";
-
-                loginButton.style.display =
-                    "none";
-
-            }
-
-            else if (
-                profile.role ===
-                "teacher"
-            ) {
-
-                backButton.href =
-                    "teacher.html";
-
-                backButton.textContent =
-                    "⬅️ لوحة الأستاذ";
-
-                backButton.style.display =
-                    "inline-block";
-
-                loginButton.style.display =
-                    "none";
-
-            }
-
-            else {
-
-                backButton.style.display =
-                    "none";
-
-                loginButton.style.display =
-                    "block";
-
-            }
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Dashboard button error:",
-                error
-            );
-
-            currentUser = null;
-            currentProfile = null;
 
             backButton.style.display =
                 "none";
+
+
+            loginButton.style.display =
+                "block";
+
+
+            return;
+        }
+
+
+
+        /* جلب الملف الشخصي */
+
+        const {
+            data: profile,
+            error
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "full_name, role"
+                )
+                .eq(
+                    "id",
+                    user.id
+                )
+                .single();
+
+
+        if (
+            error ||
+            !profile
+        ) {
+
+            console.warn(
+                "تعذر تحميل ملف المستخدم:",
+                error
+            );
+
+
+            currentProfile =
+                null;
+
+
+            backButton.style.display =
+                "none";
+
+
+            loginButton.style.display =
+                "block";
+
+
+            return;
+        }
+
+
+        currentProfile =
+            profile;
+
+
+
+        /* ===============================
+           المبرمج
+        =============================== */
+
+        if (
+            profile.role ===
+            "programmer"
+        ) {
+
+            backButton.href =
+                "programmer.html";
+
+
+            backButton.textContent =
+                "⬅️ لوحة المبرمج";
+
+
+            backButton.style.display =
+                "inline-block";
+
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+        /* ===============================
+           المدير
+        =============================== */
+
+        else if (
+            profile.role ===
+            "admin"
+        ) {
+
+            backButton.href =
+                "admin.html";
+
+
+            backButton.textContent =
+                "⬅️ لوحة المدير";
+
+
+            backButton.style.display =
+                "inline-block";
+
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+        /* ===============================
+           الأستاذ
+        =============================== */
+
+        else if (
+            profile.role ===
+            "teacher"
+        ) {
+
+            backButton.href =
+                "teacher.html";
+
+
+            backButton.textContent =
+                "⬅️ لوحة الأستاذ";
+
+
+            backButton.style.display =
+                "inline-block";
+
+
+            loginButton.style.display =
+                "none";
+
+        }
+
+
+        /* ===============================
+           الطالب
+        =============================== */
+
+        else {
+
+            backButton.style.display =
+                "none";
+
 
             loginButton.style.display =
                 "block";
@@ -653,654 +925,677 @@
 
     }
 
+    catch (error) {
 
-    async function deleteBook(book) {
+        console.error(
+            "Dashboard button error:",
+            error
+        );
 
-        if (
-            !book ||
-            !book.id
-        ) {
-            return;
-        }
 
-        const confirmed =
-            window.confirm(
+        currentUser =
+            null;
 
-                "⚠️ هل أنت متأكد من حذف الكتاب؟\n\n" +
 
-                "العنوان: " +
-                (book.title || "بدون عنوان") +
+        currentProfile =
+            null;
 
-                "\n\n" +
 
-                "سيتم حذف الكتاب وملف PDF والغلاف نهائيًا."
+        backButton.style.display =
+            "none";
 
-            );
 
-        if (!confirmed) {
-            return;
-        }
-
-        try {
-
-            const {
-                data: {
-                    session
-                }
-            } =
-                await supabaseClient.auth.getSession();
-
-            if (!session) {
-
-                alert(
-                    "يجب تسجيل الدخول أولًا."
-                );
-
-                return;
-
-            }
-
-            if (
-                !canDeleteBook(book)
-            ) {
-
-                alert(
-                    "ليس لديك صلاحية حذف هذا الكتاب."
-                );
-
-                return;
-
-            }
-
-            const buttons =
-                document.querySelectorAll(
-                    ".delete-button"
-                );
-
-            let clickedButton = null;
-
-            buttons.forEach(
-                function(button) {
-
-                    if (
-                        button.dataset.bookId ===
-                        String(book.id)
-                    ) {
-
-                        clickedButton =
-                            button;
-
-                    }
-
-                }
-            );
-
-            if (clickedButton) {
-
-                clickedButton.disabled =
-                    true;
-
-                clickedButton.textContent =
-                    "⏳ جارٍ الحذف...";
-
-            }
-
-            const response =
-                await fetch(
-
-                    "/api/books/" +
-                    encodeURIComponent(
-                        book.id
-                    ),
-
-                    {
-                        method:
-                            "DELETE",
-
-                        headers: {
-                            Authorization:
-                                "Bearer " +
-                                session.access_token
-                        }
-                    }
-
-                );
-
-            let result;
-
-            try {
-
-                result =
-                    await response.json();
-
-            }
-
-            catch (jsonError) {
-
-                result = {
-                    success: false,
-                    message:
-                        "استجاب الخادم برد غير صالح."
-                };
-
-            }
-
-            if (
-                !response.ok ||
-                !result.success
-            ) {
-
-                throw new Error(
-                    result.message ||
-                    "تعذر حذف الكتاب."
-                );
-
-            }
-
-            booksData =
-                booksData.filter(
-                    function(item) {
-
-                        return (
-                            String(item.id) !==
-                            String(book.id)
-                        );
-
-                    }
-                );
-
-            filterBooks();
-
-            alert(
-                "✅ تم حذف الكتاب والغلاف بنجاح."
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Delete book error:",
-                error
-            );
-
-            alert(
-                "❌ تعذر حذف الكتاب.\n\n" +
-                (
-                    error.message ||
-                    "حدث خطأ غير معروف."
-                )
-            );
-
-            const buttons =
-                document.querySelectorAll(
-                    ".delete-button"
-                );
-
-            buttons.forEach(
-                function(button) {
-
-                    if (
-                        button.dataset.bookId ===
-                        String(book.id)
-                    ) {
-
-                        button.disabled =
-                            false;
-
-                        button.textContent =
-                            "🗑️ حذف الكتاب";
-
-                    }
-
-                }
-            );
-
-        }
+        loginButton.style.display =
+            "block";
 
     }
 
+}
 
-    function createBookCard(book) {
 
-        const article =
-            document.createElement(
-                "article"
+
+/* =====================================================
+   حذف كتاب
+===================================================== */
+
+async function deleteBook(book) {
+
+    if (
+        !book ||
+        !book.id
+    ) {
+
+        return;
+    }
+
+
+    const confirmed =
+        window.confirm(
+
+            "⚠️ هل أنت متأكد من حذف الكتاب؟\n\n" +
+
+            "العنوان: " +
+            (
+                book.title ||
+                "بدون عنوان"
+            ) +
+
+            "\n\n" +
+
+            "سيتم حذف الكتاب وملف PDF والغلاف نهائيًا."
+
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+
+    try {
+
+        /* الحصول على الجلسة */
+
+        const {
+            data: {
+                session
+            }
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if (!session) {
+
+            alert(
+                "يجب تسجيل الدخول أولًا."
             );
 
-        article.className =
-            "book-card";
-
-        let coverHTML = `
-
-            <div class="book-placeholder">
-                📚
-            </div>
-
-        `;
-
-        if (
-            book.cover_url
-        ) {
-
-            coverHTML = `
-
-                <img
-                    src="${escapeHTML(
-                        book.cover_url
-                    )}"
-                    alt="غلاف ${escapeHTML(
-                        book.title
-                    )}"
-                    loading="lazy"
-                    decoding="async"
-                    onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;book-placeholder&quot;>📚</div>'">
-
-            `;
-
+            return;
         }
 
-        const readButton = `
 
-            <a
-                href="book.html?id=${encodeURIComponent(
-                    book.id
-                )}"
-                class="read-button">
-
-                📖 قراءة الكتاب
-
-            </a>
-
-        `;
-
-        let deleteButton =
-            "";
+        /* التحقق من الصلاحية */
 
         if (
-            canDeleteBook(book)
+            !canDeleteBook(book)
         ) {
 
-            deleteButton = `
+            alert(
+                "ليس لديك صلاحية حذف هذا الكتاب."
+            );
 
-                <button
-                    type="button"
-                    class="delete-button"
-                    data-book-id="${escapeHTML(
-                        book.id
-                    )}">
-
-                    🗑️ حذف الكتاب
-
-                </button>
-
-            `;
-
+            return;
         }
 
-        article.innerHTML = `
 
-            <div class="book-cover">
 
-                ${coverHTML}
+        /* ===============================
+           العثور على زر الحذف
+        =============================== */
 
-            </div>
-
-            <div class="book-info">
-
-                <span class="book-category">
-
-                    ${escapeHTML(
-                        normalizeCategory(
-                            book.category ||
-                            "عام"
-                        )
-                    )}
-
-                </span>
-
-                <h3>
-
-                    ${escapeHTML(
-                        book.title ||
-                        "بدون عنوان"
-                    )}
-
-                </h3>
-
-                <p>
-
-                    ${escapeHTML(
-                        book.description ||
-                        "لا يوجد وصف لهذا الكتاب."
-                    )}
-
-                </p>
-
-                <p style="
-                    color: #64748b;
-                    font-size: 14px;
-                    margin-top: 8px;
-                ">
-
-                    ✍️ ${escapeHTML(
-                        book.author ||
-                        "مؤلف غير محدد"
-                    )}
-
-                </p>
-
-                <div class="book-actions">
-
-                    ${readButton}
-
-                    ${deleteButton}
-
-                </div>
-
-            </div>
-
-        `;
-
-        const deleteButtonElement =
-            article.querySelector(
+        const buttons =
+            document.querySelectorAll(
                 ".delete-button"
             );
 
-        if (
-            deleteButtonElement
-        ) {
 
-            deleteButtonElement.addEventListener(
-                "click",
-                function() {
-                    deleteBook(book);
+        let clickedButton =
+            null;
+
+
+        buttons.forEach(
+            function(button) {
+
+                if (
+                    button.dataset.bookId ===
+                    String(book.id)
+                ) {
+
+                    clickedButton =
+                        button;
                 }
-            );
-
-        }
-
-        return article;
-
-    }
-
-
-    function displayBooks(list) {
-
-        booksContainer.innerHTML =
-            "";
-
-        if (
-            list.length === 0
-        ) {
-
-            resultsCount.textContent =
-                "لم يتم العثور على أي كتاب.";
-
-            booksContainer.innerHTML = `
-
-                <div style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                    font-size: 20px;
-                    color: #64748b;
-                ">
-
-                    📚 لا توجد كتب مطابقة للبحث
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-        if (
-            list.length === 1
-        ) {
-
-            resultsCount.textContent =
-                "تم العثور على كتاب واحد.";
-
-        }
-
-        else {
-
-            resultsCount.textContent =
-                "تم العثور على " +
-                list.length +
-                " كتب.";
-
-        }
-
-        /*
-         * نضيف البطاقات مباشرة.
-         * صور الأغلفة يتم تحميلها بشكل منفصل
-         * ولن تمنع ظهور البطاقات.
-         */
-
-        const fragment =
-            document.createDocumentFragment();
-
-        list.forEach(
-            function(book) {
-
-                fragment.appendChild(
-                    createBookCard(book)
-                );
 
             }
         );
 
-        booksContainer.appendChild(
-            fragment
-        );
 
-    }
+        if (clickedButton) {
+
+            clickedButton.disabled =
+                true;
 
 
-    function filterBooks() {
+            clickedButton.textContent =
+                "⏳ جارٍ الحذف...";
+        }
 
-        const search =
-            searchInput.value
-                .toLowerCase()
-                .trim();
 
-        const params =
-            new URLSearchParams(
-                window.location.search
+
+        /* ===============================
+           طلب الحذف
+        =============================== */
+
+        const response =
+            await fetch(
+
+                "/api/books/" +
+                encodeURIComponent(
+                    book.id
+                ),
+
+                {
+                    method:
+                        "DELETE",
+
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            session.access_token,
+
+                        Accept:
+                            "application/json"
+                    }
+                }
+
             );
 
-        const category =
-            params.get("category");
 
-        const normalizedSelectedCategory =
-            normalizeCategory(
-                category
+
+        /* ===============================
+           قراءة الاستجابة
+        =============================== */
+
+        let result;
+
+
+        try {
+
+            result =
+                await response.json();
+
+        }
+
+        catch (jsonError) {
+
+            console.error(
+                "Invalid JSON response:",
+                jsonError
             );
 
-        const filteredBooks =
+
+            result = {
+
+                success:
+                    false,
+
+                message:
+                    "استجاب الخادم برد غير صالح."
+
+            };
+
+        }
+
+
+
+        /* ===============================
+           التحقق من النتيجة
+        =============================== */
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            throw new Error(
+                result.message ||
+                "تعذر حذف الكتاب."
+            );
+
+        }
+
+
+
+        /* ===============================
+           تحديث القائمة
+        =============================== */
+
+        booksData =
             booksData.filter(
-                function(book) {
-
-                    const title =
-                        (book.title || "")
-                            .toLowerCase();
-
-                    const author =
-                        (book.author || "")
-                            .toLowerCase();
-
-                    const bookCategory =
-                        (book.category || "")
-                            .toLowerCase();
-
-                    const normalizedBookCategory =
-                        normalizeCategory(
-                            book.category || ""
-                        );
-
-                    const description =
-                        (book.description || "")
-                            .toLowerCase();
-
-                    const matchesSearch =
-
-                        title.includes(
-                            search
-                        ) ||
-
-                        author.includes(
-                            search
-                        ) ||
-
-                        bookCategory.includes(
-                            search
-                        ) ||
-
-                        normalizedBookCategory
-                            .toLowerCase()
-                            .includes(
-                                search
-                            ) ||
-
-                        description.includes(
-                            search
-                        );
-
-                    const matchesCategory =
-
-                        !normalizedSelectedCategory ||
-
-                        normalizedBookCategory ===
-                        normalizedSelectedCategory;
+                function(item) {
 
                     return (
-                        matchesSearch &&
-                        matchesCategory
+                        String(item.id) !==
+                        String(book.id)
                     );
 
                 }
             );
 
-        displayBooks(
-            filteredBooks
+
+        filterBooks();
+
+
+        alert(
+            "✅ تم حذف الكتاب والغلاف بنجاح."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Delete book error:",
+            error
+        );
+
+
+        alert(
+
+            "❌ تعذر حذف الكتاب.\n\n" +
+
+            (
+                error.message ||
+                "حدث خطأ غير معروف."
+            )
+
+        );
+
+
+
+        /* ===============================
+           إعادة الزر لحالته
+        =============================== */
+
+        const buttons =
+            document.querySelectorAll(
+                ".delete-button"
+            );
+
+
+        buttons.forEach(
+            function(button) {
+
+                if (
+                    button.dataset.bookId ===
+                    String(book.id)
+                ) {
+
+                    button.disabled =
+                        false;
+
+
+                    button.textContent =
+                        "🗑️ حذف الكتاب";
+
+                }
+
+            }
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   إنشاء بطاقة كتاب
+===================================================== */
+
+function createBookCard(book) {
+
+    const article =
+        document.createElement(
+            "article"
+        );
+
+
+    article.className =
+        "book-card";
+
+
+
+    /* ===============================
+       غلاف الكتاب
+    =============================== */
+
+    let coverHTML = `
+
+        <div class="book-placeholder">
+            📚
+        </div>
+
+    `;
+
+
+    if (
+        book.cover_url
+    ) {
+
+        const safeCoverURL =
+            escapeHTML(
+                book.cover_url
+            );
+
+
+        const safeTitle =
+            escapeHTML(
+                book.title ||
+                "بدون عنوان"
+            );
+
+
+        coverHTML = `
+
+            <img
+                src="${safeCoverURL}"
+                alt="غلاف ${safeTitle}"
+                loading="lazy"
+                decoding="async"
+                onerror="
+                    this.style.display='none';
+                    this.parentElement.innerHTML='<div class=&quot;book-placeholder&quot;>📚</div>';
+                "
+            >
+
+        `;
+
+    }
+
+
+
+    /* ===============================
+       زر القراءة
+    =============================== */
+
+    const readButton = `
+
+        <a
+            href="book.html?id=${encodeURIComponent(
+                book.id
+            )}"
+            class="read-button">
+
+            📖 قراءة الكتاب
+
+        </a>
+
+    `;
+
+
+
+    /* ===============================
+       زر الحذف
+    =============================== */
+
+    let deleteButton =
+        "";
+
+
+    if (
+        canDeleteBook(book)
+    ) {
+
+        deleteButton = `
+
+            <button
+                type="button"
+                class="delete-button"
+                data-book-id="${escapeHTML(
+                    book.id
+                )}">
+
+                🗑️ حذف الكتاب
+
+            </button>
+
+        `;
+
+    }
+
+
+
+    /* ===============================
+       بيانات الكتاب
+    =============================== */
+
+    const category =
+        normalizeCategory(
+            book.category ||
+            "عام"
+        );
+
+
+    const title =
+        book.title ||
+        "بدون عنوان";
+
+
+    const description =
+        book.description ||
+        "لا يوجد وصف لهذا الكتاب.";
+
+
+    const author =
+        book.author ||
+        "مؤلف غير محدد";
+
+
+
+    /* ===============================
+       محتوى البطاقة
+    =============================== */
+
+    article.innerHTML = `
+
+        <div class="book-cover">
+
+            ${coverHTML}
+
+        </div>
+
+
+        <div class="book-info">
+
+            <span class="book-category">
+
+                ${escapeHTML(
+                    category
+                )}
+
+            </span>
+
+
+            <h3>
+
+                ${escapeHTML(
+                    title
+                )}
+
+            </h3>
+
+
+            <p>
+
+                ${escapeHTML(
+                    description
+                )}
+
+            </p>
+
+
+            <p
+                style="
+                    color: #64748b;
+                    font-size: 14px;
+                    margin-top: 8px;
+                "
+            >
+
+                ✍️ ${escapeHTML(
+                    author
+                )}
+
+            </p>
+
+
+            <div class="book-actions">
+
+                ${readButton}
+
+                ${deleteButton}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+
+    /* ===============================
+       حدث الحذف
+    =============================== */
+
+    const deleteButtonElement =
+        article.querySelector(
+            ".delete-button"
+        );
+
+
+    if (
+        deleteButtonElement
+    ) {
+
+        deleteButtonElement.addEventListener(
+            "click",
+            function() {
+
+                deleteBook(book);
+
+            }
         );
 
     }
 
 
-    async function loadBooks() {
+    return article;
+}
 
-        try {
 
-            console.log(
-                "📚 بدء تحميل الكتب..."
-            );
 
-            const response =
-                await fetch(
-                    "/api/books",
-                    {
-                        method: "GET",
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        },
-                        cache: "no-store"
-                    }
-                );
+/* =====================================================
+   عرض الكتب
+===================================================== */
 
-            if (
-                !response.ok
-            ) {
+function displayBooks(list) {
 
-                throw new Error(
-                    "HTTP " +
-                    response.status
-                );
+    booksContainer.innerHTML =
+        "";
 
-            }
 
-            const result =
-                await response.json();
+    /* ===============================
+       لا توجد نتائج
+    =============================== */
 
-            if (
-                !result.success
-            ) {
+    if (
+        !Array.isArray(list) ||
+        list.length === 0
+    ) {
 
-                throw new Error(
-                    result.message ||
-                    "تعذر تحميل الكتب."
-                );
+        resultsCount.textContent =
+            "لم يتم العثور على أي كتاب.";
 
-            }
 
-            booksData =
-                Array.isArray(
-                    result.books
-                )
-                    ? result.books
-                    : [];
+        booksContainer.innerHTML = `
 
-            console.log(
-                "✅ تم تحميل " +
-                booksData.length +
-                " كتاب"
-            );
+            <div class="no-books">
 
-            filterBooks();
+                📚 لا توجد كتب مطابقة للبحث
 
-        }
+            </div>
 
-        catch (error) {
+        `;
 
-            console.error(
-                "Books loading error:",
-                error
-            );
 
-            resultsCount.textContent =
-                "";
+        return;
+    }
 
-            booksContainer.innerHTML = `
 
-                <div style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                    font-size: 20px;
-                    color: #b91c1c;
-                ">
 
-                    ❌ تعذر تحميل الكتب من الخادم.
+    /* ===============================
+       عدد النتائج
+    =============================== */
 
-                    <br><br>
+    if (
+        list.length === 1
+    ) {
 
-                    <span style="
-                        font-size: 15px;
-                        color: #64748b;
-                    ">
+        resultsCount.textContent =
+            "تم العثور على كتاب واحد.";
 
-                        تأكد من أن الخادم يعمل.
+    }
 
-                    </span>
+    else if (
+        list.length === 2
+    ) {
 
-                </div>
+        resultsCount.textContent =
+            "تم العثور على كتابين.";
 
-            `;
+    }
 
-        }
+    else {
+
+        resultsCount.textContent =
+            "تم العثور على " +
+            list.length +
+            " كتب.";
 
     }
 
 
-    searchInput.addEventListener(
-        "input",
-        filterBooks
+
+    /* ===============================
+       إنشاء البطاقات
+    =============================== */
+
+    const fragment =
+        document.createDocumentFragment();
+
+
+    list.forEach(
+        function(book) {
+
+            fragment.appendChild(
+                createBookCard(book)
+            );
+
+        }
     );
+
+
+    booksContainer.appendChild(
+        fragment
+    );
+
+}
+
+
+
+/* =====================================================
+   فلترة الكتب
+===================================================== */
+
+function filterBooks() {
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
 
 
     const params =
@@ -1309,63 +1604,335 @@
         );
 
 
-    const searchFromHome =
-        params.get("search");
-
-    if (
-        searchFromHome
-    ) {
-
-        searchInput.value =
-            searchFromHome;
-
-    }
-
-
     const category =
         params.get("category");
 
-    if (
-        category
-    ) {
 
-        pageTitle.textContent =
-            "كتب " +
-            normalizeCategory(
-                category
+    const normalizedSelectedCategory =
+        normalizeCategory(
+            category
+        );
+
+
+
+    const filteredBooks =
+        booksData.filter(
+            function(book) {
+
+
+                const title =
+                    (
+                        book.title ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const author =
+                    (
+                        book.author ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const bookCategory =
+                    (
+                        book.category ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const normalizedBookCategory =
+                    normalizeCategory(
+                        book.category ||
+                        ""
+                    );
+
+
+                const description =
+                    (
+                        book.description ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+
+                /* ===============================
+                   البحث
+                =============================== */
+
+                const matchesSearch =
+
+                    title.includes(
+                        search
+                    )
+
+                    ||
+
+                    author.includes(
+                        search
+                    )
+
+                    ||
+
+                    bookCategory.includes(
+                        search
+                    )
+
+                    ||
+
+                    normalizedBookCategory
+                        .toLowerCase()
+                        .includes(
+                            search
+                        )
+
+                    ||
+
+                    description.includes(
+                        search
+                    );
+
+
+
+                /* ===============================
+                   التصنيف
+                =============================== */
+
+                const matchesCategory =
+
+                    !normalizedSelectedCategory
+
+                    ||
+
+                    normalizedBookCategory ===
+                    normalizedSelectedCategory;
+
+
+
+                return (
+                    matchesSearch &&
+                    matchesCategory
+                );
+
+            }
+        );
+
+
+
+    displayBooks(
+        filteredBooks
+    );
+
+}
+
+
+
+/* =====================================================
+   تحميل الكتب من الخادم
+===================================================== */
+
+async function loadBooks() {
+
+    try {
+
+        console.log(
+            "📚 بدء تحميل الكتب..."
+        );
+
+
+        const response =
+            await fetch(
+                "/api/books",
+                {
+                    method:
+                        "GET",
+
+                    headers: {
+                        Accept:
+                            "application/json"
+                    },
+
+                    cache:
+                        "no-store"
+                }
             );
 
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !result.success
+        ) {
+
+            throw new Error(
+                result.message ||
+                "تعذر تحميل الكتب."
+            );
+
+        }
+
+
+        booksData =
+            Array.isArray(
+                result.books
+            )
+                ? result.books
+                : [];
+
+
+        console.log(
+
+            "✅ تم تحميل " +
+            booksData.length +
+            " كتاب"
+
+        );
+
+
+        filterBooks();
+
     }
 
+    catch (error) {
+
+        console.error(
+            "Books loading error:",
+            error
+        );
+
+
+        resultsCount.textContent =
+            "";
+
+
+        booksContainer.innerHTML = `
+
+            <div class="books-error">
+
+                ❌ تعذر تحميل الكتب من الخادم.
+
+                <br>
+
+                <span>
+
+                    تأكد من أن الخادم يعمل.
+
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   البحث المباشر
+===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    filterBooks
+);
+
+
+
+/* =====================================================
+   قراءة معاملات الرابط
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+
+/* =====================================================
+   البحث القادم من الصفحة الرئيسية
+===================================================== */
+
+const searchFromHome =
+    params.get("search");
+
+
+if (
+    searchFromHome
+) {
+
+    searchInput.value =
+        searchFromHome;
+
+}
+
+
+
+/* =====================================================
+   التصنيف القادم من الصفحة الرئيسية
+===================================================== */
+
+const category =
+    params.get("category");
+
+
+if (
+    category
+) {
+
+    pageTitle.textContent =
+        "كتب " +
+        normalizeCategory(
+            category
+        );
+
+}
+
+
+
+/* =====================================================
+   تشغيل الصفحة
+===================================================== */
+
+async function initializePage() {
 
     /*
-     * مهم:
-     *
-     * سابقًا كانت الصفحة تنتظر:
-     *
-     * setupDashboardButton()
-     *
-     * ثم:
-     *
-     * loadBooks()
-     *
-     * وهذا يؤخر ظهور الكتب.
-     *
-     * الآن يتم تشغيل الاثنين معًا.
+     * تشغيل معلومات المستخدم
+     * وتحميل الكتب بالتوازي.
      */
 
-    function initializePage() {
+    setupDashboardButton();
 
-        setupDashboardButton();
+    loadBooks();
 
-        loadBooks();
-
-    }
+}
 
 
-    initializePage();
+initializePage();
+
 
 </script>
+
 
 </body>
 
