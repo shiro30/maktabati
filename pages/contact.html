@@ -11,6 +11,8 @@
 
 <link rel="stylesheet" href="../style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
     /* =========================================
        هوية المؤسسة
@@ -176,6 +178,16 @@
     }
 
     /* =========================================
+       زر الحساب
+    ========================================= */
+
+    .account-icon {
+        font-size: 18px;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
+    /* =========================================
        الهاتف
     ========================================= */
 
@@ -208,35 +220,333 @@
 
 <body>
 
-```
 <!-- =========================================
      الشريط العلوي
 ========================================= -->
 
 <header class="navbar">
 
-    <div class="logo">
+```
+<div class="logo">
 
-        <div class="logo-icon">
-            📚
+    <div class="logo-icon">
+        📚
+    </div>
+
+    <div>
+
+        <div class="logo-title">
+            مكتبة ثانوية مصاص رابح
         </div>
+
+        <div class="logo-subtitle">
+            المكتبة الرقمية للمؤسسة
+        </div>
+
+    </div>
+
+</div>
+
+
+<nav>
+
+    <a href="../index.html">
+        الرئيسية
+    </a>
+
+    <a href="books.html">
+        الكتب
+    </a>
+
+    <a href="categories.html">
+        التصنيفات
+    </a>
+
+    <a href="about.html">
+        عن المكتبة
+    </a>
+
+    <a href="contact.html" class="active">
+        اتصل بنا
+    </a>
+
+</nav>
+
+
+<!-- ACCOUNT -->
+
+<a
+    href="login.html"
+    class="login-btn"
+    id="accountButton">
+
+    🔐 تسجيل الدخول
+
+</a>
+```
+
+</header>
+
+<!-- =========================================
+     هوية المؤسسة
+========================================= -->
+
+<div class="institution-bar">
+
+```
+<strong>
+    🏫 ثانوية مصاص رابح
+</strong>
+
+<span>
+    المكتبة الرقمية للمؤسسة
+</span>
+```
+
+</div>
+
+<!-- =========================================
+     المحتوى الرئيسي
+========================================= -->
+
+<main>
+
+```
+<section class="section">
+
+    <div class="section-heading">
 
         <div>
 
-            <div class="logo-title">
-                مكتبة ثانوية مصاص رابح
-            </div>
+            <span>
+                نحن هنا لمساعدتك
+            </span>
 
-            <div class="logo-subtitle">
-                المكتبة الرقمية للمؤسسة
-            </div>
+            <h2>
+                اتصل بنا
+            </h2>
+
+            <p>
+                يمكنك التواصل معنا للاستفسارات والاقتراحات
+                والمساعدة المتعلقة بالمكتبة الإلكترونية.
+            </p>
 
         </div>
 
     </div>
 
 
-    <nav>
+    <div class="contact-wrapper">
+
+        <div class="contact-card">
+
+            <h2>
+                📞 تواصل معنا
+            </h2>
+
+            <p>
+                إذا كانت لديك استفسارات أو اقتراحات أو واجهت
+                مشكلة أثناء استخدام المكتبة الإلكترونية،
+                يمكنك التواصل معنا عبر المعلومات التالية.
+            </p>
+
+
+            <!-- =================================
+                 بطاقات التواصل
+            ================================== -->
+
+            <div class="contact-grid">
+
+
+                <!-- البريد الإلكتروني -->
+
+                <div class="contact-item email">
+
+                    <div class="contact-icon">
+                        📧
+                    </div>
+
+                    <h3>
+                        البريد الإلكتروني
+                    </h3>
+
+                    <p>
+                        يمكنك مراسلتنا عبر البريد الإلكتروني:
+                    </p>
+
+                    <a href="mailto:charafeddin147@gmail.com">
+                        charafeddin147@gmail.com
+                    </a>
+
+                </div>
+
+
+                <!-- الهاتف -->
+
+                <div class="contact-item phone">
+
+                    <div class="contact-icon">
+                        📞
+                    </div>
+
+                    <h3>
+                        رقم الهاتف
+                    </h3>
+
+                    <p>
+                        للتواصل والاستفسارات:
+                    </p>
+
+                    <a href="tel:0696183217" dir="ltr">
+                        0696183217
+                    </a>
+
+                </div>
+
+
+                <!-- المؤسسة -->
+
+                <div class="contact-item school">
+
+                    <div class="contact-icon">
+                        🏫
+                    </div>
+
+                    <h3>
+                        المؤسسة
+                    </h3>
+
+                    <p>
+                        المؤسسة التعليمية التي تنتمي إليها
+                        المكتبة الرقمية:
+                    </p>
+
+                    <strong>
+                        ثانوية مصاص رابح
+                    </strong>
+
+                </div>
+
+
+                <!-- مهندس النظام -->
+
+                <div class="contact-item programmer">
+
+                    <div class="contact-icon">
+                        👨‍💻
+                    </div>
+
+                    <h3>
+                        مهندس النظام
+                    </h3>
+
+                    <p>
+                        المسؤول عن تطوير وبرمجة النظام:
+                    </p>
+
+                    <strong>
+                        شراف الدين بوردوسن
+                    </strong>
+
+                    <p>
+                        أستاذ مادة الرياضيات
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================
+                 ملاحظة
+            ================================== -->
+
+            <div class="contact-note">
+
+                <strong>
+                    💡 ملاحظة:
+                </strong>
+
+                <span>
+                    نرحب بجميع الاستفسارات والاقتراحات التي
+                    تساعد على تطوير المكتبة الرقمية وتحسين
+                    تجربة التلاميذ والأساتذة.
+                </span>
+
+            </div>
+
+
+            <!-- =================================
+                 هوية النظام
+            ================================== -->
+
+            <div class="system-identity">
+
+                <strong>
+                    🏫 مكتبة ثانوية مصاص رابح
+                </strong>
+
+                <span>
+                    مهندس النظام: شراف الدين بوردوسن —
+                    أستاذ مادة الرياضيات
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+```
+
+</main>
+
+<!-- =========================================
+     التذييل
+========================================= -->
+
+<footer>
+
+```
+<div class="footer-content">
+
+    <div>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                📚
+            </div>
+
+            <div>
+
+                <div class="logo-title">
+                    مكتبة ثانوية مصاص رابح
+                </div>
+
+                <div class="logo-subtitle">
+                    المكتبة الرقمية للمؤسسة
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            منصة إلكترونية للقراءة والتعلم
+            والوصول إلى المعرفة.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <h3>
+            روابط
+        </h3>
 
         <a href="../index.html">
             الرئيسية
@@ -254,362 +564,341 @@
             عن المكتبة
         </a>
 
-        <a href="contact.html" class="active">
+        <a href="contact.html">
             اتصل بنا
         </a>
 
-    </nav>
+    </div>
 
 
-    <a href="login.html" class="login-btn">
-        تسجيل الدخول
-    </a>
+    <div class="footer-links">
 
-</header>
+        <h3>
+            المساعدة
+        </h3>
+
+        <a href="contact.html">
+            اتصل بنا
+        </a>
+
+        <a href="guide.html">
+            كيفية استخدام المكتبة
+        </a>
+
+    </div>
+
+</div>
 
 
-<!-- =========================================
-     هوية المؤسسة
-========================================= -->
-
-<div class="institution-bar">
+<div class="copyright">
 
     <strong>
         🏫 ثانوية مصاص رابح
     </strong>
 
-    <span>
-        المكتبة الرقمية للمؤسسة
+    <br>
+
+    مكتبة الثانوية الرقمية
+
+    <br>
+
+    <span style="font-size:13px;">
+
+        مهندس النظام:
+        شراف الدين بوردوسن —
+        أستاذ مادة الرياضيات
+
     </span>
 
+    <br><br>
+
+    📧
+    <a href="mailto:charafeddin147@gmail.com">
+        charafeddin147@gmail.com
+    </a>
+
+    &nbsp; | &nbsp;
+
+    📞
+    <a href="tel:0696183217">
+        0696183217
+    </a>
+
+    <br><br>
+
+    © 2026 — جميع الحقوق محفوظة
+
 </div>
-
-
-<!-- =========================================
-     المحتوى الرئيسي
-========================================= -->
-
-<main>
-
-    <section class="section">
-
-        <div class="section-heading">
-
-            <div>
-
-                <span>
-                    نحن هنا لمساعدتك
-                </span>
-
-                <h2>
-                    اتصل بنا
-                </h2>
-
-                <p>
-                    يمكنك التواصل معنا للاستفسارات والاقتراحات
-                    والمساعدة المتعلقة بالمكتبة الإلكترونية.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="contact-wrapper">
-
-            <div class="contact-card">
-
-                <h2>
-                    📞 تواصل معنا
-                </h2>
-
-                <p>
-                    إذا كانت لديك استفسارات أو اقتراحات أو واجهت
-                    مشكلة أثناء استخدام المكتبة الإلكترونية،
-                    يمكنك التواصل معنا عبر المعلومات التالية.
-                </p>
-
-
-                <!-- =================================
-                     بطاقات التواصل
-                ================================== -->
-
-                <div class="contact-grid">
-
-
-                    <!-- البريد الإلكتروني -->
-
-                    <div class="contact-item email">
-
-                        <div class="contact-icon">
-                            📧
-                        </div>
-
-                        <h3>
-                            البريد الإلكتروني
-                        </h3>
-
-                        <p>
-                            يمكنك مراسلتنا عبر البريد الإلكتروني:
-                        </p>
-
-                        <a href="mailto:charafeddin147@gmail.com">
-                            charafeddin147@gmail.com
-                        </a>
-
-                    </div>
-
-
-                    <!-- الهاتف -->
-
-                    <div class="contact-item phone">
-
-                        <div class="contact-icon">
-                            📞
-                        </div>
-
-                        <h3>
-                            رقم الهاتف
-                        </h3>
-
-                        <p>
-                            للتواصل والاستفسارات:
-                        </p>
-
-                        <a href="tel:0696183217" dir="ltr">
-                            0696183217
-                        </a>
-
-                    </div>
-
-
-                    <!-- المؤسسة -->
-
-                    <div class="contact-item school">
-
-                        <div class="contact-icon">
-                            🏫
-                        </div>
-
-                        <h3>
-                            المؤسسة
-                        </h3>
-
-                        <p>
-                            المؤسسة التعليمية التي تنتمي إليها
-                            المكتبة الرقمية:
-                        </p>
-
-                        <strong>
-                            ثانوية مصاص رابح
-                        </strong>
-
-                    </div>
-
-
-                    <!-- مهندس النظام -->
-
-                    <div class="contact-item programmer">
-
-                        <div class="contact-icon">
-                            👨‍💻
-                        </div>
-
-                        <h3>
-                            مهندس النظام
-                        </h3>
-
-                        <p>
-                            المسؤول عن تطوير وبرمجة النظام:
-                        </p>
-
-                        <strong>
-                            شراف الدين بوردوسن
-                        </strong>
-
-                        <p>
-                            أستاذ مادة الرياضيات
-                        </p>
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- =================================
-                     ملاحظة
-                ================================== -->
-
-                <div class="contact-note">
-
-                    <strong>
-                        💡 ملاحظة:
-                    </strong>
-
-                    <span>
-                        نرحب بجميع الاستفسارات والاقتراحات التي
-                        تساعد على تطوير المكتبة الرقمية وتحسين
-                        تجربة التلاميذ والأساتذة.
-                    </span>
-
-                </div>
-
-
-                <!-- =================================
-                     هوية النظام
-                ================================== -->
-
-                <div class="system-identity">
-
-                    <strong>
-                        🏫 مكتبة ثانوية مصاص رابح
-                    </strong>
-
-                    <span>
-                        مهندس النظام: شراف الدين بوردوسن —
-                        أستاذ مادة الرياضيات
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- =========================================
-     التذييل
-========================================= -->
-
-<footer>
-
-    <div class="footer-content">
-
-        <div>
-
-            <div class="logo">
-
-                <div class="logo-icon">
-                    📚
-                </div>
-
-                <div>
-
-                    <div class="logo-title">
-                        مكتبة ثانوية مصاص رابح
-                    </div>
-
-                    <div class="logo-subtitle">
-                        المكتبة الرقمية للمؤسسة
-                    </div>
-
-                </div>
-
-            </div>
-
-            <p>
-                منصة إلكترونية للقراءة والتعلم
-                والوصول إلى المعرفة.
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <h3>
-                روابط
-            </h3>
-
-            <a href="../index.html">
-                الرئيسية
-            </a>
-
-            <a href="books.html">
-                الكتب
-            </a>
-
-            <a href="categories.html">
-                التصنيفات
-            </a>
-
-            <a href="about.html">
-                عن المكتبة
-            </a>
-
-            <a href="contact.html">
-                اتصل بنا
-            </a>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <h3>
-                المساعدة
-            </h3>
-
-            <a href="contact.html">
-                اتصل بنا
-            </a>
-
-            <a href="guide.html">
-                كيفية استخدام المكتبة
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="copyright">
-
-        <strong>
-            🏫 ثانوية مصاص رابح
-        </strong>
-
-        <br>
-
-        مكتبة الثانوية الرقمية
-
-        <br>
-
-        <span style="font-size:13px;">
-
-            مهندس النظام:
-            شراف الدين بوردوسن —
-            أستاذ مادة الرياضيات
-
-        </span>
-
-        <br><br>
-
-        📧
-        <a href="mailto:charafeddin147@gmail.com">
-            charafeddin147@gmail.com
-        </a>
-
-        &nbsp; | &nbsp;
-
-        📞
-        <a href="tel:0696183217">
-            0696183217
-        </a>
-
-        <br><br>
-
-        © 2026 — جميع الحقوق محفوظة
-
-    </div>
+```
 
 </footer>
-```
+
+<!-- =========================================
+     SUPABASE + ACCOUNT SYSTEM
+========================================= -->
+
+<script>
+
+const SUPABASE_URL =
+    "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================
+   ACCOUNT BUTTON
+========================================= */
+
+const accountButton =
+    document.getElementById("accountButton");
+
+
+/* =========================================
+   تحديد لوحة التحكم حسب الدور
+========================================= */
+
+function getDashboardByRole(role) {
+
+    switch (role) {
+
+        case "programmer":
+            return "programmer.html";
+
+        case "admin":
+            return "admin.html";
+
+        case "teacher":
+            return "teacher.html";
+
+        case "student":
+            return "student.html";
+
+        default:
+            return "login.html";
+    }
+}
+
+
+/* =========================================
+   تحديد أيقونة الحساب حسب الدور
+========================================= */
+
+function getRoleIcon(role) {
+
+    switch (role) {
+
+        case "programmer":
+            return "👨‍💻";
+
+        case "admin":
+            return "🛠️";
+
+        case "teacher":
+            return "👨‍🏫";
+
+        case "student":
+            return "🎓";
+
+        default:
+            return "🔐";
+    }
+}
+
+
+/* =========================================
+   اسم الدور
+========================================= */
+
+function getRoleName(role) {
+
+    switch (role) {
+
+        case "programmer":
+            return "المبرمج";
+
+        case "admin":
+            return "المدير";
+
+        case "teacher":
+            return "الأستاذ";
+
+        case "student":
+            return "الطالب";
+
+        default:
+            return "تسجيل الدخول";
+    }
+}
+
+
+/* =========================================
+   تحميل معلومات الحساب
+========================================= */
+
+async function loadUserAccount() {
+
+    try {
+
+        const {
+            data: { session },
+            error: sessionError
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        /* ================================
+           لا يوجد مستخدم مسجل
+        ================================= */
+
+        if (
+            sessionError ||
+            !session
+        ) {
+
+            accountButton.innerHTML =
+                "🔐 تسجيل الدخول";
+
+            accountButton.href =
+                "login.html";
+
+            return;
+        }
+
+
+        /* ================================
+           الحصول على بيانات المستخدم
+        ================================= */
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select("full_name, role")
+                .eq(
+                    "id",
+                    session.user.id
+                )
+                .single();
+
+
+        /* ================================
+           إذا لم يوجد الملف الشخصي
+        ================================= */
+
+        if (
+            profileError ||
+            !profile
+        ) {
+
+            accountButton.innerHTML =
+                "👤 حسابي";
+
+            accountButton.href =
+                "login.html";
+
+            return;
+        }
+
+
+        const name =
+            profile.full_name ||
+            "المستخدم";
+
+
+        const icon =
+            getRoleIcon(
+                profile.role
+            );
+
+
+        const roleName =
+            getRoleName(
+                profile.role
+            );
+
+
+        const dashboard =
+            getDashboardByRole(
+                profile.role
+            );
+
+
+        /* ================================
+           عرض أيقونة الدور + الاسم
+        ================================= */
+
+        accountButton.innerHTML =
+            `<span class="account-icon">${icon}</span> ${name}`;
+
+
+        accountButton.title =
+            roleName;
+
+
+        accountButton.href =
+            dashboard;
+
+
+        accountButton.onclick =
+            function() {
+
+                window.location.href =
+                    dashboard;
+
+                return false;
+            };
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Account loading error:",
+            error
+        );
+
+
+        accountButton.innerHTML =
+            "🔐 تسجيل الدخول";
+
+        accountButton.href =
+            "login.html";
+    }
+}
+
+
+/* =========================================
+   مراقبة تسجيل الدخول والخروج
+========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    function() {
+
+        loadUserAccount();
+
+    }
+);
+
+
+/* =========================================
+   تشغيل النظام
+========================================= */
+
+loadUserAccount();
+
+</script>
 
 </body>
 
