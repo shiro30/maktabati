@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -11,7 +12,15 @@
 
     <title>تفاصيل الكتاب | مكتبة الثانوية</title>
 
-    <link rel="stylesheet" href="../style.css">
+    <!-- شعار المكتبة في تبويب المتصفح -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="../favicone.png">
+
+    <link
+        rel="stylesheet"
+        href="../style.css">
 
     <style>
 
@@ -233,9 +242,11 @@
         }
 
         @keyframes pdfSpin {
+
             to {
                 transform: rotate(360deg);
             }
+
         }
 
         .pdf-loading-message {
@@ -420,6 +431,7 @@
                 top: 60px;
                 left: 8px;
             }
+
         }
 
         @media (max-width: 480px) {
@@ -440,6 +452,7 @@
             #bookTitle {
                 font-size: 21px;
             }
+
         }
 
         @media (max-width: 900px) and (orientation: landscape) {
@@ -451,20 +464,29 @@
             .pdf-reader-container:fullscreen .pdf-frame-wrapper {
                 height: calc(100vh - 48px);
             }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
 
+
 <header class="navbar">
+
+    <!-- الشعار -->
 
     <div class="logo">
 
         <div class="logo-icon">
-            📚
+
+            <img
+                src="../favicone.png"
+                alt="شعار مكتبة ثانوية مصاص رابح">
+
         </div>
 
         <div>
@@ -480,6 +502,7 @@
         </div>
 
     </div>
+
 
     <nav>
 
@@ -501,20 +524,26 @@
 
     </nav>
 
-    <div style="display:flex;align-items:center;gap:10px;">
+
+    <div
+        style="display:flex;align-items:center;gap:10px;">
 
         <a
             id="dashboardBack"
             class="login-btn dashboard-back"
             href="#">
+
             ⬅️ لوحة التحكم
+
         </a>
 
         <button
             id="loginButton"
             class="login-btn"
             onclick="window.location.href='login.html'">
+
             تسجيل الدخول
+
         </button>
 
     </div>
@@ -539,6 +568,7 @@
 
             </div>
 
+
             <div class="book-details-info">
 
                 <span
@@ -546,9 +576,11 @@
                     id="bookCategory">
                 </span>
 
+
                 <h1 id="bookTitle">
                     جاري تحميل الكتاب...
                 </h1>
+
 
                 <p class="book-author">
 
@@ -558,10 +590,12 @@
 
                 </p>
 
+
                 <p
                     id="bookDescription"
                     class="book-description">
                 </p>
+
 
                 <div class="book-meta">
 
@@ -574,6 +608,7 @@
                         <strong id="metaCategory"></strong>
 
                     </div>
+
 
                     <div>
 
@@ -589,6 +624,7 @@
 
                 </div>
 
+
                 <div
                     id="bookActions"
                     class="book-actions">
@@ -602,6 +638,7 @@
 
                     </a>
 
+
                     <a
                         id="downloadButton"
                         href="#"
@@ -610,6 +647,7 @@
                         ⬇️ تحميل الكتاب
 
                     </a>
+
 
                     <a
                         href="books.html"
@@ -621,6 +659,7 @@
 
                 </div>
 
+
                 <div
                     id="loginRequired"
                     class="login-required">
@@ -630,16 +669,12 @@
                     </h3>
 
                     <p>
-
                         يمكنك مشاهدة معلومات الكتاب، لكن قراءة الكتاب وتحميله
                         متاحة فقط للمستخدمين المسجلين في المكتبة.
-
                     </p>
 
                     <a href="login.html">
-
                         تسجيل الدخول لقراءة الكتاب
-
                     </a>
 
                 </div>
@@ -657,9 +692,11 @@
                 📖 قراءة الكتاب
             </h2>
 
+
             <div
                 id="pdfReaderContainer"
                 class="pdf-reader-container">
+
 
                 <div class="pdf-toolbar">
 
@@ -670,6 +707,7 @@
                         📖 قارئ الكتاب
 
                     </div>
+
 
                     <button
                         id="fullscreenButton"
@@ -684,6 +722,7 @@
 
 
                 <div class="pdf-frame-wrapper">
+
 
                     <div
                         id="pdfProgressContainer"
@@ -771,7 +810,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <!-- PDF.js -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 
@@ -784,8 +825,10 @@
 const SUPABASE_URL =
     "https://xdkluojrvdhdtihblpwy.supabase.co";
 
+
 const SUPABASE_ANON_KEY =
     "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
 
 const supabaseClient =
     supabase.createClient(
@@ -809,6 +852,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 const dashboardBack =
     document.getElementById("dashboardBack");
 
+
 const loginButton =
     document.getElementById("loginButton");
 
@@ -818,7 +862,9 @@ const loginButton =
 ========================================================= */
 
 let currentUser = null;
+
 let currentProfile = null;
+
 let currentAccessToken = null;
 
 
@@ -834,9 +880,13 @@ let currentBook = null;
 ========================================================= */
 
 let currentPdfDocument = null;
+
 let pdfLoadingTask = null;
+
 let renderedPages = 0;
+
 let totalPages = 0;
+
 let networkPercent = 0;
 
 
@@ -849,68 +899,90 @@ const params =
         window.location.search
     );
 
+
 const bookId =
     params.get("id");
+
 
 const bookTitle =
     document.getElementById("bookTitle");
 
+
 const bookAuthor =
     document.getElementById("bookAuthor");
+
 
 const bookCategory =
     document.getElementById("bookCategory");
 
+
 const metaCategory =
     document.getElementById("metaCategory");
+
 
 const bookDescription =
     document.getElementById("bookDescription");
 
+
 const bookCover =
     document.getElementById("bookCover");
+
 
 const pdfSection =
     document.getElementById("pdfSection");
 
+
 const pdfLoading =
     document.getElementById("pdfLoading");
+
 
 const pdfLoadingPercent =
     document.getElementById("pdfLoadingPercent");
 
+
 const pdfLoadingPages =
     document.getElementById("pdfLoadingPages");
+
 
 const pdfReaderContainer =
     document.getElementById("pdfReaderContainer");
 
+
 const pdfViewer =
     document.getElementById("pdfViewer");
+
 
 const pdfPages =
     document.getElementById("pdfPages");
 
+
 const fullscreenButton =
     document.getElementById("fullscreenButton");
+
 
 const pdfToolbarTitle =
     document.getElementById("pdfToolbarTitle");
 
+
 const readButton =
     document.getElementById("readButton");
+
 
 const downloadButton =
     document.getElementById("downloadButton");
 
+
 const loginRequired =
     document.getElementById("loginRequired");
+
 
 const bookContent =
     document.getElementById("bookContent");
 
+
 const pdfProgressBar =
     document.getElementById("pdfProgressBar");
+
 
 const pdfProgressText =
     document.getElementById("pdfProgressText");
@@ -977,8 +1049,10 @@ function updatePdfProgress() {
     pdfProgressBar.style.width =
         percent + "%";
 
+
     pdfProgressText.textContent =
         percent + "%";
+
 
     pdfLoadingPercent.textContent =
         percent + "%";
@@ -1008,6 +1082,7 @@ function updateNetworkProgress(
                 ) * 100
             );
 
+
         networkPercent =
             Math.max(
                 0,
@@ -1016,6 +1091,7 @@ function updateNetworkProgress(
                     networkPercent
                 )
             );
+
 
         updatePdfProgress();
 
@@ -1031,23 +1107,31 @@ function updateNetworkProgress(
 function showPdfProgress() {
 
     networkPercent = 0;
+
     renderedPages = 0;
+
     totalPages = 0;
+
 
     pdfProgressBar.style.width =
         "0%";
 
+
     pdfProgressText.textContent =
         "0%";
+
 
     pdfLoadingPercent.textContent =
         "0%";
 
+
     pdfLoadingPages.textContent =
         "جاري تجهيز الصفحات...";
 
+
     pdfProgressText.style.display =
         "block";
+
 
     pdfLoading.style.display =
         "flex";
@@ -1063,20 +1147,25 @@ function hidePdfProgress() {
 
     networkPercent = 100;
 
+
     pdfProgressBar.style.width =
         "100%";
+
 
     pdfProgressText.textContent =
         "100%";
 
+
     pdfLoadingPercent.textContent =
         "100%";
+
 
     setTimeout(
         function () {
 
             pdfLoading.style.display =
                 "none";
+
 
             pdfProgressText.style.display =
                 "none";
@@ -1162,8 +1251,10 @@ async function setupUser() {
             dashboardBack.style.display =
                 "none";
 
+
             loginButton.style.display =
                 "block";
+
 
             return false;
 
@@ -1211,11 +1302,14 @@ async function setupUser() {
             dashboardBack.href =
                 "programmer.html";
 
+
             dashboardBack.textContent =
                 "⬅️ لوحة المبرمج";
 
+
             dashboardBack.style.display =
                 "inline-block";
+
 
             loginButton.style.display =
                 "none";
@@ -1230,11 +1324,14 @@ async function setupUser() {
             dashboardBack.href =
                 "admin.html";
 
+
             dashboardBack.textContent =
                 "⬅️ لوحة المدير";
 
+
             dashboardBack.style.display =
                 "inline-block";
+
 
             loginButton.style.display =
                 "none";
@@ -1249,11 +1346,14 @@ async function setupUser() {
             dashboardBack.href =
                 "teacher.html";
 
+
             dashboardBack.textContent =
                 "⬅️ لوحة الأستاذ";
 
+
             dashboardBack.style.display =
                 "inline-block";
+
 
             loginButton.style.display =
                 "none";
@@ -1264,6 +1364,7 @@ async function setupUser() {
 
             dashboardBack.style.display =
                 "none";
+
 
             loginButton.style.display =
                 "none";
@@ -1282,6 +1383,7 @@ async function setupUser() {
             error
         );
 
+
         return false;
 
     }
@@ -1298,11 +1400,14 @@ function setupGuestMode() {
     readButton.style.display =
         "none";
 
+
     downloadButton.style.display =
         "none";
 
+
     loginRequired.style.display =
         "block";
+
 
     pdfSection.style.display =
         "none";
@@ -1352,6 +1457,7 @@ async function toggleFullscreen() {
             "Fullscreen error:",
             error
         );
+
 
         alert(
             "تعذر تشغيل وضع ملء الشاشة على هذا الجهاز."
@@ -1621,12 +1727,19 @@ async function renderPdfPage(
             viewport,
 
         transform: [
+
             devicePixelRatio,
+
             0,
+
             0,
+
             devicePixelRatio,
+
             0,
+
             0
+
         ]
 
     };
@@ -1946,8 +2059,10 @@ async function loadProgressivePdf(
         renderedPages =
             totalPages;
 
+
         networkPercent =
             100;
+
 
         updatePdfProgress();
 
@@ -1966,8 +2081,10 @@ async function loadProgressivePdf(
         readButton.style.display =
             "inline-block";
 
+
         readButton.href =
             "#pdfSection";
+
 
         readButton.onclick =
             function (
@@ -1975,6 +2092,7 @@ async function loadProgressivePdf(
             ) {
 
                 event.preventDefault();
+
 
                 pdfSection.scrollIntoView({
 
@@ -1996,12 +2114,15 @@ async function loadProgressivePdf(
         downloadButton.style.display =
             "inline-block";
 
+
         downloadButton.classList.remove(
             "disabled"
         );
 
+
         downloadButton.href =
             "#";
+
 
         downloadButton.onclick =
             async function (
@@ -2009,6 +2130,7 @@ async function loadProgressivePdf(
             ) {
 
                 event.preventDefault();
+
 
                 await downloadCurrentPdf(
                     book
@@ -2061,6 +2183,7 @@ async function loadProgressivePdf(
 
         pdfProgressBar.style.width =
             "0%";
+
 
         pdfProgressText.style.display =
             "none";
@@ -2156,6 +2279,7 @@ async function fetchPdfForDownload(
 
     const chunks = [];
 
+
     let receivedLength =
         0;
 
@@ -2182,6 +2306,7 @@ async function fetchPdfForDownload(
             chunks.push(
                 result.value
             );
+
 
             receivedLength +=
                 result.value.byteLength;
@@ -2360,11 +2485,14 @@ async function setupAuthenticatedMode(
         pdfSection.style.display =
             "none";
 
+
         readButton.style.display =
             "none";
 
+
         downloadButton.style.display =
             "none";
+
 
         return;
 
@@ -2539,6 +2667,7 @@ async function loadBook() {
             bookCover.src =
                 book.cover_url;
 
+
             bookCover.alt =
                 "غلاف " +
                 (
@@ -2552,6 +2681,7 @@ async function loadBook() {
 
             bookCover.src =
                 "../covers/DD.png";
+
 
             bookCover.alt =
                 "غلاف الكتاب";
@@ -2713,6 +2843,7 @@ supabaseClient.auth.onAuthStateChange(
             currentUser =
                 session.user;
 
+
             currentAccessToken =
                 session.access_token;
 
@@ -2722,6 +2853,7 @@ supabaseClient.auth.onAuthStateChange(
 
             currentUser =
                 null;
+
 
             currentAccessToken =
                 null;
@@ -2771,3 +2903,4 @@ initPage();
 </body>
 
 </html>
+```

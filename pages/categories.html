@@ -1,15 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>التصنيفات | مكتبة ثانوية مصاص رابح</title>
 
+    <link rel="icon" type="image/png" href="../favicon.png">
+
     <link rel="stylesheet" href="../style.css">
 
     <style>
+
         /* =========================================
            الشريط العلوي للمؤسسة
         ========================================== */
@@ -96,10 +102,8 @@
             text-decoration: none;
             background: #ffffff;
             border: 1px solid #e2e8f0;
-
             box-shadow:
                 0 8px 25px rgba(15, 23, 42, 0.08);
-
             transition:
                 transform 0.25s ease,
                 box-shadow 0.25s ease,
@@ -108,10 +112,8 @@
 
         .category-card:hover {
             transform: translateY(-7px);
-
             box-shadow:
                 0 18px 40px rgba(15, 23, 42, 0.16);
-
             border-color: rgba(30, 58, 138, 0.25);
         }
 
@@ -133,7 +135,6 @@
             height: 100%;
             object-fit: cover;
             display: block;
-
             transition:
                 transform 0.45s ease,
                 filter 0.45s ease;
@@ -153,7 +154,6 @@
             content: "";
             position: absolute;
             inset: 0;
-
             background:
                 linear-gradient(
                     to top,
@@ -161,7 +161,6 @@
                     rgba(15, 23, 42, 0.05) 65%,
                     transparent
                 );
-
             pointer-events: none;
         }
 
@@ -183,7 +182,6 @@
             margin: 0;
             font-size: 21px;
             font-weight: 800;
-
             text-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.35);
         }
@@ -213,14 +211,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             padding: 6px 11px;
-
             border-radius: 999px;
-
             background: #eff6ff;
             color: #1e3a8a;
-
             font-size: 13px;
             font-weight: 700;
         }
@@ -235,23 +229,16 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
-
             padding: 10px 16px;
-
             border-radius: 10px;
-
             background: #1e3a8a;
             color: white;
-
             text-decoration: none;
-
             font-weight: 700;
             font-size: 14px;
-
             transition:
                 background 0.2s ease,
                 transform 0.2s ease;
-
             white-space: nowrap;
         }
 
@@ -280,13 +267,10 @@
         .error-message {
             text-align: center;
             padding: 20px;
-
             color: #b91c1c;
             background: #fef2f2;
-
             border: 1px solid #fecaca;
             border-radius: 12px;
-
             margin: 20px 0;
         }
 
@@ -300,6 +284,7 @@
             .categories-container {
                 grid-template-columns: repeat(2, 1fr);
             }
+
         }
 
 
@@ -342,6 +327,7 @@
             .category-title-overlay h3 {
                 font-size: 20px;
             }
+
         }
 
 
@@ -368,8 +354,11 @@
             .category-title-overlay h3 {
                 font-size: 19px;
             }
+
         }
+
     </style>
+
 </head>
 
 
@@ -965,9 +954,7 @@
             <span style="font-size:13px;">
 
                 مهندس النظام:
-
                 شراف الدين بوردوسن —
-
                 أستاذ مادة الرياضيات
 
             </span>
@@ -1041,7 +1028,9 @@
 
                 default:
                     return "login.html";
+
             }
+
         }
 
 
@@ -1070,6 +1059,7 @@
                         "🔐 تسجيل الدخول";
 
                     return;
+
                 }
 
 
@@ -1097,6 +1087,7 @@
                         "👤 حسابي";
 
                     return;
+
                 }
 
 
@@ -1107,9 +1098,11 @@
 
 
                 accountButton.textContent =
-                    "👤 " + profile.full_name;
+                    "👤 " +
+                    profile.full_name;
 
             }
+
             catch (error) {
 
                 console.error(
@@ -1122,7 +1115,9 @@
 
                 accountButton.textContent =
                     "🔐 تسجيل الدخول";
+
             }
+
         }
 
 
@@ -1132,7 +1127,9 @@
 
         supabaseClient.auth.onAuthStateChange(
             function () {
+
                 updateAccountButton();
+
             }
         );
 
@@ -1147,21 +1144,28 @@
         function normalizeCategory(category) {
 
             if (!category) {
+
                 return "";
+
             }
 
 
             const value =
                 String(category)
                     .trim()
-                    .replace(/\s+/g, " ");
+                    .replace(
+                        /\s+/g,
+                        " "
+                    );
 
 
             if (
                 value === "رياضيات" ||
                 value === "الرياضيات"
             ) {
+
                 return "الرياضيات";
+
             }
 
 
@@ -1171,11 +1175,14 @@
                 value === "علم الطبيعة" ||
                 value === "العلوم الطبيعية"
             ) {
+
                 return "العلوم الطبيعية";
+
             }
 
 
             return value;
+
         }
 
 
@@ -1204,6 +1211,7 @@
                     throw new Error(
                         "الخادم لم يرجع استجابة صحيحة."
                     );
+
                 }
 
 
@@ -1225,6 +1233,7 @@
                     throw new Error(
                         "بيانات الكتب القادمة من الخادم غير صالحة."
                     );
+
                 }
 
 
@@ -1252,7 +1261,9 @@
                             !book ||
                             !book.category
                         ) {
+
                             return;
+
                         }
 
 
@@ -1268,10 +1279,12 @@
 
                             categoryCounts[category] =
                                 0;
+
                         }
 
 
                         categoryCounts[category]++;
+
                     }
                 );
 
@@ -1311,16 +1324,20 @@
                                     "لا توجد كتب";
 
                             }
+
                             else if (count === 1) {
 
                                 element.textContent =
                                     "كتاب واحد";
 
                             }
+
                             else {
 
                                 element.textContent =
-                                    count + " كتب";
+                                    count +
+                                    " كتب";
+
                             }
 
                         }
@@ -1335,6 +1352,7 @@
                     "none";
 
             }
+
             catch (error) {
 
                 console.error(
@@ -1349,7 +1367,9 @@
 
                 status.textContent =
                     "تعذر تحميل بيانات الكتب. تأكد من تشغيل الخادم.";
+
             }
+
         }
 
 
