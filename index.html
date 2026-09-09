@@ -1,10 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية</title>
@@ -69,6 +69,34 @@
         .settings-btn:hover {
             background: rgba(255, 255, 255, 0.22);
             transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           دعاء لنا ولوالدينا
+        ===================================================== */
+
+        .prayer-message {
+            margin: 18px auto 22px;
+            padding: 12px 22px;
+            width: fit-content;
+            max-width: 90%;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.8;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(6px);
+        }
+
+        body.dark-mode .prayer-message {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
         }
 
 
@@ -145,6 +173,13 @@
                 width: 50px;
                 height: 50px;
                 min-width: 50px;
+            }
+
+            .prayer-message {
+                font-size: 15px;
+                padding: 10px 16px;
+                margin-top: 15px;
+                margin-bottom: 18px;
             }
         }
 
@@ -275,7 +310,9 @@
     <div class="hero-content">
 
         <div class="welcome">
+
             🏫 ثانوية مصاص رابح
+
         </div>
 
 
@@ -301,6 +338,17 @@
             والمراجع التعليمية.
 
         </p>
+
+
+        <!-- =================================================
+             الدعاء
+        ================================================= -->
+
+        <div class="prayer-message">
+
+            ادعوا لنا ولوالدينا بالخير
+
+        </div>
 
 
         <!-- SEARCH -->
@@ -331,15 +379,21 @@
     <div class="hero-card">
 
         <div class="book-symbol">
+
             📖
+
         </div>
 
         <h2>
+
             مكتبة ثانوية مصاص رابح
+
         </h2>
 
         <p>
+
             اقرأ، تعلّم، واكتشف
+
         </p>
 
 
@@ -348,11 +402,15 @@
             <div>
 
                 <strong id="heroBooksCount">
+
                     —
+
                 </strong>
 
                 <span>
+
                     كتاب
+
                 </span>
 
             </div>
@@ -361,11 +419,15 @@
             <div>
 
                 <strong id="heroCategoriesCount">
+
                     —
+
                 </strong>
 
                 <span>
+
                     تصنيف
+
                 </span>
 
             </div>
@@ -518,7 +580,9 @@
 
 
         <a href="pages/categories.html">
+
             جميع التصنيفات ←
+
         </a>
 
     </div>
@@ -769,7 +833,6 @@
 
         </a>
 
-
     </div>
 
 </section>
@@ -798,7 +861,9 @@
 
 
         <a href="pages/books.html">
+
             عرض جميع الكتب ←
+
         </a>
 
     </div>
@@ -848,11 +913,15 @@
                 <div>
 
                     <div class="logo-title">
+
                         مكتبة ثانوية مصاص رابح
+
                     </div>
 
                     <div class="logo-subtitle">
+
                         المكتبة الإلكترونية
+
                     </div>
 
                 </div>
@@ -975,11 +1044,13 @@
 
         مهندس النظام:
         شراف الدين بوردوسن —
+
         أستاذ مادة الرياضيات
 
         <br>
 
         © 2026
+
         جميع الحقوق محفوظة
 
     </div>
@@ -993,6 +1064,7 @@
 ===================================================== -->
 
 <script src="books-data.js"></script>
+
 <script src="script.js"></script>
 
 
@@ -1045,7 +1117,6 @@ function getDashboardByRole(role) {
         default:
             return "pages/login.html";
     }
-
 }
 
 
@@ -1152,9 +1223,7 @@ async function loadUserAccount() {
 
         accountButton.href =
             "pages/login.html";
-
     }
-
 }
 
 
@@ -1231,7 +1300,6 @@ function applyTheme() {
         );
 
     }
-
 }
 
 
@@ -1315,7 +1383,6 @@ function playClickSound() {
         );
 
     }
-
 }
 
 
@@ -1567,7 +1634,6 @@ function createLatestBookCard(
 
 
     return article;
-
 }
 
 
@@ -1590,7 +1656,9 @@ function displayLatestBooks() {
         latestBooksContainer.innerHTML = `
 
             <p>
+
                 لا توجد بيانات كتب محلية.
+
             </p>
 
         `;
@@ -1664,7 +1732,9 @@ function displayLatestBooks() {
                 booksData
                     .map(
                         function(book) {
+
                             return book.category;
+
                         }
                     )
                     .filter(Boolean)
@@ -1689,4 +1759,3 @@ displayLatestBooks();
 </body>
 
 </html>
-```
