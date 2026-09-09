@@ -1,6 +1,5 @@
 ```html
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
@@ -12,7 +11,12 @@
 
     <title>عن المكتبة | مكتبة ثانوية مصاص رابح</title>
 
-    <link rel="stylesheet" href="../style.css">
+    <link rel="icon"
+          type="image/png"
+          href="../favicone.png">
+
+    <link rel="stylesheet"
+          href="../style.css">
 
     <style>
 
@@ -21,254 +25,153 @@
         ========================================= */
 
         .institution-bar {
-
             background:
                 linear-gradient(
                     135deg,
                     #0f172a,
                     #1e3a8a
                 );
-
             color: white;
-
             text-align: center;
-
             padding: 14px 20px;
-
             border-radius: 0 0 16px 16px;
-
             box-shadow:
                 0 4px 15px rgba(0, 0, 0, 0.08);
-
         }
-
 
         .institution-bar strong {
-
             display: block;
-
             font-size: 18px;
-
             margin-bottom: 4px;
-
         }
-
 
         .institution-bar span {
-
             font-size: 13px;
-
             opacity: 0.9;
-
         }
-
 
         /* =========================================
            محتوى عن المكتبة
         ========================================= */
 
         .about-content {
-
             max-width: 1000px;
-
             margin: 0 auto;
-
         }
-
 
         .about-card {
-
             background: white;
-
             border-radius: 18px;
-
             padding: 30px;
-
             margin-top: 25px;
-
             box-shadow:
                 0 8px 25px rgba(15, 23, 42, 0.06);
-
             border: 1px solid #e2e8f0;
-
         }
-
 
         .about-card h2 {
-
             color: #1e3a8a;
-
             margin-bottom: 15px;
-
         }
-
 
         .about-card h3 {
-
             color: #1e3a8a;
-
             margin-top: 30px;
-
             margin-bottom: 12px;
-
         }
-
 
         .about-card p {
-
             line-height: 2;
-
             color: #475569;
-
         }
-
 
         /* =========================================
            هوية النظام
         ========================================= */
 
         .system-identity {
-
             margin-top: 30px;
-
             display: grid;
-
             grid-template-columns:
                 repeat(2, 1fr);
-
             gap: 18px;
-
         }
-
 
         .identity-item {
-
             background: #f8fafc;
-
             border: 1px solid #e2e8f0;
-
             border-radius: 14px;
-
             padding: 20px;
-
         }
-
 
         .identity-item span {
-
             display: block;
-
             color: #64748b;
-
             font-size: 14px;
-
             margin-bottom: 7px;
-
         }
-
 
         .identity-item strong {
-
             color: #0f172a;
-
             font-size: 16px;
-
         }
-
 
         /* =========================================
            بطاقة مهندس النظام
         ========================================= */
 
         .programmer-info {
-
             margin-top: 30px;
-
             padding: 24px;
-
             text-align: center;
-
             background:
                 linear-gradient(
                     135deg,
                     #f8fafc,
                     #eff6ff
                 );
-
             border: 1px solid #dbeafe;
-
             border-radius: 16px;
-
         }
-
 
         .programmer-info strong {
-
             display: block;
-
             color: #1e3a8a;
-
             font-size: 17px;
-
             margin-bottom: 7px;
-
         }
-
 
         .programmer-info span {
-
             color: #64748b;
-
             font-size: 14px;
-
         }
-
 
         /* =========================================
            زر الحساب
         ========================================= */
 
         .account-btn {
-
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
             gap: 7px;
-
             padding: 10px 16px;
-
             border-radius: 10px;
-
             background: #1e3a8a;
-
             color: white;
-
             text-decoration: none;
-
             font-weight: 700;
-
             font-size: 14px;
-
             transition:
                 background 0.2s ease,
                 transform 0.2s ease;
-
             white-space: nowrap;
-
         }
-
 
         .account-btn:hover {
-
             background: #172554;
-
             transform: translateY(-1px);
-
         }
-
 
         /* =========================================
            الهاتف
@@ -277,46 +180,28 @@
         @media (max-width: 768px) {
 
             .institution-bar {
-
                 padding: 12px 10px;
-
             }
-
 
             .institution-bar strong {
-
                 font-size: 16px;
-
             }
-
 
             .institution-bar span {
-
                 font-size: 12px;
-
             }
-
 
             .about-card {
-
                 padding: 20px;
-
             }
-
 
             .system-identity {
-
                 grid-template-columns: 1fr;
-
             }
 
-
             .account-btn {
-
                 padding: 9px 12px;
-
                 font-size: 13px;
-
             }
 
         }
@@ -341,7 +226,12 @@
     <div class="logo">
 
         <div class="logo-icon">
-            📚
+
+            <img
+                src="../favicone.png"
+                alt="شعار مكتبة ثانوية مصاص رابح"
+            >
+
         </div>
 
 
@@ -350,7 +240,6 @@
             <div class="logo-title">
                 مكتبة ثانوية مصاص رابح
             </div>
-
 
             <div class="logo-subtitle">
                 المكتبة الرقمية للمؤسسة
@@ -361,7 +250,6 @@
     </div>
 
 
-
     <!-- القائمة -->
 
     <nav>
@@ -370,23 +258,19 @@
             الرئيسية
         </a>
 
-
         <a href="books.html">
             الكتب
         </a>
 
-
         <a href="categories.html">
             التصنيفات
         </a>
-
 
         <a href="about.html" class="active">
             عن المكتبة
         </a>
 
     </nav>
-
 
 
     <!-- الحساب -->
@@ -404,7 +288,6 @@
 </header>
 
 
-
 <!-- =========================================
      هوية المؤسسة
 ========================================= -->
@@ -415,13 +298,11 @@
         🏫 ثانوية مصاص رابح
     </strong>
 
-
     <span>
         المكتبة الرقمية للمؤسسة
     </span>
 
 </div>
-
 
 
 <!-- =========================================
@@ -430,12 +311,10 @@
 
 <main>
 
-
     <section class="section">
 
 
         <div class="section-heading">
-
 
             <div>
 
@@ -443,11 +322,9 @@
                     المكتبة الرقمية للمؤسسة
                 </span>
 
-
                 <h2>
                     عن المكتبة
                 </h2>
-
 
                 <p>
                     منصة إلكترونية تعليمية تهدف إلى توفير الكتب
@@ -456,9 +333,7 @@
 
             </div>
 
-
         </div>
-
 
 
         <div class="about-content">
@@ -477,13 +352,10 @@
 
 
                 <p>
-
                     مكتبة الثانوية هي منصة رقمية مخصصة لجمع وتنظيم
                     الكتب والمراجع التعليمية في مكان واحد، بهدف
                     تسهيل وصول التلاميذ إلى مصادر المعرفة والمطالعة.
-
                 </p>
-
 
 
                 <!-- =================================
@@ -548,7 +420,6 @@
                 </div>
 
 
-
                 <!-- =================================
                      خصائص المكتبة
                 ================================== -->
@@ -598,7 +469,6 @@
                 </div>
 
 
-
                 <!-- =================================
                      هدف المكتبة
                 ================================== -->
@@ -609,13 +479,10 @@
 
 
                 <p>
-
                     نسعى إلى إنشاء فضاء تعليمي رقمي يساعد التلميذ
                     على الوصول إلى الكتب والمراجع بسرعة، مع تنظيم
                     المحتوى حسب المواد والتخصصات.
-
                 </p>
-
 
 
                 <!-- =================================
@@ -628,22 +495,15 @@
 
 
                 <p>
-
                     • تصفح الكتب حسب المادة.<br>
-
                     • البحث عن الكتب والمؤلفين.<br>
-
                     • قراءة الكتب مباشرة بصيغة PDF.<br>
-
                     • تحميل الكتب المتاحة.<br>
-
                     • تنظيم المحتوى داخل تصنيفات واضحة.
-
                 </p>
 
 
             </div>
-
 
 
             <!-- =================================
@@ -652,16 +512,13 @@
 
             <div class="programmer-info">
 
-
                 <strong>
                     👨‍💻 مهندس النظام: شراف الدين بوردوسن
                 </strong>
 
-
                 <span>
                     أستاذ مادة الرياضيات
                 </span>
-
 
             </div>
 
@@ -671,9 +528,7 @@
 
     </section>
 
-
 </main>
-
 
 
 <!-- =========================================
@@ -703,7 +558,9 @@
         <span style="font-size:13px;">
 
             مهندس النظام:
+
             شراف الدين بوردوسن —
+
             أستاذ مادة الرياضيات
 
         </span>
@@ -719,7 +576,6 @@
 
 
 </footer>
-
 
 
 <!-- =========================================
@@ -740,7 +596,6 @@ const SUPABASE_URL =
 
 
 /*
-   مهم:
    اترك هنا نفس قيمة المفتاح الموجودة
    حاليًا في ملف about.html القديم لديك.
 */
@@ -860,7 +715,6 @@ async function updateAccountButton() {
         accountButton.href =
             getDashboard(profile.role);
 
-
         accountButton.textContent =
             "👤 " + profile.full_name;
 
@@ -873,10 +727,8 @@ async function updateAccountButton() {
             error
         );
 
-
         accountButton.href =
             "login.html";
-
 
         accountButton.textContent =
             "🔐 تسجيل الدخول";
