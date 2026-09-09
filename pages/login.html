@@ -1,302 +1,280 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
 
-```
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>تسجيل الدخول | مكتبة ثانوية مصاص رابح</title>
+    <title>تسجيل الدخول | مكتبة ثانوية مصاص رابح</title>
 
-<link
-    rel="icon"
-    type="image/png"
-    href="../favicone.png"
->
+    <link
+        rel="icon"
+        type="image/png"
+        href="../favicone.png"
+    >
 
-<link
-    rel="stylesheet"
-    href="../style.css"
->
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
 
-<style>
-    /* =========================================
-       هوية المؤسسة
-    ========================================= */
-
-    .institution-bar {
-        background:
-            linear-gradient(
-                135deg,
-                #0f172a,
-                #1e3a8a
-            );
-
-        color: white;
-        text-align: center;
-        padding: 14px 20px;
-
-        border-radius: 0 0 16px 16px;
-
-        box-shadow:
-            0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .institution-bar strong {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 4px;
-    }
-
-    .institution-bar span {
-        font-size: 13px;
-        opacity: 0.9;
-    }
-
-
-    /* =========================================
-       صفحة تسجيل الدخول
-    ========================================= */
-
-    .login-page {
-        min-height: 70vh;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 50px 20px;
-    }
-
-    .login-box {
-        width: 100%;
-        max-width: 450px;
-
-        background: white;
-
-        padding: 35px;
-
-        border-radius: 18px;
-
-        box-shadow:
-            0 10px 35px rgba(0, 0, 0, 0.08);
-
-        border: 1px solid #e2e8f0;
-    }
-
-    .login-logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        margin-bottom: 15px;
-    }
-
-    .login-logo img {
-        width: 78px;
-        height: 78px;
-
-        object-fit: contain;
-
-        border-radius: 16px;
-    }
-
-    .login-box h1 {
-        text-align: center;
-        margin-bottom: 10px;
-        color: #0f172a;
-    }
-
-    .login-subtitle {
-        text-align: center;
-        color: #64748b;
-
-        margin-bottom: 25px;
-
-        line-height: 1.8;
-    }
-
-    .school-name {
-        text-align: center;
-        color: #1e3a8a;
-
-        font-weight: bold;
-
-        margin-bottom: 25px;
-    }
-
-
-    /* =========================================
-       النموذج
-    ========================================= */
-
-    .login-form label {
-        display: block;
-
-        margin-bottom: 8px;
-
-        font-weight: bold;
-
-        color: #334155;
-    }
-
-    .login-form input {
-        width: 100%;
-
-        padding: 13px;
-
-        margin-bottom: 20px;
-
-        border: 1px solid #cbd5e1;
-
-        border-radius: 8px;
-
-        font-size: 16px;
-
-        box-sizing: border-box;
-
-        outline: none;
-
-        transition: 0.2s;
-    }
-
-    .login-form input:focus {
-        border-color: #2563eb;
-
-        box-shadow:
-            0 0 0 3px rgba(37, 99, 235, 0.10);
-    }
-
-    .login-form button {
-        width: 100%;
-
-        padding: 14px;
-
-        border: none;
-
-        border-radius: 8px;
-
-        background: #1d4ed8;
-
-        color: white;
-
-        font-size: 16px;
-
-        font-weight: bold;
-
-        cursor: pointer;
-
-        transition: 0.2s;
-    }
-
-    .login-form button:hover {
-        background: #173b8f;
-    }
-
-    .login-form button:disabled {
-        opacity: 0.7;
-
-        cursor: not-allowed;
-    }
-
-    #loginMessage {
-        margin-top: 18px;
-
-        text-align: center;
-
-        font-weight: bold;
-
-        min-height: 24px;
-    }
-
-
-    /* =========================================
-       معلومات النظام
-    ========================================= */
-
-    .system-info {
-        margin-top: 25px;
-
-        padding-top: 20px;
-
-        border-top: 1px solid #e2e8f0;
-
-        text-align: center;
-    }
-
-    .system-info strong {
-        display: block;
-
-        color: #1e3a8a;
-
-        margin-bottom: 5px;
-    }
-
-    .system-info span {
-        color: #64748b;
-
-        font-size: 13px;
-    }
-
-
-    /* =========================================
-       الهاتف
-    ========================================= */
-
-    @media (max-width: 768px) {
-
+    <style>
         .institution-bar {
-            padding: 12px 10px;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .institution-bar strong {
-            font-size: 16px;
+            display: block;
+            font-size: 18px;
+            margin-bottom: 4px;
         }
 
         .institution-bar span {
-            font-size: 12px;
+            font-size: 13px;
+            opacity: 0.9;
         }
 
         .login-page {
-            padding: 30px 15px;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
         }
 
         .login-box {
-            padding: 25px 20px;
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
         }
 
         .login-logo img {
-            width: 68px;
-            height: 68px;
+            width: 78px;
+            height: 78px;
+            object-fit: contain;
+            border-radius: 16px;
         }
-    }
-</style>
-```
 
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .school-name {
+            text-align: center;
+            color: #1e3a8a;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .login-form input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #1d4ed8;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-form button:hover {
+            background: #173b8f;
+        }
+
+        .login-form button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #loginMessage {
+            margin-top: 18px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 24px;
+            line-height: 1.7;
+        }
+
+        .system-info {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .system-info strong {
+            display: block;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .system-info span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .institution-bar {
+                padding: 12px 10px;
+            }
+
+            .institution-bar strong {
+                font-size: 16px;
+            }
+
+            .institution-bar span {
+                font-size: 12px;
+            }
+
+            .login-page {
+                padding: 30px 15px;
+            }
+
+            .login-box {
+                padding: 25px 20px;
+            }
+
+            .login-logo img {
+                width: 68px;
+                height: 68px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-```
-<!-- =========================================
-     الشريط العلوي
-========================================= -->
+    <header class="navbar">
 
-<header class="navbar">
+        <div class="container nav-container">
 
-    <div class="container nav-container">
+            <a
+                href="../index.html"
+                class="logo"
+                style="text-decoration: none;"
+            >
 
-        <!-- الشعار -->
+                <div class="logo-icon">
 
-        <a
-            href="../index.html"
-            class="logo"
-            style="text-decoration: none;"
-        >
+                    <img
+                        src="../favicone.png"
+                        alt="شعار مكتبة ثانوية مصاص رابح"
+                    >
 
-            <div class="logo-icon">
+                </div>
+
+                <div>
+
+                    <div class="logo-title">
+                        مكتبة ثانوية مصاص رابح
+                    </div>
+
+                    <div class="logo-subtitle">
+                        المكتبة الرقمية للمؤسسة
+                    </div>
+
+                </div>
+
+            </a>
+
+            <nav>
+
+                <a href="../index.html">
+                    الرئيسية
+                </a>
+
+                <a href="books.html">
+                    الكتب
+                </a>
+
+                <a href="categories.html">
+                    التصنيفات
+                </a>
+
+                <a href="about.html">
+                    عن المكتبة
+                </a>
+
+                <a href="contact.html">
+                    اتصل بنا
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <div class="institution-bar">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <span>
+            المكتبة الرقمية للمؤسسة
+        </span>
+
+    </div>
+
+
+    <main class="login-page">
+
+        <div class="login-box">
+
+            <div class="login-logo">
 
                 <img
                     src="../favicone.png"
@@ -305,488 +283,387 @@
 
             </div>
 
+            <h1>
+                تسجيل الدخول
+            </h1>
 
-            <div>
+            <p class="login-subtitle">
+                الدخول إلى حسابك في
+                المكتبة الرقمية للمؤسسة
+            </p>
 
-                <div class="logo-title">
-                    مكتبة ثانوية مصاص رابح
-                </div>
+            <div class="school-name">
+                ثانوية مصاص رابح
+            </div>
 
-                <div class="logo-subtitle">
-                    المكتبة الرقمية للمؤسسة
-                </div>
+
+            <form
+                id="loginForm"
+                class="login-form"
+            >
+
+                <label for="email">
+                    البريد الإلكتروني
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="example@email.com"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <label for="password">
+                    كلمة المرور
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="أدخل كلمة المرور"
+                    autocomplete="current-password"
+                    required
+                >
+
+
+                <button
+                    id="loginButton"
+                    type="submit"
+                >
+                    تسجيل الدخول
+                </button>
+
+
+                <div id="loginMessage"></div>
+
+            </form>
+
+
+            <div class="system-info">
+
+                <strong>
+                    👨‍💻 مهندس النظام:
+                    شراف الدين بوردوسن
+                </strong>
+
+                <span>
+                    أستاذ مادة الرياضيات
+                </span>
 
             </div>
 
-        </a>
+        </div>
+
+    </main>
 
 
-        <!-- القائمة -->
+    <footer class="footer">
 
-        <nav>
+        <div class="container">
 
-            <a href="../index.html">
-                الرئيسية
-            </a>
+            <p>
 
-            <a href="books.html">
-                الكتب
-            </a>
+                <strong>
+                    🏫 ثانوية مصاص رابح
+                </strong>
 
-            <a href="categories.html">
-                التصنيفات
-            </a>
+                <br>
 
-            <a href="about.html">
-                عن المكتبة
-            </a>
+                مكتبة الثانوية الرقمية
 
-            <a href="contact.html">
-                اتصل بنا
-            </a>
+                <br>
 
-        </nav>
+                <span style="font-size: 13px;">
 
-    </div>
+                    مهندس النظام:
+                    شراف الدين بوردوسن —
 
-</header>
+                    أستاذ مادة الرياضيات
 
+                </span>
 
-<!-- =========================================
-     هوية المؤسسة
-========================================= -->
+                <br>
+                <br>
 
-<div class="institution-bar">
+                © 2026 — جميع الحقوق محفوظة
 
-    <strong>
-        🏫 ثانوية مصاص رابح
-    </strong>
-
-    <span>
-        المكتبة الرقمية للمؤسسة
-    </span>
-
-</div>
-
-
-<!-- =========================================
-     تسجيل الدخول
-========================================= -->
-
-<main class="login-page">
-
-    <div class="login-box">
-
-        <div class="login-logo">
-
-            <img
-                src="../favicone.png"
-                alt="شعار مكتبة ثانوية مصاص رابح"
-            >
+            </p>
 
         </div>
 
+    </footer>
 
-        <h1>
-            تسجيل الدخول
-        </h1>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        <p class="login-subtitle">
+    <script>
 
-            الدخول إلى حسابك في
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-            المكتبة الرقمية للمؤسسة
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O5--_TCcQ_6tXDfpFK";
 
-        </p>
 
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
 
-        <div class="school-name">
-            ثانوية مصاص رابح
-        </div>
 
+        const loginForm =
+            document.getElementById("loginForm");
 
-        <!-- =================================
-             نموذج الدخول
-        ================================== -->
+        const loginButton =
+            document.getElementById("loginButton");
 
-        <form
-            id="loginForm"
-            class="login-form"
-        >
+        const loginMessage =
+            document.getElementById("loginMessage");
 
-            <label for="email">
-                البريد الإلكتروني
-            </label>
 
-            <input
-                type="email"
-                id="email"
-                placeholder="example@email.com"
-                autocomplete="email"
-                required
-            >
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
 
+                event.preventDefault();
 
-            <label for="password">
-                كلمة المرور
-            </label>
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
 
-            <input
-                type="password"
-                id="password"
-                placeholder="أدخل كلمة المرور"
-                autocomplete="current-password"
-                required
-            >
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
 
 
-            <button
-                id="loginButton"
-                type="submit"
-            >
-                تسجيل الدخول
-            </button>
+                loginButton.disabled = true;
 
+                loginButton.textContent =
+                    "جار تسجيل الدخول...";
 
-            <div id="loginMessage"></div>
+                loginMessage.textContent = "";
 
-        </form>
 
+                try {
 
-        <!-- =================================
-             معلومات النظام
-        ================================== -->
+                    /*
+                     * تسجيل الدخول في Supabase
+                     */
 
-        <div class="system-info">
-
-            <strong>
-                👨‍💻 مهندس النظام:
-                شراف الدين بوردوسن
-            </strong>
-
-            <span>
-                أستاذ مادة الرياضيات
-            </span>
-
-        </div>
-
-    </div>
-
-</main>
-
-
-<!-- =========================================
-     التذييل
-========================================= -->
-
-<footer class="footer">
-
-    <div class="container">
-
-        <p>
-
-            <strong>
-                🏫 ثانوية مصاص رابح
-            </strong>
-
-            <br>
-
-            مكتبة الثانوية الرقمية
-
-            <br>
-
-            <span style="font-size: 13px;">
-
-                مهندس النظام:
-                شراف الدين بوردوسن —
-
-                أستاذ مادة الرياضيات
-
-            </span>
-
-            <br>
-            <br>
-
-            © 2026 — جميع الحقوق محفوظة
-
-        </p>
-
-    </div>
-
-</footer>
-
-
-<!-- =========================================
-     Supabase
-========================================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-
-    /* =========================================
-       إعداد Supabase
-    ========================================= */
-
-    const SUPABASE_URL =
-        "https://xdkluojrvdhdtihblpwy.supabase.co";
-
-    const SUPABASE_ANON_KEY =
-        "sb_publishable_znxrXQ3DJxs8D5O5--_TCcQ_6tXDfpFK";
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        );
-
-
-    /* =========================================
-       عناصر الصفحة
-    ========================================= */
-
-    const loginForm =
-        document.getElementById(
-            "loginForm"
-        );
-
-    const loginButton =
-        document.getElementById(
-            "loginButton"
-        );
-
-    const loginMessage =
-        document.getElementById(
-            "loginMessage"
-        );
-
-
-    /* =========================================
-       تسجيل الدخول
-    ========================================= */
-
-    loginForm.addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
-
-
-            const email =
-                document
-                    .getElementById("email")
-                    .value
-                    .trim();
-
-
-            const password =
-                document
-                    .getElementById("password")
-                    .value;
-
-
-            loginButton.disabled =
-                true;
-
-            loginButton.textContent =
-                "جار تسجيل الدخول...";
-
-            loginMessage.textContent =
-                "";
-
-
-            try {
-
-                /* =========================
-                   تسجيل الدخول في Supabase
-                ========================= */
-
-                const {
-                    data,
-                    error
-                } =
-                    await supabaseClient.auth
-                        .signInWithPassword({
-
-                            email:
-                                email,
-
-                            password:
-                                password
-
+                    const {
+                        data,
+                        error
+                    } =
+                        await supabaseClient.auth.signInWithPassword({
+                            email: email,
+                            password: password
                         });
 
 
-                if (error) {
-                    throw error;
-                }
+                    /*
+                     * إذا كان الخطأ من Supabase
+                     */
+
+                    if (error) {
+
+                        console.error(
+                            "Supabase login error:",
+                            error
+                        );
+
+                        throw new Error(
+                            error.message ||
+                            "فشل تسجيل الدخول."
+                        );
+
+                    }
 
 
-                /* =========================
-                   التأكد من المستخدم
-                ========================= */
+                    /*
+                     * التأكد من وجود المستخدم
+                     */
 
-                const user =
-                    data.user;
+                    const user =
+                        data.user;
 
 
-                if (!user) {
+                    if (!user) {
 
-                    throw new Error(
-                        "لم يتم العثور على المستخدم."
+                        throw new Error(
+                            "تم تسجيل الدخول ولكن لم يتم العثور على بيانات المستخدم."
+                        );
+
+                    }
+
+
+                    /*
+                     * الحصول على صلاحية المستخدم
+                     */
+
+                    const {
+                        data: profile,
+                        error: profileError
+                    } =
+                        await supabaseClient
+                            .from("profiles")
+                            .select(
+                                "id, full_name, role"
+                            )
+                            .eq(
+                                "id",
+                                user.id
+                            )
+                            .single();
+
+
+                    if (profileError) {
+
+                        console.error(
+                            "Profile error:",
+                            profileError
+                        );
+
+                        throw new Error(
+                            "تم تسجيل الدخول بنجاح، لكن لم يتم العثور على ملف صلاحية الحساب."
+                        );
+
+                    }
+
+
+                    if (!profile) {
+
+                        throw new Error(
+                            "لم يتم العثور على صلاحية هذا الحساب."
+                        );
+
+                    }
+
+
+                    console.log(
+                        "المستخدم:",
+                        profile.full_name
+                    );
+
+                    console.log(
+                        "الصلاحية:",
+                        profile.role
+                    );
+
+
+                    loginMessage.style.color =
+                        "#15803d";
+
+                    loginMessage.textContent =
+                        "تم تسجيل الدخول بنجاح ✓";
+
+
+                    /*
+                     * التوجيه حسب الصلاحية
+                     *
+                     * login.html موجود داخل pages
+                     */
+
+                    setTimeout(
+                        function() {
+
+                            switch (
+                                String(profile.role).toLowerCase()
+                            ) {
+
+                                case "programmer":
+
+                                    window.location.href =
+                                        "programmer.html";
+
+                                    break;
+
+
+                                case "admin":
+
+                                    window.location.href =
+                                        "admin.html";
+
+                                    break;
+
+
+                                case "teacher":
+
+                                    window.location.href =
+                                        "teacher.html";
+
+                                    break;
+
+
+                                case "student":
+
+                                    window.location.href =
+                                        "student.html";
+
+                                    break;
+
+
+                                default:
+
+                                    loginMessage.style.color =
+                                        "#dc2626";
+
+                                    loginMessage.textContent =
+                                        "تم تسجيل الدخول، لكن صلاحية الحساب غير معروفة: " +
+                                        profile.role;
+
+                                    loginButton.disabled =
+                                        false;
+
+                                    loginButton.textContent =
+                                        "تسجيل الدخول";
+
+                            }
+
+                        },
+                        700
                     );
 
                 }
 
+                catch (error) {
 
-                loginMessage.textContent =
-                    "تم تسجيل الدخول بنجاح ✓";
-
-
-                /* =========================
-                   الحصول على صلاحية المستخدم
-                ========================= */
-
-                const {
-                    data: profile,
-                    error: profileError
-                } =
-                    await supabaseClient
-                        .from("profiles")
-                        .select(
-                            "id, full_name, role"
-                        )
-                        .eq(
-                            "id",
-                            user.id
-                        )
-                        .single();
-
-
-                if (
-                    profileError ||
-                    !profile
-                ) {
-
-                    throw new Error(
-                        "لم يتم العثور على صلاحية هذا الحساب."
+                    console.error(
+                        "Login error:",
+                        error
                     );
+
+
+                    loginMessage.style.color =
+                        "#dc2626";
+
+
+                    /*
+                     * عرض الخطأ الحقيقي
+                     */
+
+                    loginMessage.textContent =
+                        error.message ||
+                        "حدث خطأ أثناء تسجيل الدخول.";
+
+
+                    loginButton.disabled =
+                        false;
+
+                    loginButton.textContent =
+                        "تسجيل الدخول";
 
                 }
 
-
-                console.log(
-                    "المستخدم:",
-                    profile.full_name
-                );
-
-
-                console.log(
-                    "الصلاحية:",
-                    profile.role
-                );
-
-
-                /* =========================
-                   التوجيه حسب الصلاحية
-                ========================= */
-
-                setTimeout(
-                    function() {
-
-                        switch (
-                            profile.role
-                        ) {
-
-                            /* المبرمج */
-
-                            case "programmer":
-
-                                window.location.href =
-                                    "programmer.html";
-
-                                break;
-
-
-                            /* المدير */
-
-                            case "admin":
-
-                                window.location.href =
-                                    "admin.html";
-
-                                break;
-
-
-                            /* الأستاذ */
-
-                            case "teacher":
-
-                                window.location.href =
-                                    "teacher.html";
-
-                                break;
-
-
-                            /* التلميذ */
-
-                            case "student":
-
-                                window.location.href =
-                                    "student.html";
-
-                                break;
-
-
-                            /* صلاحية غير معروفة */
-
-                            default:
-
-                                loginMessage.textContent =
-                                    "صلاحية الحساب غير معروفة.";
-
-                                loginButton.disabled =
-                                    false;
-
-                                loginButton.textContent =
-                                    "تسجيل الدخول";
-
-                        }
-
-                    },
-                    700
-                );
-
-
             }
+        );
 
-            catch (error) {
-
-                console.error(
-                    "Login error:",
-                    error
-                );
-
-
-                loginMessage.textContent =
-                    "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-
-
-                loginButton.disabled =
-                    false;
-
-
-                loginButton.textContent =
-                    "تسجيل الدخول";
-
-            }
-
-        }
-    );
-
-</script>
-```
+    </script>
 
 </body>
 
