@@ -1,529 +1,1626 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>إدارة الحسابات | مكتبة الثانوية</title>
+    <title>إدارة الحسابات | مكتبة الثانوية</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-        font-family: "Cairo", sans-serif;
-        background: #f4f7fb;
-        color: #172033;
-    }
-
-    .header {
-        background: #0b1f3a;
-        color: white;
-        padding: 18px 6%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .logo {
-        font-size: 22px;
-        font-weight: 800;
-    }
-
-    .back-btn {
-        color: white;
-        text-decoration: none;
-        background: #16365f;
-        padding: 9px 16px;
-        border-radius: 8px;
-    }
-
-    .container {
-        width: 92%;
-        max-width: 1250px;
-        margin: 40px auto;
-    }
-
-    .page-title {
-        margin-bottom: 25px;
-    }
-
-    .page-title h1 {
-        font-size: 30px;
-        color: #0b1f3a;
-    }
-
-    .page-title p {
-        color: #687386;
-        margin-top: 5px;
-    }
-
-    .card {
-        background: white;
-        border-radius: 14px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
-    }
-
-    .card h2 {
-        margin-bottom: 20px;
-        color: #0b1f3a;
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-    }
-
-    .field {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .field label {
-        margin-bottom: 7px;
-        font-weight: 700;
-    }
-
-    .field input,
-    .field select {
-        border: 1px solid #d7deea;
-        border-radius: 8px;
-        padding: 12px;
-        font-family: inherit;
-        font-size: 15px;
-        outline: none;
-    }
-
-    .field input:focus,
-    .field select:focus {
-        border-color: #2474d8;
-    }
-
-    .main-btn {
-        margin-top: 20px;
-        border: none;
-        background: #1264c4;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 8px;
-        font-family: inherit;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .main-btn:hover {
-        background: #0d54a6;
-    }
-
-    .refresh-btn {
-        background: #198754;
-    }
-
-    .refresh-btn:hover {
-        background: #146c43;
-    }
-
-    .table-wrapper {
-        overflow-x: auto;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 900px;
-    }
-
-    th,
-    td {
-        padding: 13px 10px;
-        border-bottom: 1px solid #e8edf4;
-        text-align: right;
-    }
-
-    th {
-        background: #f5f8fc;
-        color: #344054;
-        font-weight: 800;
-    }
-
-    tr:hover td {
-        background: #fafcff;
-    }
-
-    .badge {
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-    }
-
-    .programmer {
-        background: #ede9fe;
-        color: #6d28d9;
-    }
-
-    .admin {
-        background: #dbeafe;
-        color: #1d4ed8;
-    }
-
-    .teacher {
-        background: #dcfce7;
-        color: #15803d;
-    }
-
-    .student {
-        background: #fff7ed;
-        color: #c2410c;
-    }
-
-    .status {
-        color: #15803d;
-        font-weight: 700;
-    }
-
-    .actions {
-        display: flex;
-        gap: 7px;
-    }
-
-    .action-btn {
-        border: none;
-        border-radius: 7px;
-        padding: 7px 12px;
-        font-family: inherit;
-        cursor: pointer;
-        font-weight: 700;
-    }
-
-    .edit-btn {
-        background: #e0edff;
-        color: #1459a6;
-    }
-
-    .delete-btn {
-        background: #fee2e2;
-        color: #b91c1c;
-    }
-
-    .protected {
-        color: #7a8494;
-        font-size: 13px;
-    }
-
-    .message {
-        margin-top: 15px;
-        padding: 12px;
-        border-radius: 8px;
-        display: none;
-    }
-
-    .success {
-        display: block;
-        background: #dcfce7;
-        color: #166534;
-    }
-
-    .error {
-        display: block;
-        background: #fee2e2;
-        color: #991b1b;
-    }
-
-    .loading {
-        text-align: center;
-        padding: 25px;
-        color: #667085;
-    }
-
-    .modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.55);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        z-index: 1000;
-    }
-
-    .modal.show {
-        display: flex;
-    }
-
-    .modal-box {
-        background: white;
-        width: 100%;
-        max-width: 600px;
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    }
-
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-    }
-
-    .modal-header h2 {
-        color: #0b1f3a;
-    }
-
-    .close-btn {
-        border: none;
-        background: #f1f3f6;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 20px;
-    }
-
-    .modal-grid {
-        display: grid;
-        gap: 16px;
-    }
-
-    .modal-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 22px;
-    }
-
-    .cancel-btn {
-        background: #e9edf3;
-        color: #344054;
-    }
-
-    @media (max-width: 700px) {
-        .form-grid {
-            grid-template-columns: 1fr;
+        body {
+            font-family: "Cairo", sans-serif;
+            background: #f4f7fb;
+            color: #172033;
         }
 
         .header {
-            padding: 15px 4%;
+            background: #0b1f3a;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            background: #16365f;
+            padding: 9px 16px;
+            border-radius: 8px;
         }
 
         .container {
-            width: 94%;
+            width: 92%;
+            max-width: 1250px;
+            margin: 40px auto;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            color: #0b1f3a;
+        }
+
+        .page-title p {
+            color: #687386;
+            margin-top: 5px;
         }
 
         .card {
-            padding: 18px;
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
         }
-    }
-</style>
-```
 
+        .card h2 {
+            margin-bottom: 20px;
+            color: #0b1f3a;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field label {
+            margin-bottom: 7px;
+            font-weight: 700;
+        }
+
+        .field input,
+        .field select {
+            border: 1px solid #d7deea;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #2474d8;
+        }
+
+        .main-btn {
+            margin-top: 20px;
+            border: none;
+            background: #1264c4;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .main-btn:hover {
+            background: #0d54a6;
+        }
+
+        .refresh-btn {
+            background: #198754;
+        }
+
+        .refresh-btn:hover {
+            background: #146c43;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th,
+        td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #e8edf4;
+            text-align: right;
+        }
+
+        th {
+            background: #f5f8fc;
+            color: #344054;
+            font-weight: 800;
+        }
+
+        tr:hover td {
+            background: #fafcff;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .programmer {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .admin {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .teacher {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .student {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .status {
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            border: none;
+            border-radius: 7px;
+            padding: 7px 12px;
+            font-family: inherit;
+            cursor: pointer;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .edit-btn {
+            background: #e0edff;
+            color: #1459a6;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .document-btn {
+            background: #e7f8ee;
+            color: #137333;
+        }
+
+        .document-btn:hover {
+            background: #d2f0dd;
+        }
+
+        .protected {
+            color: #7a8494;
+            font-size: 13px;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 25px;
+            color: #667085;
+        }
+
+        /* =========================
+           نافذة التعديل
+        ========================= */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: #0b1f3a;
+        }
+
+        .close-btn {
+            border: none;
+            background: #f1f3f6;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .cancel-btn {
+            background: #e9edf3;
+            color: #344054;
+        }
+
+        /* =========================
+           نافذة معلومات الوثيقة
+        ========================= */
+
+        .document-modal-box {
+            max-width: 650px;
+        }
+
+        .document-info {
+            background: #f7f9fc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .document-info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 11px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .document-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .document-info-label {
+            font-weight: 800;
+            color: #344054;
+        }
+
+        .document-info-value {
+            color: #172033;
+            text-align: left;
+            direction: ltr;
+        }
+
+        .warning-box {
+            margin-top: 18px;
+            padding: 14px;
+            background: #fff7ed;
+            color: #9a3412;
+            border: 1px solid #fed7aa;
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           بطاقة الوثيقة المخفية
+        ========================= */
+
+        #registrationDocument {
+            display: none;
+        }
+
+        .registration-paper {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto;
+            padding: 20mm;
+            color: #111827;
+            font-family: "Cairo", sans-serif;
+        }
+
+        .registration-header {
+            text-align: center;
+            border-bottom: 3px solid #0b1f3a;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .registration-header .school-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0b1f3a;
+        }
+
+        .registration-header .library-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .registration-title {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .registration-title h1 {
+            font-size: 28px;
+            color: #0b1f3a;
+            margin-bottom: 8px;
+        }
+
+        .registration-title p {
+            color: #667085;
+        }
+
+        .document-number-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .document-number {
+            display: inline-block;
+            border: 2px solid #0b1f3a;
+            padding: 8px 22px;
+            border-radius: 8px;
+            font-weight: 800;
+            direction: ltr;
+        }
+
+        .registration-details {
+            border: 1px solid #d7deea;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 25px;
+        }
+
+        .registration-row {
+            display: grid;
+            grid-template-columns: 35% 65%;
+            border-bottom: 1px solid #d7deea;
+            min-height: 50px;
+        }
+
+        .registration-row:last-child {
+            border-bottom: none;
+        }
+
+        .registration-label {
+            background: #f4f7fb;
+            padding: 12px;
+            font-weight: 800;
+        }
+
+        .registration-value {
+            padding: 12px;
+            direction: ltr;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .registration-rights {
+            margin-top: 25px;
+            border: 1px solid #d7deea;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .registration-rights h3 {
+            color: #0b1f3a;
+            margin-bottom: 12px;
+        }
+
+        .registration-rights ul {
+            padding-right: 20px;
+            line-height: 2;
+        }
+
+        .qr-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #registrationQr {
+            width: 150px;
+            height: 150px;
+            margin: 10px auto;
+        }
+
+        .qr-url {
+            direction: ltr;
+            font-size: 11px;
+            color: #667085;
+            word-break: break-all;
+        }
+
+        .registration-footer {
+            margin-top: 55px;
+            padding-top: 15px;
+            border-top: 1px solid #cbd5e1;
+            text-align: center;
+            font-size: 12px;
+            color: #667085;
+            line-height: 1.8;
+        }
+
+        .print-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .print-actions button {
+            border: none;
+            background: #1264c4;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 15px 4%;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .registration-paper {
+                width: 100%;
+                min-height: auto;
+                padding: 20px;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+
+            #registrationDocument,
+            #registrationDocument * {
+                visibility: visible !important;
+            }
+
+            #registrationDocument {
+                display: block !important;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            .registration-paper {
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0;
+                padding: 20mm;
+            }
+
+            .print-actions {
+                display: none !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-```
-<header class="header">
+    <header class="header">
 
-    <div class="logo">
-        📚 مكتبة الثانوية
+        <div class="logo">
+            📚 مكتبة الثانوية
+        </div>
+
+        <a href="admin.html" class="back-btn" id="backBtn">
+            العودة إلى اللوحة
+        </a>
+
+    </header>
+
+
+    <main class="container">
+
+        <div class="page-title">
+
+            <h1>
+                إدارة الحسابات
+            </h1>
+
+            <p>
+                إنشاء وإدارة حسابات مستخدمي مكتبة الثانوية
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             إنشاء حساب
+        ========================== -->
+
+        <section class="card">
+
+            <h2>
+                ➕ إنشاء حساب جديد
+            </h2>
+
+            <form id="createUserForm">
+
+                <div class="form-grid">
+
+                    <div class="field">
+
+                        <label for="fullName">
+                            الاسم الكامل
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            required
+                            placeholder="أدخل الاسم الكامل">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="email">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            required
+                            placeholder="example@email.com">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="password">
+                            كلمة المرور
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            required
+                            minlength="6"
+                            placeholder="6 أحرف على الأقل">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="role">
+                            نوع الحساب
+                        </label>
+
+                        <select id="role" required>
+
+                            <option value="">
+                                اختر نوع الحساب
+                            </option>
+
+                            <option value="admin">
+                                مدير
+                            </option>
+
+                            <option value="teacher">
+                                أستاذ
+                            </option>
+
+                            <option value="student">
+                                تلميذ
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="main-btn"
+                    id="createUserBtn">
+
+                    إنشاء الحساب وإصدار الوثيقة
+
+                </button>
+
+            </form>
+
+
+            <div
+                id="createMessage"
+                class="message">
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             الحسابات الموجودة
+        ========================== -->
+
+        <section class="card">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:15px;
+                margin-bottom:20px;
+                flex-wrap:wrap;
+            ">
+
+                <h2 style="margin:0;">
+                    👥 الحسابات الموجودة
+                </h2>
+
+                <button
+                    class="main-btn refresh-btn"
+                    id="refreshBtn"
+                    style="margin:0;">
+
+                    🔄 تحديث
+
+                </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>
+                                الاسم
+                            </th>
+
+                            <th>
+                                البريد الإلكتروني
+                            </th>
+
+                            <th>
+                                نوع الحساب
+                            </th>
+
+                            <th>
+                                تاريخ الإنشاء
+                            </th>
+
+                            <th>
+                                الحالة
+                            </th>
+
+                            <th>
+                                الإجراءات
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="usersTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="loading">
+
+                                جار تحميل الحسابات...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         نافذة تعديل الحساب
+    ========================== -->
+
+    <div
+        id="editModal"
+        class="modal">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>
+                    ✏️ تعديل الحساب
+                </h2>
+
+                <button
+                    class="close-btn"
+                    id="closeModalBtn">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form id="editUserForm">
+
+                <input
+                    type="hidden"
+                    id="editUserId">
+
+
+                <div class="modal-grid">
+
+                    <div class="field">
+
+                        <label for="editFullName">
+                            الاسم الكامل
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editFullName"
+                            required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="editEmail">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            type="email"
+                            id="editEmail"
+                            required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="editPassword">
+                            كلمة المرور الجديدة
+                        </label>
+
+                        <input
+                            type="password"
+                            id="editPassword"
+                            minlength="6"
+                            placeholder="اتركها فارغة إذا لم ترد تغييرها">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="editRole">
+                            نوع الحساب
+                        </label>
+
+                        <select id="editRole" required>
+
+                            <option value="admin">
+                                مدير
+                            </option>
+
+                            <option value="teacher">
+                                أستاذ
+                            </option>
+
+                            <option value="student">
+                                تلميذ
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="editMessage"
+                    class="message">
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="submit"
+                        class="main-btn">
+
+                        حفظ التعديلات
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="cancelEditBtn"
+                        class="main-btn cancel-btn">
+
+                        إلغاء
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
 
-    <a href="admin.html" class="back-btn" id="backBtn">
-        العودة إلى اللوحة
-    </a>
 
-</header>
+    <!-- =========================
+         نافذة معلومات الوثيقة
+    ========================== -->
+
+    <div
+        id="documentModal"
+        class="modal">
+
+        <div class="modal-box document-modal-box">
+
+            <div class="modal-header">
+
+                <h2>
+                    📄 وثيقة التسجيل
+                </h2>
+
+                <button
+                    class="close-btn"
+                    id="closeDocumentModalBtn">
+
+                    ×
+
+                </button>
+
+            </div>
 
 
-<main class="container">
+            <div id="documentModalContent">
 
-    <div class="page-title">
+                جار تحميل بيانات الوثيقة...
 
-        <h1>
-            إدارة الحسابات
-        </h1>
+            </div>
 
-        <p>
-            إنشاء وإدارة حسابات مستخدمي مكتبة الثانوية
-        </p>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="main-btn cancel-btn"
+                    id="closeDocumentBtn">
+
+                    إغلاق
+
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- إنشاء حساب -->
+    <!-- =========================
+         وثيقة التسجيل للطباعة
+    ========================== -->
 
-    <section class="card">
+    <div id="registrationDocument">
 
-        <h2>
-            ➕ إنشاء حساب جديد
-        </h2>
+        <div class="registration-paper">
 
-        <form id="createUserForm">
+            <div class="registration-header">
 
-            <div class="form-grid">
-
-                <div class="field">
-
-                    <label for="fullName">
-                        الاسم الكامل
-                    </label>
-
-                    <input
-                        type="text"
-                        id="fullName"
-                        required
-                        placeholder="أدخل الاسم الكامل">
-
+                <div class="school-name">
+                    ثانوية مصاص رابح
                 </div>
 
-
-                <div class="field">
-
-                    <label for="email">
-                        البريد الإلكتروني
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        required
-                        placeholder="example@email.com">
-
+                <div class="library-name">
+                    📚 مكتبة الثانوية
                 </div>
 
+            </div>
 
-                <div class="field">
 
-                    <label for="password">
-                        كلمة المرور
-                    </label>
+            <div class="registration-title">
 
-                    <input
-                        type="password"
-                        id="password"
-                        required
-                        minlength="6"
-                        placeholder="6 أحرف على الأقل">
+                <h1>
+                    وثيقة التسجيل والدخول
+                </h1>
 
+                <p>
+                    وثيقة رسمية خاصة بالدخول إلى مكتبة الثانوية الإلكترونية
+                </p>
+
+            </div>
+
+
+            <div class="document-number-box">
+
+                <div>
+                    رقم الوثيقة
                 </div>
 
+                <div
+                    class="document-number"
+                    id="printDocumentNumber">
 
-                <div class="field">
-
-                    <label for="role">
-                        نوع الحساب
-                    </label>
-
-                    <select id="role" required>
-
-                        <option value="">
-                            اختر نوع الحساب
-                        </option>
-
-                        <option value="admin">
-                            مدير
-                        </option>
-
-                        <option value="teacher">
-                            أستاذ
-                        </option>
-
-                        <option value="student">
-                            تلميذ
-                        </option>
-
-                    </select>
+                    -
 
                 </div>
 
             </div>
 
 
-            <button
-                type="submit"
-                class="main-btn">
+            <div class="registration-details">
 
-                إنشاء الحساب
+                <div class="registration-row">
 
-            </button>
+                    <div class="registration-label">
+                        الاسم الكامل
+                    </div>
 
-        </form>
+                    <div
+                        class="registration-value"
+                        id="printFullName">
+
+                        -
+
+                    </div>
+
+                </div>
 
 
-        <div
-            id="createMessage"
-            class="message">
+                <div class="registration-row">
+
+                    <div class="registration-label">
+                        البريد الإلكتروني
+                    </div>
+
+                    <div
+                        class="registration-value"
+                        id="printEmail">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+                <div class="registration-row">
+
+                    <div class="registration-label">
+                        كلمة المرور
+                    </div>
+
+                    <div
+                        class="registration-value"
+                        id="printPassword">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+                <div class="registration-row">
+
+                    <div class="registration-label">
+                        نوع الحساب
+                    </div>
+
+                    <div
+                        class="registration-value"
+                        id="printRole">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+                <div class="registration-row">
+
+                    <div class="registration-label">
+                        تاريخ الإصدار
+                    </div>
+
+                    <div
+                        class="registration-value"
+                        id="printIssuedAt">
+
+                        -
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="registration-rights">
+
+                <h3>
+                    الصلاحيات والحقوق
+                </h3>
+
+                <ul id="printRights">
+
+                    <li>
+                        -
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="qr-section">
+
+                <strong>
+                    رمز الدخول إلى المكتبة
+                </strong>
+
+                <div id="registrationQr"></div>
+
+                <div class="qr-url">
+                    https://maktabati-1-rpeo.onrender.com
+                </div>
+
+            </div>
+
+
+            <div class="registration-footer">
+
+                <div>
+                    هذه الوثيقة مخصصة لصاحب الحساب فقط.
+                </div>
+
+                <div>
+                    يرجى المحافظة عليها وعدم مشاركة بيانات الدخول مع الآخرين.
+                </div>
+
+                <div>
+                    جميع الحقوق محفوظة للمهندس/المبرمج ولثانوية مصاص رابح.
+                </div>
+
+            </div>
+
+
+            <div class="print-actions">
+
+                <button
+                    onclick="window.print()">
+
+                    🖨️ طباعة / حفظ PDF
+
+                </button>
+
+            </div>
+
         </div>
 
-    </section>
+    </div>
 
 
-    <!-- الحسابات الموجودة -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <section class="card">
-
-        <div style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:15px;
-            margin-bottom:20px;
-        ">
-
-            <h2 style="margin:0;">
-                👥 الحسابات الموجودة
-            </h2>
-
-            <button
-                class="main-btn refresh-btn"
-                id="refreshBtn"
-                style="margin:0;">
-
-                🔄 تحديث
-
-            </button>
-
-        </div>
+    <!-- مكتبة QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 
-        <div class="table-wrapper">
+    <script>
 
-            <table>
+        // ============================================
+        // إعداد Supabase
+        // ============================================
 
-                <thead>
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-                    <tr>
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
 
-                        <th>#</th>
-                        <th>الاسم</th>
-                        <th>البريد الإلكتروني</th>
-                        <th>نوع الحساب</th>
-                        <th>تاريخ الإنشاء</th>
-                        <th>الحالة</th>
-                        <th>الإجراءات</th>
-
-                    </tr>
-
-                </thead>
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
 
 
-                <tbody id="usersTableBody">
+        // ============================================
+        // رابط المكتبة
+        // ============================================
+
+        const LIBRARY_URL =
+            "https://maktabati-1-rpeo.onrender.com";
+
+
+        // ============================================
+        // عناصر الصفحة
+        // ============================================
+
+        const usersTableBody =
+            document.getElementById(
+                "usersTableBody"
+            );
+
+        const createUserForm =
+            document.getElementById(
+                "createUserForm"
+            );
+
+        const createMessage =
+            document.getElementById(
+                "createMessage"
+            );
+
+        const createUserBtn =
+            document.getElementById(
+                "createUserBtn"
+            );
+
+        const refreshBtn =
+            document.getElementById(
+                "refreshBtn"
+            );
+
+        const editModal =
+            document.getElementById(
+                "editModal"
+            );
+
+        const editUserForm =
+            document.getElementById(
+                "editUserForm"
+            );
+
+        const editMessage =
+            document.getElementById(
+                "editMessage"
+            );
+
+        const backBtn =
+            document.getElementById(
+                "backBtn"
+            );
+
+        const documentModal =
+            document.getElementById(
+                "documentModal"
+            );
+
+        const documentModalContent =
+            document.getElementById(
+                "documentModalContent"
+            );
+
+
+        // ============================================
+        // أسماء أنواع الحسابات
+        // ============================================
+
+        const roleNames = {
+
+            programmer: "مبرمج",
+
+            admin: "مدير",
+
+            teacher: "أستاذ",
+
+            student: "تلميذ"
+
+        };
+
+
+        // ============================================
+        // الصلاحيات حسب نوع الحساب
+        // ============================================
+
+        const roleRights = {
+
+            programmer: [
+                "صلاحيات كاملة على النظام.",
+                "إدارة الحسابات والمكتبة.",
+                "إدارة إعدادات النظام.",
+                "صلاحيات برمجية وإدارية كاملة."
+            ],
+
+            admin: [
+                "إدارة حسابات المستخدمين.",
+                "إدارة محتوى المكتبة.",
+                "إضافة وتعديل وحذف الكتب حسب الصلاحيات.",
+                "متابعة مستخدمي المكتبة."
+            ],
+
+            teacher: [
+                "الدخول إلى المكتبة.",
+                "قراءة الكتب والبحث فيها.",
+                "إضافة وإدارة الكتب الخاصة به حسب الصلاحيات."
+            ],
+
+            student: [
+                "الدخول إلى المكتبة.",
+                "البحث عن الكتب.",
+                "قراءة الكتب وتحميلها حسب المتاح."
+            ]
+
+        };
+
+
+        // ============================================
+        // التحقق من المبرمج أو المدير
+        // ============================================
+
+        async function checkAccountManager() {
+
+            const {
+                data: {
+                    user
+                }
+            } =
+                await supabaseClient.auth.getUser();
+
+
+            if (!user) {
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+
+            }
+
+
+            const {
+                data: profile,
+                error
+            } =
+                await supabaseClient
+
+                    .from("profiles")
+
+                    .select(
+                        "role, full_name"
+                    )
+
+                    .eq(
+                        "id",
+                        user.id
+                    )
+
+                    .single();
+
+
+            if (error || !profile) {
+
+                document.body.innerHTML = `
+
+                    <div style="
+                        text-align:center;
+                        margin-top:100px;
+                        font-family:Cairo,sans-serif;
+                    ">
+
+                        <h1>
+                            🚫 غير مصرح
+                        </h1>
+
+                        <p>
+                            لم يتم العثور على بيانات الحساب.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return false;
+
+            }
+
+
+            if (
+                profile.role !== "programmer" &&
+                profile.role !== "admin"
+            ) {
+
+                document.body.innerHTML = `
+
+                    <div style="
+                        text-align:center;
+                        margin-top:100px;
+                        font-family:Cairo,sans-serif;
+                    ">
+
+                        <h1>
+                            🚫 غير مصرح
+                        </h1>
+
+                        <p>
+                            ليس لديك صلاحية للوصول إلى إدارة الحسابات.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return false;
+
+            }
+
+
+            if (
+                profile.role ===
+                "programmer"
+            ) {
+
+                backBtn.href =
+                    "programmer.html";
+
+                backBtn.textContent =
+                    "العودة إلى لوحة المبرمج";
+
+            } else {
+
+                backBtn.href =
+                    "admin.html";
+
+                backBtn.textContent =
+                    "العودة إلى لوحة المدير";
+
+            }
+
+
+            return true;
+
+        }
+
+
+        // ============================================
+        // الحصول على Access Token
+        // ============================================
+
+        async function getAccessToken() {
+
+            const {
+                data
+            } =
+                await supabaseClient.auth.getSession();
+
+            return data.session?.access_token;
+
+        }
+
+
+        // ============================================
+        // عرض رسالة
+        // ============================================
+
+        function showMessage(
+            element,
+            message,
+            type
+        ) {
+
+            element.textContent =
+                message;
+
+            element.className =
+                "message " + type;
+
+        }
+
+
+        // ============================================
+        // تحميل الحسابات
+        // ============================================
+
+        async function loadUsers() {
+
+            usersTableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="loading">
+
+                        جار تحميل الحسابات...
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            try {
+
+                const token =
+                    await getAccessToken();
+
+
+                if (!token) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                const response =
+                    await fetch(
+                        "/api/admin/users",
+                        {
+
+                            headers: {
+
+                                "Authorization":
+                                    "Bearer " +
+                                    token
+
+                            }
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !result.success
+                ) {
+
+                    throw new Error(
+                        result.message ||
+                        "تعذر تحميل الحسابات."
+                    );
+
+                }
+
+
+                renderUsers(
+                    result.users
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                usersTableBody.innerHTML = `
 
                     <tr>
 
@@ -531,669 +1628,624 @@
                             colspan="7"
                             class="loading">
 
-                            جار تحميل الحسابات...
+                            ❌ ${escapeHtml(
+                                error.message
+                            )}
 
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- نافذة تعديل الحساب -->
-
-<div
-    id="editModal"
-    class="modal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>
-                ✏️ تعديل الحساب
-            </h2>
-
-            <button
-                class="close-btn"
-                id="closeModalBtn">
-
-                ×
-
-            </button>
-
-        </div>
-
-
-        <form id="editUserForm">
-
-            <input
-                type="hidden"
-                id="editUserId">
-
-
-            <div class="modal-grid">
-
-                <div class="field">
-
-                    <label for="editFullName">
-                        الاسم الكامل
-                    </label>
-
-                    <input
-                        type="text"
-                        id="editFullName"
-                        required>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="editEmail">
-                        البريد الإلكتروني
-                    </label>
-
-                    <input
-                        type="email"
-                        id="editEmail"
-                        required>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="editPassword">
-                        كلمة المرور الجديدة
-                    </label>
-
-                    <input
-                        type="password"
-                        id="editPassword"
-                        minlength="6"
-                        placeholder="اتركها فارغة إذا لم ترد تغييرها">
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="editRole">
-                        نوع الحساب
-                    </label>
-
-                    <select id="editRole" required>
-
-                        <option value="admin">
-                            مدير
-                        </option>
-
-                        <option value="teacher">
-                            أستاذ
-                        </option>
-
-                        <option value="student">
-                            تلميذ
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="editMessage"
-                class="message">
-            </div>
-
-
-            <div class="modal-actions">
-
-                <button
-                    type="submit"
-                    class="main-btn">
-
-                    حفظ التعديلات
-
-                </button>
-
-                <button
-                    type="button"
-                    id="cancelEditBtn"
-                    class="main-btn cancel-btn">
-
-                    إلغاء
-
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-<script>
-
-    // ============================================
-    // إعداد Supabase
-    // ============================================
-
-    const SUPABASE_URL =
-        "https://xdkluojrvdhdtihblpwy.supabase.co";
-
-    const SUPABASE_ANON_KEY =
-        "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        );
-
-
-    // ============================================
-    // عناصر الصفحة
-    // ============================================
-
-    const usersTableBody =
-        document.getElementById("usersTableBody");
-
-    const createUserForm =
-        document.getElementById("createUserForm");
-
-    const createMessage =
-        document.getElementById("createMessage");
-
-    const refreshBtn =
-        document.getElementById("refreshBtn");
-
-    const editModal =
-        document.getElementById("editModal");
-
-    const editUserForm =
-        document.getElementById("editUserForm");
-
-    const editMessage =
-        document.getElementById("editMessage");
-
-    const backBtn =
-        document.getElementById("backBtn");
-
-
-    // ============================================
-    // أسماء أنواع الحسابات
-    // ============================================
-
-    const roleNames = {
-
-        programmer: "مبرمج",
-
-        admin: "مدير",
-
-        teacher: "أستاذ",
-
-        student: "تلميذ"
-
-    };
-
-
-    // ============================================
-    // التحقق من المبرمج أو المدير
-    // ============================================
-
-    async function checkAccountManager() {
-
-        const {
-            data: {
-                user
-            }
-        } = await supabaseClient.auth.getUser();
-
-
-        if (!user) {
-
-            window.location.href = "login.html";
-
-            return false;
-
-        }
-
-
-        const {
-            data: profile,
-            error
-        } = await supabaseClient
-
-            .from("profiles")
-
-            .select("role, full_name")
-
-            .eq("id", user.id)
-
-            .single();
-
-
-        if (error || !profile) {
-
-            document.body.innerHTML = `
-
-                <div style="
-                    text-align:center;
-                    margin-top:100px;
-                    font-family:Cairo,sans-serif;
-                ">
-
-                    <h1>
-                        🚫 غير مصرح
-                    </h1>
-
-                    <p>
-                        لم يتم العثور على بيانات الحساب.
-                    </p>
-
-                </div>
-
-            `;
-
-            return false;
-
-        }
-
-
-        // المسموح لهم بالدخول:
-        // المبرمج + المدير
-
-        if (
-            profile.role !== "programmer" &&
-            profile.role !== "admin"
-        ) {
-
-            document.body.innerHTML = `
-
-                <div style="
-                    text-align:center;
-                    margin-top:100px;
-                    font-family:Cairo,sans-serif;
-                ">
-
-                    <h1>
-                        🚫 غير مصرح
-                    </h1>
-
-                    <p>
-                        ليس لديك صلاحية للوصول إلى إدارة الحسابات.
-                    </p>
-
-                </div>
-
-            `;
-
-            return false;
-
-        }
-
-
-        // تغيير زر العودة حسب نوع الحساب
-
-        if (profile.role === "programmer") {
-
-            backBtn.href = "programmer.html";
-
-            backBtn.textContent =
-                "العودة إلى لوحة المبرمج";
-
-        } else {
-
-            backBtn.href = "admin.html";
-
-            backBtn.textContent =
-                "العودة إلى لوحة المدير";
-
-        }
-
-
-        return true;
-
-    }
-
-
-    // ============================================
-    // الحصول على Access Token
-    // ============================================
-
-    async function getAccessToken() {
-
-        const {
-            data
-        } = await supabaseClient.auth.getSession();
-
-        return data.session?.access_token;
-
-    }
-
-
-    // ============================================
-    // عرض رسالة
-    // ============================================
-
-    function showMessage(
-        element,
-        message,
-        type
-    ) {
-
-        element.textContent = message;
-
-        element.className =
-            "message " + type;
-
-    }
-
-
-    // ============================================
-    // تحميل الحسابات
-    // ============================================
-
-    async function loadUsers() {
-
-        usersTableBody.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    class="loading">
-
-                    جار تحميل الحسابات...
-
-                </td>
-
-            </tr>
-
-        `;
-
-
-        try {
-
-            const token =
-                await getAccessToken();
-
-
-            if (!token) {
-
-                window.location.href =
-                    "login.html";
-
-                return;
-
-            }
-
-
-            const response =
-                await fetch(
-                    "/api/admin/users",
-                    {
-                        headers: {
-                            "Authorization":
-                                "Bearer " + token
-                        }
-                    }
-                );
-
-
-            const result =
-                await response.json();
-
-
-            if (
-                !response.ok ||
-                !result.success
-            ) {
-
-                throw new Error(
-                    result.message ||
-                    "تعذر تحميل الحسابات."
-                );
-
-            }
-
-
-            renderUsers(result.users);
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            usersTableBody.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="7"
-                        class="loading">
-
-                        ❌ ${escapeHtml(error.message)}
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        }
-
-    }
-
-
-    // ============================================
-    // عرض الحسابات
-    // ============================================
-
-    function renderUsers(users) {
-
-        if (!users || users.length === 0) {
-
-            usersTableBody.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="7"
-                        class="loading">
-
-                        لا توجد حسابات.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-            return;
-
-        }
-
-
-        usersTableBody.innerHTML =
-
-            users.map((user, index) => {
-
-                const role =
-                    user.role || "غير محدد";
-
-
-                const roleClass =
-                    role === "programmer"
-                        ? "programmer"
-                        : role;
-
-
-                const date =
-                    user.createdAt
-                        ? new Date(
-                            user.createdAt
-                        ).toLocaleDateString(
-                            "ar-DZ"
-                        )
-                        : "-";
-
-
-                let actions = "";
-
-
-                // المبرمج محمي دائما
-
-                if (role === "programmer") {
-
-                    actions = `
-
-                        <span class="protected">
-
-                            🔒 حساب محمي
-
-                        </span>
-
-                    `;
-
-                } else {
-
-                    actions = `
-
-                        <div class="actions">
-
-                            <button
-                                class="action-btn edit-btn"
-                                onclick='openEditModal(${JSON.stringify(user)})'>
-
-                                ✏️ تعديل
-
-                            </button>
-
-
-                            <button
-                                class="action-btn delete-btn"
-                                onclick="deleteUser('${user.id}', '${escapeAttribute(user.fullName)}')">
-
-                                🗑️ حذف
-
-                            </button>
-
-                        </div>
-
-                    `;
-
-                }
-
-
-                return `
-
-                    <tr>
-
-                        <td>
-                            ${index + 1}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(user.fullName)}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(user.email || "-")}
-                        </td>
-
-                        <td>
-
-                            <span
-                                class="badge ${roleClass}">
-
-                                ${roleNames[role] || role}
-
-                            </span>
-
-                        </td>
-
-                        <td>
-                            ${date}
-                        </td>
-
-                        <td>
-
-                            <span class="status">
-                                ● نشط
-                            </span>
-
-                        </td>
-
-                        <td>
-                            ${actions}
                         </td>
 
                     </tr>
 
                 `;
 
-            }).join("");
+            }
 
-    }
-
-
-    // ============================================
-    // إنشاء حساب
-    // ============================================
-
-    createUserForm.addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
+        }
 
 
-            createMessage.className =
-                "message";
+        // ============================================
+        // عرض الحسابات
+        // ============================================
 
-            createMessage.textContent = "";
+        function renderUsers(users) {
+
+            if (
+                !users ||
+                users.length === 0
+            ) {
+
+                usersTableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="loading">
+
+                            لا توجد حسابات.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
 
 
-            const fullName =
+            usersTableBody.innerHTML =
+
+                users.map(
+                    (user, index) => {
+
+                        const role =
+                            user.role ||
+                            "غير محدد";
+
+
+                        const roleClass =
+                            role ===
+                                "programmer"
+
+                                ? "programmer"
+
+                                : role;
+
+
+                        const date =
+                            user.createdAt
+
+                                ? new Date(
+                                    user.createdAt
+                                ).toLocaleDateString(
+                                    "ar-DZ"
+                                )
+
+                                : "-";
+
+
+                        let actions = "";
+
+
+                        if (
+                            role ===
+                            "programmer"
+                        ) {
+
+                            actions = `
+
+                                <span class="protected">
+
+                                    🔒 حساب محمي
+
+                                </span>
+
+                            `;
+
+                        } else {
+
+                            actions = `
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn document-btn"
+                                        onclick='viewRegistrationDocument(${JSON.stringify(user)})'>
+
+                                        📄 الوثيقة
+
+                                    </button>
+
+
+                                    <button
+                                        class="action-btn edit-btn"
+                                        onclick='openEditModal(${JSON.stringify(user)})'>
+
+                                        ✏️ تعديل
+
+                                    </button>
+
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteUser(
+                                            '${user.id}',
+                                            '${escapeAttribute(user.fullName)}'
+                                        )">
+
+                                        🗑️ حذف
+
+                                    </button>
+
+                                </div>
+
+                            `;
+
+                        }
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+                                    ${index + 1}
+                                </td>
+
+
+                                <td>
+                                    ${escapeHtml(
+                                        user.fullName
+                                    )}
+                                </td>
+
+
+                                <td>
+                                    ${escapeHtml(
+                                        user.email || "-"
+                                    )}
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="badge ${roleClass}">
+
+                                        ${escapeHtml(
+                                            roleNames[role] ||
+                                            role
+                                        )}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    ${date}
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status">
+
+                                        ● نشط
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    ${actions}
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                ).join("");
+
+        }
+
+
+        // ============================================
+        // إنشاء الحساب
+        // ============================================
+
+        createUserForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                createMessage.className =
+                    "message";
+
+                createMessage.textContent =
+                    "";
+
+
+                const fullName =
+                    document.getElementById(
+                        "fullName"
+                    ).value.trim();
+
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    ).value.trim();
+
+
+                const password =
+                    document.getElementById(
+                        "password"
+                    ).value;
+
+
+                const role =
+                    document.getElementById(
+                        "role"
+                    ).value;
+
+
+                if (!fullName) {
+
+                    showMessage(
+                        createMessage,
+                        "يرجى إدخال الاسم الكامل.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!email) {
+
+                    showMessage(
+                        createMessage,
+                        "يرجى إدخال البريد الإلكتروني.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    !password ||
+                    password.length < 6
+                ) {
+
+                    showMessage(
+                        createMessage,
+                        "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!role) {
+
+                    showMessage(
+                        createMessage,
+                        "يرجى اختيار نوع الحساب.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    createUserBtn.disabled =
+                        true;
+
+                    createUserBtn.textContent =
+                        "⏳ جار إنشاء الحساب...";
+
+
+                    const token =
+                        await getAccessToken();
+
+
+                    if (!token) {
+
+                        throw new Error(
+                            "انتهت جلسة تسجيل الدخول."
+                        );
+
+                    }
+
+
+                    const response =
+                        await fetch(
+                            "/api/admin/create-user",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        "Bearer " +
+                                        token
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        fullName,
+
+                                        email,
+
+                                        password,
+
+                                        role
+
+                                    })
+
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (
+                        !response.ok ||
+                        !result.success
+                    ) {
+
+                        throw new Error(
+                            result.message ||
+                            "فشل إنشاء الحساب."
+                        );
+
+                    }
+
+
+                    showMessage(
+                        createMessage,
+                        "✅ تم إنشاء الحساب وإصدار وثيقة التسجيل بنجاح.",
+                        "success"
+                    );
+
+
+                    /*
+                       مهم:
+
+                       كلمة المرور متوفرة الآن فقط لأن
+                       المدير أدخلها لحظة إنشاء الحساب.
+
+                       الخادم لا يخزنها في جدول الوثائق.
+                    */
+
+                    if (
+                        result.registrationDocument
+                    ) {
+
+                        openRegistrationDocument(
+                            result.registrationDocument
+                        );
+
+                    }
+
+
+                    createUserForm.reset();
+
+
+                    await loadUsers();
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        createMessage,
+                        "❌ " +
+                        error.message,
+                        "error"
+                    );
+
+                } finally {
+
+                    createUserBtn.disabled =
+                        false;
+
+                    createUserBtn.textContent =
+                        "إنشاء الحساب وإصدار الوثيقة";
+
+                }
+
+            }
+        );
+
+
+        // ============================================
+        // فتح وثيقة التسجيل الجديدة
+        // ============================================
+
+        function openRegistrationDocument(
+            documentData
+        ) {
+
+            document.getElementById(
+                "printDocumentNumber"
+            ).textContent =
+                documentData.documentNumber ||
+                "-";
+
+
+            document.getElementById(
+                "printFullName"
+            ).textContent =
+                documentData.fullName ||
+                "-";
+
+
+            document.getElementById(
+                "printEmail"
+            ).textContent =
+                documentData.email ||
+                "-";
+
+
+            document.getElementById(
+                "printPassword"
+            ).textContent =
+                documentData.password ||
+                "-";
+
+
+            document.getElementById(
+                "printRole"
+            ).textContent =
+                roleNames[
+                    documentData.role
+                ] ||
+                documentData.role ||
+                "-";
+
+
+            document.getElementById(
+                "printIssuedAt"
+            ).textContent =
+                documentData.issuedAt
+                    ? new Date(
+                        documentData.issuedAt
+                    ).toLocaleString(
+                        "ar-DZ"
+                    )
+                    : new Date().toLocaleString(
+                        "ar-DZ"
+                    );
+
+
+            const rightsList =
                 document.getElementById(
-                    "fullName"
-                ).value.trim();
+                    "printRights"
+                );
 
 
-            const email =
+            const rights =
+                roleRights[
+                    documentData.role
+                ] ||
+                [];
+
+
+            rightsList.innerHTML =
+                rights.map(
+                    right =>
+                        `<li>${escapeHtml(
+                            right
+                        )}</li>`
+                ).join("");
+
+
+            createQRCode();
+
+
+            /*
+                ننتظر قليلا حتى يتم إنشاء QR
+                ثم نفتح نافذة الطباعة.
+            */
+
+            setTimeout(
+                function() {
+
+                    window.print();
+
+                },
+                500
+            );
+
+        }
+
+
+        // ============================================
+        // إنشاء QR Code
+        // ============================================
+
+        function createQRCode() {
+
+            const qrContainer =
                 document.getElementById(
-                    "email"
-                ).value.trim();
+                    "registrationQr"
+                );
 
 
-            const password =
-                document.getElementById(
-                    "password"
-                ).value;
+            qrContainer.innerHTML =
+                "";
 
 
-            const role =
-                document.getElementById(
-                    "role"
-                ).value;
+            if (
+                typeof QRCode ===
+                "undefined"
+            ) {
+
+                qrContainer.innerHTML = `
+
+                    <div style="
+                        color:#b91c1c;
+                        font-size:13px;
+                    ">
+
+                        تعذر تحميل رمز QR.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            new QRCode(
+                qrContainer,
+                {
+
+                    text:
+                        LIBRARY_URL,
+
+                    width: 150,
+
+                    height: 150,
+
+                    correctLevel:
+                        QRCode.CorrectLevel.H
+
+                }
+            );
+
+        }
+
+
+        // ============================================
+        // عرض وثيقة حساب موجود
+        // ============================================
+
+        async function viewRegistrationDocument(
+            user
+        ) {
+
+            documentModal.classList.add(
+                "show"
+            );
+
+
+            documentModalContent.innerHTML = `
+
+                <div class="loading">
+
+                    ⏳ جار تحميل بيانات الوثيقة...
+
+                </div>
+
+            `;
 
 
             try {
@@ -1213,28 +2265,20 @@
 
                 const response =
                     await fetch(
-                        "/api/admin/create-user",
+                        "/api/admin/users/" +
+                        encodeURIComponent(
+                            user.id
+                        ) +
+                        "/registration-document",
                         {
-                            method: "POST",
 
                             headers: {
 
-                                "Content-Type":
-                                    "application/json",
-
                                 "Authorization":
-                                    "Bearer " + token
+                                    "Bearer " +
+                                    token
 
-                            },
-
-                            body: JSON.stringify({
-
-                                fullName,
-                                email,
-                                password,
-                                role
-
-                            })
+                            }
 
                         }
                     );
@@ -1251,192 +2295,524 @@
 
                     throw new Error(
                         result.message ||
-                        "فشل إنشاء الحساب."
+                        "تعذر تحميل بيانات الوثيقة."
                     );
 
                 }
 
 
-                showMessage(
-                    createMessage,
-                    "✅ تم إنشاء الحساب بنجاح.",
-                    "success"
-                );
+                const document =
+                    result.document;
 
 
-                createUserForm.reset();
+                const accountUser =
+                    result.user;
 
 
-                await loadUsers();
+                const issuedDate =
+                    document.issued_at
+                        ? new Date(
+                            document.issued_at
+                        ).toLocaleString(
+                            "ar-DZ"
+                        )
+                        : "-";
+
+
+                documentModalContent.innerHTML = `
+
+                    <div class="document-info">
+
+                        <div class="document-info-row">
+
+                            <span class="document-info-label">
+                                رقم الوثيقة
+                            </span>
+
+                            <span class="document-info-value">
+                                ${escapeHtml(
+                                    document.document_number
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-info-row">
+
+                            <span class="document-info-label">
+                                الاسم
+                            </span>
+
+                            <span>
+                                ${escapeHtml(
+                                    accountUser.fullName
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-info-row">
+
+                            <span class="document-info-label">
+                                البريد الإلكتروني
+                            </span>
+
+                            <span class="document-info-value">
+                                ${escapeHtml(
+                                    accountUser.email
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-info-row">
+
+                            <span class="document-info-label">
+                                نوع الحساب
+                            </span>
+
+                            <span>
+                                ${escapeHtml(
+                                    roleNames[
+                                        accountUser.role
+                                    ] ||
+                                    accountUser.role
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-info-row">
+
+                            <span class="document-info-label">
+                                تاريخ الإصدار
+                            </span>
+
+                            <span>
+                                ${escapeHtml(
+                                    issuedDate
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-info-row">
+
+                            <span class="document-info-label">
+                                حالة الوثيقة
+                            </span>
+
+                            <span>
+
+                                ${
+                                    document.status ===
+                                    "issued"
+
+                                        ? "🟢 صالحة"
+
+                                        : "🔴 ملغاة"
+                                }
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="warning-box">
+
+                        ⚠️ <strong>ملاحظة مهمة:</strong>
+
+                        <br>
+
+                        كلمة المرور القديمة لا يمكن استرجاعها
+                        من النظام بعد إنشاء الحساب، لأن النظام
+                        لا يخزن كلمات المرور بصورتها الأصلية.
+
+                        <br><br>
+
+                        إذا احتجت إلى وثيقة جديدة تتضمن كلمة مرور،
+                        يجب تغيير كلمة المرور أولًا ثم إصدار وثيقة
+                        جديدة.
+
+                    </div>
+
+                `;
 
 
             } catch (error) {
 
                 console.error(error);
 
-                showMessage(
-                    createMessage,
-                    "❌ " + error.message,
-                    "error"
-                );
+                documentModalContent.innerHTML = `
+
+                    <div class="message error">
+
+                        ❌ ${escapeHtml(
+                            error.message
+                        )}
+
+                    </div>
+
+                `;
 
             }
 
         }
-    );
 
 
-    // ============================================
-    // فتح نافذة التعديل
-    // ============================================
+        // ============================================
+        // إغلاق نافذة الوثيقة
+        // ============================================
 
-    function openEditModal(user) {
+        function closeDocumentModal() {
 
-        // منع تعديل حساب المبرمج
-
-        if (user.role === "programmer") {
-
-            alert(
-                "🔒 لا يمكن تعديل حساب المبرمج."
+            documentModal.classList.remove(
+                "show"
             );
 
-            return;
-
         }
 
 
         document.getElementById(
-            "editUserId"
-        ).value = user.id;
+            "closeDocumentModalBtn"
+        ).addEventListener(
+            "click",
+            closeDocumentModal
+        );
 
 
         document.getElementById(
-            "editFullName"
-        ).value = user.fullName || "";
+            "closeDocumentBtn"
+        ).addEventListener(
+            "click",
+            closeDocumentModal
+        );
 
 
-        document.getElementById(
-            "editEmail"
-        ).value = user.email || "";
+        documentModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    documentModal
+                ) {
+
+                    closeDocumentModal();
+
+                }
+
+            }
+        );
 
 
-        document.getElementById(
-            "editPassword"
-        ).value = "";
+        // ============================================
+        // فتح نافذة التعديل
+        // ============================================
 
-
-        document.getElementById(
-            "editRole"
-        ).value =
-
-            [
-                "admin",
-                "teacher",
-                "student"
-            ].includes(user.role)
-
-                ? user.role
-
-                : "student";
-
-
-        editMessage.className =
-            "message";
-
-        editMessage.textContent = "";
-
-
-        editModal.classList.add("show");
-
-    }
-
-
-    // ============================================
-    // إغلاق نافذة التعديل
-    // ============================================
-
-    function closeEditModal() {
-
-        editModal.classList.remove("show");
-
-    }
-
-
-    document.getElementById(
-        "closeModalBtn"
-    ).addEventListener(
-        "click",
-        closeEditModal
-    );
-
-
-    document.getElementById(
-        "cancelEditBtn"
-    ).addEventListener(
-        "click",
-        closeEditModal
-    );
-
-
-    editModal.addEventListener(
-        "click",
-        function(event) {
+        function openEditModal(user) {
 
             if (
-                event.target === editModal
+                user.role ===
+                "programmer"
             ) {
 
-                closeEditModal();
+                alert(
+                    "🔒 لا يمكن تعديل حساب المبرمج."
+                );
+
+                return;
 
             }
 
-        }
-    );
+
+            document.getElementById(
+                "editUserId"
+            ).value =
+                user.id;
 
 
-    // ============================================
-    // حفظ تعديل الحساب
-    // ============================================
+            document.getElementById(
+                "editFullName"
+            ).value =
+                user.fullName ||
+                "";
 
-    editUserForm.addEventListener(
-        "submit",
-        async function(event) {
 
-            event.preventDefault();
+            document.getElementById(
+                "editEmail"
+            ).value =
+                user.email ||
+                "";
+
+
+            document.getElementById(
+                "editPassword"
+            ).value =
+                "";
+
+
+            document.getElementById(
+                "editRole"
+            ).value =
+
+                [
+                    "admin",
+                    "teacher",
+                    "student"
+                ].includes(
+                    user.role
+                )
+
+                    ? user.role
+
+                    : "student";
 
 
             editMessage.className =
                 "message";
 
-
-            const userId =
-                document.getElementById(
-                    "editUserId"
-                ).value;
+            editMessage.textContent =
+                "";
 
 
-            const fullName =
-                document.getElementById(
-                    "editFullName"
-                ).value.trim();
+            editModal.classList.add(
+                "show"
+            );
+
+        }
 
 
-            const email =
-                document.getElementById(
-                    "editEmail"
-                ).value.trim();
+        // ============================================
+        // إغلاق نافذة التعديل
+        // ============================================
+
+        function closeEditModal() {
+
+            editModal.classList.remove(
+                "show"
+            );
+
+        }
 
 
-            const password =
-                document.getElementById(
-                    "editPassword"
-                ).value;
+        document.getElementById(
+            "closeModalBtn"
+        ).addEventListener(
+            "click",
+            closeEditModal
+        );
 
 
-            const role =
-                document.getElementById(
-                    "editRole"
-                ).value;
+        document.getElementById(
+            "cancelEditBtn"
+        ).addEventListener(
+            "click",
+            closeEditModal
+        );
+
+
+        editModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    editModal
+                ) {
+
+                    closeEditModal();
+
+                }
+
+            }
+        );
+
+
+        // ============================================
+        // حفظ تعديل الحساب
+        // ============================================
+
+        editUserForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                editMessage.className =
+                    "message";
+
+                editMessage.textContent =
+                    "";
+
+
+                const userId =
+                    document.getElementById(
+                        "editUserId"
+                    ).value;
+
+
+                const fullName =
+                    document.getElementById(
+                        "editFullName"
+                    ).value.trim();
+
+
+                const email =
+                    document.getElementById(
+                        "editEmail"
+                    ).value.trim();
+
+
+                const password =
+                    document.getElementById(
+                        "editPassword"
+                    ).value;
+
+
+                const role =
+                    document.getElementById(
+                        "editRole"
+                    ).value;
+
+
+                try {
+
+                    const token =
+                        await getAccessToken();
+
+
+                    if (!token) {
+
+                        throw new Error(
+                            "انتهت جلسة تسجيل الدخول."
+                        );
+
+                    }
+
+
+                    const response =
+                        await fetch(
+                            "/api/admin/users/" +
+                            encodeURIComponent(
+                                userId
+                            ),
+                            {
+
+                                method: "PUT",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        "Bearer " +
+                                        token
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        fullName,
+
+                                        email,
+
+                                        password,
+
+                                        role
+
+                                    })
+
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (
+                        !response.ok ||
+                        !result.success
+                    ) {
+
+                        throw new Error(
+                            result.message ||
+                            "فشل تعديل الحساب."
+                        );
+
+                    }
+
+
+                    showMessage(
+                        editMessage,
+                        "✅ تم تعديل الحساب بنجاح.",
+                        "success"
+                    );
+
+
+                    await loadUsers();
+
+
+                    setTimeout(
+                        closeEditModal,
+                        700
+                    );
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        editMessage,
+                        "❌ " +
+                        error.message,
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        // ============================================
+        // حذف حساب
+        // ============================================
+
+        async function deleteUser(
+            userId,
+            userName
+        ) {
+
+            const confirmed =
+                confirm(
+
+                    "هل أنت متأكد من حذف الحساب:\n\n" +
+
+                    userName +
+
+                    "\n\nلا يمكن التراجع عن هذه العملية."
+
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
 
 
             try {
@@ -1456,35 +2832,23 @@
 
                 const response =
                     await fetch(
-
                         "/api/admin/users/" +
-                        encodeURIComponent(userId),
-
+                        encodeURIComponent(
+                            userId
+                        ),
                         {
 
-                            method: "PUT",
+                            method: "DELETE",
 
                             headers: {
 
-                                "Content-Type":
-                                    "application/json",
-
                                 "Authorization":
-                                    "Bearer " + token
+                                    "Bearer " +
+                                    token
 
-                            },
-
-                            body: JSON.stringify({
-
-                                fullName,
-                                email,
-                                password,
-                                role
-
-                            })
+                            }
 
                         }
-
                     );
 
 
@@ -1499,212 +2863,136 @@
 
                     throw new Error(
                         result.message ||
-                        "فشل تعديل الحساب."
+                        "فشل حذف الحساب."
                     );
 
                 }
 
 
-                showMessage(
-                    editMessage,
-                    "✅ تم تعديل الحساب بنجاح.",
-                    "success"
+                alert(
+                    "✅ تم حذف الحساب بنجاح."
                 );
 
 
                 await loadUsers();
 
 
-                setTimeout(
-                    closeEditModal,
-                    700
-                );
-
-
             } catch (error) {
 
                 console.error(error);
 
-                showMessage(
-                    editMessage,
-                    "❌ " + error.message,
-                    "error"
+                alert(
+                    "❌ " +
+                    error.message
                 );
 
             }
 
         }
-    );
 
 
-    // ============================================
-    // حذف حساب
-    // ============================================
+        // ============================================
+        // تحديث القائمة
+        // ============================================
 
-    async function deleteUser(
-        userId,
-        userName
-    ) {
-
-        const confirmed =
-            confirm(
-
-                "هل أنت متأكد من حذف الحساب:\n\n" +
-
-                userName +
-
-                "\n\nلا يمكن التراجع عن هذه العملية."
-
-            );
+        refreshBtn.addEventListener(
+            "click",
+            loadUsers
+        );
 
 
-        if (!confirmed) {
+        // ============================================
+        // حماية HTML
+        // ============================================
 
-            return;
+        function escapeHtml(value) {
+
+            return String(
+                value ?? ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
 
         }
 
 
-        try {
+        function escapeAttribute(value) {
 
-            const token =
-                await getAccessToken();
+            return String(
+                value ?? ""
+            )
 
+                .replace(
+                    /\\/g,
+                    "\\\\"
+                )
 
-            if (!token) {
+                .replace(
+                    /'/g,
+                    "\\'"
+                )
 
-                throw new Error(
-                    "انتهت جلسة تسجيل الدخول."
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /\n/g,
+                    " "
                 );
+
+        }
+
+
+        // ============================================
+        // تشغيل الصفحة
+        // ============================================
+
+        async function initializePage() {
+
+            const allowed =
+                await checkAccountManager();
+
+
+            if (!allowed) {
+
+                return;
 
             }
-
-
-            const response =
-                await fetch(
-
-                    "/api/admin/users/" +
-                    encodeURIComponent(userId),
-
-                    {
-
-                        method: "DELETE",
-
-                        headers: {
-
-                            "Authorization":
-                                "Bearer " + token
-
-                        }
-
-                    }
-
-                );
-
-
-            const result =
-                await response.json();
-
-
-            if (
-                !response.ok ||
-                !result.success
-            ) {
-
-                throw new Error(
-                    result.message ||
-                    "فشل حذف الحساب."
-                );
-
-            }
-
-
-            alert(
-                "✅ تم حذف الحساب بنجاح."
-            );
 
 
             await loadUsers();
 
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                "❌ " + error.message
-            );
-
-        }
-
-    }
-
-
-    // ============================================
-    // تحديث القائمة
-    // ============================================
-
-    refreshBtn.addEventListener(
-        "click",
-        loadUsers
-    );
-
-
-    // ============================================
-    // حماية HTML
-    // ============================================
-
-    function escapeHtml(value) {
-
-        return String(value ?? "")
-
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-
-    }
-
-
-    function escapeAttribute(value) {
-
-        return String(value ?? "")
-
-            .replace(/\\/g, "\\\\")
-            .replace(/'/g, "\\'")
-            .replace(/"/g, "&quot;")
-            .replace(/\n/g, " ");
-
-    }
-
-
-    // ============================================
-    // تشغيل الصفحة
-    // ============================================
-
-    async function initializePage() {
-
-        const allowed =
-            await checkAccountManager();
-
-
-        if (!allowed) {
-
-            return;
-
         }
 
 
-        await loadUsers();
+        initializePage();
 
-    }
-
-
-    initializePage();
-
-</script>
-```
+    </script>
 
 </body>
 
