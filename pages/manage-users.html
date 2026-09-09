@@ -392,6 +392,7 @@
             padding: 20mm;
             color: #111827;
             font-family: "Cairo", sans-serif;
+            position: relative;
         }
 
         .registration-header {
@@ -491,14 +492,26 @@
         }
 
         .qr-section {
-            margin-top: 30px;
+            position: absolute;
+            left: 20mm;
+            bottom: 38mm;
+            width: 32mm;
             text-align: center;
         }
 
         #registrationQr {
-            width: 150px;
-            height: 150px;
-            margin: 10px auto;
+            width: 28mm;
+            height: 28mm;
+            margin: 4px auto;
+        }
+
+        #registrationQr img {
+            width: 28mm !important;
+            height: 28mm !important;
+        }
+
+        .qr-section strong {
+            display: none;
         }
 
         .qr-url {
@@ -2211,9 +2224,9 @@
                     text:
                         LIBRARY_URL,
 
-                    width: 150,
+                    width: 105,
 
-                    height: 150,
+                    height: 105,
 
                     correctLevel:
                         QRCode.CorrectLevel.H
