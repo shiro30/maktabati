@@ -1,64 +1,45 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | مكتبة ثانوية مصاص رابح</title>
 
-    <title>
-        تسجيل الدخول | مكتبة ثانوية مصاص رابح
-    </title>
+    <link rel="icon" type="image/png" href="../favicone.png">
 
-
-    <!-- =========================================
-         الشعار
-    ========================================== -->
+    <link rel="stylesheet" href="../style.css">
 
     <link
-        rel="icon"
-        type="image/png"
-        href="../favicone.png"
-    >
-
-
-    <!-- =========================================
-         ملف التنسيق الرئيسي
-    ========================================== -->
-
-    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
-        href="../style.css"
     >
-
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Cairo", Arial, sans-serif;
+        }
 
         /* =========================================
            هوية المؤسسة
         ========================================== */
 
         .institution-bar {
-
             background:
                 linear-gradient(
                     135deg,
                     #0f172a,
                     #1e3a8a
                 );
-
             color: white;
-
             text-align: center;
-
             padding: 14px 20px;
-
-            border-radius:
-                0 0 16px 16px;
-
+            border-radius: 0 0 16px 16px;
             box-shadow:
                 0 4px 15px rgba(
                     0,
@@ -68,55 +49,35 @@
                 );
         }
 
-
         .institution-bar strong {
-
             display: block;
-
             font-size: 18px;
-
             margin-bottom: 4px;
         }
 
-
         .institution-bar span {
-
             font-size: 13px;
-
             opacity: 0.9;
         }
-
 
         /* =========================================
            صفحة تسجيل الدخول
         ========================================== */
 
         .login-page {
-
             min-height: 70vh;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             padding: 50px 20px;
         }
 
-
         .login-box {
-
             width: 100%;
-
             max-width: 450px;
-
             background: white;
-
             padding: 35px;
-
             border-radius: 18px;
-
             box-shadow:
                 0 10px 35px rgba(
                     0,
@@ -124,115 +85,71 @@
                     0,
                     0.08
                 );
-
-            border:
-                1px solid #e2e8f0;
+            border: 1px solid #e2e8f0;
         }
 
-
         .login-logo {
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             margin-bottom: 15px;
         }
 
-
         .login-logo img {
-
             width: 78px;
-
             height: 78px;
-
             object-fit: contain;
-
             border-radius: 16px;
+            display: block;
         }
 
-
         .login-box h1 {
-
             text-align: center;
-
             margin-bottom: 10px;
-
             color: #0f172a;
         }
 
-
         .login-subtitle {
-
             text-align: center;
-
             color: #64748b;
-
             margin-bottom: 25px;
-
             line-height: 1.8;
         }
 
-
         .school-name {
-
             text-align: center;
-
             color: #1e3a8a;
-
             font-weight: bold;
-
             margin-bottom: 25px;
         }
-
 
         /* =========================================
            النموذج
         ========================================== */
 
         .login-form label {
-
             display: block;
-
             margin-bottom: 8px;
-
             font-weight: bold;
-
             color: #334155;
         }
 
-
         .login-form input {
-
             width: 100%;
-
             padding: 13px;
-
             margin-bottom: 20px;
-
-            border:
-                1px solid #cbd5e1;
-
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
-
             font-size: 16px;
-
-            box-sizing: border-box;
-
             outline: none;
-
+            font-family: inherit;
             transition:
                 border-color 0.2s ease,
                 box-shadow 0.2s ease;
         }
 
-
         .login-form input:focus {
-
             border-color: #2563eb;
-
             box-shadow:
                 0 0 0 3px
                 rgba(
@@ -243,98 +160,62 @@
                 );
         }
 
-
         .login-form button {
-
             width: 100%;
-
             padding: 14px;
-
             border: none;
-
             border-radius: 8px;
-
             background: #1d4ed8;
-
             color: white;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
-
+            font-family: inherit;
             transition:
                 background 0.2s ease,
                 transform 0.2s ease;
         }
 
-
         .login-form button:hover {
-
             background: #173b8f;
-
-            transform:
-                translateY(-1px);
+            transform: translateY(-1px);
         }
 
-
         .login-form button:disabled {
-
             opacity: 0.7;
-
             cursor: not-allowed;
-
             transform: none;
         }
 
-
         #loginMessage {
-
             margin-top: 18px;
-
             text-align: center;
-
             font-weight: bold;
-
             min-height: 24px;
+            line-height: 1.7;
         }
-
 
         /* =========================================
            معلومات النظام
         ========================================== */
 
         .system-info {
-
             margin-top: 25px;
-
             padding-top: 20px;
-
-            border-top:
-                1px solid #e2e8f0;
-
+            border-top: 1px solid #e2e8f0;
             text-align: center;
         }
 
-
         .system-info strong {
-
             display: block;
-
             color: #1e3a8a;
-
             margin-bottom: 5px;
         }
 
-
         .system-info span {
-
             color: #64748b;
-
             font-size: 13px;
         }
-
 
         /* =========================================
            الهاتف
@@ -343,54 +224,34 @@
         @media (max-width: 768px) {
 
             .institution-bar {
-
-                padding:
-                    12px 10px;
+                padding: 12px 10px;
             }
 
-
             .institution-bar strong {
-
                 font-size: 16px;
             }
 
-
             .institution-bar span {
-
                 font-size: 12px;
             }
 
-
             .login-page {
-
-                padding:
-                    30px 15px;
+                padding: 30px 15px;
             }
-
 
             .login-box {
-
-                padding:
-                    25px 20px;
+                padding: 25px 20px;
             }
-
 
             .login-logo img {
-
                 width: 68px;
-
                 height: 68px;
             }
-
         }
-
     </style>
-
 </head>
 
-
 <body>
-
 
     <!-- =========================================
          الشريط العلوي
@@ -399,11 +260,6 @@
     <header class="navbar">
 
         <div class="container nav-container">
-
-
-            <!-- =================================
-                 الشعار
-            ================================== -->
 
             <a
                 href="../index.html"
@@ -420,7 +276,6 @@
 
                 </div>
 
-
                 <div>
 
                     <div class="logo-title">
@@ -434,11 +289,6 @@
                 </div>
 
             </a>
-
-
-            <!-- =================================
-                 القائمة
-            ================================== -->
 
             <nav>
 
@@ -464,11 +314,9 @@
 
             </nav>
 
-
         </div>
 
     </header>
-
 
     <!-- =========================================
          هوية المؤسسة
@@ -486,7 +334,6 @@
 
     </div>
 
-
     <!-- =========================================
          تسجيل الدخول
     ========================================== -->
@@ -494,11 +341,6 @@
     <main class="login-page">
 
         <div class="login-box">
-
-
-            <!-- =================================
-                 شعار تسجيل الدخول
-            ================================== -->
 
             <div class="login-logo">
 
@@ -509,27 +351,21 @@
 
             </div>
 
-
             <h1>
                 تسجيل الدخول
             </h1>
 
-
             <p class="login-subtitle">
 
                 الدخول إلى حسابك في
-
                 <br>
-
                 المكتبة الرقمية للمؤسسة
 
             </p>
 
-
             <div class="school-name">
                 ثانوية مصاص رابح
             </div>
-
 
             <!-- =================================
                  نموذج الدخول
@@ -540,11 +376,9 @@
                 class="login-form"
             >
 
-
                 <label for="email">
                     البريد الإلكتروني
                 </label>
-
 
                 <input
                     type="email"
@@ -554,11 +388,9 @@
                     required
                 >
 
-
                 <label for="password">
                     كلمة المرور
                 </label>
-
 
                 <input
                     type="password"
@@ -568,7 +400,6 @@
                     required
                 >
 
-
                 <button
                     id="loginButton"
                     type="submit"
@@ -576,12 +407,9 @@
                     تسجيل الدخول
                 </button>
 
-
                 <div id="loginMessage"></div>
 
-
             </form>
-
 
             <!-- =================================
                  معلومات النظام
@@ -600,11 +428,9 @@
 
             </div>
 
-
         </div>
 
     </main>
-
 
     <!-- =========================================
          التذييل
@@ -630,7 +456,6 @@
 
                     مهندس النظام:
                     شراف الدين بوردوسن —
-
                     أستاذ مادة الرياضيات
 
                 </span>
@@ -646,16 +471,13 @@
 
     </footer>
 
-
     <!-- =========================================
          Supabase
     ========================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
     <script>
-
 
         /* =========================================
            إعداد Supabase
@@ -664,10 +486,8 @@
         const SUPABASE_URL =
             "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-
         const SUPABASE_ANON_KEY =
-            "sb_publishable_znxrXQ3DJxs8D5O5--_TCcQ_6tXDfpFK";
-
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
 
         const supabaseClient =
             window.supabase.createClient(
@@ -675,28 +495,29 @@
                 SUPABASE_ANON_KEY
             );
 
-
         /* =========================================
            عناصر الصفحة
         ========================================== */
 
         const loginForm =
-            document.getElementById(
-                "loginForm"
-            );
-
+            document.getElementById("loginForm");
 
         const loginButton =
-            document.getElementById(
-                "loginButton"
-            );
-
+            document.getElementById("loginButton");
 
         const loginMessage =
-            document.getElementById(
-                "loginMessage"
-            );
+            document.getElementById("loginMessage");
 
+        /* =========================================
+           عرض رسالة
+        ========================================== */
+
+        function showMessage(message, color) {
+
+            loginMessage.textContent = message;
+            loginMessage.style.color = color;
+
+        }
 
         /* =========================================
            تسجيل الدخول
@@ -708,50 +529,42 @@
 
                 event.preventDefault();
 
-
-                /* ================================
-                   الحصول على بيانات المستخدم
-                ================================= */
-
                 const email =
                     document
                         .getElementById("email")
                         .value
                         .trim();
 
-
                 const password =
                     document
                         .getElementById("password")
                         .value;
 
+                if (!email || !password) {
 
-                /* ================================
-                   حالة الزر
-                ================================= */
+                    showMessage(
+                        "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+                        "#dc2626"
+                    );
 
-                loginButton.disabled =
-                    true;
+                    return;
+                }
 
+                loginButton.disabled = true;
 
                 loginButton.textContent =
                     "جار تسجيل الدخول...";
 
-
-                loginMessage.textContent =
-                    "";
-
-
-                loginMessage.style.color =
-                    "#64748b";
-
+                showMessage(
+                    "",
+                    "#64748b"
+                );
 
                 try {
 
-
-                    /* ============================
+                    /* =================================
                        تسجيل الدخول في Supabase
-                    ============================= */
+                    ================================== */
 
                     const {
                         data,
@@ -761,29 +574,16 @@
                             .auth
                             .signInWithPassword({
 
-                                email:
-                                    email,
-
-                                password:
-                                    password
+                                email: email,
+                                password: password
 
                             });
 
-
                     if (error) {
-
                         throw error;
-
                     }
 
-
-                    /* ============================
-                       التأكد من وجود المستخدم
-                    ============================= */
-
-                    const user =
-                        data.user;
-
+                    const user = data.user;
 
                     if (!user) {
 
@@ -793,22 +593,14 @@
 
                     }
 
+                    showMessage(
+                        "تم تسجيل الدخول بنجاح ✓",
+                        "#16a34a"
+                    );
 
-                    /* ============================
-                       رسالة النجاح
-                    ============================= */
-
-                    loginMessage.textContent =
-                        "تم تسجيل الدخول بنجاح ✓";
-
-
-                    loginMessage.style.color =
-                        "#16a34a";
-
-
-                    /* ============================
+                    /* =================================
                        الحصول على صلاحية المستخدم
-                    ============================= */
+                    ================================== */
 
                     const {
                         data: profile,
@@ -825,7 +617,6 @@
                             )
                             .single();
 
-
                     if (
                         profileError ||
                         !profile
@@ -837,142 +628,135 @@
 
                     }
 
-
-                    /* ============================
-                       معلومات الحساب
-                    ============================= */
-
                     console.log(
                         "المستخدم:",
                         profile.full_name
                     );
-
 
                     console.log(
                         "الصلاحية:",
                         profile.role
                     );
 
-
-                    /* ============================
+                    /* =================================
                        التوجيه حسب الصلاحية
-                    ============================= */
+                       
+                       مهم:
+                       login.html داخل pages/
+                       لذلك نستخدم ../
+                    ================================== */
+
+                    let destination = null;
+
+                    switch (
+                        String(profile.role)
+                            .trim()
+                            .toLowerCase()
+                    ) {
+
+                        case "programmer":
+
+                            destination =
+                                "../programmer.html";
+
+                            break;
+
+                        case "admin":
+
+                            destination =
+                                "../admin.html";
+
+                            break;
+
+                        case "teacher":
+
+                            destination =
+                                "../teacher.html";
+
+                            break;
+
+                        case "student":
+
+                            destination =
+                                "../student.html";
+
+                            break;
+
+                        default:
+
+                            showMessage(
+                                "صلاحية الحساب غير معروفة.",
+                                "#dc2626"
+                            );
+
+                            loginButton.disabled = false;
+
+                            loginButton.textContent =
+                                "تسجيل الدخول";
+
+                            return;
+                    }
+
+                    /* =================================
+                       الانتقال
+                    ================================== */
 
                     setTimeout(
                         function() {
 
-                            switch (
-                                profile.role
-                            ) {
-
-
-                                /* =================
-                                   المبرمج
-                                ================== */
-
-                                case "programmer":
-
-                                    window.location.href =
-                                        "programmer.html";
-
-                                    break;
-
-
-                                /* =================
-                                   المدير
-                                ================== */
-
-                                case "admin":
-
-                                    window.location.href =
-                                        "admin.html";
-
-                                    break;
-
-
-                                /* =================
-                                   الأستاذ
-                                ================== */
-
-                                case "teacher":
-
-                                    window.location.href =
-                                        "teacher.html";
-
-                                    break;
-
-
-                                /* =================
-                                   التلميذ
-                                ================== */
-
-                                case "student":
-
-                                    window.location.href =
-                                        "student.html";
-
-                                    break;
-
-
-                                /* =================
-                                   صلاحية غير معروفة
-                                ================== */
-
-                                default:
-
-                                    loginMessage.textContent =
-                                        "صلاحية الحساب غير معروفة.";
-
-
-                                    loginMessage.style.color =
-                                        "#dc2626";
-
-
-                                    loginButton.disabled =
-                                        false;
-
-
-                                    loginButton.textContent =
-                                        "تسجيل الدخول";
-
-                            }
+                            window.location.href =
+                                destination;
 
                         },
-                        700
+                        500
                     );
-
 
                 }
 
-
                 catch (error) {
-
 
                     console.error(
                         "Login error:",
                         error
                     );
 
-
-                    /* ============================
-                       رسالة الخطأ
-                    ============================= */
-
-                    loginMessage.textContent =
+                    let errorMessage =
                         "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
 
+                    if (
+                        error &&
+                        error.message
+                    ) {
 
-                    loginMessage.style.color =
-                        "#dc2626";
+                        console.error(
+                            "Supabase message:",
+                            error.message
+                        );
 
+                        /*
+                         * إذا كان الخطأ متعلقًا بقاعدة
+                         * profiles نعرض رسالة أوضح.
+                         */
 
-                    /* ============================
-                       إعادة تفعيل الزر
-                    ============================= */
+                        if (
+                            error.message.includes(
+                                "profiles"
+                            )
+                        ) {
 
-                    loginButton.disabled =
-                        false;
+                            errorMessage =
+                                "تم تسجيل الدخول، لكن بيانات صلاحية الحساب غير موجودة.";
 
+                        }
+
+                    }
+
+                    showMessage(
+                        errorMessage,
+                        "#dc2626"
+                    );
+
+                    loginButton.disabled = false;
 
                     loginButton.textContent =
                         "تسجيل الدخول";
@@ -982,9 +766,7 @@
             }
         );
 
-
     </script>
-
 
 </body>
 
