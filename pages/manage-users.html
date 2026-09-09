@@ -392,7 +392,6 @@
             padding: 20mm;
             color: #111827;
             font-family: "Cairo", sans-serif;
-            position: relative;
         }
 
         .registration-header {
@@ -477,8 +476,9 @@
         .registration-rights {
             margin-top: 25px;
             border: 1px solid #d7deea;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 20px;
+            background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
         }
 
         .registration-rights h3 {
@@ -489,36 +489,65 @@
         .registration-rights ul {
             padding-right: 20px;
             line-height: 2;
+            margin-bottom: 18px;
         }
 
         .qr-section {
-            position: absolute;
-            left: 20mm;
-            bottom: 38mm;
-            width: 32mm;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 18px;
+            padding: 14px 16px;
+            border: 1px dashed #b8c6d9;
+            border-radius: 12px;
+            background: #ffffff;
         }
 
-        #registrationQr {
-            width: 28mm;
-            height: 28mm;
-            margin: 4px auto;
-        }
-
-        #registrationQr img {
-            width: 28mm !important;
-            height: 28mm !important;
+        .qr-info {
+            text-align: right;
+            flex: 1;
         }
 
         .qr-section strong {
-            display: none;
+            display: block;
+            color: #0b1f3a;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .qr-info span {
+            display: block;
+            color: #667085;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        #registrationQr {
+            width: 24mm;
+            height: 24mm;
+            min-width: 24mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        #registrationQr img {
+            width: 22mm !important;
+            height: 22mm !important;
+            display: block;
         }
 
         .qr-url {
             direction: ltr;
-            font-size: 11px;
+            font-size: 9px;
             color: #667085;
             word-break: break-all;
+            margin-top: 4px;
         }
 
         .registration-footer {
@@ -1192,19 +1221,26 @@
 
                 </ul>
 
-            </div>
+                <div class="qr-section">
 
+                    <div id="registrationQr"></div>
 
-            <div class="qr-section">
+                    <div class="qr-info">
 
-                <strong>
-                    رمز الدخول إلى المكتبة
-                </strong>
+                        <strong>
+                            رمز الدخول إلى المكتبة
+                        </strong>
 
-                <div id="registrationQr"></div>
+                        <span>
+                            امسح الرمز للوصول السريع إلى المكتبة الإلكترونية.
+                        </span>
 
-                <div class="qr-url">
-                    https://maktabati-1-rpeo.onrender.com
+                        <div class="qr-url">
+                            https://maktabati-1-rpeo.onrender.com
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
