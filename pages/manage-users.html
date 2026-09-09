@@ -384,76 +384,89 @@
             display: none;
         }
 
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
         .registration-paper {
+            box-sizing: border-box;
             width: 210mm;
-            min-height: 297mm;
+            height: 297mm;
+            min-height: 0;
+            max-height: 297mm;
             background: white;
             margin: 0 auto;
-            padding: 20mm;
+            padding: 12mm 14mm 10mm;
             color: #111827;
             font-family: "Cairo", sans-serif;
+            overflow: hidden;
         }
 
         .registration-header {
             text-align: center;
-            border-bottom: 3px solid #0b1f3a;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            border-bottom: 2px solid #0b1f3a;
+            padding-bottom: 9px;
+            margin-bottom: 13px;
         }
 
         .registration-header .school-name {
-            font-size: 24px;
+            font-size: 21px;
             font-weight: 800;
             color: #0b1f3a;
         }
 
         .registration-header .library-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-top: 5px;
+            margin-top: 2px;
         }
 
         .registration-title {
             text-align: center;
-            margin: 25px 0;
+            margin: 12px 0;
         }
 
         .registration-title h1 {
-            font-size: 28px;
+            font-size: 23px;
             color: #0b1f3a;
-            margin-bottom: 8px;
+            margin: 0 0 4px;
         }
 
         .registration-title p {
             color: #667085;
+            margin: 0;
+            font-size: 12px;
         }
 
         .document-number-box {
             text-align: center;
-            margin: 20px 0;
+            margin: 10px 0;
+            font-size: 12px;
         }
 
         .document-number {
             display: inline-block;
-            border: 2px solid #0b1f3a;
-            padding: 8px 22px;
-            border-radius: 8px;
+            border: 1.5px solid #0b1f3a;
+            padding: 5px 18px;
+            border-radius: 7px;
             font-weight: 800;
             direction: ltr;
+            margin-top: 2px;
         }
 
         .registration-details {
             border: 1px solid #d7deea;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            margin-top: 25px;
+            margin-top: 12px;
         }
 
         .registration-row {
             display: grid;
             grid-template-columns: 35% 65%;
             border-bottom: 1px solid #d7deea;
-            min-height: 50px;
+            min-height: 38px;
         }
 
         .registration-row:last-child {
@@ -462,45 +475,49 @@
 
         .registration-label {
             background: #f4f7fb;
-            padding: 12px;
+            padding: 8px 10px;
             font-weight: 800;
+            font-size: 12px;
         }
 
         .registration-value {
-            padding: 12px;
+            padding: 8px 10px;
             direction: ltr;
             text-align: left;
             word-break: break-word;
+            font-size: 12px;
         }
 
         .registration-rights {
-            margin-top: 25px;
+            margin-top: 12px;
             border: 1px solid #d7deea;
-            border-radius: 14px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 11px 13px;
             background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
         }
 
         .registration-rights h3 {
             color: #0b1f3a;
-            margin-bottom: 12px;
+            margin: 0 0 5px;
+            font-size: 14px;
         }
 
         .registration-rights ul {
-            padding-right: 20px;
-            line-height: 2;
-            margin-bottom: 18px;
+            padding-right: 18px;
+            line-height: 1.65;
+            margin: 0;
+            font-size: 11px;
         }
 
         .qr-section {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 18px;
-            margin-top: 18px;
-            padding: 14px 16px;
+            gap: 13px;
+            margin-top: 9px;
+            padding: 7px 10px;
             border: 1px dashed #b8c6d9;
-            border-radius: 12px;
+            border-radius: 9px;
             background: #ffffff;
         }
 
@@ -512,64 +529,76 @@
         .qr-section strong {
             display: block;
             color: #0b1f3a;
-            font-size: 14px;
-            margin-bottom: 5px;
+            font-size: 12px;
+            margin-bottom: 2px;
         }
 
         .qr-info span {
             display: block;
             color: #667085;
-            font-size: 11px;
-            line-height: 1.7;
+            font-size: 9px;
+            line-height: 1.5;
         }
 
         #registrationQr {
-            width: 24mm;
-            height: 24mm;
-            min-width: 24mm;
+            width: 21mm;
+            height: 21mm;
+            min-width: 21mm;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 3px;
+            padding: 2px;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border-radius: 6px;
             background: #ffffff;
         }
 
         #registrationQr img {
-            width: 22mm !important;
-            height: 22mm !important;
+            width: 19mm !important;
+            height: 19mm !important;
             display: block;
         }
 
         .qr-url {
             direction: ltr;
-            font-size: 9px;
+            font-size: 8px;
             color: #667085;
             word-break: break-all;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .registration-footer {
-            margin-top: 55px;
-            padding-top: 15px;
+            margin-top: 13px;
+            padding-top: 7px;
             border-top: 1px solid #cbd5e1;
             text-align: center;
-            font-size: 12px;
+            font-size: 10px;
             color: #667085;
-            line-height: 1.8;
+            line-height: 1.55;
+        }
+
+        .registration-footer .prayer-line {
+            color: #0b1f3a;
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .registration-footer .programmer-line {
+            color: #475467;
+            font-weight: 700;
         }
 
         .print-actions {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .print-actions button {
             border: none;
             background: #1264c4;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 22px;
             border-radius: 8px;
             font-family: inherit;
             font-weight: 700;
@@ -595,8 +624,11 @@
 
             .registration-paper {
                 width: 100%;
-                min-height: auto;
-                padding: 20px;
+                height: auto;
+                min-height: 0;
+                max-height: none;
+                padding: 18px;
+                overflow: visible;
             }
         }
 
@@ -619,10 +651,18 @@
             }
 
             .registration-paper {
+                box-sizing: border-box;
                 width: 210mm;
+                height: 297mm;
                 min-height: 297mm;
+                max-height: 297mm;
                 margin: 0;
-                padding: 20mm;
+                padding: 12mm 14mm 10mm;
+                overflow: hidden;
+            }
+
+            .registration-footer {
+                margin-top: 10px;
             }
 
             .print-actions {
@@ -1221,26 +1261,19 @@
 
                 </ul>
 
-                <div class="qr-section">
+            </div>
 
-                    <div id="registrationQr"></div>
 
-                    <div class="qr-info">
+            <div class="qr-section">
 
-                        <strong>
-                            رمز الدخول إلى المكتبة
-                        </strong>
+                <strong>
+                    رمز الدخول إلى المكتبة
+                </strong>
 
-                        <span>
-                            امسح الرمز للوصول السريع إلى المكتبة الإلكترونية.
-                        </span>
+                <div id="registrationQr"></div>
 
-                        <div class="qr-url">
-                            https://maktabati-1-rpeo.onrender.com
-                        </div>
-
-                    </div>
-
+                <div class="qr-url">
+                    https://maktabati-1-rpeo.onrender.com
                 </div>
 
             </div>
@@ -1248,16 +1281,16 @@
 
             <div class="registration-footer">
 
-                <div>
-                    هذه الوثيقة مخصصة لصاحب الحساب فقط.
+                <div class="prayer-line">
+                    ادعوا لنا ولوالدينا بالخير.
                 </div>
 
                 <div>
-                    يرجى المحافظة عليها وعدم مشاركة بيانات الدخول مع الآخرين.
+                    هذه الوثيقة مخصصة لصاحب الحساب فقط، ويرجى المحافظة عليها وعدم مشاركة بيانات الدخول مع الآخرين.
                 </div>
 
-                <div>
-                    جميع الحقوق محفوظة للمهندس/المبرمج ولثانوية مصاص رابح.
+                <div class="programmer-line">
+                    جميع الحقوق محفوظة للمبرمج شراف الدين بوردوسن ولثانوية مصاص رابح.
                 </div>
 
             </div>
