@@ -1516,28 +1516,7 @@
     <!-- الإعدادات -->
 
     <div class="top-settings">
-
-        <button
-            class="settings-btn"
-            id="darkButton"
-            title="الوضع الداكن">
-
-            🌙 الوضع الداكن
-
-        </button>
-
-
-        <button
-            class="settings-btn"
-            id="lightButton"
-            title="الوضع الفاتح">
-
-            ☀️ الوضع الفاتح
-
-        </button>
-
-
-        <button
+<button
             class="settings-btn"
             id="soundButton"
             title="صوت النقر">
@@ -2492,66 +2471,17 @@ loadUserAccount();
 /* =====================================================
    الإعدادات العامة
 ===================================================== */
-
-const darkButton =
-    document.getElementById(
-        "darkButton"
-    );
-
-
-const lightButton =
-    document.getElementById(
-        "lightButton"
-    );
-
-
-const soundButton =
+    const soundButton =
     document.getElementById(
         "soundButton"
     );
-
-
-/* =====================================================
-   الإعدادات المحفوظة
-===================================================== */
-
-let darkMode =
-    localStorage.getItem(
-        "maktabati_dark_mode"
-    ) === "true";
-
-
-let soundEnabled =
+    let soundEnabled =
     localStorage.getItem(
         "maktabati_sound"
     ) !== "false";
 
-
-/* =====================================================
-   تطبيق الوضع
-===================================================== */
-
-function applyTheme() {
-
-    if (darkMode) {
-
-        document.body.classList.add(
-            "dark-mode"
-        );
-
-    }
-
-    else {
-
-        document.body.classList.remove(
-            "dark-mode"
-        );
-    }
-}
-
-
-/* =====================================================
-   صوت النقر
+    /* =====================================================
+       صوت النقر
 ===================================================== */
 
 function playClickSound() {
@@ -2629,57 +2559,8 @@ function playClickSound() {
     }
 }
 
-
-/* =====================================================
-   Dark
-===================================================== */
-
-darkButton.addEventListener(
-    "click",
-    function() {
-
-        darkMode = true;
-
-
-        localStorage.setItem(
-            "maktabati_dark_mode",
-            "true"
-        );
-
-
-        applyTheme();
-
-        playClickSound();
-    }
-);
-
-
-/* =====================================================
-   Light
-===================================================== */
-
-lightButton.addEventListener(
-    "click",
-    function() {
-
-        darkMode = false;
-
-
-        localStorage.setItem(
-            "maktabati_dark_mode",
-            "false"
-        );
-
-
-        applyTheme();
-
-        playClickSound();
-    }
-);
-
-
-/* =====================================================
-   الصوت
+    /* =====================================================
+       الصوت
 ===================================================== */
 
 soundButton.addEventListener(
@@ -2707,13 +2588,6 @@ soundButton.addEventListener(
         }
     }
 );
-
-
-/* =====================================================
-   تطبيق الإعدادات
-===================================================== */
-
-applyTheme();
 
 
 soundButton.textContent =
