@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
@@ -126,6 +125,7 @@
 
         body.dark-mode .category-card,
         body.dark-mode .identity-item,
+        body.dark-mode .identity-card,
         body.dark-mode .book-card {
             background: #1e293b;
             color: #e2e8f0;
@@ -133,12 +133,14 @@
 
         body.dark-mode .category-card h3,
         body.dark-mode .identity-item h3,
+        body.dark-mode .identity-card h3,
         body.dark-mode .book-card h3 {
             color: #f8fafc;
         }
 
         body.dark-mode .category-card p,
         body.dark-mode .identity-item p,
+        body.dark-mode .identity-card p,
         body.dark-mode .book-card p {
             color: #cbd5e1;
         }
@@ -158,6 +160,82 @@
 
         body.dark-mode footer {
             background: #020617;
+        }
+
+
+        /* =====================================================
+           البطاقة الرئيسية الجديدة
+        ===================================================== */
+
+        .hero-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            top: -110px;
+            right: -90px;
+            pointer-events: none;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            bottom: -90px;
+            left: -70px;
+            pointer-events: none;
+        }
+
+        .book-symbol {
+            width: 108px;
+            height: 108px;
+            margin: 0 auto 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            box-shadow:
+                0 16px 35px rgba(0, 0, 0, 0.16),
+                0 0 0 7px rgba(255, 255, 255, 0.08);
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .book-symbol:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow:
+                0 22px 45px rgba(0, 0, 0, 0.20),
+                0 0 0 9px rgba(255, 255, 255, 0.10);
+        }
+
+        .book-symbol img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 23px;
+            display: block;
+        }
+
+        .hero-card h2,
+        .hero-card p,
+        .hero-card .hero-stat {
+            position: relative;
+            z-index: 2;
         }
 
 
@@ -410,6 +488,40 @@
 
 
         /* =====================================================
+           تحسين قسم أحدث الكتب
+        ===================================================== */
+
+        .books-section {
+            position: relative;
+        }
+
+        .books-container {
+            position: relative;
+        }
+
+        .book-cover {
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .book-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+
+        /* =====================================================
            الشاشات الصغيرة
         ===================================================== */
 
@@ -449,6 +561,15 @@
                 font-size: 24px;
             }
 
+            .book-symbol {
+                width: 92px;
+                height: 92px;
+                border-radius: 26px;
+            }
+
+            .book-symbol img {
+                border-radius: 20px;
+            }
         }
 
 
@@ -466,6 +587,15 @@
                 font-size: 15px;
             }
 
+            .book-symbol {
+                width: 82px;
+                height: 82px;
+                border-radius: 23px;
+            }
+
+            .book-symbol img {
+                border-radius: 17px;
+            }
         }
 
     </style>
@@ -657,13 +787,22 @@
 
     <div class="hero-card">
 
+
+        <!-- شعار المكتبة بدل صورة الكتب -->
+
         <div class="book-symbol">
-            📖
+
+            <img
+                src="favicon.png"
+                alt="شعار مكتبة ثانوية مصاص رابح">
+
         </div>
+
 
         <h2>
             مكتبة ثانوية مصاص رابح
         </h2>
+
 
         <p>
             اقرأ، تعلّم، واكتشف
@@ -1141,6 +1280,7 @@
 
 <!-- =====================================================
      BOOKS
+     مكتبتنا - أحدث الكتب
 ===================================================== -->
 
 <section class="section books-section">
@@ -1337,6 +1477,7 @@
 
         مهندس النظام:
         شراف الدين بوردوسن —
+
         أستاذ مادة الرياضيات
 
         <br>
@@ -1379,7 +1520,6 @@ const supabaseClient =
     );
 
 
-
 /* =====================================================
    ACCOUNT BUTTON
 ===================================================== */
@@ -1406,11 +1546,8 @@ function getDashboardByRole(role) {
 
         default:
             return "pages/login.html";
-
     }
-
 }
-
 
 
 async function loadUserAccount() {
@@ -1438,7 +1575,6 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-
         }
 
 
@@ -1468,7 +1604,6 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-
         }
 
 
@@ -1498,7 +1633,6 @@ async function loadUserAccount() {
                     dashboard;
 
                 return false;
-
             };
 
     }
@@ -1515,16 +1649,15 @@ async function loadUserAccount() {
 
         accountButton.href =
             "pages/login.html";
-
     }
-
 }
-
 
 
 supabaseClient.auth.onAuthStateChange(
     function() {
+
         loadUserAccount();
+
     }
 );
 
@@ -1594,7 +1727,6 @@ function applyTheme() {
         );
 
     }
-
 }
 
 
@@ -1656,7 +1788,6 @@ function playClickSound() {
 
         oscillator.connect(gain);
 
-
         gain.connect(
             audioContext.destination
         );
@@ -1678,7 +1809,6 @@ function playClickSound() {
         );
 
     }
-
 }
 
 
@@ -1762,7 +1892,9 @@ soundButton.addEventListener(
 
 
         if (soundEnabled) {
+
             playClickSound();
+
         }
 
     }
@@ -1804,7 +1936,6 @@ const latestBooksContainer =
  * covers/DD.png
  * /covers/DD.png
  * https://...
- *
  */
 
 function getBookCoverPath(cover) {
@@ -1842,7 +1973,7 @@ function getBookCoverPath(cover) {
 
     value =
         value.replace(
-            /^\.\/+/,
+            /^\.\//,
             ""
         );
 
@@ -1893,11 +2024,9 @@ function createLatestBookCard(
 
 
     let coverHTML = `
-
         <div class="book-placeholder">
             📚
         </div>
-
     `;
 
 
@@ -1910,7 +2039,6 @@ function createLatestBookCard(
     if (coverPath) {
 
         coverHTML = `
-
             <img
                 src="${coverPath}"
                 alt="غلاف ${book.title || ""}"
@@ -1921,7 +2049,6 @@ function createLatestBookCard(
                     this.parentElement.innerHTML='<div class=&quot;book-placeholder&quot;>📚</div>';
                 "
             >
-
         `;
 
     }
@@ -1933,7 +2060,6 @@ function createLatestBookCard(
     if (book.pdf) {
 
         buttonHTML = `
-
             <a
                 href="pages/book.html?book=${index}"
                 class="read-button">
@@ -1941,7 +2067,6 @@ function createLatestBookCard(
                 📖 قراءة الكتاب
 
             </a>
-
         `;
 
     }
@@ -1949,7 +2074,6 @@ function createLatestBookCard(
     else {
 
         buttonHTML = `
-
             <span
                 class="read-button"
                 style="
@@ -1960,7 +2084,6 @@ function createLatestBookCard(
                 📖 الكتاب غير متوفر
 
             </span>
-
         `;
 
     }
@@ -2047,7 +2170,6 @@ function displayLatestBooks() {
         `;
 
         return;
-
     }
 
 
@@ -2114,7 +2236,9 @@ function displayLatestBooks() {
                 booksData
                     .map(
                         function(book) {
+
                             return book.category;
+
                         }
                     )
                     .filter(Boolean)
