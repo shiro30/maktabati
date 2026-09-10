@@ -2,222 +2,849 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>تسجيل الدخول | مكتبة ثانوية مصاص رابح</title>
 
-    <link
-        rel="icon"
-        type="image/png"
-        href="../favicon.png"
-    >
+    <link rel="icon" type="image/png" href="../favicon.png">
 
-    <link
-        rel="stylesheet"
-        href="../style.css"
-    >
+    <link rel="stylesheet" href="../style.css">
 
     <style>
-        .institution-bar {
-            background: linear-gradient(135deg, #0f172a, #1e3a8a);
-            color: white;
+
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
+
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
+
+            --white: #ffffff;
+            --text: #e8eef7;
+            --muted: #94a3b8;
+
+            --border: rgba(255, 255, 255, 0.09);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(18, 53, 95, 0.45),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(255, 122, 24, 0.08),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    145deg,
+                    var(--black),
+                    var(--black-soft) 45%,
+                    #061426
+                );
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.18;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 38px 38px;
+        }
+
+
+        /* =========================
+           BASMALA
+        ========================= */
+
+        .basmala {
+            position: relative;
+            z-index: 10;
+
+            width: 100%;
+
             text-align: center;
-            padding: 14px 20px;
-            border-radius: 0 0 16px 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+            padding: 18px 15px 14px;
+
+            color: #f5f7fa;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #02050b,
+                    #07172d,
+                    #030812
+                );
+
+            border-bottom:
+                1px solid
+                rgba(255, 122, 24, 0.18);
+
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.28);
+        }
+
+        .basmala-text {
+            display: inline-block;
+
+            font-family:
+                "Amiri",
+                "Traditional Arabic",
+                "Times New Roman",
+                serif;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            line-height: 1.6;
+
+            color: #f8fafc;
+
+            text-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.45);
+        }
+
+        .basmala-text::after {
+            content: "";
+
+            display: block;
+
+            width: 48px;
+            height: 2px;
+
+            margin: 7px auto 0;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            position: relative;
+            z-index: 5;
+
+            background:
+                rgba(3, 7, 18, 0.94);
+
+            border-bottom:
+                1px solid
+                rgba(255, 122, 24, 0.22);
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.35),
+                0 1px 0 rgba(255, 122, 24, 0.08);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .nav-container {
+            min-height: 76px;
+        }
+
+        .logo {
+            color: var(--white) !important;
+        }
+
+        .logo-icon {
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--navy-2),
+                    var(--black)
+                );
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.35);
+
+            box-shadow:
+                0 0 20px
+                rgba(255, 122, 24, 0.08);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+        .logo-title {
+            color: var(--white) !important;
+        }
+
+        .logo-subtitle {
+            color: var(--muted) !important;
+        }
+
+        nav a {
+            color: #cbd5e1 !important;
+
+            transition:
+                all 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--orange-light) !important;
+        }
+
+        nav a.active {
+            color: var(--orange) !important;
+        }
+
+
+        /* =========================
+           INSTITUTION BAR
+        ========================= */
+
+        .institution-bar {
+            position: relative;
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #050a14,
+                    var(--navy),
+                    #0b2342
+                );
+
+            color: var(--white);
+
+            text-align: center;
+
+            padding: 16px 20px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 122, 24, 0.28);
+
+            box-shadow:
+                0 8px 28px rgba(0, 0, 0, 0.3),
+                inset 0 -1px 0
+                rgba(255, 122, 24, 0.06);
         }
 
         .institution-bar strong {
             display: block;
+
             font-size: 18px;
-            margin-bottom: 4px;
+
+            margin-bottom: 5px;
+
+            color: var(--white);
         }
 
         .institution-bar span {
             font-size: 13px;
-            opacity: 0.9;
+
+            color: #aebed2;
         }
 
+
+        /* =========================
+           LOGIN PAGE
+        ========================= */
+
         .login-page {
-            min-height: 70vh;
+            position: relative;
+            z-index: 1;
+
+            min-height:
+                calc(100vh - 250px);
+
             display: flex;
+
             align-items: center;
             justify-content: center;
-            padding: 50px 20px;
+
+            padding: 55px 20px;
         }
 
         .login-box {
+            position: relative;
+
             width: 100%;
-            max-width: 450px;
-            background: white;
-            padding: 35px;
-            border-radius: 18px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e2e8f0;
+            max-width: 470px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13, 39, 75, 0.96),
+                    rgba(4, 10, 20, 0.98)
+                );
+
+            padding: 38px;
+
+            border-radius: 22px;
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.18);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.48),
+
+                0 0 35px
+                rgba(8, 27, 54, 0.45);
+
+            overflow: hidden;
         }
 
+        .login-box::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--orange),
+                    var(--orange-light),
+                    var(--orange)
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(255, 122, 24, 0.55);
+        }
+
+        .login-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            left: -100px;
+            bottom: -100px;
+
+            background:
+                rgba(255, 122, 24, 0.06);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           LOGIN LOGO
+        ========================= */
+
         .login-logo {
+            position: relative;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
+
+            margin: 8px 0 18px;
         }
 
         .login-logo img {
-            width: 78px;
-            height: 78px;
+            width: 82px;
+            height: 82px;
+
             object-fit: contain;
-            border-radius: 16px;
+
+            padding: 9px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #102e54,
+                    #050b15
+                );
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.3);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.4),
+
+                0 0 25px
+                rgba(255, 122, 24, 0.09);
         }
 
+
+        /* =========================
+           TEXT
+        ========================= */
+
         .login-box h1 {
+            position: relative;
+
             text-align: center;
-            margin-bottom: 10px;
-            color: #0f172a;
+
+            margin: 0 0 10px;
+
+            color: var(--white);
+
+            font-size: 30px;
+        }
+
+        .login-box h1::after {
+            content: "";
+
+            display: block;
+
+            width: 55px;
+            height: 3px;
+
+            margin: 12px auto 0;
+
+            border-radius: 20px;
+
+            background:
+                var(--orange);
+
+            box-shadow:
+                0 0 12px
+                rgba(255, 122, 24, 0.45);
         }
 
         .login-subtitle {
             text-align: center;
-            color: #64748b;
-            margin-bottom: 25px;
+
+            color: var(--muted);
+
+            margin: 18px 0 12px;
+
             line-height: 1.8;
         }
 
         .school-name {
             text-align: center;
-            color: #1e3a8a;
+
+            color: var(--orange-light);
+
             font-weight: bold;
-            margin-bottom: 25px;
+
+            margin-bottom: 28px;
         }
+
+
+        /* =========================
+           FORM
+        ========================= */
 
         .login-form label {
             display: block;
-            margin-bottom: 8px;
+
+            margin-bottom: 9px;
+
             font-weight: bold;
-            color: #334155;
+
+            color: #dbe7f5;
+
+            font-size: 14px;
         }
 
         .login-form .input-group {
             position: relative;
-            margin-bottom: 20px;
+
+            margin-bottom: 21px;
         }
 
         .login-form input {
             width: 100%;
-            height: 54px;
-            padding: 0 16px;
-            border: 2px solid #dbe3ef;
+
+            height: 56px;
+
+            padding: 0 17px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
             border-radius: 14px;
-            background: #f8fafc;
-            color: #0f172a;
+
+            background:
+                rgba(2, 8, 18, 0.78);
+
+            color: var(--white);
+
             font-family: inherit;
+
             font-size: 16px;
-            box-sizing: border-box;
+
             outline: none;
-            transition: all 0.25s ease;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
         }
 
         .login-form input::placeholder {
-            color: #94a3b8;
+            color: #64748b;
         }
 
         .login-form input:hover {
-            border-color: #b9c8dc;
-            background: #ffffff;
+            border-color:
+                rgba(255, 154, 61, 0.35);
+
+            background:
+                rgba(3, 10, 22, 0.9);
         }
 
         .login-form input:focus {
-            border-color: #2563eb;
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+            border-color:
+                var(--orange);
+
+            background:
+                rgba(3, 10, 22, 0.95);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(255, 122, 24, 0.10),
+
+                0 0 20px
+                rgba(255, 122, 24, 0.08);
         }
 
         .password-group input {
-            padding-left: 54px;
+            padding-left: 58px;
         }
+
+
+        /* =========================
+           PASSWORD TOGGLE
+        ========================= */
 
         .toggle-password {
             position: absolute;
+
             left: 8px;
             top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
+
+            transform:
+                translateY(-50%);
+
+            width: 42px;
+            height: 42px;
+
             border: none;
-            border-radius: 10px;
+
+            border-radius: 11px;
+
             background: transparent;
-            color: #64748b;
+
+            color: #8292a8;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             cursor: pointer;
-            transition: all 0.2s ease;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
         }
 
         .toggle-password:hover {
-            background: #eaf1ff;
-            color: #2563eb;
+            background:
+                rgba(255, 122, 24, 0.10);
+
+            color:
+                var(--orange-light);
         }
 
         .toggle-password svg {
             width: 21px;
             height: 21px;
+
             pointer-events: none;
         }
 
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
         .login-form button#loginButton {
             width: 100%;
+
+            height: 55px;
+
             padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: #1d4ed8;
+
+            border:
+                1px solid
+                rgba(255, 154, 61, 0.35);
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d95f0b,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
             color: white;
+
+            font-family: inherit;
+
             font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
-            transition: 0.2s;
+
+            box-shadow:
+                0 10px 25px
+                rgba(255, 122, 24, 0.16);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease;
         }
 
         .login-form button#loginButton:hover {
-            background: #173b8f;
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(255, 122, 24, 0.25);
+
+            filter:
+                brightness(1.05);
+        }
+
+        .login-form button#loginButton:active {
+            transform:
+                translateY(0);
         }
 
         .login-form button#loginButton:disabled {
-            opacity: 0.7;
+            opacity: 0.65;
+
             cursor: not-allowed;
+
+            transform: none;
         }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
 
         #loginMessage {
             margin-top: 18px;
+
+            padding: 0 5px;
+
             text-align: center;
+
             font-weight: bold;
+
             min-height: 24px;
+
             line-height: 1.7;
         }
 
+
+        /* =========================
+           SYSTEM INFO
+        ========================= */
+
         .system-info {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
+            position: relative;
+
+            margin-top: 28px;
+
+            padding-top: 21px;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
             text-align: center;
         }
 
         .system-info strong {
             display: block;
-            color: #1e3a8a;
-            margin-bottom: 5px;
+
+            color:
+                var(--orange-light);
+
+            margin-bottom: 6px;
         }
 
         .system-info span {
-            color: #64748b;
+            color:
+                var(--muted);
+
             font-size: 13px;
         }
 
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            position: relative;
+
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #02050b,
+                    #030812
+                );
+
+            border-top:
+                1px solid
+                rgba(255, 122, 24, 0.16);
+
+            color:
+                #9aa9bc;
+
+            text-align: center;
+        }
+
+        .footer strong {
+            color:
+                var(--white);
+        }
+
+        .footer span {
+            color:
+                #7f8ea3;
+        }
+
+        .footer-dua {
+            display: block;
+
+            margin-top: 14px;
+
+            color:
+                var(--orange-light);
+
+            font-family:
+                "Amiri",
+                "Traditional Arabic",
+                "Times New Roman",
+                serif;
+
+            font-size: 19px;
+
+            font-weight: bold;
+
+            line-height: 1.8;
+        }
+
+        .footer-dua::before {
+            content: "";
+
+            display: block;
+
+            width: 50px;
+            height: 2px;
+
+            margin: 0 auto 10px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
         @media (max-width: 768px) {
+
+            .basmala {
+                padding: 15px 10px 12px;
+            }
+
+            .basmala-text {
+                font-size: 20px;
+            }
+
             .institution-bar {
-                padding: 12px 10px;
+                padding: 13px 10px;
             }
 
             .institution-bar strong {
@@ -229,22 +856,83 @@
             }
 
             .login-page {
-                padding: 30px 15px;
+                min-height:
+                    calc(100vh - 230px);
+
+                padding:
+                    35px 15px;
             }
 
             .login-box {
-                padding: 25px 20px;
+                padding:
+                    32px 22px;
+
+                border-radius:
+                    19px;
             }
 
             .login-logo img {
-                width: 68px;
-                height: 68px;
+                width: 72px;
+                height: 72px;
+            }
+
+            .login-box h1 {
+                font-size: 26px;
+            }
+
+            .login-form input {
+                height: 54px;
+            }
+
+            .login-form button#loginButton {
+                height: 54px;
+            }
+
+            .footer-dua {
+                font-size: 17px;
             }
         }
+
+        @media (max-width: 430px) {
+
+            .basmala-text {
+                font-size: 18px;
+            }
+
+            .login-box {
+                padding:
+                    30px 18px;
+            }
+
+            .login-subtitle {
+                font-size: 14px;
+            }
+        }
+
     </style>
+
 </head>
 
+
 <body>
+
+
+    <!-- =========================
+         BASMALA
+    ========================== -->
+
+    <div class="basmala">
+
+        <div class="basmala-text">
+            بسم الله الرحمن الرحيم
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
     <header class="navbar">
 
@@ -279,6 +967,7 @@
 
             </a>
 
+
             <nav>
 
                 <a href="../index.html">
@@ -308,6 +997,10 @@
     </header>
 
 
+    <!-- =========================
+         INSTITUTION BAR
+    ========================== -->
+
     <div class="institution-bar">
 
         <strong>
@@ -321,9 +1014,14 @@
     </div>
 
 
+    <!-- =========================
+         LOGIN
+    ========================== -->
+
     <main class="login-page">
 
         <div class="login-box">
+
 
             <div class="login-logo">
 
@@ -334,14 +1032,19 @@
 
             </div>
 
+
             <h1>
                 تسجيل الدخول
             </h1>
 
+
             <p class="login-subtitle">
+
                 الدخول إلى حسابك في
                 المكتبة الرقمية للمؤسسة
+
             </p>
+
 
             <div class="school-name">
                 ثانوية مصاص رابح
@@ -353,9 +1056,11 @@
                 class="login-form"
             >
 
+
                 <label for="email">
                     البريد الإلكتروني
                 </label>
+
 
                 <div class="input-group">
 
@@ -374,6 +1079,7 @@
                     كلمة المرور
                 </label>
 
+
                 <div class="input-group password-group">
 
                     <input
@@ -383,6 +1089,7 @@
                         autocomplete="current-password"
                         required
                     >
+
 
                     <button
                         type="button"
@@ -401,8 +1108,15 @@
                             stroke-linejoin="round"
                             aria-hidden="true"
                         >
+
                             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
-                            <circle cx="12" cy="12" r="2.5"></circle>
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="2.5"
+                            ></circle>
+
                         </svg>
 
                     </button>
@@ -420,6 +1134,7 @@
 
                 <div id="loginMessage"></div>
 
+
             </form>
 
 
@@ -436,10 +1151,15 @@
 
             </div>
 
+
         </div>
 
     </main>
 
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
     <footer class="footer">
 
@@ -471,6 +1191,12 @@
 
                 © 2026 — جميع الحقوق محفوظة
 
+                <span class="footer-dua">
+
+                    اللهم علمنا ما جهلنا وزدنا علما
+
+                </span>
+
             </p>
 
         </div>
@@ -478,12 +1204,18 @@
     </footer>
 
 
+    <!-- =========================
+         SUPABASE
+    ========================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
     <script>
 
         const SUPABASE_URL =
             "https://xdkluojrvdhdtihblpwy.supabase.co";
+
 
         const SUPABASE_ANON_KEY =
             "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
@@ -499,18 +1231,26 @@
         const loginForm =
             document.getElementById("loginForm");
 
+
         const loginButton =
             document.getElementById("loginButton");
+
 
         const loginMessage =
             document.getElementById("loginMessage");
 
+
         const togglePassword =
             document.getElementById("togglePassword");
+
 
         const passwordInput =
             document.getElementById("password");
 
+
+        /* =========================
+           SHOW / HIDE PASSWORD
+        ========================== */
 
         togglePassword.addEventListener(
             "click",
@@ -519,8 +1259,12 @@
                 const isHidden =
                     passwordInput.type === "password";
 
+
                 passwordInput.type =
-                    isHidden ? "text" : "password";
+                    isHidden
+                        ? "text"
+                        : "password";
+
 
                 togglePassword.setAttribute(
                     "aria-label",
@@ -529,6 +1273,7 @@
                         : "إظهار كلمة المرور"
                 );
 
+
                 togglePassword.setAttribute(
                     "title",
                     isHidden
@@ -536,8 +1281,12 @@
                         : "إظهار كلمة المرور"
                 );
 
-                togglePassword.innerHTML = isHidden
+
+                togglePassword.innerHTML =
+                    isHidden
+
                     ? `
+
                         <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -547,13 +1296,21 @@
                             stroke-linejoin="round"
                             aria-hidden="true"
                         >
+
                             <path d="M3 3l18 18"></path>
+
                             <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+
                             <path d="M9.9 4.2A11.8 11.8 0 0 1 12 4c6.5 0 10 6 10 6a18.2 18.2 0 0 1-3.1 3.9"></path>
+
                             <path d="M6.1 6.1C3.5 7.8 2 10 2 10s3.5 6 10 6c1.1 0 2.1-.2 3-.5"></path>
+
                         </svg>
+
                     `
+
                     : `
+
                         <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -563,14 +1320,26 @@
                             stroke-linejoin="round"
                             aria-hidden="true"
                         >
+
                             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
-                            <circle cx="12" cy="12" r="2.5"></circle>
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="2.5"
+                            ></circle>
+
                         </svg>
+
                     `;
 
             }
         );
 
+
+        /* =========================
+           LOGIN
+        ========================== */
 
         loginForm.addEventListener(
             "submit",
@@ -585,6 +1354,7 @@
                         .value
                         .trim();
 
+
                 const password =
                     document
                         .getElementById("password")
@@ -593,8 +1363,10 @@
 
                 loginButton.disabled = true;
 
+
                 loginButton.textContent =
                     "جار تسجيل الدخول...";
+
 
                 loginMessage.textContent = "";
 
@@ -606,8 +1378,11 @@
                         error
                     } =
                         await supabaseClient.auth.signInWithPassword({
+
                             email: email,
+
                             password: password
+
                         });
 
 
@@ -619,6 +1394,7 @@
                         );
 
                         throw error;
+
                     }
 
 
@@ -640,14 +1416,18 @@
                         error: profileError
                     } =
                         await supabaseClient
+
                             .from("profiles")
+
                             .select(
                                 "id, full_name, role"
                             )
+
                             .eq(
                                 "id",
                                 user.id
                             )
+
                             .single();
 
 
@@ -675,7 +1455,8 @@
 
 
                     loginMessage.style.color =
-                        "#15803d";
+                        "#4ade80";
+
 
                     loginMessage.textContent =
                         "تم تسجيل الدخول بنجاح ✓";
@@ -685,6 +1466,7 @@
                         "المستخدم:",
                         profile.full_name
                     );
+
 
                     console.log(
                         "الصلاحية:",
@@ -698,6 +1480,7 @@
                             switch (
                                 String(profile.role).toLowerCase()
                             ) {
+
 
                                 case "programmer":
 
@@ -734,14 +1517,17 @@
                                 default:
 
                                     loginMessage.style.color =
-                                        "#dc2626";
+                                        "#ff6b6b";
+
 
                                     loginMessage.textContent =
                                         "تم تسجيل الدخول، لكن صلاحية الحساب غير معروفة: " +
                                         profile.role;
 
+
                                     loginButton.disabled =
                                         false;
+
 
                                     loginButton.textContent =
                                         "تسجيل الدخول";
@@ -764,7 +1550,7 @@
 
 
                     loginMessage.style.color =
-                        "#dc2626";
+                        "#ff6b6b";
 
 
                     loginMessage.textContent =
@@ -775,6 +1561,7 @@
                     loginButton.disabled =
                         false;
 
+
                     loginButton.textContent =
                         "تسجيل الدخول";
 
@@ -784,6 +1571,7 @@
         );
 
     </script>
+
 
 </body>
 
