@@ -1,59 +1,248 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>
         مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية
     </title>
 
-    <link
-        rel="icon"
-        type="image/png"
-        href="favicon.png">
+    <link rel="icon"
+          type="image/png"
+          href="favicon.png">
 
-    <link
-        rel="stylesheet"
-        href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
 
         /* =====================================================
-           شعار المكتبة
+           الهوية البصرية
         ===================================================== */
+
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
+
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
+            --orange-soft: rgba(255, 122, 24, 0.12);
+
+            --white: #ffffff;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: rgba(148, 163, 184, 0.18);
+        }
+
+
+        /* =====================================================
+           الصفحة
+        ===================================================== */
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(18, 53, 95, 0.45),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 25%,
+                    rgba(255, 122, 24, 0.08),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--black),
+                    var(--black-soft),
+                    #061326
+                ) !important;
+
+            color: var(--text);
+
+            min-height: 100vh;
+        }
+
+
+        /* شبكة خفيفة في الخلفية */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 40px 40px;
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(3, 7, 18, 0.97),
+                    rgba(8, 27, 54, 0.97)
+                ) !important;
+
+            border-bottom:
+                1px solid rgba(255, 122, 24, 0.28) !important;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.35),
+                0 1px 0 rgba(255, 122, 24, 0.08);
+
+            backdrop-filter: blur(14px);
+        }
+
+
+        .logo {
+            color: white;
+        }
+
 
         .logo-icon {
             width: 58px;
             height: 58px;
             min-width: 58px;
-            border-radius: 50%;
+
+            border-radius: 16px;
             overflow: hidden;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             flex-shrink: 0;
+
             background: white;
+
+            border:
+                2px solid rgba(255, 122, 24, 0.65);
+
+            box-shadow:
+                0 0 0 4px rgba(255, 122, 24, 0.07),
+                0 8px 25px rgba(0, 0, 0, 0.35);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
         }
+
+
+        .logo-icon:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 0 0 6px rgba(255, 122, 24, 0.10),
+                0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
 
         .logo-icon img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
             display: block;
         }
 
 
+        .logo-title {
+            color: #ffffff !important;
+        }
+
+
+        .logo-subtitle {
+            color: #94a3b8 !important;
+        }
+
+
+        .navbar nav a {
+            color: #cbd5e1 !important;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease;
+        }
+
+
+        .navbar nav a:hover {
+            color: #ffffff !important;
+
+            background:
+                rgba(255, 122, 24, 0.08);
+        }
+
+
+        .navbar nav a.active {
+            color: var(--orange) !important;
+
+            font-weight: 700;
+        }
+
+
+        .login-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    #e85d04
+                ) !important;
+
+            color: white !important;
+
+            border: 1px solid
+                rgba(255, 154, 61, 0.45) !important;
+
+            box-shadow:
+                0 8px 22px
+                rgba(255, 122, 24, 0.22);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 28px
+                rgba(255, 122, 24, 0.32);
+        }
+
+
         /* =====================================================
-           الإعدادات العلوية
+           الإعدادات
         ===================================================== */
 
         .top-settings {
@@ -64,179 +253,532 @@
             position: relative;
         }
 
+
         .settings-btn {
-            border: none;
-            background: rgba(255, 255, 255, 0.12);
-            color: inherit;
+            border:
+                1px solid rgba(148, 163, 184, 0.18);
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            color: #e2e8f0;
+
             padding: 8px 11px;
+
             border-radius: 10px;
+
             cursor: pointer;
+
             font-size: 14px;
-            transition: background 0.2s ease, transform 0.2s ease;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+
             white-space: nowrap;
         }
 
+
         .settings-btn:hover {
-            background: rgba(255, 255, 255, 0.22);
+            background:
+                rgba(255, 122, 24, 0.12);
+
+            border-color:
+                rgba(255, 122, 24, 0.35);
+
+            color: white;
+
             transform: translateY(-1px);
         }
 
 
         /* =====================================================
-           دعاء لنا ولوالدينا
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .welcome {
+            color: var(--orange) !important;
+
+            background:
+                rgba(255, 122, 24, 0.08) !important;
+
+            border:
+                1px solid rgba(255, 122, 24, 0.22) !important;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.20);
+        }
+
+
+        .hero h1 {
+            color: white !important;
+        }
+
+
+        .hero h1 span:last-child {
+            color: var(--orange) !important;
+        }
+
+
+        .hero p {
+            color: #cbd5e1 !important;
+        }
+
+
+        /* =====================================================
+           الدعاء
         ===================================================== */
 
         .prayer-message {
             margin: 18px auto 22px;
+
             padding: 12px 22px;
+
             width: fit-content;
             max-width: 90%;
+
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.14);
-            border: 1px solid rgba(255, 255, 255, 0.22);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 27, 54, 0.92),
+                    rgba(13, 39, 75, 0.82)
+                );
+
+            border:
+                1px solid rgba(255, 122, 24, 0.28);
+
             color: #ffffff;
+
             font-size: 17px;
             font-weight: 600;
-            line-height: 1.8;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(6px);
-        }
 
-        body.dark-mode .prayer-message {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
-            color: #f8fafc;
+            line-height: 1.8;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 28px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.04);
+
+            backdrop-filter: blur(8px);
         }
 
 
         /* =====================================================
-           الوضع الداكن
+           البحث
         ===================================================== */
 
-        body.dark-mode {
-            background: #0f172a;
-            color: #e2e8f0;
+        .search-box {
+            background:
+                rgba(8, 27, 54, 0.82) !important;
+
+            border:
+                1px solid rgba(255, 122, 24, 0.20) !important;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.28) !important;
+
+            backdrop-filter: blur(10px);
         }
 
-        body.dark-mode .section,
-        body.dark-mode .books-section {
-            background: #0f172a;
+
+        .search-box input {
+            background:
+                rgba(3, 7, 18, 0.72) !important;
+
+            color: white !important;
+
+            border-color:
+                rgba(148, 163, 184, 0.18) !important;
         }
 
-        body.dark-mode .category-card,
-        body.dark-mode .identity-item,
-        body.dark-mode .identity-card,
-        body.dark-mode .book-card {
-            background: #1e293b;
-            color: #e2e8f0;
+
+        .search-box input::placeholder {
+            color: #94a3b8 !important;
         }
 
-        body.dark-mode .category-card h3,
-        body.dark-mode .identity-item h3,
-        body.dark-mode .identity-card h3,
-        body.dark-mode .book-card h3 {
-            color: #f8fafc;
+
+        .search-box input:focus {
+            border-color:
+                rgba(255, 122, 24, 0.60) !important;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255, 122, 24, 0.10) !important;
+
+            outline: none;
         }
 
-        body.dark-mode .category-card p,
-        body.dark-mode .identity-item p,
-        body.dark-mode .identity-card p,
-        body.dark-mode .book-card p {
-            color: #cbd5e1;
+
+        .search-box button {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    #e85d04
+                ) !important;
+
+            color: white !important;
+
+            box-shadow:
+                0 8px 20px
+                rgba(255, 122, 24, 0.20);
         }
 
-        body.dark-mode .search-box {
-            background: #1e293b;
-        }
 
-        body.dark-mode .search-box input {
-            background: #1e293b;
-            color: white;
-        }
-
-        body.dark-mode .search-box input::placeholder {
-            color: #94a3b8;
-        }
-
-        body.dark-mode footer {
-            background: #020617;
+        .search-box button:hover {
+            filter: brightness(1.08);
         }
 
 
         /* =====================================================
-           البطاقة الرئيسية الجديدة
+           HERO CARD
         ===================================================== */
 
         .hero-card {
             position: relative;
+
             overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d274b,
+                    #081b36 55%,
+                    #030712
+                ) !important;
+
+            border:
+                1px solid rgba(255, 122, 24, 0.25) !important;
+
+            box-shadow:
+                0 25px 55px rgba(0, 0, 0, 0.42),
+                0 0 35px rgba(255, 122, 24, 0.05) !important;
         }
+
 
         .hero-card::before {
             content: "";
+
             position: absolute;
-            width: 220px;
-            height: 220px;
+
+            width: 260px;
+            height: 260px;
+
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            top: -110px;
+
+            background:
+                rgba(255, 122, 24, 0.08);
+
+            top: -130px;
             right: -90px;
+
             pointer-events: none;
         }
 
+
         .hero-card::after {
             content: "";
+
             position: absolute;
-            width: 170px;
-            height: 170px;
+
+            width: 200px;
+            height: 200px;
+
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.06);
-            bottom: -90px;
+
+            background:
+                rgba(37, 99, 235, 0.10);
+
+            bottom: -100px;
             left: -70px;
+
             pointer-events: none;
         }
+
 
         .book-symbol {
             width: 108px;
             height: 108px;
+
             margin: 0 auto 22px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.96);
-            padding: 10px;
+
+            border-radius: 28px;
+
+            background: white;
+
+            padding: 9px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             position: relative;
             z-index: 2;
+
+            border:
+                2px solid rgba(255, 122, 24, 0.50);
+
             box-shadow:
-                0 16px 35px rgba(0, 0, 0, 0.16),
-                0 0 0 7px rgba(255, 255, 255, 0.08);
+                0 18px 40px rgba(0, 0, 0, 0.40),
+                0 0 0 7px
+                rgba(255, 122, 24, 0.06);
+
             transition:
                 transform 0.35s ease,
                 box-shadow 0.35s ease;
         }
 
+
         .book-symbol:hover {
-            transform: translateY(-5px) scale(1.03);
+            transform:
+                translateY(-5px) scale(1.03);
+
             box-shadow:
-                0 22px 45px rgba(0, 0, 0, 0.20),
-                0 0 0 9px rgba(255, 255, 255, 0.10);
+                0 24px 50px rgba(0, 0, 0, 0.48),
+                0 0 0 9px
+                rgba(255, 122, 24, 0.09);
         }
+
 
         .book-symbol img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
-            border-radius: 23px;
+
+            border-radius: 21px;
+
             display: block;
         }
 
-        .hero-card h2,
-        .hero-card p,
-        .hero-card .hero-stat {
+
+        .hero-card h2 {
+            color: white !important;
+
             position: relative;
             z-index: 2;
+        }
+
+
+        .hero-card p {
+            color: #cbd5e1 !important;
+
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .hero-stat {
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .hero-stat strong {
+            color: var(--orange) !important;
+        }
+
+
+        .hero-stat span {
+            color: #cbd5e1 !important;
+        }
+
+
+        /* =====================================================
+           الأقسام
+        ===================================================== */
+
+        .section {
+            position: relative;
+
+            background:
+                transparent !important;
+        }
+
+
+        .section-heading {
+            position: relative;
+        }
+
+
+        .section-heading::before {
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+
+            top: 5px;
+
+            width: 4px;
+            height: 42px;
+
+            border-radius: 5px;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            box-shadow:
+                0 0 15px
+                rgba(255, 122, 24, 0.30);
+        }
+
+
+        .section-heading > div {
+            padding-right: 18px;
+        }
+
+
+        .section-heading span {
+            color: var(--orange) !important;
+        }
+
+
+        .section-heading h2 {
+            color: white !important;
+        }
+
+
+        .section-heading a {
+            color: #cbd5e1 !important;
+
+            transition:
+                color 0.25s ease;
+        }
+
+
+        .section-heading a:hover {
+            color: var(--orange) !important;
+        }
+
+
+        /* =====================================================
+           التصنيفات
+        ===================================================== */
+
+        .category-card {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d274b,
+                    #081b36
+                ) !important;
+
+            color: white !important;
+
+            border:
+                1px solid rgba(148, 163, 184, 0.15) !important;
+
+            box-shadow:
+                0 12px 32px
+                rgba(0, 0, 0, 0.28) !important;
+
+            transition:
+                transform 0.30s ease,
+                box-shadow 0.30s ease,
+                border-color 0.30s ease;
+        }
+
+
+        .category-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            opacity: 0.85;
+        }
+
+
+        .category-card:hover {
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(255, 122, 24, 0.42) !important;
+
+            box-shadow:
+                0 20px 42px
+                rgba(0, 0, 0, 0.38),
+                0 0 25px
+                rgba(255, 122, 24, 0.07) !important;
+        }
+
+
+        .category-icon {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                #061326 !important;
+
+            border-color:
+                rgba(255, 122, 24, 0.18) !important;
+        }
+
+
+        .category-icon::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 122, 24, 0.04),
+                    rgba(8, 27, 54, 0.20)
+                );
+
+            pointer-events: none;
+        }
+
+
+        .category-card h3 {
+            color: white !important;
+        }
+
+
+        .category-card p {
+            color: #94a3b8 !important;
         }
 
 
@@ -246,279 +788,560 @@
 
         .identity-section {
             position: relative;
+
             overflow: hidden;
         }
 
+
         .identity-section::before {
             content: "";
+
             position: absolute;
-            width: 280px;
-            height: 280px;
+
+            width: 320px;
+            height: 320px;
+
             border-radius: 50%;
-            background: rgba(59, 130, 246, 0.07);
-            top: -120px;
-            left: -100px;
+
+            background:
+                rgba(37, 99, 235, 0.07);
+
+            top: -140px;
+            left: -120px;
+
             pointer-events: none;
         }
+
 
         .identity-section::after {
             content: "";
+
             position: absolute;
-            width: 220px;
-            height: 220px;
+
+            width: 250px;
+            height: 250px;
+
             border-radius: 50%;
-            background: rgba(16, 185, 129, 0.06);
-            bottom: -100px;
-            right: -80px;
+
+            background:
+                rgba(255, 122, 24, 0.045);
+
+            bottom: -110px;
+            right: -90px;
+
             pointer-events: none;
         }
 
+
         .identity-intro {
             max-width: 780px;
-            margin: 0 auto 35px;
+
+            margin:
+                0 auto 35px;
+
             text-align: center;
+
             position: relative;
             z-index: 1;
         }
 
+
         .identity-intro-badge {
             display: inline-flex;
+
             align-items: center;
             gap: 8px;
+
             padding: 7px 15px;
+
             margin-bottom: 12px;
+
             border-radius: 30px;
-            background: rgba(59, 130, 246, 0.10);
-            color: #2563eb;
-            border: 1px solid rgba(59, 130, 246, 0.15);
+
+            background:
+                rgba(255, 122, 24, 0.08);
+
+            color:
+                var(--orange);
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.22);
+
             font-size: 14px;
             font-weight: 700;
         }
 
+
         .identity-intro h3 {
-            margin: 0 0 10px;
+            margin:
+                0 0 10px;
+
             font-size: 28px;
-            color: #0f172a;
+
+            color: white;
         }
+
 
         .identity-intro p {
             margin: 0;
-            color: #64748b;
+
+            color:
+                #94a3b8;
+
             font-size: 16px;
+
             line-height: 2;
         }
 
+
         .identity-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 18px;
+
             position: relative;
             z-index: 1;
         }
 
+
         .identity-card {
             position: relative;
+
             padding: 26px 20px;
+
             border-radius: 20px;
-            background: linear-gradient(
-                145deg,
-                #ffffff,
-                #f8fafc
-            );
-            border: 1px solid #e2e8f0;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d274b,
+                    #081b36
+                );
+
+            border:
+                1px solid
+                rgba(148, 163, 184, 0.15);
+
             text-align: center;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+
+            box-shadow:
+                0 12px 32px
+                rgba(0, 0, 0, 0.28);
+
             transition:
                 transform 0.3s ease,
                 box-shadow 0.3s ease,
                 border-color 0.3s ease;
         }
 
-        .identity-card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.11);
-            border-color: rgba(59, 130, 246, 0.35);
+
+        .identity-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 3px;
+
+            border-radius:
+                20px 20px 0 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
         }
+
+
+        .identity-card:hover {
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+                0 20px 42px
+                rgba(0, 0, 0, 0.38),
+                0 0 25px
+                rgba(255, 122, 24, 0.06);
+
+            border-color:
+                rgba(255, 122, 24, 0.35);
+        }
+
 
         .identity-card-icon {
             width: 64px;
             height: 64px;
-            margin: 0 auto 16px;
+
+            margin:
+                0 auto 16px;
+
             border-radius: 18px;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             font-size: 30px;
-            background: linear-gradient(
-                135deg,
-                #eff6ff,
-                #dbeafe
-            );
-            border: 1px solid #bfdbfe;
-            box-shadow: 0 7px 18px rgba(37, 99, 235, 0.10);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #12355f,
+                    #0d274b
+                );
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.24);
+
+            box-shadow:
+                0 8px 22px
+                rgba(0, 0, 0, 0.25);
         }
 
+
         .identity-card h3 {
-            margin: 0 0 9px;
+            margin:
+                0 0 9px;
+
             font-size: 18px;
-            color: #0f172a;
+
+            color: white;
         }
+
 
         .identity-card p {
             margin: 0;
-            color: #64748b;
+
+            color:
+                #94a3b8;
+
             font-size: 14px;
+
             line-height: 1.8;
         }
 
+
         .identity-card-number {
             position: absolute;
+
             top: 12px;
             left: 14px;
+
             width: 25px;
             height: 25px;
+
             border-radius: 50%;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
-            background: #f1f5f9;
-            color: #94a3b8;
+
+            background:
+                rgba(255, 122, 24, 0.10);
+
+            color:
+                var(--orange-light);
+
             font-size: 11px;
             font-weight: 700;
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.15);
         }
+
 
         .identity-footer {
             margin-top: 28px;
+
             padding: 17px 22px;
+
             border-radius: 16px;
-            background: linear-gradient(
-                135deg,
-                rgba(37, 99, 235, 0.08),
-                rgba(16, 185, 129, 0.06)
-            );
-            border: 1px solid rgba(59, 130, 246, 0.12);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 27, 54, 0.90),
+                    rgba(13, 39, 75, 0.70)
+                );
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.18);
+
             text-align: center;
-            color: #475569;
+
+            color:
+                #cbd5e1;
+
             font-size: 14px;
+
             line-height: 1.9;
+
             position: relative;
             z-index: 1;
         }
 
+
         .identity-footer strong {
-            color: #1e40af;
+            color:
+                var(--orange-light);
         }
 
 
         /* =====================================================
-           الوضع الداكن - هويتنا
-        ===================================================== */
-
-        body.dark-mode .identity-section::before {
-            background: rgba(59, 130, 246, 0.12);
-        }
-
-        body.dark-mode .identity-section::after {
-            background: rgba(16, 185, 129, 0.10);
-        }
-
-        body.dark-mode .identity-intro-badge {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-            border-color: rgba(96, 165, 250, 0.20);
-        }
-
-        body.dark-mode .identity-intro h3 {
-            color: #f8fafc;
-        }
-
-        body.dark-mode .identity-intro p {
-            color: #94a3b8;
-        }
-
-        body.dark-mode .identity-card {
-            background: linear-gradient(
-                145deg,
-                #1e293b,
-                #172033
-            );
-            border-color: #334155;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
-        }
-
-        body.dark-mode .identity-card:hover {
-            border-color: rgba(96, 165, 250, 0.40);
-            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
-        }
-
-        body.dark-mode .identity-card-icon {
-            background: linear-gradient(
-                135deg,
-                #1e3a5f,
-                #1e40af
-            );
-            border-color: #315b8f;
-        }
-
-        body.dark-mode .identity-card h3 {
-            color: #f8fafc;
-        }
-
-        body.dark-mode .identity-card p {
-            color: #cbd5e1;
-        }
-
-        body.dark-mode .identity-card-number {
-            background: #334155;
-            color: #94a3b8;
-        }
-
-        body.dark-mode .identity-footer {
-            background: linear-gradient(
-                135deg,
-                rgba(59, 130, 246, 0.12),
-                rgba(16, 185, 129, 0.08)
-            );
-            border-color: rgba(96, 165, 250, 0.15);
-            color: #cbd5e1;
-        }
-
-        body.dark-mode .identity-footer strong {
-            color: #93c5fd;
-        }
-
-
-        /* =====================================================
-           تحسين قسم أحدث الكتب
+           أحدث الكتب
         ===================================================== */
 
         .books-section {
             position: relative;
         }
 
+
         .books-container {
             position: relative;
         }
 
+
+        .book-card {
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d274b,
+                    #081b36
+                ) !important;
+
+            color: white !important;
+
+            border:
+                1px solid
+                rgba(148, 163, 184, 0.15) !important;
+
+            box-shadow:
+                0 12px 32px
+                rgba(0, 0, 0, 0.28) !important;
+
+            transition:
+                transform 0.30s ease,
+                box-shadow 0.30s ease,
+                border-color 0.30s ease;
+        }
+
+
+        .book-card:hover {
+            transform:
+                translateY(-6px);
+
+            border-color:
+                rgba(255, 122, 24, 0.35) !important;
+
+            box-shadow:
+                0 20px 42px
+                rgba(0, 0, 0, 0.38),
+                0 0 25px
+                rgba(255, 122, 24, 0.06) !important;
+        }
+
+
         .book-cover {
             overflow: hidden;
+
+            background:
+                #061326 !important;
         }
+
 
         .book-cover img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
+
             display: block;
         }
+
 
         .book-placeholder {
             width: 100%;
             height: 100%;
+
             min-height: 180px;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             font-size: 48px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d274b,
+                    #061326
+                );
+
+            color:
+                var(--orange);
+        }
+
+
+        .book-info {
+            color: white;
+        }
+
+
+        .book-category {
+            background:
+                rgba(255, 122, 24, 0.10) !important;
+
+            color:
+                var(--orange-light) !important;
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.18);
+        }
+
+
+        .book-card h3 {
+            color: white !important;
+        }
+
+
+        .book-card p {
+            color:
+                #94a3b8 !important;
+        }
+
+
+        .read-button {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    #e85d04
+                ) !important;
+
+            color: white !important;
+
+            border:
+                1px solid
+                rgba(255, 154, 61, 0.30);
+
+            box-shadow:
+                0 8px 20px
+                rgba(255, 122, 24, 0.18);
+        }
+
+
+        .read-button:hover {
+            filter: brightness(1.08);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background:
+                linear-gradient(
+                    145deg,
+                    #020617,
+                    #030712,
+                    #061326
+                ) !important;
+
+            border-top:
+                1px solid
+                rgba(255, 122, 24, 0.22);
+
+            box-shadow:
+                0 -15px 40px
+                rgba(0, 0, 0, 0.28);
+        }
+
+
+        footer .logo-title {
+            color: white !important;
+        }
+
+
+        footer .logo-subtitle {
+            color: #94a3b8 !important;
+        }
+
+
+        footer p {
+            color:
+                #94a3b8 !important;
+        }
+
+
+        .footer-links h3 {
+            color:
+                var(--orange) !important;
+        }
+
+
+        .footer-links a {
+            color:
+                #cbd5e1 !important;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .footer-links a:hover {
+            color:
+                var(--orange-light) !important;
+
+            transform:
+                translateX(-3px);
+        }
+
+
+        .copyright {
+            border-top:
+                1px solid
+                rgba(148, 163, 184, 0.12);
+
+            color:
+                #64748b !important;
+        }
+
+
+        .copyright strong {
+            color:
+                var(--orange-light) !important;
+        }
+
+
+        /* =====================================================
+           رسائل التحميل
+        ===================================================== */
+
+        #latestBooksContainer > p {
+            color:
+                #94a3b8 !important;
         }
 
 
@@ -531,45 +1354,64 @@
             .top-settings {
                 margin-right: 0;
                 margin-top: 10px;
+
                 justify-content: center;
+
                 flex-wrap: wrap;
             }
 
+
             .settings-btn {
                 font-size: 13px;
-                padding: 7px 9px;
+
+                padding:
+                    7px 9px;
             }
+
 
             .logo-icon {
                 width: 50px;
                 height: 50px;
                 min-width: 50px;
+
+                border-radius: 14px;
             }
+
 
             .prayer-message {
                 font-size: 15px;
-                padding: 10px 16px;
+
+                padding:
+                    10px 16px;
+
                 margin-top: 15px;
                 margin-bottom: 18px;
             }
 
+
             .identity-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
+
                 gap: 14px;
             }
+
 
             .identity-intro h3 {
                 font-size: 24px;
             }
 
+
             .book-symbol {
                 width: 92px;
                 height: 92px;
-                border-radius: 26px;
+
+                border-radius: 25px;
             }
 
+
             .book-symbol img {
-                border-radius: 20px;
+                border-radius: 19px;
             }
         }
 
@@ -580,24 +1422,29 @@
                 grid-template-columns: 1fr;
             }
 
+
             .identity-card {
-                padding: 22px 18px;
+                padding:
+                    22px 18px;
             }
+
 
             .identity-intro p {
                 font-size: 15px;
             }
 
+
             .book-symbol {
                 width: 82px;
                 height: 82px;
-                border-radius: 23px;
+
+                border-radius: 22px;
             }
+
 
             .book-symbol img {
-                border-radius: 17px;
+                border-radius: 16px;
             }
-
         }
 
     </style>
@@ -644,33 +1491,23 @@
         <a
             href="#"
             class="active">
-
             الرئيسية
-
         </a>
 
         <a href="pages/books.html">
-
             الكتب
-
         </a>
 
         <a href="pages/categories.html">
-
             التصنيفات
-
         </a>
 
         <a href="pages/about.html">
-
             عن المكتبة
-
         </a>
 
         <a href="pages/contact.html">
-
             التواصل
-
         </a>
 
     </nav>
@@ -726,8 +1563,6 @@
 </header>
 
 
-
-
 <!-- =====================================================
      HERO
 ===================================================== -->
@@ -739,9 +1574,7 @@
     <div class="hero-content">
 
         <div class="welcome">
-
             🏫 ثانوية مصاص رابح
-
         </div>
 
 
@@ -799,14 +1632,11 @@
     </div>
 
 
-
-
     <!-- HERO CARD -->
 
     <div class="hero-card">
 
-
-        <!-- شعار المكتبة بدل صورة الكتب -->
+        <!-- شعار المكتبة -->
 
         <div class="book-symbol">
 
@@ -818,16 +1648,12 @@
 
 
         <h2>
-
             مكتبة ثانوية مصاص رابح
-
         </h2>
 
 
         <p>
-
             اقرأ، تعلّم، واكتشف
-
         </p>
 
 
@@ -836,15 +1662,11 @@
             <div>
 
                 <strong id="heroBooksCount">
-
                     —
-
                 </strong>
 
                 <span>
-
                     كتاب
-
                 </span>
 
             </div>
@@ -853,15 +1675,11 @@
             <div>
 
                 <strong id="heroCategoriesCount">
-
                     —
-
                 </strong>
 
                 <span>
-
                     تصنيف
-
                 </span>
 
             </div>
@@ -871,8 +1689,6 @@
     </div>
 
 </section>
-
-
 
 
 <!-- =====================================================
@@ -886,24 +1702,18 @@
         <div>
 
             <span>
-
                 تصفح المكتبة
-
             </span>
 
             <h2>
-
                 التصنيفات
-
             </h2>
 
         </div>
 
 
         <a href="pages/categories.html">
-
             جميع التصنيفات ←
-
         </a>
 
     </div>
@@ -927,20 +1737,14 @@
             </div>
 
             <h3>
-
                 الرياضيات
-
             </h3>
 
             <p>
-
                 الكتب والمراجع الرياضية
-
             </p>
 
         </a>
-
-
 
 
         <!-- العلوم الطبيعية -->
@@ -958,20 +1762,14 @@
             </div>
 
             <h3>
-
                 العلوم الطبيعية
-
             </h3>
 
             <p>
-
                 العلوم الطبيعية والتجريبية
-
             </p>
 
         </a>
-
-
 
 
         <!-- الفيزياء -->
@@ -989,20 +1787,14 @@
             </div>
 
             <h3>
-
                 الفيزياء
-
             </h3>
 
             <p>
-
                 الفيزياء والتجارب العلمية
-
             </p>
 
         </a>
-
-
 
 
         <!-- التاريخ والجغرافيا -->
@@ -1020,20 +1812,14 @@
             </div>
 
             <h3>
-
                 التاريخ والجغرافيا
-
             </h3>
 
             <p>
-
                 الحضارات والعالم
-
             </p>
 
         </a>
-
-
 
 
         <!-- الفلسفة -->
@@ -1051,20 +1837,14 @@
             </div>
 
             <h3>
-
                 الفلسفة
-
             </h3>
 
             <p>
-
                 الفكر والفلسفة
-
             </p>
 
         </a>
-
-
 
 
         <!-- العلوم الإسلامية -->
@@ -1082,20 +1862,14 @@
             </div>
 
             <h3>
-
                 العلوم الإسلامية
-
             </h3>
 
             <p>
-
                 القرآن والحديث والفقه
-
             </p>
 
         </a>
-
-
 
 
         <!-- اللغات -->
@@ -1113,20 +1887,14 @@
             </div>
 
             <h3>
-
                 اللغات
-
             </h3>
 
             <p>
-
                 العربية والفرنسية والإنجليزية
-
             </p>
 
         </a>
-
-
 
 
         <!-- الإعلام الآلي -->
@@ -1144,20 +1912,14 @@
             </div>
 
             <h3>
-
                 الإعلام الآلي
-
             </h3>
 
             <p>
-
                 البرمجة والتكنولوجيا
-
             </p>
 
         </a>
-
-
 
 
         <!-- الاقتصاد -->
@@ -1175,15 +1937,11 @@
             </div>
 
             <h3>
-
                 الاقتصاد
-
             </h3>
 
             <p>
-
                 الاقتصاد والتسيير
-
             </p>
 
         </a>
@@ -1193,11 +1951,8 @@
 </section>
 
 
-
-
 <!-- =====================================================
      SCHOOL IDENTITY
-     هويتنا - بعد التصنيفات
 ===================================================== -->
 
 <section class="section identity-section">
@@ -1207,15 +1962,11 @@
         <div>
 
             <span>
-
                 من نحن؟
-
             </span>
 
             <h2>
-
                 هويتنا
-
             </h2>
 
         </div>
@@ -1233,9 +1984,7 @@
 
 
         <h3>
-
             المعرفة... رسالة وهوية
-
         </h3>
 
 
@@ -1258,32 +2007,22 @@
         <div class="identity-card">
 
             <div class="identity-card-number">
-
                 01
-
             </div>
 
             <div class="identity-card-icon">
-
                 🏫
-
             </div>
 
             <h3>
-
                 المؤسسة التعليمية
-
             </h3>
 
             <p>
-
                 ثانوية مصاص رابح
-
             </p>
 
         </div>
-
-
 
 
         <!-- المنصة -->
@@ -1291,32 +2030,22 @@
         <div class="identity-card">
 
             <div class="identity-card-number">
-
                 02
-
             </div>
 
             <div class="identity-card-icon">
-
                 📚
-
             </div>
 
             <h3>
-
                 المنصة
-
             </h3>
 
             <p>
-
                 مكتبة الثانوية الإلكترونية
-
             </p>
 
         </div>
-
-
 
 
         <!-- المهندس -->
@@ -1324,32 +2053,22 @@
         <div class="identity-card">
 
             <div class="identity-card-number">
-
                 03
-
             </div>
 
             <div class="identity-card-icon">
-
                 👨‍💻
-
             </div>
 
             <h3>
-
                 مهندس النظام
-
             </h3>
 
             <p>
-
                 شراف الدين بوردوسن
-
             </p>
 
         </div>
-
-
 
 
         <!-- الصفة -->
@@ -1357,27 +2076,19 @@
         <div class="identity-card">
 
             <div class="identity-card-number">
-
                 04
-
             </div>
 
             <div class="identity-card-icon">
-
                 📐
-
             </div>
 
             <h3>
-
                 الصفة
-
             </h3>
 
             <p>
-
                 أستاذ مادة الرياضيات
-
             </p>
 
         </div>
@@ -1388,9 +2099,7 @@
     <div class="identity-footer">
 
         <strong>
-
             مكتبة ثانوية مصاص رابح
-
         </strong>
 
         مساحة للعلم والمعرفة،
@@ -1402,11 +2111,8 @@
 </section>
 
 
-
-
 <!-- =====================================================
      BOOKS
-     مكتبتنا - أحدث الكتب
 ===================================================== -->
 
 <section class="section books-section">
@@ -1416,24 +2122,18 @@
         <div>
 
             <span>
-
                 مكتبتنا
-
             </span>
 
             <h2>
-
                 أحدث الكتب
-
             </h2>
 
         </div>
 
 
         <a href="pages/books.html">
-
             عرض جميع الكتب ←
-
         </a>
 
     </div>
@@ -1444,9 +2144,7 @@
         id="latestBooksContainer">
 
         <p>
-
             جار تحميل الكتب...
-
         </p>
 
     </div>
@@ -1454,8 +2152,6 @@
 </section>
 
 </main>
-
-
 
 
 <!-- =====================================================
@@ -1485,15 +2181,11 @@
                 <div>
 
                     <div class="logo-title">
-
                         مكتبة ثانوية مصاص رابح
-
                     </div>
 
                     <div class="logo-subtitle">
-
                         المكتبة الإلكترونية
-
                     </div>
 
                 </div>
@@ -1512,45 +2204,31 @@
         </div>
 
 
-
-
         <!-- LINKS -->
 
         <div class="footer-links">
 
             <h3>
-
                 روابط
-
             </h3>
 
             <a href="index.html">
-
                 الرئيسية
-
             </a>
 
             <a href="pages/books.html">
-
                 الكتب
-
             </a>
 
             <a href="pages/categories.html">
-
                 التصنيفات
-
             </a>
 
             <a href="pages/about.html">
-
                 عن المكتبة
-
             </a>
 
         </div>
-
-
 
 
         <!-- HELP -->
@@ -1558,26 +2236,18 @@
         <div class="footer-links">
 
             <h3>
-
                 المساعدة
-
             </h3>
 
             <a href="pages/guide.html">
-
                 كيفية استخدام المكتبة
-
             </a>
 
             <a href="pages/contact.html">
-
                 اتصل بنا
-
             </a>
 
         </div>
-
-
 
 
         <!-- SYSTEM ENGINEER -->
@@ -1585,14 +2255,12 @@
         <div class="footer-links">
 
             <h3>
-
                 النظام
-
             </h3>
 
             <p
                 style="
-                    color:#cbd5e1;
+                    color:#94a3b8;
                     line-height:1.9;
                     font-size:13px;
                 ">
@@ -1603,7 +2271,7 @@
 
                 <strong
                     style="
-                        color:white;
+                        color:#ff9a3d;
                         font-size:14px;
                     ">
 
@@ -1622,14 +2290,10 @@
     </div>
 
 
-
-
     <div class="copyright">
 
         <strong>
-
             ثانوية مصاص رابح
-
         </strong>
 
         <br>
@@ -1639,22 +2303,17 @@
         <br>
 
         مهندس النظام:
-
         شراف الدين بوردوسن —
-
         أستاذ مادة الرياضيات
 
         <br>
 
         © 2026
-
         جميع الحقوق محفوظة
 
     </div>
 
 </footer>
-
-
 
 
 <!-- =====================================================
@@ -1664,8 +2323,6 @@
 <script src="books-data.js"></script>
 
 <script src="script.js"></script>
-
-
 
 
 <script>
@@ -1692,7 +2349,9 @@ const supabaseClient =
 ===================================================== */
 
 const accountButton =
-    document.getElementById("accountButton");
+    document.getElementById(
+        "accountButton"
+    );
 
 
 function getDashboardByRole(role) {
@@ -1713,9 +2372,7 @@ function getDashboardByRole(role) {
 
         default:
             return "pages/login.html";
-
     }
-
 }
 
 
@@ -1744,7 +2401,6 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-
         }
 
 
@@ -1774,7 +2430,6 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-
         }
 
 
@@ -1804,7 +2459,6 @@ async function loadUserAccount() {
                     dashboard;
 
                 return false;
-
             };
 
     }
@@ -1821,17 +2475,13 @@ async function loadUserAccount() {
 
         accountButton.href =
             "pages/login.html";
-
     }
-
 }
 
 
 supabaseClient.auth.onAuthStateChange(
     function() {
-
         loadUserAccount();
-
     }
 );
 
@@ -1896,9 +2546,7 @@ function applyTheme() {
         document.body.classList.remove(
             "dark-mode"
         );
-
     }
-
 }
 
 
@@ -1909,9 +2557,7 @@ function applyTheme() {
 function playClickSound() {
 
     if (!soundEnabled) {
-
         return;
-
     }
 
 
@@ -1923,9 +2569,7 @@ function playClickSound() {
 
 
         if (!AudioContext) {
-
             return;
-
         }
 
 
@@ -1982,9 +2626,7 @@ function playClickSound() {
         console.log(
             "Sound unavailable"
         );
-
     }
-
 }
 
 
@@ -2008,7 +2650,6 @@ darkButton.addEventListener(
         applyTheme();
 
         playClickSound();
-
     }
 );
 
@@ -2033,7 +2674,6 @@ lightButton.addEventListener(
         applyTheme();
 
         playClickSound();
-
     }
 );
 
@@ -2063,17 +2703,14 @@ soundButton.addEventListener(
 
 
         if (soundEnabled) {
-
             playClickSound();
-
         }
-
     }
 );
 
 
 /* =====================================================
-   تطبيق الإعدادات عند فتح الصفحة
+   تطبيق الإعدادات
 ===================================================== */
 
 applyTheme();
@@ -2095,16 +2732,14 @@ const latestBooksContainer =
     );
 
 
-/*
- * إصلاح مسار صورة الغلاف
- */
+/* =====================================================
+   إصلاح مسار صورة الغلاف
+===================================================== */
 
 function getBookCoverPath(cover) {
 
     if (!cover) {
-
         return "";
-
     }
 
 
@@ -2115,13 +2750,9 @@ function getBookCoverPath(cover) {
 
 
     if (!value) {
-
         return "";
-
     }
 
-
-    /* رابط خارجي */
 
     if (
         value.startsWith("http://") ||
@@ -2130,11 +2761,8 @@ function getBookCoverPath(cover) {
     ) {
 
         return value;
-
     }
 
-
-    /* إزالة ./ في البداية */
 
     value =
         value.replace(
@@ -2143,38 +2771,29 @@ function getBookCoverPath(cover) {
         );
 
 
-    /* إذا كان المسار يبدأ بـ / */
-
     if (
         value.startsWith("/")
     ) {
 
         return value;
-
     }
 
-
-    /* إذا كان يحتوي أصلًا على covers/ */
 
     if (
         value.startsWith("covers/")
     ) {
 
         return value;
-
     }
 
 
-    /* اسم ملف فقط */
-
     return "covers/" + value;
-
 }
 
 
-/*
- * حماية النصوص القادمة من الخادم
- */
+/* =====================================================
+   حماية النصوص
+===================================================== */
 
 function escapeLatestBookHTML(value) {
 
@@ -2191,13 +2810,12 @@ function escapeLatestBookHTML(value) {
 
 
     return div.innerHTML;
-
 }
 
 
-/*
- * إنشاء بطاقة أحدث كتاب
- */
+/* =====================================================
+   إنشاء بطاقة أحدث كتاب
+===================================================== */
 
 function createLatestBookCard(book) {
 
@@ -2211,10 +2829,6 @@ function createLatestBookCard(book) {
         "book-card";
 
 
-    /* =================================================
-       الغلاف
-    ================================================= */
-
     let coverHTML = `
 
         <div class="book-placeholder">
@@ -2223,14 +2837,6 @@ function createLatestBookCard(book) {
 
     `;
 
-
-    /*
-     * الكتب المرفوعة من المنصة
-     * تستخدم cover_url
-     *
-     * الكتب القديمة المحلية
-     * يمكنها استخدام cover
-     */
 
     const coverPath =
         book.cover_url ||
@@ -2247,12 +2853,14 @@ function createLatestBookCard(book) {
                 src="${escapeLatestBookHTML(
                     coverPath
                 )}"
+
                 alt="غلاف ${escapeLatestBookHTML(
-                    book.title ||
-                    ""
+                    book.title || ""
                 )}"
+
                 loading="lazy"
                 decoding="async"
+
                 onerror="
                     this.style.display='none';
                     this.parentElement.innerHTML='<div class=&quot;book-placeholder&quot;>📚</div>';
@@ -2260,21 +2868,11 @@ function createLatestBookCard(book) {
             >
 
         `;
-
     }
 
 
-    /* =================================================
-       زر القراءة
-    ================================================= */
-
     let buttonHTML = "";
 
-
-    /*
-     * الكتب المرفوعة من قاعدة البيانات
-     * لها id حقيقي.
-     */
 
     if (book.id) {
 
@@ -2284,6 +2882,7 @@ function createLatestBookCard(book) {
                 href="pages/book.html?id=${encodeURIComponent(
                     book.id
                 )}"
+
                 class="read-button">
 
                 📖 قراءة الكتاب
@@ -2291,12 +2890,8 @@ function createLatestBookCard(book) {
             </a>
 
         `;
-
     }
 
-    /*
-     * دعم الكتب المحلية القديمة
-     */
 
     else if (book.pdf) {
 
@@ -2306,6 +2901,7 @@ function createLatestBookCard(book) {
                 href="pages/book.html?book=${encodeURIComponent(
                     book.index ?? ""
                 )}"
+
                 class="read-button">
 
                 📖 قراءة الكتاب
@@ -2313,8 +2909,8 @@ function createLatestBookCard(book) {
             </a>
 
         `;
-
     }
+
 
     else {
 
@@ -2332,13 +2928,8 @@ function createLatestBookCard(book) {
             </span>
 
         `;
-
     }
 
-
-    /* =================================================
-       محتوى البطاقة
-    ================================================= */
 
     article.innerHTML = `
 
@@ -2383,7 +2974,7 @@ function createLatestBookCard(book) {
 
             <p
                 style="
-                    color:#64748b;
+                    color:#94a3b8;
                     font-size:14px;
                     margin-top:8px;
                 ">
@@ -2404,7 +2995,6 @@ function createLatestBookCard(book) {
 
 
     return article;
-
 }
 
 
@@ -2416,12 +3006,13 @@ async function loadLatestBooks() {
 
     latestBooksContainer.innerHTML = `
 
-        <p style="
-            grid-column:1 / -1;
-            text-align:center;
-            padding:40px 20px;
-            color:#64748b;
-        ">
+        <p
+            style="
+                grid-column:1 / -1;
+                text-align:center;
+                padding:40px 20px;
+                color:#94a3b8;
+            ">
 
             ⏳ جار تحميل أحدث الكتب...
 
@@ -2459,7 +3050,6 @@ async function loadLatestBooks() {
                 "HTTP " +
                 response.status
             );
-
         }
 
 
@@ -2475,7 +3065,6 @@ async function loadLatestBooks() {
                 result.message ||
                 "تعذر تحميل الكتب."
             );
-
         }
 
 
@@ -2492,17 +3081,6 @@ async function loadLatestBooks() {
             books.length
         );
 
-
-        /*
-         * ترتيب الكتب من الأحدث إلى الأقدم
-         *
-         * إذا كان created_at موجودًا
-         * نستخدمه.
-         *
-         * وإذا لم يكن موجودًا
-         * نحافظ على ترتيب الخادم
-         * ثم نعكسه ليكون الأحدث أولًا.
-         */
 
         const hasDates =
             books.some(
@@ -2548,11 +3126,10 @@ async function loadLatestBooks() {
 
 
                     return dateB - dateA;
-
                 }
             );
-
         }
+
 
         else {
 
@@ -2560,13 +3137,8 @@ async function loadLatestBooks() {
                 books
                     .slice()
                     .reverse();
-
         }
 
-
-        /*
-         * أخذ أحدث أربعة كتب فقط
-         */
 
         const latestBooks =
             books.slice(
@@ -2585,21 +3157,22 @@ async function loadLatestBooks() {
 
             latestBooksContainer.innerHTML = `
 
-                <p style="
-                    grid-column:1 / -1;
-                    text-align:center;
-                    padding:50px 20px;
-                    color:#64748b;
-                    font-size:18px;
-                ">
+                <p
+                    style="
+                        grid-column:1 / -1;
+                        text-align:center;
+                        padding:50px 20px;
+                        color:#94a3b8;
+                        font-size:18px;
+                    ">
 
                     📚 لا توجد كتب مرفوعة حاليا
 
                 </p>
 
             `;
-
         }
+
 
         else {
 
@@ -2623,7 +3196,6 @@ async function loadLatestBooks() {
             latestBooksContainer.appendChild(
                 fragment
             );
-
         }
 
 
@@ -2641,7 +3213,6 @@ async function loadLatestBooks() {
 
             booksCount.textContent =
                 books.length;
-
         }
 
 
@@ -2659,6 +3230,7 @@ async function loadLatestBooks() {
 
             const categories =
                 new Set(
+
                     books
                         .map(
                             function(book) {
@@ -2669,16 +3241,15 @@ async function loadLatestBooks() {
                                 )
                                     .toString()
                                     .trim();
-
                             }
                         )
+
                         .filter(Boolean)
                 );
 
 
             categoriesCount.textContent =
                 categories.size;
-
         }
 
 
@@ -2690,6 +3261,7 @@ async function loadLatestBooks() {
 
     }
 
+
     catch (error) {
 
         console.error(
@@ -2700,22 +3272,24 @@ async function loadLatestBooks() {
 
         latestBooksContainer.innerHTML = `
 
-            <p style="
-                grid-column:1 / -1;
-                text-align:center;
-                padding:50px 20px;
-                color:#b91c1c;
-                font-size:18px;
-            ">
+            <p
+                style="
+                    grid-column:1 / -1;
+                    text-align:center;
+                    padding:50px 20px;
+                    color:#ff7a18;
+                    font-size:18px;
+                ">
 
                 ❌ تعذر تحميل أحدث الكتب
 
                 <br><br>
 
-                <span style="
-                    color:#64748b;
-                    font-size:14px;
-                ">
+                <span
+                    style="
+                        color:#94a3b8;
+                        font-size:14px;
+                    ">
 
                     تأكد من أن الخادم يعمل.
 
@@ -2724,9 +3298,7 @@ async function loadLatestBooks() {
             </p>
 
         `;
-
     }
-
 }
 
 

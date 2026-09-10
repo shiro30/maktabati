@@ -6,219 +6,1027 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>اتصل بنا | مكتبة ثانوية مصاص رابح</title>
+    <title>اتصل بنا | مكتبة ثانوية مصاص رابح</title>
 
-<link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-    /* =========================================
-       هوية المؤسسة
-    ========================================= */
+    <style>
 
-    .institution-bar {
-        background: linear-gradient(135deg, #0f172a, #1e3a8a);
-        color: white;
-        text-align: center;
-        padding: 14px 20px;
-        border-radius: 0 0 16px 16px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
+        /* =========================================
+           الهوية البصرية
+        ========================================= */
 
-    .institution-bar strong {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 4px;
-    }
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
 
-    .institution-bar span {
-        font-size: 13px;
-        opacity: 0.9;
-    }
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
 
-    /* =========================================
-       بطاقة الاتصال
-    ========================================= */
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
 
-    .contact-wrapper {
-        max-width: 900px;
-        margin: 0 auto;
-    }
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
 
-    .contact-card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 18px;
-        padding: 35px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-    }
-
-    .contact-card h2 {
-        margin-top: 0;
-        color: #172033;
-    }
-
-    .contact-card > p {
-        color: #64748b;
-        line-height: 1.9;
-    }
-
-    /* =========================================
-       معلومات التواصل
-    ========================================= */
-
-    .contact-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        margin-top: 30px;
-    }
-
-    .contact-item {
-        padding: 24px;
-        border-radius: 14px;
-        border: 1px solid #e2e8f0;
-        transition: 0.25s ease;
-    }
-
-    .contact-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
-    }
-
-    .contact-item.email {
-        background: #eff6ff;
-    }
-
-    .contact-item.phone {
-        background: #f0fdf4;
-    }
-
-    .contact-item.school {
-        background: #fff7ed;
-    }
-
-    .contact-item.programmer {
-        background: #f8fafc;
-    }
-
-    .contact-icon {
-        font-size: 32px;
-        margin-bottom: 10px;
-    }
-
-    .contact-item h3 {
-        color: #172033;
-        margin: 8px 0;
-    }
-
-    .contact-item p {
-        color: #64748b;
-        line-height: 1.8;
-        margin-bottom: 10px;
-    }
-
-    .contact-item a {
-        color: #1d4ed8;
-        font-weight: 700;
-        text-decoration: none;
-        word-break: break-word;
-    }
-
-    .contact-item a:hover {
-        text-decoration: underline;
-    }
-
-    /* =========================================
-       بطاقة الملاحظة
-    ========================================= */
-
-    .contact-note {
-        margin-top: 30px;
-        padding: 20px;
-        background: #f8fafc;
-        border-radius: 12px;
-        border-right: 4px solid #1d4ed8;
-        line-height: 1.9;
-    }
-
-    .contact-note strong {
-        color: #172033;
-    }
-
-    .contact-note span {
-        color: #64748b;
-    }
-
-    /* =========================================
-       هوية النظام
-    ========================================= */
-
-    .system-identity {
-        margin-top: 30px;
-        padding: 24px;
-        background: linear-gradient(135deg, #f8fafc, #eff6ff);
-        border: 1px solid #dbeafe;
-        border-radius: 16px;
-        text-align: center;
-    }
-
-    .system-identity strong {
-        display: block;
-        color: #1e3a8a;
-        font-size: 17px;
-        margin-bottom: 8px;
-    }
-
-    .system-identity span {
-        color: #64748b;
-        font-size: 14px;
-    }
-
-    /* =========================================
-       زر الحساب
-    ========================================= */
-
-    .account-icon {
-        font-size: 18px;
-        margin-left: 5px;
-        vertical-align: middle;
-    }
-
-    /* =========================================
-       الهاتف
-    ========================================= */
-
-    @media (max-width: 768px) {
-
-        .institution-bar {
-            padding: 12px 10px;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
+
+        /* =========================================
+           الصفحة
+        ========================================= */
+
+        body {
+
+            background:
+                radial-gradient(
+                    circle at 20% 10%,
+                    rgba(255, 122, 24, 0.08),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 80% 30%,
+                    rgba(18, 53, 95, 0.35),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--black),
+                    var(--black-soft),
+                    #061326
+                );
+
+            color: var(--text);
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================================
+           خلفية شبكية خفيفة
+        ========================================= */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.035;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.5) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.5) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            z-index: -1;
+        }
+
+
+        /* =========================================
+           الشريط العلوي
+        ========================================= */
+
+        .navbar {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(3, 7, 18, 0.97),
+                    rgba(8, 27, 54, 0.96)
+                ) !important;
+
+            border-bottom:
+                1px solid
+                rgba(255, 122, 24, 0.22);
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.35);
+
+            position: relative;
+
+            z-index: 10;
+        }
+
+
+        .navbar::after {
+
+            content: "";
+
+            position: absolute;
+
+            bottom: -1px;
+
+            right: 0;
+
+            width: 180px;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange)
+                );
+
+            box-shadow:
+                0 0 12px
+                rgba(255,122,24,0.55);
+        }
+
+
+        /* =========================================
+           الشعار
+        ========================================= */
+
+        .logo-icon {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy-2),
+                    var(--navy-3)
+                ) !important;
+
+            border:
+                1px solid
+                rgba(255,122,24,0.35);
+
+            box-shadow:
+                0 0 18px
+                rgba(255,122,24,0.10);
+        }
+
+
+        .logo-title {
+
+            color: var(--white) !important;
+        }
+
+
+        .logo-subtitle {
+
+            color: var(--muted) !important;
+        }
+
+
+        /* =========================================
+           روابط القائمة
+        ========================================= */
+
+        nav a {
+
+            color: #cbd5e1 !important;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease;
+        }
+
+
+        nav a:hover {
+
+            color: var(--orange-light) !important;
+        }
+
+
+        nav a.active {
+
+            color: var(--orange) !important;
+
+            background:
+                rgba(255,122,24,0.08);
+
+            border-radius: 8px;
+        }
+
+
+        /* =========================================
+           زر الحساب
+        ========================================= */
+
+        .login-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy-2),
+                    var(--navy-3)
+                ) !important;
+
+            color: white !important;
+
+            border:
+                1px solid
+                rgba(255,122,24,0.35) !important;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.25);
+
+            transition: 0.25s ease;
+        }
+
+
+        .login-btn:hover {
+
+            border-color:
+                var(--orange) !important;
+
+            box-shadow:
+                0 0 20px
+                rgba(255,122,24,0.18);
+        }
+
+
+        .account-icon {
+
+            font-size: 18px;
+
+            margin-left: 5px;
+
+            vertical-align: middle;
+        }
+
+
+        /* =========================================
+           شريط المؤسسة
+        ========================================= */
+
+        .institution-bar {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #030712,
+                    #0b2344
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 16px 20px;
+
+            border-radius:
+                0 0 18px 18px;
+
+            border-bottom:
+                1px solid
+                rgba(255,122,24,0.18);
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,0.30);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .institution-bar::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            right: 0;
+
+            width: 160px;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange)
+                );
+
+            box-shadow:
+                0 0 15px
+                rgba(255,122,24,0.5);
+        }
+
+
         .institution-bar strong {
+
+            display: block;
+
+            font-size: 18px;
+
+            margin-bottom: 5px;
+
+            color: #ffffff;
+        }
+
+
+        .institution-bar span {
+
+            font-size: 13px;
+
+            color: #94a3b8;
+        }
+
+
+        /* =========================================
+           عنوان القسم
+        ========================================= */
+
+        .section-heading {
+
+            position: relative;
+        }
+
+
+        .section-heading span {
+
+            color:
+                var(--orange) !important;
+
+            font-weight: 700;
+        }
+
+
+        .section-heading h2 {
+
+            color:
+                var(--white) !important;
+        }
+
+
+        .section-heading p {
+
+            color:
+                var(--muted) !important;
+
+            line-height: 1.9;
+        }
+
+
+        /* =========================================
+           بطاقة الاتصال الرئيسية
+        ========================================= */
+
+        .contact-wrapper {
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+        }
+
+
+        .contact-card {
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(8,27,54,0.97),
+                    rgba(3,7,18,0.98)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.38);
+
+            overflow: hidden;
+        }
+
+
+        /* الخط البرتقالي العلوي */
+
+        .contact-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            right: 0;
+
+            left: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    var(--orange-light),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 20px
+                rgba(255,122,24,0.35);
+        }
+
+
+        .contact-card h2 {
+
+            margin-top: 0;
+
+            color:
+                var(--white);
+
+            font-size: 25px;
+        }
+
+
+        .contact-card > p {
+
+            color:
+                var(--muted);
+
+            line-height: 1.95;
+
+            margin-bottom: 0;
+        }
+
+
+        /* =========================================
+           شبكة معلومات التواصل
+        ========================================= */
+
+        .contact-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+            margin-top: 32px;
+        }
+
+
+        /* =========================================
+           بطاقة التواصل
+        ========================================= */
+
+        .contact-item {
+
+            position: relative;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,39,75,0.92),
+                    rgba(7,13,24,0.96)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+
+            overflow: hidden;
+        }
+
+
+        .contact-item::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            right: 0;
+
+            width: 70px;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange)
+                );
+        }
+
+
+        .contact-item:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(255,122,24,0.35);
+
+            box-shadow:
+                0 14px 30px
+                rgba(0,0,0,0.35),
+                0 0 18px
+                rgba(255,122,24,0.06);
+        }
+
+
+        /* =========================================
+           أيقونات
+        ========================================= */
+
+        .contact-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 29px;
+
+            margin-bottom: 15px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,122,24,0.08);
+
+            border:
+                1px solid
+                rgba(255,122,24,0.20);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0,0,0,0.20);
+        }
+
+
+        .contact-item h3 {
+
+            color:
+                var(--white);
+
+            margin: 8px 0 10px;
+
+            font-size: 18px;
+        }
+
+
+        .contact-item p {
+
+            color:
+                var(--muted);
+
+            line-height: 1.85;
+
+            margin:
+                0 0 10px;
+        }
+
+
+        .contact-item strong {
+
+            color:
+                #f8fafc;
+
             font-size: 16px;
         }
 
-        .institution-bar span {
-            font-size: 12px;
+
+        .contact-item a {
+
+            color:
+                var(--orange-light);
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            word-break: break-word;
+
+            transition: 0.2s ease;
         }
 
-        .contact-card {
-            padding: 22px;
+
+        .contact-item a:hover {
+
+            color:
+                #ffb36b;
+
+            text-decoration: underline;
         }
 
-        .contact-grid {
-            grid-template-columns: 1fr;
+
+        /* =========================================
+           ألوان البطاقات
+        ========================================= */
+
+        .contact-item.email {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,39,75,0.95),
+                    rgba(7,13,24,0.98)
+                );
         }
-    }
-</style>
-```
+
+
+        .contact-item.phone {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(10,39,52,0.95),
+                    rgba(7,13,24,0.98)
+                );
+        }
+
+
+        .contact-item.school {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(35,32,25,0.95),
+                    rgba(7,13,24,0.98)
+                );
+        }
+
+
+        .contact-item.programmer {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18,27,42,0.95),
+                    rgba(7,13,24,0.98)
+                );
+        }
+
+
+        /* =========================================
+           الملاحظة
+        ========================================= */
+
+        .contact-note {
+
+            margin-top: 30px;
+
+            padding: 22px 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,122,24,0.07),
+                    rgba(13,39,75,0.45)
+                );
+
+            border:
+                1px solid
+                rgba(255,122,24,0.15);
+
+            border-right:
+                4px solid
+                var(--orange);
+
+            border-radius: 14px;
+
+            line-height: 1.95;
+        }
+
+
+        .contact-note strong {
+
+            color:
+                var(--orange-light);
+
+            margin-left: 5px;
+        }
+
+
+        .contact-note span {
+
+            color:
+                #cbd5e1;
+        }
+
+
+        /* =========================================
+           هوية النظام
+        ========================================= */
+
+        .system-identity {
+
+            position: relative;
+
+            margin-top: 30px;
+
+            padding: 26px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #030712,
+                    #0d274b
+                );
+
+            border:
+                1px solid
+                rgba(255,122,24,0.18);
+
+            border-radius: 17px;
+
+            text-align: center;
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(255,255,255,0.03);
+        }
+
+
+        .system-identity::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            right: 20%;
+
+            left: 20%;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+        }
+
+
+        .system-identity strong {
+
+            display: block;
+
+            color:
+                var(--orange-light);
+
+            font-size: 18px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .system-identity span {
+
+            color:
+                var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           التذييل
+        ========================================= */
+
+        footer {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #02040a,
+                    #061326
+                ) !important;
+
+            border-top:
+                1px solid
+                rgba(255,122,24,0.18);
+
+            margin-top: 40px;
+        }
+
+
+        footer .logo-title {
+
+            color:
+                var(--white) !important;
+        }
+
+
+        footer .logo-subtitle {
+
+            color:
+                var(--muted) !important;
+        }
+
+
+        footer p {
+
+            color:
+                var(--muted) !important;
+
+            line-height: 1.8;
+        }
+
+
+        .footer-links h3 {
+
+            color:
+                var(--orange-light) !important;
+        }
+
+
+        .footer-links a {
+
+            color:
+                #94a3b8 !important;
+
+            transition: 0.2s ease;
+        }
+
+
+        .footer-links a:hover {
+
+            color:
+                var(--orange) !important;
+        }
+
+
+        .copyright {
+
+            color:
+                #64748b !important;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+
+        .copyright strong {
+
+            color:
+                var(--white);
+        }
+
+
+        .copyright a {
+
+            color:
+                var(--orange-light) !important;
+
+            text-decoration: none;
+        }
+
+
+        .copyright a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           الهاتف
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+            .institution-bar {
+
+                padding:
+                    13px 10px;
+            }
+
+
+            .institution-bar strong {
+
+                font-size: 16px;
+            }
+
+
+            .institution-bar span {
+
+                font-size: 12px;
+            }
+
+
+            .contact-card {
+
+                padding:
+                    24px 18px;
+
+                border-radius: 18px;
+            }
+
+
+            .contact-card h2 {
+
+                font-size: 22px;
+            }
+
+
+            .contact-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 16px;
+            }
+
+
+            .contact-item {
+
+                padding: 21px;
+            }
+
+
+            .contact-note {
+
+                padding:
+                    18px;
+            }
+
+
+            .system-identity {
+
+                padding:
+                    22px 15px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .contact-card > p {
+
+                font-size: 14px;
+            }
+
+
+            .contact-item h3 {
+
+                font-size: 17px;
+            }
+
+
+            .contact-item p {
+
+                font-size: 14px;
+            }
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
 
 <!-- =========================================
      الشريط العلوي
@@ -226,327 +1034,28 @@
 
 <header class="navbar">
 
-```
-<div class="logo">
+    <div class="logo">
 
-    <div class="logo-icon">
-        📚
-    </div>
-
-    <div>
-
-        <div class="logo-title">
-            مكتبة ثانوية مصاص رابح
+        <div class="logo-icon">
+            📚
         </div>
-
-        <div class="logo-subtitle">
-            المكتبة الرقمية للمؤسسة
-        </div>
-
-    </div>
-
-</div>
-
-
-<nav>
-
-    <a href="../index.html">
-        الرئيسية
-    </a>
-
-    <a href="books.html">
-        الكتب
-    </a>
-
-    <a href="categories.html">
-        التصنيفات
-    </a>
-
-    <a href="about.html">
-        عن المكتبة
-    </a>
-
-    <a href="contact.html" class="active">
-        اتصل بنا
-    </a>
-
-</nav>
-
-
-<!-- ACCOUNT -->
-
-<a
-    href="login.html"
-    class="login-btn"
-    id="accountButton">
-
-    🔐 تسجيل الدخول
-
-</a>
-```
-
-</header>
-
-<!-- =========================================
-     هوية المؤسسة
-========================================= -->
-
-<div class="institution-bar">
-
-```
-<strong>
-    🏫 ثانوية مصاص رابح
-</strong>
-
-<span>
-    المكتبة الرقمية للمؤسسة
-</span>
-```
-
-</div>
-
-<!-- =========================================
-     المحتوى الرئيسي
-========================================= -->
-
-<main>
-
-```
-<section class="section">
-
-    <div class="section-heading">
 
         <div>
 
-            <span>
-                نحن هنا لمساعدتك
-            </span>
-
-            <h2>
-                اتصل بنا
-            </h2>
-
-            <p>
-                يمكنك التواصل معنا للاستفسارات والاقتراحات
-                والمساعدة المتعلقة بالمكتبة الإلكترونية.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="contact-wrapper">
-
-        <div class="contact-card">
-
-            <h2>
-                📞 تواصل معنا
-            </h2>
-
-            <p>
-                إذا كانت لديك استفسارات أو اقتراحات أو واجهت
-                مشكلة أثناء استخدام المكتبة الإلكترونية،
-                يمكنك التواصل معنا عبر المعلومات التالية.
-            </p>
-
-
-            <!-- =================================
-                 بطاقات التواصل
-            ================================== -->
-
-            <div class="contact-grid">
-
-
-                <!-- البريد الإلكتروني -->
-
-                <div class="contact-item email">
-
-                    <div class="contact-icon">
-                        📧
-                    </div>
-
-                    <h3>
-                        البريد الإلكتروني
-                    </h3>
-
-                    <p>
-                        يمكنك مراسلتنا عبر البريد الإلكتروني:
-                    </p>
-
-                    <a href="mailto:charafeddin147@gmail.com">
-                        charafeddin147@gmail.com
-                    </a>
-
-                </div>
-
-
-                <!-- الهاتف -->
-
-                <div class="contact-item phone">
-
-                    <div class="contact-icon">
-                        📞
-                    </div>
-
-                    <h3>
-                        رقم الهاتف
-                    </h3>
-
-                    <p>
-                        للتواصل والاستفسارات:
-                    </p>
-
-                    <a href="tel:0696183217" dir="ltr">
-                        0696183217
-                    </a>
-
-                </div>
-
-
-                <!-- المؤسسة -->
-
-                <div class="contact-item school">
-
-                    <div class="contact-icon">
-                        🏫
-                    </div>
-
-                    <h3>
-                        المؤسسة
-                    </h3>
-
-                    <p>
-                        المؤسسة التعليمية التي تنتمي إليها
-                        المكتبة الرقمية:
-                    </p>
-
-                    <strong>
-                        ثانوية مصاص رابح
-                    </strong>
-
-                </div>
-
-
-                <!-- مهندس النظام -->
-
-                <div class="contact-item programmer">
-
-                    <div class="contact-icon">
-                        👨‍💻
-                    </div>
-
-                    <h3>
-                        مهندس النظام
-                    </h3>
-
-                    <p>
-                        المسؤول عن تطوير وبرمجة النظام:
-                    </p>
-
-                    <strong>
-                        شراف الدين بوردوسن
-                    </strong>
-
-                    <p>
-                        أستاذ مادة الرياضيات
-                    </p>
-
-                </div>
-
-
+            <div class="logo-title">
+                مكتبة ثانوية مصاص رابح
             </div>
 
-
-            <!-- =================================
-                 ملاحظة
-            ================================== -->
-
-            <div class="contact-note">
-
-                <strong>
-                    💡 ملاحظة:
-                </strong>
-
-                <span>
-                    نرحب بجميع الاستفسارات والاقتراحات التي
-                    تساعد على تطوير المكتبة الرقمية وتحسين
-                    تجربة التلاميذ والأساتذة.
-                </span>
-
-            </div>
-
-
-            <!-- =================================
-                 هوية النظام
-            ================================== -->
-
-            <div class="system-identity">
-
-                <strong>
-                    🏫 مكتبة ثانوية مصاص رابح
-                </strong>
-
-                <span>
-                    مهندس النظام: شراف الدين بوردوسن —
-                    أستاذ مادة الرياضيات
-                </span>
-
+            <div class="logo-subtitle">
+                المكتبة الرقمية للمؤسسة
             </div>
 
         </div>
 
     </div>
 
-</section>
-```
 
-</main>
-
-<!-- =========================================
-     التذييل
-========================================= -->
-
-<footer>
-
-```
-<div class="footer-content">
-
-    <div>
-
-        <div class="logo">
-
-            <div class="logo-icon">
-                📚
-            </div>
-
-            <div>
-
-                <div class="logo-title">
-                    مكتبة ثانوية مصاص رابح
-                </div>
-
-                <div class="logo-subtitle">
-                    المكتبة الرقمية للمؤسسة
-                </div>
-
-            </div>
-
-        </div>
-
-        <p>
-            منصة إلكترونية للقراءة والتعلم
-            والوصول إلى المعرفة.
-        </p>
-
-    </div>
-
-
-    <div class="footer-links">
-
-        <h3>
-            روابط
-        </h3>
+    <nav>
 
         <a href="../index.html">
             الرئيسية
@@ -564,74 +1073,383 @@
             عن المكتبة
         </a>
 
-        <a href="contact.html">
+        <a href="contact.html" class="active">
             اتصل بنا
         </a>
 
-    </div>
+    </nav>
 
 
-    <div class="footer-links">
+    <!-- ACCOUNT -->
 
-        <h3>
-            المساعدة
-        </h3>
+    <a
+        href="login.html"
+        class="login-btn"
+        id="accountButton">
 
-        <a href="contact.html">
-            اتصل بنا
-        </a>
+        🔐 تسجيل الدخول
 
-        <a href="guide.html">
-            كيفية استخدام المكتبة
-        </a>
+    </a>
 
-    </div>
-
-</div>
+</header>
 
 
-<div class="copyright">
+<!-- =========================================
+     هوية المؤسسة
+========================================= -->
+
+<div class="institution-bar">
 
     <strong>
         🏫 ثانوية مصاص رابح
     </strong>
 
-    <br>
-
-    مكتبة الثانوية الرقمية
-
-    <br>
-
-    <span style="font-size:13px;">
-
-        مهندس النظام:
-        شراف الدين بوردوسن —
-        أستاذ مادة الرياضيات
-
+    <span>
+        المكتبة الرقمية للمؤسسة
     </span>
 
-    <br><br>
-
-    📧
-    <a href="mailto:charafeddin147@gmail.com">
-        charafeddin147@gmail.com
-    </a>
-
-    &nbsp; | &nbsp;
-
-    📞
-    <a href="tel:0696183217">
-        0696183217
-    </a>
-
-    <br><br>
-
-    © 2026 — جميع الحقوق محفوظة
-
 </div>
-```
+
+
+<!-- =========================================
+     المحتوى الرئيسي
+========================================= -->
+
+<main>
+
+    <section class="section">
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>
+                    نحن هنا لمساعدتك
+                </span>
+
+                <h2>
+                    اتصل بنا
+                </h2>
+
+                <p>
+                    يمكنك التواصل معنا للاستفسارات والاقتراحات
+                    والمساعدة المتعلقة بالمكتبة الإلكترونية.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-wrapper">
+
+
+            <div class="contact-card">
+
+
+                <h2>
+                    📞 تواصل معنا
+                </h2>
+
+
+                <p>
+                    إذا كانت لديك استفسارات أو اقتراحات أو واجهت
+                    مشكلة أثناء استخدام المكتبة الإلكترونية،
+                    يمكنك التواصل معنا عبر المعلومات التالية.
+                </p>
+
+
+                <!-- =================================
+                     بطاقات التواصل
+                ================================== -->
+
+                <div class="contact-grid">
+
+
+                    <!-- البريد الإلكتروني -->
+
+                    <div class="contact-item email">
+
+                        <div class="contact-icon">
+                            📧
+                        </div>
+
+                        <h3>
+                            البريد الإلكتروني
+                        </h3>
+
+                        <p>
+                            يمكنك مراسلتنا عبر البريد الإلكتروني:
+                        </p>
+
+                        <a href="mailto:charafeddin147@gmail.com">
+                            charafeddin147@gmail.com
+                        </a>
+
+                    </div>
+
+
+                    <!-- الهاتف -->
+
+                    <div class="contact-item phone">
+
+                        <div class="contact-icon">
+                            📞
+                        </div>
+
+                        <h3>
+                            رقم الهاتف
+                        </h3>
+
+                        <p>
+                            للتواصل والاستفسارات:
+                        </p>
+
+                        <a
+                            href="tel:0696183217"
+                            dir="ltr">
+
+                            0696183217
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- المؤسسة -->
+
+                    <div class="contact-item school">
+
+                        <div class="contact-icon">
+                            🏫
+                        </div>
+
+                        <h3>
+                            المؤسسة
+                        </h3>
+
+                        <p>
+                            المؤسسة التعليمية التي تنتمي إليها
+                            المكتبة الرقمية:
+                        </p>
+
+                        <strong>
+                            ثانوية مصاص رابح
+                        </strong>
+
+                    </div>
+
+
+                    <!-- مهندس النظام -->
+
+                    <div class="contact-item programmer">
+
+                        <div class="contact-icon">
+                            👨‍💻
+                        </div>
+
+                        <h3>
+                            مهندس النظام
+                        </h3>
+
+                        <p>
+                            المسؤول عن تطوير وبرمجة النظام:
+                        </p>
+
+                        <strong>
+                            شراف الدين بوردوسن
+                        </strong>
+
+                        <p>
+                            أستاذ مادة الرياضيات
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================
+                     ملاحظة
+                ================================== -->
+
+                <div class="contact-note">
+
+                    <strong>
+                        💡 ملاحظة:
+                    </strong>
+
+                    <span>
+                        نرحب بجميع الاستفسارات والاقتراحات التي
+                        تساعد على تطوير المكتبة الرقمية وتحسين
+                        تجربة التلاميذ والأساتذة.
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     هوية النظام
+                ================================== -->
+
+                <div class="system-identity">
+
+                    <strong>
+                        🏫 مكتبة ثانوية مصاص رابح
+                    </strong>
+
+                    <span>
+                        مهندس النظام: شراف الدين بوردوسن —
+                        أستاذ مادة الرياضيات
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================
+     التذييل
+========================================= -->
+
+<footer>
+
+    <div class="footer-content">
+
+
+        <div>
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <div class="logo-title">
+                        مكتبة ثانوية مصاص رابح
+                    </div>
+
+                    <div class="logo-subtitle">
+                        المكتبة الرقمية للمؤسسة
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p>
+                منصة إلكترونية للقراءة والتعلم
+                والوصول إلى المعرفة.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                روابط
+            </h3>
+
+            <a href="../index.html">
+                الرئيسية
+            </a>
+
+            <a href="books.html">
+                الكتب
+            </a>
+
+            <a href="categories.html">
+                التصنيفات
+            </a>
+
+            <a href="about.html">
+                عن المكتبة
+            </a>
+
+            <a href="contact.html">
+                اتصل بنا
+            </a>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                المساعدة
+            </h3>
+
+            <a href="contact.html">
+                اتصل بنا
+            </a>
+
+            <a href="guide.html">
+                كيفية استخدام المكتبة
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="copyright">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <br>
+
+        مكتبة الثانوية الرقمية
+
+        <br>
+
+        <span style="font-size:13px;">
+
+            مهندس النظام:
+            شراف الدين بوردوسن —
+            أستاذ مادة الرياضيات
+
+        </span>
+
+        <br><br>
+
+        📧
+
+        <a href="mailto:charafeddin147@gmail.com">
+            charafeddin147@gmail.com
+        </a>
+
+        &nbsp; | &nbsp;
+
+        📞
+
+        <a href="tel:0696183217">
+            0696183217
+        </a>
+
+        <br><br>
+
+        © 2026 — جميع الحقوق محفوظة
+
+    </div>
 
 </footer>
+
 
 <!-- =========================================
      SUPABASE + ACCOUNT SYSTEM
@@ -641,6 +1459,7 @@
 
 const SUPABASE_URL =
     "https://xdkluojrvdhdtihblpwy.supabase.co";
+
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
@@ -658,7 +1477,9 @@ const supabaseClient =
 ========================================= */
 
 const accountButton =
-    document.getElementById("accountButton");
+    document.getElementById(
+        "accountButton"
+    );
 
 
 /* =========================================
@@ -899,6 +1720,7 @@ supabaseClient.auth.onAuthStateChange(
 loadUserAccount();
 
 </script>
+
 
 </body>
 
