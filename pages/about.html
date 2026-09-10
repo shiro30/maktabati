@@ -1,9 +1,7 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -13,138 +11,56 @@
 
     <link rel="icon"
           type="image/png"
-          href="../favicone.png">
+          href="../favicon.png">
 
     <link rel="stylesheet"
           href="../style.css">
 
     <style>
-
         /* =========================================
-           هوية المؤسسة
+           الخلفية العامة
         ========================================= */
 
-        .institution-bar {
+        body {
             background:
-                linear-gradient(
-                    135deg,
-                    #0f172a,
-                    #1e3a8a
-                );
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            border-radius: 0 0 16px 16px;
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.08);
+                radial-gradient(
+                    circle at 10% 0%,
+                    rgba(37, 99, 235, 0.07),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(14, 165, 233, 0.06),
+                    transparent 25%
+                ),
+                #f8fafc;
         }
 
-        .institution-bar strong {
-            display: block;
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-
-        .institution-bar span {
-            font-size: 13px;
-            opacity: 0.9;
-        }
 
         /* =========================================
-           محتوى عن المكتبة
+           الشريط العلوي
         ========================================= */
 
-        .about-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .about-card {
-            background: white;
-            border-radius: 18px;
-            padding: 30px;
-            margin-top: 25px;
+        .navbar {
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid #e2e8f0;
             box-shadow:
-                0 8px 25px rgba(15, 23, 42, 0.06);
-            border: 1px solid #e2e8f0;
+                0 5px 22px rgba(15, 23, 42, 0.06);
         }
 
-        .about-card h2 {
-            color: #1e3a8a;
-            margin-bottom: 15px;
-        }
 
-        .about-card h3 {
-            color: #1e3a8a;
-            margin-top: 30px;
-            margin-bottom: 12px;
-        }
-
-        .about-card p {
-            line-height: 2;
-            color: #475569;
-        }
-
-        /* =========================================
-           هوية النظام
-        ========================================= */
-
-        .system-identity {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns:
-                repeat(2, 1fr);
-            gap: 18px;
-        }
-
-        .identity-item {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+        .logo-icon {
+            overflow: hidden;
             border-radius: 14px;
-            padding: 20px;
         }
 
-        .identity-item span {
-            display: block;
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 7px;
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        .identity-item strong {
-            color: #0f172a;
-            font-size: 16px;
-        }
-
-        /* =========================================
-           بطاقة مهندس النظام
-        ========================================= */
-
-        .programmer-info {
-            margin-top: 30px;
-            padding: 24px;
-            text-align: center;
-            background:
-                linear-gradient(
-                    135deg,
-                    #f8fafc,
-                    #eff6ff
-                );
-            border: 1px solid #dbeafe;
-            border-radius: 16px;
-        }
-
-        .programmer-info strong {
-            display: block;
-            color: #1e3a8a;
-            font-size: 17px;
-            margin-bottom: 7px;
-        }
-
-        .programmer-info span {
-            color: #64748b;
-            font-size: 14px;
-        }
 
         /* =========================================
            زر الحساب
@@ -155,23 +71,447 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
+
             padding: 10px 16px;
-            border-radius: 10px;
-            background: #1e3a8a;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #2563eb
+                );
+
             color: white;
             text-decoration: none;
+
             font-weight: 700;
             font-size: 14px;
+
             transition:
-                background 0.2s ease,
-                transform 0.2s ease;
+                all 0.2s ease;
+
             white-space: nowrap;
+
+            box-shadow:
+                0 5px 14px rgba(
+                    37,
+                    99,
+                    235,
+                    0.18
+                );
         }
 
+
         .account-btn:hover {
-            background: #172554;
-            transform: translateY(-1px);
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #1d4ed8
+                );
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 18px rgba(
+                    37,
+                    99,
+                    235,
+                    0.25
+                );
         }
+
+
+        /* =========================================
+           هوية المؤسسة
+        ========================================= */
+
+        .institution-bar {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a 0%,
+                    #1e3a8a 55%,
+                    #2563eb 100%
+                );
+
+            color: white;
+            text-align: center;
+
+            padding: 18px 20px;
+
+            border-radius:
+                0 0 16px 16px;
+
+            box-shadow:
+                0 8px 25px rgba(
+                    30,
+                    58,
+                    138,
+                    0.16
+                );
+        }
+
+
+        .institution-bar strong {
+            display: block;
+
+            font-size: 18px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .institution-bar span {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+
+        /* =========================================
+           عناوين الأقسام
+        ========================================= */
+
+        .section-heading > div {
+            position: relative;
+            padding-right: 18px;
+        }
+
+
+        .section-heading > div::before {
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+            top: 4px;
+            bottom: 4px;
+
+            width: 4px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #2563eb,
+                    #0ea5e9
+                );
+        }
+
+
+        .section-heading > div > span {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           المحتوى
+        ========================================= */
+
+        .about-content {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           البطاقة الرئيسية
+        ========================================= */
+
+        .about-card {
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #f8fbff
+                );
+
+            border-radius: 22px;
+
+            padding: 34px;
+
+            margin-top: 28px;
+
+            box-shadow:
+                0 14px 40px rgba(
+                    15,
+                    23,
+                    42,
+                    0.08
+                );
+
+            border: 1px solid #dbeafe;
+        }
+
+
+        .about-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #1e3a8a,
+                    #2563eb,
+                    #38bdf8
+                );
+        }
+
+
+        .about-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            left: -90px;
+            bottom: -100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.045
+                );
+
+            pointer-events: none;
+        }
+
+
+        .about-card h2 {
+            color: #173b8f;
+
+            margin-bottom: 15px;
+
+            font-size: 25px;
+        }
+
+
+        .about-card h3 {
+            color: #1e40af;
+
+            margin-top: 32px;
+            margin-bottom: 13px;
+
+            padding-right: 12px;
+
+            border-right:
+                3px solid #38bdf8;
+        }
+
+
+        .about-card p {
+            line-height: 2.05;
+
+            color: #475569;
+
+            font-size: 15.5px;
+        }
+
+
+        /* =========================================
+           هوية النظام
+        ========================================= */
+
+        .system-identity {
+            margin-top: 30px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .identity-item {
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #f1f7ff
+                );
+
+            border:
+                1px solid #dbeafe;
+
+            border-radius: 16px;
+
+            padding: 21px;
+
+            box-shadow:
+                0 5px 16px rgba(
+                    30,
+                    64,
+                    175,
+                    0.05
+                );
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+
+        .identity-item:hover {
+            transform: translateY(-3px);
+
+            border-color: #93c5fd;
+
+            box-shadow:
+                0 10px 24px rgba(
+                    30,
+                    64,
+                    175,
+                    0.10
+                );
+        }
+
+
+        .identity-item span {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .identity-item strong {
+            color: #0f172a;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================================
+           معلومات الكتب
+        ========================================= */
+
+        .book-meta {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-top: 26px;
+        }
+
+
+        .book-meta > div {
+            background: #eff6ff;
+
+            border:
+                1px solid #dbeafe;
+
+            border-radius: 14px;
+
+            padding: 17px;
+        }
+
+
+        .book-meta span {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .book-meta strong {
+            color: #1e3a8a;
+        }
+
+
+        /* =========================================
+           مهندس النظام
+        ========================================= */
+
+        .programmer-info {
+            margin-top: 30px;
+
+            padding: 26px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fbff 55%,
+                    #e0f2fe
+                );
+
+            border:
+                1px solid #bfdbfe;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    30,
+                    64,
+                    175,
+                    0.07
+                );
+        }
+
+
+        .programmer-info strong {
+            display: block;
+
+            color: #1e3a8a;
+
+            font-size: 17px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .programmer-info span {
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           التذييل
+        ========================================= */
+
+        footer {
+            margin-top: 30px;
+            background: #0f172a;
+        }
+
 
         /* =========================================
            الهاتف
@@ -180,32 +520,46 @@
         @media (max-width: 768px) {
 
             .institution-bar {
-                padding: 12px 10px;
+                padding: 14px 10px;
             }
+
 
             .institution-bar strong {
                 font-size: 16px;
             }
 
+
             .institution-bar span {
                 font-size: 12px;
             }
 
+
             .about-card {
-                padding: 20px;
+                padding: 24px 18px;
+                border-radius: 18px;
             }
+
+
+            .about-card h2 {
+                font-size: 21px;
+            }
+
 
             .system-identity {
                 grid-template-columns: 1fr;
             }
 
+
+            .book-meta {
+                grid-template-columns: 1fr;
+            }
+
+
             .account-btn {
                 padding: 9px 12px;
                 font-size: 13px;
             }
-
         }
-
     </style>
 
 </head>
@@ -213,554 +567,538 @@
 
 <body>
 
+    <!-- =========================================
+         الشريط العلوي
+    ========================================= -->
 
-<!-- =========================================
-     الشريط العلوي
-========================================= -->
+    <header class="navbar">
 
-<header class="navbar">
+        <!-- الشعار -->
 
+        <div class="logo">
 
-    <!-- الشعار -->
+            <div class="logo-icon">
 
-    <div class="logo">
+                <img
+                    src="../favicon.png"
+                    alt="شعار مكتبة ثانوية مصاص رابح"
+                >
 
-        <div class="logo-icon">
-
-            <img
-                src="../favicone.png"
-                alt="شعار مكتبة ثانوية مصاص رابح"
-            >
-
-        </div>
-
-
-        <div>
-
-            <div class="logo-title">
-                مكتبة ثانوية مصاص رابح
             </div>
 
-            <div class="logo-subtitle">
-                المكتبة الرقمية للمؤسسة
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- القائمة -->
-
-    <nav>
-
-        <a href="../index.html">
-            الرئيسية
-        </a>
-
-        <a href="books.html">
-            الكتب
-        </a>
-
-        <a href="categories.html">
-            التصنيفات
-        </a>
-
-        <a href="about.html" class="active">
-            عن المكتبة
-        </a>
-
-    </nav>
-
-
-    <!-- الحساب -->
-
-    <a
-        href="login.html"
-        class="account-btn"
-        id="accountButton">
-
-        🔐 تسجيل الدخول
-
-    </a>
-
-
-</header>
-
-
-<!-- =========================================
-     هوية المؤسسة
-========================================= -->
-
-<div class="institution-bar">
-
-    <strong>
-        🏫 ثانوية مصاص رابح
-    </strong>
-
-    <span>
-        المكتبة الرقمية للمؤسسة
-    </span>
-
-</div>
-
-
-<!-- =========================================
-     المحتوى الرئيسي
-========================================= -->
-
-<main>
-
-    <section class="section">
-
-
-        <div class="section-heading">
 
             <div>
 
-                <span>
+                <div class="logo-title">
+                    مكتبة ثانوية مصاص رابح
+                </div>
+
+
+                <div class="logo-subtitle">
                     المكتبة الرقمية للمؤسسة
-                </span>
-
-                <h2>
-                    عن المكتبة
-                </h2>
-
-                <p>
-                    منصة إلكترونية تعليمية تهدف إلى توفير الكتب
-                    والمراجع الدراسية للطلاب بطريقة منظمة وسهلة.
-                </p>
+                </div>
 
             </div>
 
         </div>
 
 
-        <div class="about-content">
+        <!-- القائمة -->
 
+        <nav>
 
-            <!-- =================================
-                 تعريف المكتبة
-            ================================== -->
+            <a href="../index.html">
+                الرئيسية
+            </a>
 
-            <div class="about-card">
 
+            <a href="books.html">
+                الكتب
+            </a>
 
-                <h2>
-                    📚 مكتبة ثانوية مصاص رابح
-                </h2>
 
+            <a href="categories.html">
+                التصنيفات
+            </a>
 
-                <p>
-                    مكتبة الثانوية هي منصة رقمية مخصصة لجمع وتنظيم
-                    الكتب والمراجع التعليمية في مكان واحد، بهدف
-                    تسهيل وصول التلاميذ إلى مصادر المعرفة والمطالعة.
-                </p>
 
+            <a
+                href="about.html"
+                class="active"
+            >
+                عن المكتبة
+            </a>
 
-                <!-- =================================
-                     معلومات المنصة
-                ================================== -->
+        </nav>
 
-                <div class="system-identity">
 
+        <!-- الحساب -->
 
-                    <div class="identity-item">
+        <a
+            href="login.html"
+            class="account-btn"
+            id="accountButton"
+        >
+            🔐 تسجيل الدخول
+        </a>
 
-                        <span>
-                            🏫 المؤسسة
-                        </span>
+    </header>
 
-                        <strong>
-                            ثانوية مصاص رابح
-                        </strong>
 
-                    </div>
+    <!-- =========================================
+         هوية المؤسسة
+    ========================================= -->
 
-
-                    <div class="identity-item">
-
-                        <span>
-                            📚 المنصة
-                        </span>
-
-                        <strong>
-                            المكتبة الرقمية للمؤسسة
-                        </strong>
-
-                    </div>
-
-
-                    <div class="identity-item">
-
-                        <span>
-                            👨‍💻 مهندس النظام
-                        </span>
-
-                        <strong>
-                            شراف الدين بوردوسن
-                        </strong>
-
-                    </div>
-
-
-                    <div class="identity-item">
-
-                        <span>
-                            👨‍🏫 الصفة
-                        </span>
-
-                        <strong>
-                            أستاذ مادة الرياضيات
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- =================================
-                     خصائص المكتبة
-                ================================== -->
-
-                <div class="book-meta">
-
-
-                    <div>
-
-                        <span>
-                            📚 الكتب
-                        </span>
-
-                        <strong>
-                            مراجع تعليمية
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            🎓 الفئة
-                        </span>
-
-                        <strong>
-                            تلاميذ الثانوية
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            📄 الصيغة
-                        </span>
-
-                        <strong>
-                            PDF
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- =================================
-                     هدف المكتبة
-                ================================== -->
-
-                <h3>
-                    🎯 هدف المكتبة
-                </h3>
-
-
-                <p>
-                    نسعى إلى إنشاء فضاء تعليمي رقمي يساعد التلميذ
-                    على الوصول إلى الكتب والمراجع بسرعة، مع تنظيم
-                    المحتوى حسب المواد والتخصصات.
-                </p>
-
-
-                <!-- =================================
-                     ماذا توفر المكتبة؟
-                ================================== -->
-
-                <h3>
-                    📖 ماذا توفر المكتبة؟
-                </h3>
-
-
-                <p>
-                    • تصفح الكتب حسب المادة.<br>
-                    • البحث عن الكتب والمؤلفين.<br>
-                    • قراءة الكتب مباشرة بصيغة PDF.<br>
-                    • تحميل الكتب المتاحة.<br>
-                    • تنظيم المحتوى داخل تصنيفات واضحة.
-                </p>
-
-
-            </div>
-
-
-            <!-- =================================
-                 مهندس النظام
-            ================================== -->
-
-            <div class="programmer-info">
-
-                <strong>
-                    👨‍💻 مهندس النظام: شراف الدين بوردوسن
-                </strong>
-
-                <span>
-                    أستاذ مادة الرياضيات
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
-</main>
-
-
-<!-- =========================================
-     التذييل
-========================================= -->
-
-<footer>
-
-
-    <div class="copyright">
-
+    <div class="institution-bar">
 
         <strong>
             🏫 ثانوية مصاص رابح
         </strong>
 
-
-        <br>
-
-
-        مكتبة الثانوية الرقمية
-
-
-        <br>
-
-
-        <span style="font-size:13px;">
-
-            مهندس النظام:
-
-            شراف الدين بوردوسن —
-
-            أستاذ مادة الرياضيات
-
+        <span>
+            المكتبة الرقمية للمؤسسة
         </span>
-
-
-        <br><br>
-
-
-        © 2026 — جميع الحقوق محفوظة
-
 
     </div>
 
 
-</footer>
+    <!-- =========================================
+         المحتوى الرئيسي
+    ========================================= -->
+
+    <main>
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>
+                        المكتبة الرقمية للمؤسسة
+                    </span>
+
+                    <h2>
+                        عن المكتبة
+                    </h2>
+
+                    <p>
+                        منصة إلكترونية تعليمية تهدف إلى توفير الكتب
+                        والمراجع الدراسية للطلاب بطريقة منظمة وسهلة.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-<!-- =========================================
-     Supabase
-========================================= -->
+            <div class="about-content">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+                <!-- =================================
+                     تعريف المكتبة
+                ================================== -->
 
+                <div class="about-card">
 
-<script>
-
-/* =========================================
-   إعداد Supabase
-========================================= */
-
-const SUPABASE_URL =
-    "https://xdkluojrvdhdtihblpwy.supabase.co";
+                    <h2>
+                        📚 مكتبة ثانوية مصاص رابح
+                    </h2>
 
 
-/*
-   اترك هنا نفس قيمة المفتاح الموجودة
-   حاليًا في ملف about.html القديم لديك.
-*/
-
-const SUPABASE_ANON_KEY =
-    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+                    <p>
+                        مكتبة الثانوية هي منصة رقمية مخصصة لجمع وتنظيم
+                        الكتب والمراجع التعليمية في مكان واحد، بهدف
+                        تسهيل وصول التلاميذ إلى مصادر المعرفة والمطالعة.
+                    </p>
 
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
+                    <!-- =================================
+                         معلومات المنصة
+                    ================================== -->
+
+                    <div class="system-identity">
+
+                        <div class="identity-item">
+
+                            <span>
+                                🏫 المؤسسة
+                            </span>
+
+                            <strong>
+                                ثانوية مصاص رابح
+                            </strong>
+
+                        </div>
 
 
-/* =========================================
-   زر الحساب
-========================================= */
+                        <div class="identity-item">
 
-const accountButton =
-    document.getElementById("accountButton");
+                            <span>
+                                📚 المنصة
+                            </span>
 
+                            <strong>
+                                المكتبة الرقمية للمؤسسة
+                            </strong>
 
-/* =========================================
-   تحديد لوحة التحكم حسب الدور
-========================================= */
-
-function getDashboard(role) {
-
-    switch (role) {
-
-        case "programmer":
-            return "programmer.html";
-
-        case "admin":
-            return "admin.html";
-
-        case "teacher":
-            return "teacher.html";
-
-        case "student":
-            return "student.html";
-
-        default:
-            return "login.html";
-
-    }
-
-}
+                        </div>
 
 
-/* =========================================
-   تحديث زر الحساب
-========================================= */
+                        <div class="identity-item">
 
-async function updateAccountButton() {
+                            <span>
+                                👨‍💻 مهندس النظام
+                            </span>
 
-    try {
+                            <strong>
+                                شراف الدين بوردوسن
+                            </strong>
 
-        const {
-            data: {
-                session
+                        </div>
+
+
+                        <div class="identity-item">
+
+                            <span>
+                                👨‍🏫 الصفة
+                            </span>
+
+                            <strong>
+                                أستاذ مادة الرياضيات
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         خصائص المكتبة
+                    ================================== -->
+
+                    <div class="book-meta">
+
+                        <div>
+
+                            <span>
+                                📚 الكتب
+                            </span>
+
+                            <strong>
+                                مراجع تعليمية
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                🎓 الفئة
+                            </span>
+
+                            <strong>
+                                تلاميذ الثانوية
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                📄 الصيغة
+                            </span>
+
+                            <strong>
+                                PDF
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         هدف المكتبة
+                    ================================== -->
+
+                    <h3>
+                        🎯 هدف المكتبة
+                    </h3>
+
+
+                    <p>
+                        نسعى إلى إنشاء فضاء تعليمي رقمي يساعد التلميذ
+                        على الوصول إلى الكتب والمراجع بسرعة، مع تنظيم
+                        المحتوى حسب المواد والتخصصات.
+                    </p>
+
+
+                    <!-- =================================
+                         ماذا توفر المكتبة؟
+                    ================================== -->
+
+                    <h3>
+                        📖 ماذا توفر المكتبة؟
+                    </h3>
+
+
+                    <p>
+                        • تصفح الكتب حسب المادة.<br>
+                        • البحث عن الكتب والمؤلفين.<br>
+                        • قراءة الكتب مباشرة بصيغة PDF.<br>
+                        • تحميل الكتب المتاحة.<br>
+                        • تنظيم المحتوى داخل تصنيفات واضحة.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================
+                     مهندس النظام
+                ================================== -->
+
+                <div class="programmer-info">
+
+                    <strong>
+                        👨‍💻 مهندس النظام: شراف الدين بوردوسن
+                    </strong>
+
+                    <span>
+                        أستاذ مادة الرياضيات
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         التذييل
+    ========================================= -->
+
+    <footer>
+
+        <div class="copyright">
+
+            <strong>
+                🏫 ثانوية مصاص رابح
+            </strong>
+
+            <br>
+
+            مكتبة الثانوية الرقمية
+
+            <br>
+
+            <span style="font-size:13px;">
+
+                مهندس النظام:
+                شراف الدين بوردوسن —
+                أستاذ مادة الرياضيات
+
+            </span>
+
+            <br><br>
+
+            © 2026 — جميع الحقوق محفوظة
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================
+         Supabase
+    ========================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+        /* =========================================
+           إعداد Supabase
+        ========================================= */
+
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        /* =========================================
+           زر الحساب
+        ========================================= */
+
+        const accountButton =
+            document.getElementById(
+                "accountButton"
+            );
+
+
+        /* =========================================
+           تحديد لوحة التحكم حسب الدور
+        ========================================= */
+
+        function getDashboard(role) {
+
+            switch (role) {
+
+                case "programmer":
+                    return "programmer.html";
+
+                case "admin":
+                    return "admin.html";
+
+                case "teacher":
+                    return "teacher.html";
+
+                case "student":
+                    return "student.html";
+
+                default:
+                    return "login.html";
             }
-        } =
-            await supabaseClient.auth.getSession();
-
-
-        /* المستخدم غير مسجل */
-
-        if (!session) {
-
-            accountButton.href =
-                "login.html";
-
-            accountButton.textContent =
-                "🔐 تسجيل الدخول";
-
-            return;
 
         }
 
 
-        /* المستخدم مسجل */
+        /* =========================================
+           تحديث زر الحساب
+        ========================================= */
 
-        const user =
-            session.user;
+        async function updateAccountButton() {
+
+            try {
+
+                const {
+                    data: {
+                        session
+                    }
+                } =
+                    await supabaseClient.auth.getSession();
 
 
-        const {
-            data: profile,
-            error
-        } =
-            await supabaseClient
-                .from("profiles")
-                .select("full_name, role")
-                .eq("id", user.id)
-                .single();
+                /* المستخدم غير مسجل */
+
+                if (!session) {
+
+                    accountButton.href =
+                        "login.html";
+
+                    accountButton.textContent =
+                        "🔐 تسجيل الدخول";
+
+                    return;
+                }
 
 
-        /* تعذر الحصول على الملف الشخصي */
+                /* المستخدم مسجل */
 
-        if (error || !profile) {
+                const user =
+                    session.user;
 
-            accountButton.href =
-                "login.html";
 
-            accountButton.textContent =
-                "👤 حسابي";
+                const {
+                    data: profile,
+                    error
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select(
+                            "full_name, role"
+                        )
+                        .eq(
+                            "id",
+                            user.id
+                        )
+                        .single();
 
-            return;
+
+                /* تعذر الحصول على الملف الشخصي */
+
+                if (error || !profile) {
+
+                    accountButton.href =
+                        "login.html";
+
+                    accountButton.textContent =
+                        "👤 حسابي";
+
+                    return;
+                }
+
+
+                /* الاسم + لوحة التحكم */
+
+                accountButton.href =
+                    getDashboard(
+                        profile.role
+                    );
+
+
+                accountButton.textContent =
+                    "👤 " +
+                    profile.full_name;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في تحميل الحساب:",
+                    error
+                );
+
+
+                accountButton.href =
+                    "login.html";
+
+
+                accountButton.textContent =
+                    "🔐 تسجيل الدخول";
+            }
 
         }
 
 
-        /* الاسم + لوحة التحكم */
+        /* =========================================
+           مراقبة تسجيل الدخول والخروج
+        ========================================= */
 
-        accountButton.href =
-            getDashboard(profile.role);
+        supabaseClient.auth.onAuthStateChange(
+            () => {
 
-        accountButton.textContent =
-            "👤 " + profile.full_name;
+                updateAccountButton();
 
-    }
-
-    catch (error) {
-
-        console.error(
-            "خطأ في تحميل الحساب:",
-            error
+            }
         );
 
-        accountButton.href =
-            "login.html";
 
-        accountButton.textContent =
-            "🔐 تسجيل الدخول";
-
-    }
-
-}
-
-
-/* =========================================
-   مراقبة تسجيل الدخول والخروج
-========================================= */
-
-supabaseClient.auth.onAuthStateChange(
-    () => {
+        /* =========================================
+           تشغيل النظام
+        ========================================= */
 
         updateAccountButton();
 
-    }
-);
-
-
-/* =========================================
-   تشغيل النظام
-========================================= */
-
-updateAccountButton();
-
-</script>
+    </script>
 
 
 </body>
 
 </html>
-```
