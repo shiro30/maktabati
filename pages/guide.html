@@ -1,925 +1,1324 @@
+```html
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>كيفية استخدام المكتبة | مكتبة ثانوية مصاص رابح</title>
+    <title>دليل الاستخدام | مكتبة ثانوية مصاص رابح</title>
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../style.css">
 
-<link rel="stylesheet" href="../style.css">
+    <style>
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
 
-<style>
-    /* =========================================
-       هوية المؤسسة
-    ========================================= */
+            --white: #ffffff;
+            --text: #e8eef7;
+            --muted: #94a3b8;
 
-    .institution-bar {
-        background: linear-gradient(135deg, #0f172a, #1e3a8a);
-        color: white;
-        text-align: center;
-        padding: 14px 20px;
-        border-radius: 0 0 16px 16px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
+            --border: rgba(255, 255, 255, 0.09);
+        }
 
-    .institution-bar strong {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 4px;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    .institution-bar span {
-        font-size: 13px;
-        opacity: 0.9;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* =========================================
-       دليل الاستخدام
-    ========================================= */
+        body {
+            margin: 0;
+            min-height: 100vh;
 
-    .guide-container {
-        max-width: 900px;
-        margin: 0 auto;
-    }
+            color: var(--text);
 
-    .guide-card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-    }
+            background:
+                radial-gradient(
+                    circle at 12% 8%,
+                    rgba(18, 53, 95, 0.42),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 88% 80%,
+                    rgba(255, 122, 24, 0.07),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    145deg,
+                    var(--black),
+                    var(--black-soft) 48%,
+                    #061426
+                );
+        }
 
-    .guide-intro {
-        text-align: center;
-    }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
 
-    .guide-intro-icon {
-        font-size: 48px;
-        margin-bottom: 10px;
-    }
+            opacity: 0.16;
 
-    .guide-card h2 {
-        margin-top: 0;
-        color: #172033;
-    }
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
 
-    .guide-card p {
-        color: #64748b;
-        line-height: 2;
-    }
+            background-size: 38px 38px;
+        }
 
-    /* =========================================
-       خطوات الاستخدام
-    ========================================= */
+        /* =========================================
+           شريط التنقل
+        ========================================= */
 
-    .step-header {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 15px;
-    }
+        .navbar {
+            position: relative;
+            z-index: 10;
 
-    .step-number {
-        width: 45px;
-        height: 45px;
-        min-width: 45px;
-        border-radius: 50%;
-        background: #1d4ed8;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 18px;
-    }
+            background: rgba(3, 7, 18, 0.94);
 
-    .step-card:nth-child(3) .step-number {
-        background: #1d4ed8;
-    }
+            border-bottom:
+                1px solid rgba(255, 122, 24, 0.22);
 
-    .step-card:nth-child(5) .step-number {
-        background: #16a34a;
-    }
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.38),
+                0 1px 0 rgba(255, 122, 24, 0.08);
 
-    .step-card:nth-child(6) .step-number {
-        background: #f97316;
-    }
+            backdrop-filter: blur(14px);
+        }
 
-    /* =========================================
-       هوية النظام
-    ========================================= */
+        .nav-container {
+            min-height: 76px;
+        }
 
-    .system-identity {
-        margin-top: 30px;
-        padding: 24px;
-        text-align: center;
-        background: linear-gradient(135deg, #f8fafc, #eff6ff);
-        border: 1px solid #dbeafe;
-        border-radius: 16px;
-    }
+        .logo {
+            color: var(--white) !important;
+        }
 
-    .system-identity strong {
-        display: block;
-        color: #1e3a8a;
-        font-size: 17px;
-        margin-bottom: 8px;
-    }
+        .logo-icon {
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--navy-2),
+                    var(--black)
+                );
 
-    .system-identity span {
-        color: #64748b;
-        font-size: 14px;
-    }
+            border:
+                1px solid rgba(255, 122, 24, 0.35);
 
-    /* =========================================
-       زر العودة
-    ========================================= */
+            box-shadow:
+                0 0 20px rgba(255, 122, 24, 0.08);
+        }
 
-    .guide-back {
-        text-align: center;
-        margin-top: 30px;
-    }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-    .guide-back .read-button {
-        display: inline-flex;
-        width: auto;
-        padding: 12px 30px;
-    }
+        .logo-title {
+            color: var(--white) !important;
+        }
 
-    /* =========================================
-       زر الحساب
-    ========================================= */
+        .logo-subtitle {
+            color: var(--muted) !important;
+        }
 
-    .account-icon {
-        font-size: 18px;
-        margin-left: 5px;
-        vertical-align: middle;
-    }
+        nav a {
+            color: #cbd5e1 !important;
+            transition: all 0.25s ease;
+        }
 
-    /* =========================================
-       الهاتف
-    ========================================= */
+        nav a:hover {
+            color: var(--orange-light) !important;
+        }
 
-    @media (max-width: 768px) {
+        nav a.active {
+            color: var(--orange) !important;
+        }
+
+        .account-btn {
+            transition: all 0.25s ease;
+        }
+
+        .account-btn:hover {
+            border-color: rgba(255, 122, 24, 0.5) !important;
+            color: var(--orange-light) !important;
+        }
+
+        /* =========================================
+           هوية المؤسسة
+        ========================================= */
 
         .institution-bar {
-            padding: 12px 10px;
+            position: relative;
+            z-index: 5;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #050a14,
+                    var(--navy),
+                    #0b2342
+                );
+
+            color: var(--white);
+
+            text-align: center;
+
+            padding: 16px 20px;
+
+            border-bottom:
+                1px solid rgba(255, 122, 24, 0.28);
+
+            box-shadow:
+                0 8px 28px rgba(0, 0, 0, 0.30),
+                inset 0 -1px 0 rgba(255, 122, 24, 0.06);
         }
 
         .institution-bar strong {
-            font-size: 16px;
+            display: block;
+
+            font-size: 18px;
+            margin-bottom: 5px;
+
+            color: var(--white);
         }
 
         .institution-bar span {
-            font-size: 12px;
+            font-size: 13px;
+            color: #aebed2;
         }
 
-        .guide-card {
-            padding: 22px;
+        /* =========================================
+           المحتوى الرئيسي
+        ========================================= */
+
+        main {
+            position: relative;
+            z-index: 1;
         }
 
-        .step-header {
-            align-items: flex-start;
+        .guide-section {
+            max-width: 1100px;
+            margin: 0 auto;
+
+            padding:
+                65px 20px
+                75px;
+        }
+
+        /* =========================================
+           عنوان الصفحة
+        ========================================= */
+
+        .guide-heading {
+            position: relative;
+
+            margin-bottom: 42px;
+            padding-right: 20px;
+        }
+
+        .guide-heading::before {
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+            top: 5px;
+
+            width: 5px;
+            height: 82px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            box-shadow:
+                0 0 18px rgba(255, 122, 24, 0.38);
+        }
+
+        .guide-heading span {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--orange-light);
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .guide-heading h1 {
+            margin: 0 0 12px;
+
+            color: var(--white);
+
+            font-size: 34px;
+            line-height: 1.3;
+        }
+
+        .guide-heading p {
+            margin: 0;
+
+            max-width: 780px;
+
+            color: var(--muted);
+
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        /* =========================================
+           المقدمة
+        ========================================= */
+
+        .guide-intro {
+            position: relative;
+
+            margin-bottom: 38px;
+            padding: 28px 30px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13, 39, 75, 0.94),
+                    rgba(4, 10, 20, 0.96)
+                );
+
+            border:
+                1px solid rgba(255, 122, 24, 0.15);
+
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.30);
+        }
+
+        .guide-intro::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 3px;
+
+            border-radius:
+                18px 18px 0 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--orange),
+                    var(--orange-light),
+                    var(--orange)
+                );
+        }
+
+        .guide-intro h2 {
+            margin: 0 0 12px;
+
+            color: var(--white);
+
+            font-size: 23px;
+        }
+
+        .guide-intro h2::first-letter {
+            color: var(--orange);
+        }
+
+        .guide-intro p {
+            margin: 0;
+
+            color: #b7c4d5;
+
+            line-height: 2;
+            font-size: 15px;
+        }
+
+        /* =========================================
+           خطوات الاستخدام
+        ========================================= */
+
+        .steps-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 24px;
+        }
+
+        .steps-title .title-line {
+            width: 6px;
+            height: 30px;
+
+            border-radius: 8px;
+
+            background: var(--orange);
+
+            box-shadow:
+                0 0 14px rgba(255, 122, 24, 0.35);
+        }
+
+        .steps-title h2 {
+            margin: 0;
+
+            color: var(--white);
+
+            font-size: 25px;
+        }
+
+        .steps-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+        /* =========================================
+           بطاقة الخطوة
+        ========================================= */
+
+        .step-card {
+            position: relative;
+
+            min-height: 205px;
+
+            padding: 27px 25px 25px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13, 39, 75, 0.95),
+                    rgba(4, 10, 20, 0.97)
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            box-shadow:
+                0 14px 38px rgba(0, 0, 0, 0.28);
+
+            overflow: hidden;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .step-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--orange),
+                    transparent
+                );
+
+            opacity: 0.9;
+        }
+
+        .step-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            left: -70px;
+            bottom: -70px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 122, 24, 0.035);
+
+            pointer-events: none;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(255, 122, 24, 0.25);
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.38),
+                0 0 25px rgba(255, 122, 24, 0.06);
         }
 
         .step-number {
-            width: 40px;
-            height: 40px;
-            min-width: 40px;
-        }
-    }
-</style>
-```
+            display: inline-flex;
 
+            align-items: center;
+            justify-content: center;
+
+            width: 48px;
+            height: 48px;
+
+            margin-bottom: 17px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--orange),
+                    #c95108
+                );
+
+            color: var(--white);
+
+            font-size: 20px;
+            font-weight: bold;
+
+            box-shadow:
+                0 8px 20px rgba(255, 122, 24, 0.18);
+        }
+
+        .step-card h3 {
+            margin: 0 0 10px;
+
+            color: var(--white);
+
+            font-size: 19px;
+        }
+
+        .step-card p {
+            margin: 0;
+
+            color: var(--muted);
+
+            line-height: 1.9;
+
+            font-size: 14px;
+        }
+
+        /* =========================================
+           نصائح
+        ========================================= */
+
+        .guide-tips {
+            position: relative;
+
+            margin-top: 34px;
+
+            padding: 28px 30px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(8, 27, 54, 0.96),
+                    rgba(3, 8, 17, 0.98)
+                );
+
+            border:
+                1px solid rgba(255, 122, 24, 0.14);
+
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.28);
+        }
+
+        .guide-tips h2 {
+            margin: 0 0 16px;
+
+            color: var(--orange-light);
+
+            font-size: 22px;
+        }
+
+        .guide-tips ul {
+            margin: 0;
+            padding-right: 22px;
+
+            color: #b8c5d5;
+
+            line-height: 2.1;
+        }
+
+        .guide-tips li {
+            margin-bottom: 5px;
+        }
+
+        .guide-tips li::marker {
+            color: var(--orange);
+        }
+
+        /* =========================================
+           زر العودة
+        ========================================= */
+
+        .guide-actions {
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 40px;
+        }
+
+        .home-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 210px;
+
+            padding: 14px 24px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            color: var(--white) !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c95108,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            border:
+                1px solid rgba(255, 154, 61, 0.35);
+
+            font-weight: bold;
+
+            box-shadow:
+                0 10px 25px rgba(255, 122, 24, 0.14);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.05);
+
+            box-shadow:
+                0 14px 32px rgba(255, 122, 24, 0.22);
+        }
+
+        /* =========================================
+           معلومات مهندس النظام
+        ========================================= */
+
+        .programmer-info {
+            margin-top: 45px;
+
+            padding: 22px;
+
+            text-align: center;
+
+            border-radius: 16px;
+
+            background:
+                rgba(3, 8, 17, 0.72);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .programmer-info strong {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: var(--orange-light);
+        }
+
+        .programmer-info span {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* =========================================
+           التذييل
+        ========================================= */
+
+        footer,
+        .footer {
+            position: relative;
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #02050b,
+                    #030812
+                );
+
+            border-top:
+                1px solid rgba(255, 122, 24, 0.16);
+
+            color: #9aa9bc;
+        }
+
+        footer strong,
+        .footer strong {
+            color: var(--white);
+        }
+
+        footer span,
+        .footer span {
+            color: #7f8ea3;
+        }
+
+        /* =========================================
+           الهاتف
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+            .institution-bar {
+                padding: 13px 10px;
+            }
+
+            .institution-bar strong {
+                font-size: 16px;
+            }
+
+            .institution-bar span {
+                font-size: 12px;
+            }
+
+            .guide-section {
+                padding:
+                    42px 15px
+                    55px;
+            }
+
+            .guide-heading {
+                padding-right: 16px;
+                margin-bottom: 30px;
+            }
+
+            .guide-heading::before {
+                height: 72px;
+                width: 4px;
+            }
+
+            .guide-heading h1 {
+                font-size: 28px;
+            }
+
+            .guide-heading p {
+                font-size: 14px;
+            }
+
+            .guide-intro {
+                padding: 24px 20px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step-card {
+                min-height: auto;
+            }
+
+            .guide-tips {
+                padding: 24px 20px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            .guide-heading h1 {
+                font-size: 25px;
+            }
+
+            .steps-title h2 {
+                font-size: 21px;
+            }
+
+            .step-card {
+                padding: 23px 20px;
+            }
+
+            .home-button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
+
 
 <body>
 
-<!-- =========================================
-     الشريط العلوي
-========================================= -->
+    <!-- =========================================
+         شريط التنقل
+    ========================================= -->
 
-<header class="navbar">
+    <header class="navbar">
 
-```
-<div class="logo">
-
-    <div class="logo-icon">
-        📚
-    </div>
-
-    <div>
-
-        <div class="logo-title">
-            مكتبة ثانوية مصاص رابح
-        </div>
-
-        <div class="logo-subtitle">
-            المكتبة الرقمية للمؤسسة
-        </div>
-
-    </div>
-
-</div>
-
-
-<nav>
-
-    <a href="../index.html">
-        الرئيسية
-    </a>
-
-    <a href="books.html">
-        الكتب
-    </a>
-
-    <a href="categories.html">
-        التصنيفات
-    </a>
-
-    <a href="about.html">
-        عن المكتبة
-    </a>
-
-    <a href="contact.html">
-        اتصل بنا
-    </a>
-
-    <a href="guide.html" class="active">
-        دليل الاستخدام
-    </a>
-
-</nav>
-
-
-<!-- ACCOUNT -->
-
-<a
-    href="login.html"
-    class="login-btn"
-    id="accountButton">
-
-    🔐 تسجيل الدخول
-
-</a>
-```
-
-</header>
-
-<!-- =========================================
-     هوية المؤسسة
-========================================= -->
-
-<div class="institution-bar">
-
-```
-<strong>
-    🏫 ثانوية مصاص رابح
-</strong>
-
-<span>
-    المكتبة الرقمية للمؤسسة
-</span>
-```
-
-</div>
-
-<!-- =========================================
-     المحتوى الرئيسي
-========================================= -->
-
-<main>
-
-```
-<section class="section">
-
-    <div class="section-heading">
-
-        <div>
-
-            <span>
-                دليل المستخدم
-            </span>
-
-            <h2>
-                كيفية استخدام المكتبة
-            </h2>
-
-            <p>
-                خطوات بسيطة للاستفادة من خدمات المكتبة الرقمية.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="guide-container">
-
-
-        <!-- =================================
-             المقدمة
-        ================================== -->
-
-        <div class="guide-card guide-intro">
-
-            <div class="guide-intro-icon">
-                📚
-            </div>
-
-            <h2>
-                مرحبًا بك في مكتبة ثانوية مصاص رابح
-            </h2>
-
-            <p>
-                توفر لك المكتبة الرقمية إمكانية الوصول إلى
-                مجموعة من الكتب والمراجع التعليمية بطريقة
-                سهلة ومنظمة.
-                يمكنك البحث عن الكتب، تصفح التصنيفات،
-                والاطلاع على الكتب المتوفرة مباشرة من الموقع.
-            </p>
-
-        </div>
-
-
-        <!-- =================================
-             الخطوة 1
-        ================================== -->
-
-        <div class="guide-card step-card">
-
-            <div class="step-header">
-
-                <div class="step-number">
-                    1
-                </div>
-
-                <h2>
-                    البحث عن كتاب
-                </h2>
-
-            </div>
-
-            <p>
-                استخدم قسم الكتب للبحث عن الكتاب الذي تريده.
-                يمكنك الاستفادة من البحث للوصول إلى الكتب
-                المناسبة حسب العنوان أو المعلومات المتوفرة عنها.
-            </p>
-
-        </div>
-
-
-        <!-- =================================
-             الخطوة 2
-        ================================== -->
-
-        <div class="guide-card step-card">
-
-            <div class="step-header">
-
-                <div class="step-number">
-                    2
-                </div>
-
-                <h2>
-                    تصفح الكتب
-                </h2>
-
-            </div>
-
-            <p>
-                من خلال قسم «الكتب» يمكنك مشاهدة الكتب الموجودة
-                في المكتبة والاطلاع على عنوان الكتاب ومؤلفه
-                وتصنيفه ووصفه.
-            </p>
-
-        </div>
-
-
-        <!-- =================================
-             الخطوة 3
-        ================================== -->
-
-        <div class="guide-card step-card">
-
-            <div class="step-header">
-
-                <div class="step-number">
-                    3
-                </div>
-
-                <h2>
-                    اختيار التصنيف
-                </h2>
-
-            </div>
-
-            <p>
-                يمكنك استخدام صفحة «التصنيفات» للوصول بسرعة
-                إلى الكتب المتعلقة بمادة أو مجال معين، مثل
-                الرياضيات والعلوم والإعلام الآلي واللغات.
-            </p>
-
-        </div>
-
-
-        <!-- =================================
-             الخطوة 4
-        ================================== -->
-
-        <div class="guide-card step-card">
-
-            <div class="step-header">
-
-                <div class="step-number">
-                    4
-                </div>
-
-                <h2>
-                    قراءة الكتاب
-                </h2>
-
-            </div>
-
-            <p>
-                عندما يكون الكتاب متوفرًا بصيغة PDF، اضغط على
-                «قراءة الكتاب» لفتح صفحة الكتاب، حيث يمكنك
-                الاطلاع عليه مباشرة داخل الموقع.
-            </p>
-
-        </div>
-
-
-        <!-- =================================
-             الخطوة 5
-        ================================== -->
-
-        <div class="guide-card step-card">
-
-            <div class="step-header">
-
-                <div class="step-number">
-                    5
-                </div>
-
-                <h2>
-                    التواصل مع إدارة المكتبة
-                </h2>
-
-            </div>
-
-            <p>
-                إذا واجهت مشكلة أو كان لديك اقتراح لتطوير
-                المكتبة، يمكنك الانتقال إلى صفحة «اتصل بنا»
-                لمعرفة وسائل التواصل المتاحة.
-            </p>
-
-        </div>
-
-
-        <!-- =================================
-             هوية النظام
-        ================================== -->
-
-        <div class="system-identity">
-
-            <strong>
-                🏫 مكتبة ثانوية مصاص رابح
-            </strong>
-
-            <span>
-                مهندس النظام: شراف الدين بوردوسن —
-                أستاذ مادة الرياضيات
-            </span>
-
-        </div>
-
-
-        <!-- =================================
-             زر العودة
-        ================================== -->
-
-        <div class="guide-back">
+        <div class="container nav-container">
 
             <a
                 href="../index.html"
-                class="read-button">
+                class="logo"
+                style="text-decoration: none;"
+            >
 
-                ← العودة إلى الصفحة الرئيسية
+                <div class="logo-icon">
 
+                    <img
+                        src="../favicon.png"
+                        alt="شعار مكتبة ثانوية مصاص رابح"
+                    >
+
+                </div>
+
+                <div>
+
+                    <div class="logo-title">
+                        مكتبة ثانوية مصاص رابح
+                    </div>
+
+                    <div class="logo-subtitle">
+                        المكتبة الرقمية للمؤسسة
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <nav>
+
+                <a href="../index.html">
+                    الرئيسية
+                </a>
+
+                <a href="books.html">
+                    الكتب
+                </a>
+
+                <a href="categories.html">
+                    التصنيفات
+                </a>
+
+                <a href="about.html">
+                    عن المكتبة
+                </a>
+
+                <a href="contact.html">
+                    اتصل بنا
+                </a>
+
+                <a href="guide.html" class="active">
+                    دليل الاستخدام
+                </a>
+
+            </nav>
+
+
+            <a
+                href="login.html"
+                class="account-btn"
+                id="accountButton"
+            >
+                🔐 تسجيل الدخول
             </a>
 
         </div>
 
+    </header>
+
+
+    <!-- =========================================
+         هوية المؤسسة
+    ========================================= -->
+
+    <div class="institution-bar">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <span>
+            المكتبة الرقمية للمؤسسة
+        </span>
+
     </div>
 
-</section>
-```
 
-</main>
+    <!-- =========================================
+         المحتوى الرئيسي
+    ========================================= -->
 
-<!-- =========================================
-     التذييل
-========================================= -->
+    <main>
 
-<footer>
-
-```
-<div class="footer-content">
+        <section class="guide-section">
 
 
-    <!-- معلومات المكتبة -->
+            <!-- عنوان الصفحة -->
 
-    <div>
+            <div class="guide-heading">
 
-        <div class="logo">
-
-            <div class="logo-icon">
-                📚
-            </div>
-
-            <div>
-
-                <div class="logo-title">
-                    مكتبة ثانوية مصاص رابح
-                </div>
-
-                <div class="logo-subtitle">
+                <span>
                     المكتبة الرقمية للمؤسسة
+                </span>
+
+                <h1>
+                    📖 دليل استخدام المكتبة
+                </h1>
+
+                <p>
+                    دليل مبسط يساعدك على الاستفادة من خدمات المكتبة
+                    الرقمية والوصول إلى الكتب والمراجع التعليمية بسهولة.
+                </p>
+
+            </div>
+
+
+            <!-- المقدمة -->
+
+            <div class="guide-intro">
+
+                <h2>
+                    مرحبا بك في المكتبة الرقمية
+                </h2>
+
+                <p>
+                    تم تصميم المكتبة لتسهيل وصول التلاميذ والأساتذة
+                    إلى الكتب والمراجع التعليمية بطريقة منظمة وسريعة.
+                    يمكنك تصفح الكتب، البحث عنها، اختيار التصنيف المناسب
+                    وقراءة الكتب المتاحة مباشرة.
+                </p>
+
+            </div>
+
+
+            <!-- عنوان الخطوات -->
+
+            <div class="steps-title">
+
+                <div class="title-line"></div>
+
+                <h2>
+                    خطوات استخدام المكتبة
+                </h2>
+
+            </div>
+
+
+            <!-- الخطوات -->
+
+            <div class="steps-grid">
+
+
+                <!-- الخطوة 1 -->
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h3>
+                        🔎 البحث عن كتاب
+                    </h3>
+
+                    <p>
+                        استخدم صفحة الكتب للبحث عن الكتاب الذي تريده.
+                        يمكنك البحث باسم الكتاب أو المؤلف للوصول إلى
+                        النتيجة المطلوبة بسرعة.
+                    </p>
+
+                </div>
+
+
+                <!-- الخطوة 2 -->
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h3>
+                        📚 تصفح الكتب
+                    </h3>
+
+                    <p>
+                        من صفحة الكتب يمكنك مشاهدة الكتب المتوفرة
+                        والاطلاع على معلوماتها الأساسية مثل العنوان
+                        والمؤلف والتصنيف.
+                    </p>
+
+                </div>
+
+
+                <!-- الخطوة 3 -->
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h3>
+                        🗂️ اختيار التصنيف
+                    </h3>
+
+                    <p>
+                        يمكنك الدخول إلى صفحة التصنيفات واختيار المادة
+                        أو المجال الذي تبحث عنه للوصول إلى الكتب المرتبطة
+                        به بسهولة.
+                    </p>
+
+                </div>
+
+
+                <!-- الخطوة 4 -->
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <h3>
+                        📖 قراءة الكتاب
+                    </h3>
+
+                    <p>
+                        عند اختيار كتاب يمكنك فتح صفحته والاطلاع على
+                        معلوماته، ثم قراءة ملف PDF مباشرة إذا كان متاحا.
+                    </p>
+
+                </div>
+
+
+                <!-- الخطوة 5 -->
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <h3>
+                        💬 التواصل مع إدارة المكتبة
+                    </h3>
+
+                    <p>
+                        إذا واجهت مشكلة أو أردت إرسال استفسار أو ملاحظة،
+                        يمكنك استعمال صفحة اتصل بنا للتواصل مع إدارة
+                        المكتبة.
+                    </p>
+
+                </div>
+
+
+                <!-- الخطوة 6 -->
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        6
+                    </div>
+
+                    <h3>
+                        🔐 تسجيل الدخول
+                    </h3>
+
+                    <p>
+                        يمكن للمستخدمين المسجلين الدخول إلى حساباتهم
+                        للوصول إلى الخدمات والصلاحيات الخاصة بنوع
+                        الحساب الممنوح لهم.
+                    </p>
+
                 </div>
 
             </div>
+
+
+            <!-- نصائح -->
+
+            <div class="guide-tips">
+
+                <h2>
+                    💡 نصائح للاستفادة من المكتبة
+                </h2>
+
+                <ul>
+
+                    <li>
+                        استخدم كلمات واضحة عند البحث عن الكتاب.
+                    </li>
+
+                    <li>
+                        استفد من التصنيفات للوصول إلى الكتب حسب المادة.
+                    </li>
+
+                    <li>
+                        تأكد من توفر ملف PDF قبل محاولة قراءة الكتاب.
+                    </li>
+
+                    <li>
+                        استخدم صفحة اتصل بنا عند وجود مشكلة أو استفسار.
+                    </li>
+
+                    <li>
+                        حافظ على استخدام المكتبة في إطارها التعليمي.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- زر العودة -->
+
+            <div class="guide-actions">
+
+                <a
+                    href="../index.html"
+                    class="home-button"
+                >
+                    🏠 العودة إلى الصفحة الرئيسية
+                </a>
+
+            </div>
+
+
+            <!-- مهندس النظام -->
+
+            <div class="programmer-info">
+
+                <strong>
+                    👨‍💻 مهندس النظام: شراف الدين بوردوسن
+                </strong>
+
+                <span>
+                    أستاذ مادة الرياضيات
+                </span>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         التذييل
+    ========================================= -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+
+                <strong>
+                    🏫 ثانوية مصاص رابح
+                </strong>
+
+                <br>
+
+                مكتبة الثانوية الرقمية
+
+                <br>
+
+                <span style="font-size: 13px;">
+
+                    مهندس النظام:
+                    شراف الدين بوردوسن —
+                    أستاذ مادة الرياضيات
+
+                </span>
+
+                <br>
+                <br>
+
+                © 2026 — جميع الحقوق محفوظة
+
+            </p>
 
         </div>
 
-        <p>
-            منصة إلكترونية للقراءة والتعلم
-            والوصول إلى المعرفة.
-        </p>
+    </footer>
 
-    </div>
 
+    <!-- =========================================
+         Supabase
+    ========================================= -->
 
-    <!-- روابط -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <div class="footer-links">
+    <script>
 
-        <h3>
-            روابط
-        </h3>
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
 
-        <a href="../index.html">
-            الرئيسية
-        </a>
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
 
-        <a href="books.html">
-            الكتب
-        </a>
 
-        <a href="categories.html">
-            التصنيفات
-        </a>
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
 
-        <a href="about.html">
-            عن المكتبة
-        </a>
 
-        <a href="contact.html">
-            اتصل بنا
-        </a>
+        /* =========================================
+           تحديث زر الحساب حسب حالة تسجيل الدخول
+        ========================================= */
 
-    </div>
+        const accountButton =
+            document.getElementById("accountButton");
 
 
-    <!-- المساعدة -->
+        async function updateAccountButton() {
 
-    <div class="footer-links">
+            try {
 
-        <h3>
-            المساعدة
-        </h3>
+                const {
+                    data: {
+                        user
+                    }
+                } =
+                    await supabaseClient.auth.getUser();
 
-        <a href="guide.html">
-            كيفية استخدام المكتبة
-        </a>
 
-        <a href="contact.html">
-            اتصل بنا
-        </a>
+                if (!user) {
 
-    </div>
+                    accountButton.textContent =
+                        "🔐 تسجيل الدخول";
 
-</div>
+                    accountButton.href =
+                        "login.html";
 
+                    return;
+                }
 
-<!-- =================================
-     حقوق وهوية النظام
-================================== -->
 
-<div class="copyright">
+                const {
+                    data: profile
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select(
+                            "full_name, role"
+                        )
+                        .eq(
+                            "id",
+                            user.id
+                        )
+                        .single();
 
-    <strong>
-        🏫 ثانوية مصاص رابح
-    </strong>
 
-    <br>
+                if (profile) {
 
-    مكتبة الثانوية الرقمية
+                    let page = "student.html";
 
-    <br>
+                    switch (
+                        String(profile.role).toLowerCase()
+                    ) {
 
-    <span style="font-size:13px;">
+                        case "programmer":
+                            page = "programmer.html";
+                            break;
 
-        مهندس النظام:
-        شراف الدين بوردوسن —
-        أستاذ مادة الرياضيات
+                        case "admin":
+                            page = "admin.html";
+                            break;
 
-    </span>
+                        case "teacher":
+                            page = "teacher.html";
+                            break;
 
-    <br><br>
+                        case "student":
+                            page = "student.html";
+                            break;
 
-    © 2026 — جميع الحقوق محفوظة
+                    }
 
-</div>
-```
 
-</footer>
+                    accountButton.textContent =
+                        "👤 " +
+                        (
+                            profile.full_name ||
+                            "حسابي"
+                        );
 
-<!-- =========================================
-     SUPABASE + ACCOUNT SYSTEM
-========================================= -->
+                    accountButton.href =
+                        page;
 
-<script>
+                }
 
-const SUPABASE_URL =
-    "https://xdkluojrvdhdtihblpwy.supabase.co";
+            }
 
-const SUPABASE_ANON_KEY =
-    "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+            catch (error) {
 
+                console.error(
+                    "Account button error:",
+                    error
+                );
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
+            }
 
-
-/* =========================================
-   ACCOUNT BUTTON
-========================================= */
-
-const accountButton =
-    document.getElementById("accountButton");
-
-
-/* =========================================
-   تحديد لوحة التحكم حسب الدور
-========================================= */
-
-function getDashboardByRole(role) {
-
-    switch (role) {
-
-        case "programmer":
-            return "programmer.html";
-
-        case "admin":
-            return "admin.html";
-
-        case "teacher":
-            return "teacher.html";
-
-        case "student":
-            return "student.html";
-
-        default:
-            return "login.html";
-    }
-}
-
-
-/* =========================================
-   تحديد أيقونة الحساب حسب الدور
-========================================= */
-
-function getRoleIcon(role) {
-
-    switch (role) {
-
-        case "programmer":
-            return "👨‍💻";
-
-        case "admin":
-            return "🛠️";
-
-        case "teacher":
-            return "👨‍🏫";
-
-        case "student":
-            return "🎓";
-
-        default:
-            return "🔐";
-    }
-}
-
-
-/* =========================================
-   اسم الدور
-========================================= */
-
-function getRoleName(role) {
-
-    switch (role) {
-
-        case "programmer":
-            return "المبرمج";
-
-        case "admin":
-            return "المدير";
-
-        case "teacher":
-            return "الأستاذ";
-
-        case "student":
-            return "الطالب";
-
-        default:
-            return "تسجيل الدخول";
-    }
-}
-
-
-/* =========================================
-   تحميل معلومات الحساب
-========================================= */
-
-async function loadUserAccount() {
-
-    try {
-
-        const {
-            data: { session },
-            error: sessionError
-        } =
-            await supabaseClient
-                .auth
-                .getSession();
-
-
-        /* ================================
-           لا يوجد مستخدم مسجل
-        ================================= */
-
-        if (
-            sessionError ||
-            !session
-        ) {
-
-            accountButton.innerHTML =
-                "🔐 تسجيل الدخول";
-
-            accountButton.href =
-                "login.html";
-
-            return;
         }
 
 
-        /* ================================
-           الحصول على بيانات المستخدم
-        ================================= */
+        updateAccountButton();
 
-        const {
-            data: profile,
-            error: profileError
-        } =
-            await supabaseClient
-                .from("profiles")
-                .select("full_name, role")
-                .eq(
-                    "id",
-                    session.user.id
-                )
-                .single();
-
-
-        /* ================================
-           إذا لم يوجد الملف الشخصي
-        ================================= */
-
-        if (
-            profileError ||
-            !profile
-        ) {
-
-            accountButton.innerHTML =
-                "👤 حسابي";
-
-            accountButton.href =
-                "login.html";
-
-            return;
-        }
-
-
-        const name =
-            profile.full_name ||
-            "المستخدم";
-
-
-        const icon =
-            getRoleIcon(
-                profile.role
-            );
-
-
-        const roleName =
-            getRoleName(
-                profile.role
-            );
-
-
-        const dashboard =
-            getDashboardByRole(
-                profile.role
-            );
-
-
-        /* ================================
-           عرض أيقونة الدور + الاسم
-        ================================= */
-
-        accountButton.innerHTML =
-            `<span class="account-icon">${icon}</span> ${name}`;
-
-
-        accountButton.title =
-            roleName;
-
-
-        accountButton.href =
-            dashboard;
-
-
-        accountButton.onclick =
-            function() {
-
-                window.location.href =
-                    dashboard;
-
-                return false;
-            };
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Account loading error:",
-            error
-        );
-
-
-        accountButton.innerHTML =
-            "🔐 تسجيل الدخول";
-
-        accountButton.href =
-            "login.html";
-    }
-}
-
-
-/* =========================================
-   مراقبة تسجيل الدخول والخروج
-========================================= */
-
-supabaseClient.auth.onAuthStateChange(
-    function() {
-
-        loadUserAccount();
-
-    }
-);
-
-
-/* =========================================
-   تشغيل النظام
-========================================= */
-
-loadUserAccount();
-
-</script>
+    </script>
 
 </body>
 
 </html>
+```
