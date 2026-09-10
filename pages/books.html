@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 
 <html lang="ar" dir="rtl">
@@ -25,125 +26,1053 @@
 
 <style>
 
+    :root {
+        --black: #030712;
+        --black-soft: #070d18;
+        --navy: #081b36;
+        --navy-2: #0d274b;
+        --navy-3: #12355f;
+        --orange: #ff7a18;
+        --orange-light: #ff9a3d;
+        --white: #ffffff;
+        --text: #e8eef8;
+        --muted: #9aa9bd;
+        --border: rgba(255, 255, 255, 0.08);
+    }
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+
+    body {
+        background:
+            radial-gradient(
+                circle at 15% 10%,
+                rgba(18, 53, 95, 0.45),
+                transparent 32%
+            ),
+            radial-gradient(
+                circle at 85% 20%,
+                rgba(255, 122, 24, 0.08),
+                transparent 28%
+            ),
+            linear-gradient(
+                135deg,
+                var(--black),
+                var(--black-soft) 45%,
+                #06152a
+            );
+
+        color: var(--text);
+        min-height: 100vh;
+    }
+
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.18;
+
+        background-image:
+            linear-gradient(
+                rgba(255, 255, 255, 0.025) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.025) 1px,
+                transparent 1px
+            );
+
+        background-size: 40px 40px;
+        z-index: -1;
+    }
+
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(3, 7, 18, 0.97),
+                rgba(8, 27, 54, 0.96)
+            ) !important;
+
+        border-bottom:
+            1px solid
+            rgba(255, 122, 24, 0.30);
+
+        box-shadow:
+            0 10px 35px
+            rgba(0, 0, 0, 0.35);
+
+        backdrop-filter: blur(14px);
+
+        position: relative;
+        z-index: 10;
+    }
+
+
+    .navbar::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                var(--orange),
+                transparent
+            );
+
+        opacity: 0.75;
+    }
+
+
+    .logo-icon {
+        background:
+            linear-gradient(
+                145deg,
+                var(--navy-3),
+                var(--black)
+            ) !important;
+
+        border:
+            1px solid
+            rgba(255, 122, 24, 0.45) !important;
+
+        box-shadow:
+            0 0 22px
+            rgba(255, 122, 24, 0.12);
+    }
+
+
+    .logo-title {
+        color: var(--white) !important;
+    }
+
+
+    .logo-subtitle {
+        color: var(--muted) !important;
+    }
+
+
+    .navbar nav a {
+        color: #c7d3e5 !important;
+        transition: 0.25s ease;
+    }
+
+
+    .navbar nav a:hover {
+        color: var(--orange-light) !important;
+    }
+
+
+    .navbar nav a.active {
+        color: var(--orange) !important;
+    }
+
+
+    .login-btn {
+        background:
+            linear-gradient(
+                135deg,
+                var(--navy-2),
+                var(--navy-3)
+            ) !important;
+
+        color: white !important;
+
+        border:
+            1px solid
+            rgba(255, 122, 24, 0.35) !important;
+
+        box-shadow:
+            0 6px 20px
+            rgba(0, 0, 0, 0.25);
+
+        transition: 0.25s ease;
+    }
+
+
+    .login-btn:hover {
+        background:
+            linear-gradient(
+                135deg,
+                var(--navy-3),
+                #174476
+            ) !important;
+
+        border-color:
+            rgba(255, 122, 24, 0.70) !important;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 8px 24px
+            rgba(255, 122, 24, 0.12);
+    }
+
+
     .dashboard-back-btn {
         display: none;
         text-decoration: none;
-        background: #0b1f3a;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--navy-2),
+                var(--navy-3)
+            );
+
         color: white;
+
         padding: 10px 18px;
-        border-radius: 8px;
+
+        border:
+            1px solid
+            rgba(255, 122, 24, 0.35);
+
+        border-radius: 10px;
+
         font-weight: 700;
+
         margin-right: 15px;
-        transition: 0.2s;
+
+        transition: 0.25s ease;
     }
+
 
     .dashboard-back-btn:hover {
-        background: #16365f;
-    }
+        background: #174476;
 
-    .navbar {
-        gap: 15px;
-    }
+        border-color:
+            rgba(255, 122, 24, 0.70);
 
-    .book-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-    }
-
-    .book-actions .read-button {
-        margin-top: 0;
-    }
-
-    .delete-button {
-        border: none;
-        cursor: pointer;
-        background: #dc2626;
-        color: white;
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-weight: 700;
-        font-size: 14px;
-        transition: 0.2s;
-    }
-
-    .delete-button:hover {
-        background: #b91c1c;
         transform: translateY(-1px);
     }
 
-    .delete-button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+        min-height: calc(100vh - 180px);
     }
+
+
+    .section {
+        position: relative;
+    }
+
+
+    .section-heading {
+        margin-bottom: 35px;
+    }
+
+
+    .section-heading > div {
+        width: 100%;
+    }
+
+
+    .section-heading span {
+        display: inline-block;
+
+        color: var(--orange);
+
+        font-weight: 800;
+
+        letter-spacing: 0.5px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .section-heading h2 {
+        color: var(--white) !important;
+
+        font-size: clamp(28px, 4vw, 42px);
+
+        margin: 0;
+
+        position: relative;
+
+        padding-right: 18px;
+    }
+
+
+    .section-heading h2::before {
+        content: "";
+
+        position: absolute;
+
+        right: 0;
+
+        top: 8px;
+
+        bottom: 8px;
+
+        width: 5px;
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                180deg,
+                var(--orange),
+                var(--orange-light)
+            );
+
+        box-shadow:
+            0 0 18px
+            rgba(255, 122, 24, 0.35);
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-box {
+        position: relative;
+
+        max-width: 720px;
+
+        margin-top: 25px;
+    }
+
+
+    .search-box input {
+        width: 100%;
+
+        height: 58px;
+
+        padding:
+            0 22px
+            0 58px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.10);
+
+        border-radius: 16px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(8, 27, 54, 0.92),
+                rgba(7, 13, 24, 0.95)
+            );
+
+        color: var(--white);
+
+        font-family: inherit;
+
+        font-size: 16px;
+
+        outline: none;
+
+        transition: 0.25s ease;
+
+        box-shadow:
+            0 12px 30px
+            rgba(0, 0, 0, 0.20);
+    }
+
+
+    .search-box input::placeholder {
+        color: #7f90a7;
+    }
+
+
+    .search-box input:hover {
+        border-color:
+            rgba(255, 122, 24, 0.28);
+    }
+
+
+    .search-box input:focus {
+        border-color:
+            rgba(255, 122, 24, 0.75);
+
+        box-shadow:
+            0 0 0 4px
+            rgba(255, 122, 24, 0.08),
+            0 14px 35px
+            rgba(0, 0, 0, 0.30);
+    }
+
+
+    .search-box span {
+        position: absolute;
+
+        left: 18px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        font-size: 21px;
+
+        color: var(--orange);
+
+        pointer-events: none;
+    }
+
+
+    #resultsCount {
+        color: var(--muted) !important;
+
+        font-size: 15px;
+
+        margin-top: 15px !important;
+
+        padding-right: 4px;
+    }
+
+
+    /* =========================
+       BOOKS GRID
+    ========================= */
+
+    .books-container {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fill,
+                minmax(250px, 1fr)
+            );
+
+        gap: 26px;
+
+        align-items: stretch;
+    }
+
+
+    .book-card {
+        position: relative;
+
+        overflow: hidden;
+
+        display: flex;
+
+        flex-direction: column;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(13, 39, 75, 0.96),
+                rgba(3, 7, 18, 0.98)
+            ) !important;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.08);
+
+        border-radius: 18px;
+
+        padding: 12px;
+
+        box-shadow:
+            0 16px 38px
+            rgba(0, 0, 0, 0.32);
+
+        transition:
+            transform 0.28s ease,
+            border-color 0.28s ease,
+            box-shadow 0.28s ease;
+
+        min-width: 0;
+    }
+
+
+    .book-card::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        right: 0;
+
+        height: 3px;
+
+        background:
+            linear-gradient(
+                90deg,
+                var(--orange),
+                var(--orange-light),
+                var(--orange)
+            );
+
+        opacity: 0.85;
+    }
+
+
+    .book-card:hover {
+        transform: translateY(-7px);
+
+        border-color:
+            rgba(255, 122, 24, 0.42);
+
+        box-shadow:
+            0 22px 48px
+            rgba(0, 0, 0, 0.44),
+            0 0 25px
+            rgba(255, 122, 24, 0.08);
+    }
+
 
     .book-cover {
         min-height: 280px;
-        background: #eef2f7;
-        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #0b1f3a,
+                #050b15
+            ) !important;
+
+        border-radius: 13px;
+
         overflow: hidden;
+
+        position: relative;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.07);
     }
+
+
+    .book-cover::after {
+        content: "";
+
+        position: absolute;
+
+        inset: 0;
+
+        pointer-events: none;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.06),
+                transparent 35%,
+                rgba(255, 122, 24, 0.04)
+            );
+    }
+
 
     .book-cover img {
         width: 100%;
+
         height: 280px;
+
         object-fit: cover;
-        border-radius: 10px;
+
+        border-radius: 13px;
+
         display: block;
-        background: #eef2f7;
+
+        background: #0b1f3a;
     }
+
 
     .book-placeholder {
         width: 100%;
+
         height: 280px;
+
         display: flex;
+
         align-items: center;
+
         justify-content: center;
-        background: #eef2f7;
-        border-radius: 10px;
+
+        background:
+            radial-gradient(
+                circle at center,
+                #12355f,
+                #050b15
+            );
+
+        border-radius: 13px;
+
         font-size: 70px;
+
+        position: relative;
     }
+
+
+    .book-placeholder::after {
+        content: "";
+
+        position: absolute;
+
+        width: 90px;
+        height: 90px;
+
+        border-radius: 50%;
+
+        border:
+            1px solid
+            rgba(255, 122, 24, 0.20);
+
+        box-shadow:
+            0 0 35px
+            rgba(255, 122, 24, 0.08);
+    }
+
+
+    /* =========================
+       BOOK INFO
+    ========================= */
+
+    .book-info {
+        padding: 18px 8px 8px;
+    }
+
+
+    .book-category {
+        display: inline-block;
+
+        color: var(--orange-light) !important;
+
+        background:
+            rgba(255, 122, 24, 0.10);
+
+        border:
+            1px solid
+            rgba(255, 122, 24, 0.22);
+
+        padding: 6px 11px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+
+        font-weight: 800;
+
+        margin-bottom: 11px;
+    }
+
+
+    .book-info h3 {
+        color: var(--white) !important;
+
+        font-size: 21px;
+
+        line-height: 1.5;
+
+        margin:
+            0 0
+            10px;
+
+        word-break: break-word;
+    }
+
+
+    .book-info p {
+        color: var(--muted) !important;
+
+        line-height: 1.8;
+
+        font-size: 14px;
+
+        margin: 0;
+    }
+
+
+    .book-info p[style] {
+        color: #aebcd0 !important;
+
+        border-top:
+            1px solid
+            rgba(255, 255, 255, 0.06);
+
+        padding-top: 10px;
+    }
+
+
+    /* =========================
+       ACTIONS
+    ========================= */
+
+    .book-actions {
+        display: flex;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+
+        margin-top: 16px;
+    }
+
+
+    .book-actions .read-button {
+        margin-top: 0;
+
+        flex: 1;
+
+        min-width: 140px;
+
+        text-align: center;
+
+        text-decoration: none;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--orange),
+                var(--orange-light)
+            ) !important;
+
+        color: #111827 !important;
+
+        border:
+            1px solid
+            rgba(255, 154, 61, 0.55);
+
+        padding: 11px 16px;
+
+        border-radius: 11px;
+
+        font-weight: 800;
+
+        transition: 0.25s ease;
+
+        box-shadow:
+            0 8px 22px
+            rgba(255, 122, 24, 0.15);
+    }
+
+
+    .book-actions .read-button:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 28px
+            rgba(255, 122, 24, 0.25);
+
+        filter: brightness(1.05);
+    }
+
+
+    .delete-button {
+        border: none;
+
+        cursor: pointer;
+
+        background:
+            linear-gradient(
+                135deg,
+                #991b1b,
+                #dc2626
+            );
+
+        color: white;
+
+        padding: 10px 16px;
+
+        border-radius: 11px;
+
+        font-weight: 700;
+
+        font-size: 14px;
+
+        transition: 0.25s ease;
+
+        border:
+            1px solid
+            rgba(248, 113, 113, 0.18);
+    }
+
+
+    .delete-button:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #b91c1c,
+                #ef4444
+            );
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 20px
+            rgba(220, 38, 38, 0.18);
+    }
+
+
+    .delete-button:disabled {
+        opacity: 0.6;
+
+        cursor: not-allowed;
+
+        transform: none;
+
+        box-shadow: none;
+    }
+
+
+    /* =========================
+       LOADING / EMPTY / ERROR
+    ========================= */
 
     .loading-books {
         grid-column: 1 / -1;
+
         text-align: center;
-        padding: 60px 20px;
+
+        padding: 75px 20px;
+
         font-size: 20px;
-        color: #64748b;
+
+        color: var(--muted);
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(13, 39, 75, 0.55),
+                rgba(3, 7, 18, 0.72)
+            );
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.07);
+
+        border-radius: 18px;
     }
+
+
+    .books-empty-message {
+        grid-column: 1 / -1;
+
+        text-align: center;
+
+        padding: 75px 20px;
+
+        font-size: 20px;
+
+        color: var(--muted);
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(13, 39, 75, 0.55),
+                rgba(3, 7, 18, 0.72)
+            );
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.07);
+
+        border-radius: 18px;
+    }
+
+
+    .books-error-message {
+        grid-column: 1 / -1;
+
+        text-align: center;
+
+        padding: 75px 20px;
+
+        font-size: 20px;
+
+        color: #fca5a5;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(69, 10, 10, 0.55),
+                rgba(3, 7, 18, 0.80)
+            );
+
+        border:
+            1px solid
+            rgba(248, 113, 113, 0.16);
+
+        border-radius: 18px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        background:
+            linear-gradient(
+                135deg,
+                #02050c,
+                #06152a
+            ) !important;
+
+        border-top:
+            1px solid
+            rgba(255, 122, 24, 0.24);
+
+        margin-top: 60px;
+
+        position: relative;
+    }
+
+
+    footer::before {
+        content: "";
+
+        position: absolute;
+
+        top: -1px;
+
+        left: 15%;
+
+        right: 15%;
+
+        height: 2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                var(--orange),
+                transparent
+            );
+
+        opacity: 0.65;
+    }
+
+
+    .copyright {
+        color: #8fa0b6 !important;
+    }
+
+
+    .copyright strong {
+        color: var(--white) !important;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1000px) {
+
+        .books-container {
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+        }
+
+    }
+
 
     @media (max-width: 800px) {
 
         .dashboard-back-btn {
             padding: 8px 12px;
+
             font-size: 13px;
+
             margin-right: 5px;
         }
+
 
         .navbar nav {
             display: none;
         }
 
+
+        .section-heading h2 {
+            font-size: 30px;
+        }
+
+
+        .books-container {
+            grid-template-columns: 1fr;
+
+            gap: 20px;
+        }
+
+
         .book-actions {
             flex-direction: column;
         }
 
+
         .book-actions .read-button,
         .book-actions .delete-button {
             width: 100%;
+
             text-align: center;
+
             box-sizing: border-box;
         }
+
 
         .book-cover {
             min-height: 240px;
         }
 
+
         .book-cover img,
         .book-placeholder {
             height: 240px;
+        }
+
+    }
+
+
+    @media (max-width: 480px) {
+
+        .search-box input {
+            height: 54px;
+
+            font-size: 14px;
+
+            padding-right: 16px;
+        }
+
+
+        .section-heading h2 {
+            font-size: 27px;
+        }
+
+
+        .book-card {
+            padding: 10px;
+
+            border-radius: 15px;
+        }
+
+
+        .book-info {
+            padding:
+                16px 6px 6px;
         }
 
     }
@@ -245,12 +1174,7 @@
         </div>
 
         <p
-            id="resultsCount"
-            style="
-                margin-top: 15px;
-                color: #64748b;
-                font-size: 15px;
-            ">
+            id="resultsCount">
         </p>
 
     </div>
@@ -322,25 +1246,30 @@
     let currentUser = null;
     let currentProfile = null;
 
+
     const booksContainer =
         document.getElementById(
             "booksContainer"
         );
+
 
     const searchInput =
         document.getElementById(
             "bookSearch"
         );
 
+
     const pageTitle =
         document.getElementById(
             "pageTitle"
         );
 
+
     const resultsCount =
         document.getElementById(
             "resultsCount"
         );
+
 
     let booksData = [];
 
@@ -376,12 +1305,14 @@
                     " "
                 );
 
+
         if (
             value === "رياضيات" ||
             value === "الرياضيات"
         ) {
             return "الرياضيات";
         }
+
 
         if (
             value === "علوم" ||
@@ -391,6 +1322,7 @@
         ) {
             return "العلوم الطبيعية";
         }
+
 
         if (
             value === "فيزياء" ||
@@ -402,6 +1334,7 @@
             return "العلوم الفيزيائية";
         }
 
+
         if (
             value === "تاريخ" ||
             value === "التاريخ" ||
@@ -412,12 +1345,14 @@
             return "التاريخ والجغرافيا";
         }
 
+
         if (
             value === "فلسفة" ||
             value === "الفلسفة"
         ) {
             return "الفلسفة";
         }
+
 
         if (
             value === "إسلاميات" ||
@@ -427,6 +1362,7 @@
             return "العلوم الإسلامية";
         }
 
+
         if (
             value === "لغة" ||
             value === "لغات" ||
@@ -434,6 +1370,7 @@
         ) {
             return "اللغات";
         }
+
 
         if (
             value === "إعلام آلي" ||
@@ -444,6 +1381,7 @@
             return "الإعلام الآلي";
         }
 
+
         if (
             value === "اقتصاد" ||
             value === "الاقتصاد" ||
@@ -453,6 +1391,7 @@
         ) {
             return "الاقتصاد والمحاسبة";
         }
+
 
         return value;
 
@@ -468,23 +1407,30 @@
             return false;
         }
 
+
         const role =
             currentProfile.role;
+
 
         if (role === "programmer") {
             return true;
         }
 
+
         if (role === "admin") {
             return true;
         }
 
+
         if (role === "teacher") {
+
             return (
                 book.uploaded_by ===
                 currentUser.id
             );
+
         }
+
 
         return false;
 
@@ -498,10 +1444,12 @@
                 "dashboardBackBtn"
             );
 
+
         const loginButton =
             document.getElementById(
                 "loginBtn"
             );
+
 
         try {
 
@@ -512,8 +1460,10 @@
             } =
                 await supabaseClient.auth.getUser();
 
+
             currentUser =
                 user || null;
+
 
             if (!user) {
 
@@ -529,6 +1479,7 @@
 
             }
 
+
             const {
                 data: profile,
                 error
@@ -543,6 +1494,7 @@
                         user.id
                     )
                     .single();
+
 
             if (
                 error ||
@@ -561,8 +1513,10 @@
 
             }
 
+
             currentProfile =
                 profile;
+
 
             if (
                 profile.role ===
@@ -641,6 +1595,7 @@
             );
 
             currentUser = null;
+
             currentProfile = null;
 
             backButton.style.display =
@@ -663,6 +1618,7 @@
             return;
         }
 
+
         const confirmed =
             window.confirm(
 
@@ -677,9 +1633,11 @@
 
             );
 
+
         if (!confirmed) {
             return;
         }
+
 
         try {
 
@@ -690,6 +1648,7 @@
             } =
                 await supabaseClient.auth.getSession();
 
+
             if (!session) {
 
                 alert(
@@ -699,6 +1658,7 @@
                 return;
 
             }
+
 
             if (
                 !canDeleteBook(book)
@@ -712,12 +1672,15 @@
 
             }
 
+
             const buttons =
                 document.querySelectorAll(
                     ".delete-button"
                 );
 
+
             let clickedButton = null;
+
 
             buttons.forEach(
                 function(button) {
@@ -735,6 +1698,7 @@
                 }
             );
 
+
             if (clickedButton) {
 
                 clickedButton.disabled =
@@ -744,6 +1708,7 @@
                     "⏳ جارٍ الحذف...";
 
             }
+
 
             const response =
                 await fetch(
@@ -766,7 +1731,9 @@
 
                 );
 
+
             let result;
+
 
             try {
 
@@ -785,6 +1752,7 @@
 
             }
 
+
             if (
                 !response.ok ||
                 !result.success
@@ -796,6 +1764,7 @@
                 );
 
             }
+
 
             booksData =
                 booksData.filter(
@@ -809,7 +1778,9 @@
                     }
                 );
 
+
             filterBooks();
+
 
             alert(
                 "✅ تم حذف الكتاب والغلاف بنجاح."
@@ -824,6 +1795,7 @@
                 error
             );
 
+
             alert(
                 "❌ تعذر حذف الكتاب.\n\n" +
                 (
@@ -832,10 +1804,12 @@
                 )
             );
 
+
             const buttons =
                 document.querySelectorAll(
                     ".delete-button"
                 );
+
 
             buttons.forEach(
                 function(button) {
@@ -868,8 +1842,10 @@
                 "article"
             );
 
+
         article.className =
             "book-card";
+
 
         let coverHTML = `
 
@@ -878,6 +1854,7 @@
             </div>
 
         `;
+
 
         if (
             book.cover_url
@@ -900,6 +1877,7 @@
 
         }
 
+
         const readButton = `
 
             <a
@@ -914,8 +1892,10 @@
 
         `;
 
+
         let deleteButton =
             "";
+
 
         if (
             canDeleteBook(book)
@@ -937,6 +1917,7 @@
             `;
 
         }
+
 
         article.innerHTML = `
 
@@ -1002,10 +1983,12 @@
 
         `;
 
+
         const deleteButtonElement =
             article.querySelector(
                 ".delete-button"
             );
+
 
         if (
             deleteButtonElement
@@ -1020,6 +2003,7 @@
 
         }
 
+
         return article;
 
     }
@@ -1030,6 +2014,7 @@
         booksContainer.innerHTML =
             "";
 
+
         if (
             list.length === 0
         ) {
@@ -1037,15 +2022,10 @@
             resultsCount.textContent =
                 "لم يتم العثور على أي كتاب.";
 
+
             booksContainer.innerHTML = `
 
-                <div style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                    font-size: 20px;
-                    color: #64748b;
-                ">
+                <div class="books-empty-message">
 
                     📚 لا توجد كتب مطابقة للبحث
 
@@ -1056,6 +2036,7 @@
             return;
 
         }
+
 
         if (
             list.length === 1
@@ -1075,14 +2056,10 @@
 
         }
 
-        /*
-         * نضيف البطاقات مباشرة.
-         * صور الأغلفة يتم تحميلها بشكل منفصل
-         * ولن تمنع ظهور البطاقات.
-         */
 
         const fragment =
             document.createDocumentFragment();
+
 
         list.forEach(
             function(book) {
@@ -1093,6 +2070,7 @@
 
             }
         );
+
 
         booksContainer.appendChild(
             fragment
@@ -1108,18 +2086,22 @@
                 .toLowerCase()
                 .trim();
 
+
         const params =
             new URLSearchParams(
                 window.location.search
             );
 
+
         const category =
             params.get("category");
+
 
         const normalizedSelectedCategory =
             normalizeCategory(
                 category
             );
+
 
         const filteredBooks =
             booksData.filter(
@@ -1129,22 +2111,27 @@
                         (book.title || "")
                             .toLowerCase();
 
+
                     const author =
                         (book.author || "")
                             .toLowerCase();
 
+
                     const bookCategory =
                         (book.category || "")
                             .toLowerCase();
+
 
                     const normalizedBookCategory =
                         normalizeCategory(
                             book.category || ""
                         );
 
+
                     const description =
                         (book.description || "")
                             .toLowerCase();
+
 
                     const matchesSearch =
 
@@ -1170,12 +2157,14 @@
                             search
                         );
 
+
                     const matchesCategory =
 
                         !normalizedSelectedCategory ||
 
                         normalizedBookCategory ===
                         normalizedSelectedCategory;
+
 
                     return (
                         matchesSearch &&
@@ -1184,6 +2173,7 @@
 
                 }
             );
+
 
         displayBooks(
             filteredBooks
@@ -1200,18 +2190,22 @@
                 "📚 بدء تحميل الكتب..."
             );
 
+
             const response =
                 await fetch(
                     "/api/books",
                     {
                         method: "GET",
+
                         headers: {
                             "Accept":
                                 "application/json"
                         },
+
                         cache: "no-store"
                     }
                 );
+
 
             if (
                 !response.ok
@@ -1224,8 +2218,10 @@
 
             }
 
+
             const result =
                 await response.json();
+
 
             if (
                 !result.success
@@ -1238,6 +2234,7 @@
 
             }
 
+
             booksData =
                 Array.isArray(
                     result.books
@@ -1245,11 +2242,13 @@
                     ? result.books
                     : [];
 
+
             console.log(
                 "✅ تم تحميل " +
                 booksData.length +
                 " كتاب"
             );
+
 
             filterBooks();
 
@@ -1262,18 +2261,14 @@
                 error
             );
 
+
             resultsCount.textContent =
                 "";
 
+
             booksContainer.innerHTML = `
 
-                <div style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                    font-size: 20px;
-                    color: #b91c1c;
-                ">
+                <div class="books-error-message">
 
                     ❌ تعذر تحميل الكتب من الخادم.
 
@@ -1281,7 +2276,7 @@
 
                     <span style="
                         font-size: 15px;
-                        color: #64748b;
+                        color: #94a3b8;
                     ">
 
                         تأكد من أن الخادم يعمل.
@@ -1312,6 +2307,7 @@
     const searchFromHome =
         params.get("search");
 
+
     if (
         searchFromHome
     ) {
@@ -1325,6 +2321,7 @@
     const category =
         params.get("category");
 
+
     if (
         category
     ) {
@@ -1337,22 +2334,6 @@
 
     }
 
-
-    /*
-     * مهم:
-     *
-     * سابقًا كانت الصفحة تنتظر:
-     *
-     * setupDashboardButton()
-     *
-     * ثم:
-     *
-     * loadBooks()
-     *
-     * وهذا يؤخر ظهور الكتب.
-     *
-     * الآن يتم تشغيل الاثنين معًا.
-     */
 
     function initializePage() {
 
@@ -1370,3 +2351,4 @@
 </body>
 
 </html>
+```
