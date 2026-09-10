@@ -17,168 +17,365 @@
           href="../style.css">
 
     <style>
-        /* =========================================
-           الخلفية العامة
-        ========================================= */
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
+
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
+
+            --white: #f8fafc;
+            --text: #d7e0ec;
+            --muted: #91a0b5;
+
+            --line: rgba(255, 255, 255, 0.09);
+            --orange-line: rgba(255, 122, 24, 0.28);
+        }
+
+
+        /* =====================================================
+           الأساس
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             background:
                 radial-gradient(
-                    circle at 10% 0%,
-                    rgba(37, 99, 235, 0.07),
-                    transparent 28%
+                    circle at 8% 5%,
+                    rgba(255, 122, 24, 0.11),
+                    transparent 24%
                 ),
                 radial-gradient(
-                    circle at 90% 15%,
-                    rgba(14, 165, 233, 0.06),
-                    transparent 25%
+                    circle at 92% 18%,
+                    rgba(18, 53, 95, 0.35),
+                    transparent 30%
                 ),
-                #f8fafc;
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(255, 122, 24, 0.055),
+                    transparent 30%
+                ),
+                var(--black);
+
+            color: var(--text);
+            min-height: 100vh;
         }
 
 
-        /* =========================================
+        /* شبكة خلفية خفيفة */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.18;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 42px 42px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 80%
+                );
+
+            -webkit-mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 80%
+                );
+
+            z-index: -1;
+        }
+
+
+        /* =====================================================
            الشريط العلوي
-        ========================================= */
+        ===================================================== */
 
         .navbar {
-            background: rgba(255, 255, 255, 0.97);
-            border-bottom: 1px solid #e2e8f0;
+            background: rgba(3, 7, 18, 0.94);
+
+            border-bottom:
+                1px solid
+                var(--orange-line);
+
             box-shadow:
-                0 5px 22px rgba(15, 23, 42, 0.06);
+                0 10px 35px rgba(0, 0, 0, 0.35),
+                0 1px 0 rgba(255, 122, 24, 0.12);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
 
+
+        /* =====================================================
+           الشعار
+        ===================================================== */
 
         .logo-icon {
             overflow: hidden;
-            border-radius: 14px;
-        }
 
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0c2344,
+                    #050b14
+                );
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.24);
+
+            box-shadow:
+                0 0 22px
+                rgba(255, 122, 24, 0.08);
+        }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
+
             object-fit: contain;
         }
 
+        .logo-title {
+            color: var(--white) !important;
+            font-weight: 800;
+        }
 
-        /* =========================================
+        .logo-subtitle {
+            color: #9eacc0 !important;
+        }
+
+
+        /* =====================================================
+           روابط القائمة
+        ===================================================== */
+
+        nav a {
+            color: #b9c5d5 !important;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color:
+                var(--orange-light) !important;
+        }
+
+        nav a.active::after {
+            background:
+                var(--orange) !important;
+
+            box-shadow:
+                0 0 10px
+                rgba(255, 122, 24, 0.45);
+        }
+
+
+        /* =====================================================
            زر الحساب
-        ========================================= */
+        ===================================================== */
 
         .account-btn {
             display: inline-flex;
+
             align-items: center;
             justify-content: center;
+
             gap: 7px;
 
-            padding: 10px 16px;
+            padding: 10px 17px;
+
+            border:
+                1px solid
+                rgba(255, 154, 61, 0.35);
 
             border-radius: 12px;
 
             background:
                 linear-gradient(
                     135deg,
-                    #1e3a8a,
-                    #2563eb
+                    #102d56,
+                    #07172d
                 );
 
-            color: white;
+            color: #fff !important;
+
             text-decoration: none;
 
-            font-weight: 700;
+            font-weight: 800;
             font-size: 14px;
 
             transition:
-                all 0.2s ease;
+                all 0.25s ease;
 
             white-space: nowrap;
 
             box-shadow:
-                0 5px 14px rgba(
-                    37,
-                    99,
-                    235,
-                    0.18
-                );
+                0 7px 20px
+                rgba(0, 0, 0, 0.24);
         }
-
 
         .account-btn:hover {
+            transform:
+                translateY(-2px);
+
+            border-color:
+                rgba(255, 154, 61, 0.7);
+
             background:
                 linear-gradient(
                     135deg,
-                    #172554,
-                    #1d4ed8
+                    #173d70,
+                    #0b2345
                 );
-
-            transform: translateY(-2px);
 
             box-shadow:
-                0 8px 18px rgba(
-                    37,
-                    99,
-                    235,
-                    0.25
-                );
+                0 10px 25px
+                rgba(0, 0, 0, 0.35),
+
+                0 0 18px
+                rgba(255, 122, 24, 0.12);
         }
 
 
-        /* =========================================
-           هوية المؤسسة
-        ========================================= */
+        /* =====================================================
+           شريط المؤسسة
+        ===================================================== */
 
         .institution-bar {
+            position: relative;
+
+            overflow: hidden;
+
             background:
                 linear-gradient(
-                    135deg,
-                    #0f172a 0%,
-                    #1e3a8a 55%,
-                    #2563eb 100%
+                    110deg,
+                    #030712 0%,
+                    #081b36 52%,
+                    #0d274b 100%
                 );
 
-            color: white;
+            color: #fff;
+
             text-align: center;
 
-            padding: 18px 20px;
+            padding: 21px 20px;
 
             border-radius:
-                0 0 16px 16px;
+                0 0 18px 18px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 122, 24, 0.35);
 
             box-shadow:
-                0 8px 25px rgba(
-                    30,
-                    58,
-                    138,
-                    0.16
-                );
+                0 12px 35px
+                rgba(0, 0, 0, 0.3),
+
+                inset 0 -1px 0
+                rgba(255, 122, 24, 0.08);
         }
 
+        .institution-bar::before {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            left: -100px;
+            top: -145px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 122, 24, 0.08);
+        }
+
+        .institution-bar::after {
+            content: "";
+
+            position: absolute;
+
+            width: 8px;
+            height: 58%;
+
+            right: 0;
+            top: 21%;
+
+            border-radius:
+                10px 0 0 10px;
+
+            background:
+                linear-gradient(
+                    #ff9a3d,
+                    #ff6a00
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(255, 122, 24, 0.35);
+        }
 
         .institution-bar strong {
             display: block;
 
-            font-size: 18px;
+            font-size: 19px;
 
-            margin-bottom: 4px;
+            margin-bottom: 5px;
+
+            color: #fff;
+
+            letter-spacing: 0.1px;
         }
-
 
         .institution-bar span {
             font-size: 13px;
-            opacity: 0.9;
+
+            color: #b6c4d6;
         }
 
 
-        /* =========================================
-           عناوين الأقسام
-        ========================================= */
+        /* =====================================================
+           عنوان القسم
+        ===================================================== */
 
         .section-heading > div {
             position: relative;
-            padding-right: 18px;
-        }
 
+            padding-right: 20px;
+        }
 
         .section-heading > div::before {
             content: "";
@@ -186,70 +383,112 @@
             position: absolute;
 
             right: 0;
-            top: 4px;
+
+            top: 3px;
             bottom: 4px;
 
-            width: 4px;
+            width: 5px;
 
-            border-radius: 10px;
+            border-radius: 8px;
 
             background:
                 linear-gradient(
                     180deg,
-                    #2563eb,
-                    #0ea5e9
+                    var(--orange-light),
+                    var(--orange)
                 );
-        }
 
+            box-shadow:
+                0 0 16px
+                rgba(255, 122, 24, 0.25);
+        }
 
         .section-heading > div > span {
-            color: #2563eb;
-            font-weight: 700;
+            color:
+                var(--orange-light) !important;
+
+            font-weight: 800;
+
+            font-size: 13px;
+
+            letter-spacing: 0.2px;
+        }
+
+        .section-heading h2 {
+            color: #fff !important;
+
+            font-size:
+                clamp(28px, 4vw, 38px);
+
+            font-weight: 900;
+
+            margin-top: 5px;
+            margin-bottom: 8px;
+
+            letter-spacing: -0.5px;
+
+            text-shadow:
+                0 4px 20px
+                rgba(0, 0, 0, 0.3);
+        }
+
+        .section-heading p {
+            color:
+                #94a3b8 !important;
+
+            max-width: 700px;
+
+            line-height: 1.9;
         }
 
 
-        /* =========================================
+        /* =====================================================
            المحتوى
-        ========================================= */
+        ===================================================== */
 
         .about-content {
-            max-width: 1050px;
+            max-width: 1080px;
+
             margin: 0 auto;
         }
 
 
-        /* =========================================
+        /* =====================================================
            البطاقة الرئيسية
-        ========================================= */
+        ===================================================== */
 
         .about-card {
             position: relative;
+
             overflow: hidden;
 
             background:
                 linear-gradient(
                     145deg,
-                    #ffffff,
-                    #f8fbff
+                    rgba(13, 39, 75, 0.97),
+                    rgba(4, 11, 23, 0.98)
                 );
 
-            border-radius: 22px;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
 
-            padding: 34px;
+            border-radius: 24px;
 
-            margin-top: 28px;
+            padding: 38px;
+
+            margin-top: 30px;
 
             box-shadow:
-                0 14px 40px rgba(
-                    15,
-                    23,
-                    42,
-                    0.08
-                );
+                0 24px 70px
+                rgba(0, 0, 0, 0.38),
 
-            border: 1px solid #dbeafe;
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.045);
         }
 
+
+        /* الخط البرتقالي العلوي */
 
         .about-card::before {
             content: "";
@@ -260,304 +499,612 @@
             right: 0;
             left: 0;
 
-            height: 5px;
+            height: 4px;
 
             background:
                 linear-gradient(
                     90deg,
-                    #1e3a8a,
-                    #2563eb,
-                    #38bdf8
+                    #ff6a00,
+                    #ff9a3d,
+                    #12355f,
+                    #ff6a00
                 );
+
+            background-size: 220% 100%;
+
+            animation:
+                aboutGlow 7s
+                ease-in-out
+                infinite;
         }
 
+
+        /* دوائر زخرفية */
 
         .about-card::after {
             content: "";
 
             position: absolute;
 
-            width: 180px;
-            height: 180px;
+            width: 300px;
+            height: 300px;
 
-            left: -90px;
-            bottom: -100px;
+            left: -180px;
+            bottom: -190px;
 
             border-radius: 50%;
 
-            background:
-                rgba(
-                    37,
-                    99,
-                    235,
-                    0.045
-                );
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.12);
+
+            box-shadow:
+                0 0 0 30px
+                rgba(255, 122, 24, 0.025),
+
+                0 0 0 60px
+                rgba(255, 122, 24, 0.018);
 
             pointer-events: none;
         }
 
+        @keyframes aboutGlow {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+
+        /* =====================================================
+           عنوان البطاقة
+        ===================================================== */
 
         .about-card h2 {
-            color: #173b8f;
+            position: relative;
 
-            margin-bottom: 15px;
+            z-index: 1;
 
-            font-size: 25px;
+            color: #fff !important;
+
+            margin-bottom: 16px;
+
+            font-size:
+                clamp(23px, 3vw, 29px);
+
+            font-weight: 900;
+
+            letter-spacing: -0.3px;
         }
 
+
+        /* =====================================================
+           عناوين فرعية
+        ===================================================== */
 
         .about-card h3 {
-            color: #1e40af;
+            position: relative;
 
-            margin-top: 32px;
-            margin-bottom: 13px;
+            z-index: 1;
 
-            padding-right: 12px;
+            color: #fff !important;
+
+            margin-top: 36px;
+            margin-bottom: 15px;
+
+            padding:
+                12px 16px 12px 0;
 
             border-right:
-                3px solid #38bdf8;
+                3px solid
+                var(--orange);
+
+            font-size: 20px;
+
+            font-weight: 850;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 122, 24, 0.045),
+                    transparent 72%
+                );
+        }
+
+        .about-card h3::after {
+            content: "";
+
+            position: absolute;
+
+            right: -3px;
+            bottom: 0;
+
+            width: 35px;
+            height: 3px;
+
+            background:
+                var(--orange-light);
+
+            box-shadow:
+                0 0 12px
+                rgba(255, 122, 24, 0.45);
         }
 
 
-        .about-card p {
-            line-height: 2.05;
+        /* =====================================================
+           النصوص
+        ===================================================== */
 
-            color: #475569;
+        .about-card p {
+            position: relative;
+
+            z-index: 1;
+
+            line-height: 2.15;
+
+            color:
+                #c4cfdd !important;
 
             font-size: 15.5px;
         }
 
 
-        /* =========================================
-           هوية النظام
-        ========================================= */
+        /* =====================================================
+           بطاقات هوية النظام
+        ===================================================== */
 
         .system-identity {
-            margin-top: 30px;
+            position: relative;
+
+            z-index: 1;
+
+            margin-top: 31px;
 
             display: grid;
 
             grid-template-columns:
                 repeat(2, 1fr);
 
-            gap: 18px;
+            gap: 16px;
         }
 
-
         .identity-item {
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 112px;
+
             background:
                 linear-gradient(
                     145deg,
-                    #ffffff,
-                    #f1f7ff
+                    rgba(15, 44, 82, 0.9),
+                    rgba(4, 12, 25, 0.95)
                 );
 
             border:
-                1px solid #dbeafe;
+                1px solid
+                rgba(255, 255, 255, 0.085);
 
-            border-radius: 16px;
+            border-radius: 18px;
 
-            padding: 21px;
+            padding: 21px 22px;
 
             box-shadow:
-                0 5px 16px rgba(
-                    30,
-                    64,
-                    175,
-                    0.05
-                );
+                0 10px 28px
+                rgba(0, 0, 0, 0.23),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.035);
 
             transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                border-color 0.2s ease;
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        /* الخط البرتقالي الجانبي */
+
+        .identity-item::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+            right: 0;
+
+            width: 3px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--orange-light),
+                    var(--orange)
+                );
+
+            box-shadow:
+                0 0 14px
+                rgba(255, 122, 24, 0.25);
+        }
+
+
+        /* زخرفة دائرية */
+
+        .identity-item::after {
+            content: "";
+
+            position: absolute;
+
+            width: 95px;
+            height: 95px;
+
+            left: -48px;
+            bottom: -55px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 122, 24, 0.055);
+
+            pointer-events: none;
         }
 
 
         .identity-item:hover {
-            transform: translateY(-3px);
+            transform:
+                translateY(-5px);
 
-            border-color: #93c5fd;
+            border-color:
+                rgba(255, 154, 61, 0.36);
 
             box-shadow:
-                0 10px 24px rgba(
-                    30,
-                    64,
-                    175,
-                    0.10
-                );
-        }
+                0 16px 34px
+                rgba(0, 0, 0, 0.3),
 
+                0 0 22px
+                rgba(255, 122, 24, 0.07);
+        }
 
         .identity-item span {
             display: block;
 
-            color: #64748b;
+            color:
+                #8fa1b8 !important;
 
-            font-size: 14px;
+            font-size: 13px;
 
-            margin-bottom: 7px;
+            font-weight: 700;
+
+            margin-bottom: 9px;
         }
-
 
         .identity-item strong {
-            color: #0f172a;
+            color:
+                #f8fafc !important;
 
             font-size: 16px;
+
+            font-weight: 850;
         }
 
 
-        /* =========================================
-           معلومات الكتب
-        ========================================= */
+        /* =====================================================
+           بطاقات خصائص الكتب
+        ===================================================== */
 
         .book-meta {
+            position: relative;
+
+            z-index: 1;
+
             display: grid;
 
             grid-template-columns:
                 repeat(3, 1fr);
 
-            gap: 14px;
+            gap: 15px;
 
-            margin-top: 26px;
+            margin-top: 25px;
         }
-
 
         .book-meta > div {
-            background: #eff6ff;
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0b2345,
+                    #050d1c
+                );
 
             border:
-                1px solid #dbeafe;
+                1px solid
+                rgba(255, 122, 24, 0.17);
 
-            border-radius: 14px;
+            border-radius: 16px;
 
-            padding: 17px;
+            padding: 20px;
+
+            box-shadow:
+                0 9px 25px
+                rgba(0, 0, 0, 0.2);
+
+            transition:
+                transform 0.22s ease,
+                border-color 0.22s ease;
         }
 
+        .book-meta > div::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+
+            opacity: 0.7;
+        }
+
+        .book-meta > div:hover {
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(255, 154, 61, 0.4);
+        }
 
         .book-meta span {
             display: block;
 
-            color: #64748b;
+            color:
+                #8fa1b8 !important;
 
             font-size: 13px;
 
-            margin-bottom: 6px;
-        }
+            font-weight: 700;
 
+            margin-bottom: 8px;
+        }
 
         .book-meta strong {
-            color: #1e3a8a;
+            color:
+                #ffad63 !important;
+
+            font-size: 16px;
+
+            font-weight: 850;
         }
 
 
-        /* =========================================
-           مهندس النظام
-        ========================================= */
+        /* =====================================================
+           بطاقة مهندس النظام
+        ===================================================== */
 
         .programmer-info {
+            position: relative;
+
+            overflow: hidden;
+
             margin-top: 30px;
 
-            padding: 26px;
+            padding: 27px 30px;
 
             text-align: center;
 
             background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255, 122, 24, 0.10),
+                    transparent 55%
+                ),
+
                 linear-gradient(
-                    135deg,
-                    #eff6ff,
-                    #f8fbff 55%,
-                    #e0f2fe
+                    145deg,
+                    #0d274b,
+                    #040a14
                 );
 
             border:
-                1px solid #bfdbfe;
+                1px solid
+                rgba(255, 122, 24, 0.30);
 
-            border-radius: 18px;
+            border-radius: 20px;
 
             box-shadow:
-                0 8px 24px rgba(
-                    30,
-                    64,
-                    175,
-                    0.07
-                );
+                0 15px 38px
+                rgba(0, 0, 0, 0.3),
+
+                0 0 28px
+                rgba(255, 122, 24, 0.055);
         }
 
+        .programmer-info::before,
+        .programmer-info::after {
+            content: "";
+
+            position: absolute;
+
+            width: 55px;
+            height: 55px;
+
+            border:
+                1px solid
+                rgba(255, 122, 24, 0.18);
+
+            border-radius: 50%;
+        }
+
+        .programmer-info::before {
+            right: -27px;
+            top: -27px;
+        }
+
+        .programmer-info::after {
+            left: -27px;
+            bottom: -27px;
+        }
 
         .programmer-info strong {
+            position: relative;
+
+            z-index: 1;
+
             display: block;
 
-            color: #1e3a8a;
+            color: #fff !important;
 
-            font-size: 17px;
+            font-size: 18px;
 
-            margin-bottom: 7px;
+            font-weight: 900;
+
+            margin-bottom: 8px;
         }
 
-
         .programmer-info span {
-            color: #64748b;
+            position: relative;
+
+            z-index: 1;
+
+            color:
+                #aab8c9 !important;
 
             font-size: 14px;
         }
 
 
-        /* =========================================
+        /* =====================================================
            التذييل
-        ========================================= */
+        ===================================================== */
 
         footer {
-            margin-top: 30px;
-            background: #0f172a;
+            margin-top: 40px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #050b14,
+                    #02050a
+                );
+
+            border-top:
+                1px solid
+                rgba(255, 122, 24, 0.18);
+
+            box-shadow:
+                0 -12px 35px
+                rgba(0, 0, 0, 0.22);
+        }
+
+        footer .copyright {
+            color:
+                #aebbc9 !important;
+        }
+
+        footer strong {
+            color:
+                #fff !important;
+        }
+
+        footer span {
+            color:
+                #8493a7 !important;
         }
 
 
-        /* =========================================
+        /* =====================================================
            الهاتف
-        ========================================= */
+        ===================================================== */
 
         @media (max-width: 768px) {
 
             .institution-bar {
-                padding: 14px 10px;
+                padding: 16px 12px;
             }
-
 
             .institution-bar strong {
                 font-size: 16px;
             }
 
-
             .institution-bar span {
                 font-size: 12px;
             }
 
-
             .about-card {
-                padding: 24px 18px;
-                border-radius: 18px;
-            }
+                padding: 27px 19px;
 
+                border-radius: 20px;
+            }
 
             .about-card h2 {
-                font-size: 21px;
+                font-size: 22px;
             }
 
+            .about-card h3 {
+                font-size: 18px;
+            }
 
             .system-identity {
                 grid-template-columns: 1fr;
+
+                gap: 13px;
             }
 
+            .identity-item {
+                min-height: auto;
+            }
 
             .book-meta {
                 grid-template-columns: 1fr;
-            }
 
+                gap: 12px;
+            }
 
             .account-btn {
                 padding: 9px 12px;
+
                 font-size: 13px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .about-card {
+                padding: 24px 16px;
+            }
+
+            .section-heading h2 {
+                font-size: 27px;
+            }
+
+            .about-card p {
+                font-size: 14.5px;
+
+                line-height: 2;
+            }
+
+            .programmer-info {
+                padding: 23px 17px;
             }
         }
     </style>
@@ -567,13 +1114,12 @@
 
 <body>
 
-    <!-- =========================================
+
+    <!-- =====================================================
          الشريط العلوي
-    ========================================= -->
+    ===================================================== -->
 
     <header class="navbar">
-
-        <!-- الشعار -->
 
         <div class="logo">
 
@@ -593,7 +1139,6 @@
                     مكتبة ثانوية مصاص رابح
                 </div>
 
-
                 <div class="logo-subtitle">
                     المكتبة الرقمية للمؤسسة
                 </div>
@@ -603,24 +1148,19 @@
         </div>
 
 
-        <!-- القائمة -->
-
         <nav>
 
             <a href="../index.html">
                 الرئيسية
             </a>
 
-
             <a href="books.html">
                 الكتب
             </a>
 
-
             <a href="categories.html">
                 التصنيفات
             </a>
-
 
             <a
                 href="about.html"
@@ -631,8 +1171,6 @@
 
         </nav>
 
-
-        <!-- الحساب -->
 
         <a
             href="login.html"
@@ -645,9 +1183,9 @@
     </header>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          هوية المؤسسة
-    ========================================= -->
+    ===================================================== -->
 
     <div class="institution-bar">
 
@@ -662,9 +1200,9 @@
     </div>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          المحتوى الرئيسي
-    ========================================= -->
+    ===================================================== -->
 
     <main>
 
@@ -694,9 +1232,10 @@
 
             <div class="about-content">
 
-                <!-- =================================
+
+                <!-- =================================================
                      تعريف المكتبة
-                ================================== -->
+                ================================================= -->
 
                 <div class="about-card">
 
@@ -712,11 +1251,12 @@
                     </p>
 
 
-                    <!-- =================================
+                    <!-- =================================================
                          معلومات المنصة
-                    ================================== -->
+                    ================================================= -->
 
                     <div class="system-identity">
+
 
                         <div class="identity-item">
 
@@ -772,11 +1312,12 @@
                     </div>
 
 
-                    <!-- =================================
+                    <!-- =================================================
                          خصائص المكتبة
-                    ================================== -->
+                    ================================================= -->
 
                     <div class="book-meta">
+
 
                         <div>
 
@@ -819,9 +1360,9 @@
                     </div>
 
 
-                    <!-- =================================
+                    <!-- =================================================
                          هدف المكتبة
-                    ================================== -->
+                    ================================================= -->
 
                     <h3>
                         🎯 هدف المكتبة
@@ -835,9 +1376,9 @@
                     </p>
 
 
-                    <!-- =================================
+                    <!-- =================================================
                          ماذا توفر المكتبة؟
-                    ================================== -->
+                    ================================================= -->
 
                     <h3>
                         📖 ماذا توفر المكتبة؟
@@ -855,9 +1396,9 @@
                 </div>
 
 
-                <!-- =================================
+                <!-- =================================================
                      مهندس النظام
-                ================================== -->
+                ================================================= -->
 
                 <div class="programmer-info">
 
@@ -878,9 +1419,9 @@
     </main>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          التذييل
-    ========================================= -->
+    ===================================================== -->
 
     <footer>
 
@@ -913,18 +1454,18 @@
     </footer>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          Supabase
-    ========================================= -->
+    ===================================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
     <script>
 
-        /* =========================================
+        /* =====================================================
            إعداد Supabase
-        ========================================= */
+        ===================================================== */
 
         const SUPABASE_URL =
             "https://xdkluojrvdhdtihblpwy.supabase.co";
@@ -941,9 +1482,9 @@
             );
 
 
-        /* =========================================
+        /* =====================================================
            زر الحساب
-        ========================================= */
+        ===================================================== */
 
         const accountButton =
             document.getElementById(
@@ -951,9 +1492,9 @@
             );
 
 
-        /* =========================================
+        /* =====================================================
            تحديد لوحة التحكم حسب الدور
-        ========================================= */
+        ===================================================== */
 
         function getDashboard(role) {
 
@@ -978,9 +1519,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            تحديث زر الحساب
-        ========================================= */
+        ===================================================== */
 
         async function updateAccountButton() {
 
@@ -1058,6 +1599,7 @@
 
             }
 
+
             catch (error) {
 
                 console.error(
@@ -1077,9 +1619,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            مراقبة تسجيل الدخول والخروج
-        ========================================= */
+        ===================================================== */
 
         supabaseClient.auth.onAuthStateChange(
             () => {
@@ -1090,9 +1632,9 @@
         );
 
 
-        /* =========================================
+        /* =====================================================
            تشغيل النظام
-        ========================================= */
+        ===================================================== */
 
         updateAccountButton();
 
