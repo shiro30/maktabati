@@ -14,39 +14,153 @@
         rel="stylesheet">
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: "Cairo", sans-serif;
-            background: #f4f7fb;
-            color: #172033;
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
+
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
+
+            --white: #ffffff;
+            --text: #edf2f7;
+            --muted: #9eacbd;
+
+            --card: #081525;
+            --card-2: #0a1b31;
+
+            --border: rgba(255,255,255,0.09);
+
+            --green: #22c55e;
+            --red: #ef4444;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(18,53,95,0.25),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom left,
+                    rgba(255,122,24,0.06),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    180deg,
+                    var(--black),
+                    var(--black-soft)
+                );
+
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           البسملة
+        ========================================= */
+
+        .basmala {
+            text-align: center;
+            background: var(--black);
+            color: #ffffff;
+            padding: 16px 20px 14px;
+            font-size: 19px;
+            font-weight: 700;
+            position: relative;
+            border-bottom: 1px solid rgba(255,122,24,0.18);
+        }
+
+        .basmala::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 2px;
+            background: var(--orange);
+            border-radius: 10px;
+        }
+
+        /* =========================================
+           الهيدر
+        ========================================= */
+
         .header {
-            background: #0b1f3a;
+            background:
+                linear-gradient(
+                    135deg,
+                    #030712 0%,
+                    #081b36 55%,
+                    #0d274b 100%
+                );
+
             color: white;
             padding: 18px 6%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            gap: 20px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.38);
         }
 
         .logo {
             font-size: 22px;
             font-weight: 800;
+            white-space: nowrap;
         }
 
         .back-btn {
             color: white;
             text-decoration: none;
-            background: #16365f;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border: 1px solid rgba(255,255,255,0.10);
+
             padding: 9px 16px;
-            border-radius: 8px;
+            border-radius: 9px;
+
+            font-weight: 700;
+
+            transition: 0.2s;
         }
+
+        .back-btn:hover {
+            background: rgba(255,122,24,0.12);
+            border-color: rgba(255,122,24,0.35);
+            color: var(--orange-light);
+            transform: translateY(-1px);
+        }
+
+        /* =========================================
+           الحاوية
+        ========================================= */
 
         .container {
             width: 92%;
@@ -54,32 +168,96 @@
             margin: 40px auto;
         }
 
+        /* =========================================
+           عنوان الصفحة
+        ========================================= */
+
         .page-title {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
+            position: relative;
+            padding-right: 18px;
+        }
+
+        .page-title::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 4px;
+            border-radius: 10px;
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
         }
 
         .page-title h1 {
             font-size: 30px;
-            color: #0b1f3a;
+            color: #ffffff;
+            font-weight: 800;
         }
 
         .page-title p {
-            color: #687386;
-            margin-top: 5px;
+            color: var(--muted);
+            margin-top: 6px;
+            line-height: 1.8;
         }
 
+        /* =========================================
+           البطاقات
+        ========================================= */
+
         .card {
-            background: white;
-            border-radius: 14px;
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--card),
+                    var(--card-2)
+                );
+
+            border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.32);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,122,24,0.55),
+                    transparent
+                );
         }
 
         .card h2 {
             margin-bottom: 20px;
-            color: #0b1f3a;
+            color: #ffffff;
+            font-size: 21px;
+            font-weight: 800;
         }
+
+        /* =========================================
+           النموذج
+        ========================================= */
 
         .form-grid {
             display: grid;
@@ -95,49 +273,123 @@
         .field label {
             margin-bottom: 7px;
             font-weight: 700;
+            color: #dbe4ef;
         }
 
         .field input,
         .field select {
-            border: 1px solid #d7deea;
-            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 9px;
+
             padding: 12px;
+
             font-family: inherit;
             font-size: 15px;
+
             outline: none;
+
+            background: #050d19;
+            color: #ffffff;
+
+            transition: 0.2s;
+        }
+
+        .field input::placeholder {
+            color: #667589;
         }
 
         .field input:focus,
         .field select:focus {
-            border-color: #2474d8;
+            border-color: var(--orange);
+            box-shadow:
+                0 0 0 3px rgba(255,122,24,0.09);
         }
+
+        .field select option {
+            background: #081525;
+            color: #ffffff;
+        }
+
+        /* =========================================
+           الأزرار الرئيسية
+        ========================================= */
 
         .main-btn {
             margin-top: 20px;
+
             border: none;
-            background: #1264c4;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    #e85d04
+                );
+
             color: white;
+
             padding: 12px 25px;
-            border-radius: 8px;
+            border-radius: 9px;
+
             font-family: inherit;
-            font-weight: 700;
+            font-weight: 800;
+
             cursor: pointer;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 6px 18px rgba(255,122,24,0.12);
         }
 
         .main-btn:hover {
-            background: #0d54a6;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange-light),
+                    var(--orange)
+                );
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 9px 24px rgba(255,122,24,0.22);
+        }
+
+        .main-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .refresh-btn {
-            background: #198754;
+            background:
+                linear-gradient(
+                    135deg,
+                    #12355f,
+                    #0d274b
+                );
+
+            box-shadow: none;
         }
 
         .refresh-btn:hover {
-            background: #146c43;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    #e85d04
+                );
         }
+
+        /* =========================================
+           الجدول
+        ========================================= */
 
         .table-wrapper {
             overflow-x: auto;
+            border-radius: 11px;
+            border: 1px solid var(--border);
         }
 
         table {
@@ -148,53 +400,87 @@
 
         th,
         td {
-            padding: 13px 10px;
-            border-bottom: 1px solid #e8edf4;
+            padding: 14px 11px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
             text-align: right;
         }
 
         th {
-            background: #f5f8fc;
-            color: #344054;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d274b,
+                    #081b36
+                );
+
+            color: #ffffff;
             font-weight: 800;
+            white-space: nowrap;
+        }
+
+        td {
+            color: #d7e0eb;
+            background: rgba(3,7,18,0.30);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         tr:hover td {
-            background: #fafcff;
+            background:
+                rgba(255,122,24,0.045);
         }
+
+        /* =========================================
+           شارات الحسابات
+        ========================================= */
 
         .badge {
             display: inline-block;
-            padding: 5px 10px;
+
+            padding: 5px 11px;
+
             border-radius: 20px;
+
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
+
+            border: 1px solid transparent;
         }
 
         .programmer {
-            background: #ede9fe;
-            color: #6d28d9;
+            background: rgba(255,122,24,0.13);
+            color: var(--orange-light);
+            border-color: rgba(255,122,24,0.24);
         }
 
         .admin {
-            background: #dbeafe;
-            color: #1d4ed8;
+            background: rgba(18,53,95,0.35);
+            color: #8fc5ff;
+            border-color: rgba(90,160,230,0.20);
         }
 
         .teacher {
-            background: #dcfce7;
-            color: #15803d;
+            background: rgba(34,197,94,0.10);
+            color: #6ee7a0;
+            border-color: rgba(34,197,94,0.18);
         }
 
         .student {
-            background: #fff7ed;
-            color: #c2410c;
+            background: rgba(255,122,24,0.08);
+            color: #ffb36d;
+            border-color: rgba(255,122,24,0.15);
         }
 
         .status {
-            color: #15803d;
-            font-weight: 700;
+            color: #4ade80;
+            font-weight: 800;
         }
+
+        /* =========================================
+           الإجراءات
+        ========================================= */
 
         .actions {
             display: flex;
@@ -203,76 +489,111 @@
         }
 
         .action-btn {
-            border: none;
-            border-radius: 7px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+
             padding: 7px 12px;
+
             font-family: inherit;
             cursor: pointer;
-            font-weight: 700;
+
+            font-weight: 800;
             white-space: nowrap;
+
+            transition: 0.2s;
         }
 
         .edit-btn {
-            background: #e0edff;
-            color: #1459a6;
+            background: rgba(37,99,235,0.12);
+            color: #8fc5ff;
+            border-color: rgba(37,99,235,0.18);
+        }
+
+        .edit-btn:hover {
+            background: rgba(37,99,235,0.22);
+            transform: translateY(-1px);
         }
 
         .delete-btn {
-            background: #fee2e2;
-            color: #b91c1c;
+            background: rgba(239,68,68,0.10);
+            color: #ff8e8e;
+            border-color: rgba(239,68,68,0.18);
+        }
+
+        .delete-btn:hover {
+            background: rgba(239,68,68,0.20);
+            transform: translateY(-1px);
         }
 
         .document-btn {
-            background: #e7f8ee;
-            color: #137333;
+            background: rgba(34,197,94,0.09);
+            color: #72e6a0;
+            border-color: rgba(34,197,94,0.16);
         }
 
         .document-btn:hover {
-            background: #d2f0dd;
+            background: rgba(34,197,94,0.18);
+            transform: translateY(-1px);
         }
 
         .protected {
-            color: #7a8494;
+            color: #7f8da0;
             font-size: 13px;
+            font-weight: 700;
         }
+
+        /* =========================================
+           الرسائل
+        ========================================= */
 
         .message {
             margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border-radius: 9px;
             display: none;
+            line-height: 1.8;
+            border: 1px solid transparent;
         }
 
         .success {
             display: block;
-            background: #dcfce7;
-            color: #166534;
+            background: rgba(34,197,94,0.09);
+            color: #6ee7a0;
+            border-color: rgba(34,197,94,0.18);
         }
 
         .error {
             display: block;
-            background: #fee2e2;
-            color: #991b1b;
+            background: rgba(239,68,68,0.09);
+            color: #ff9696;
+            border-color: rgba(239,68,68,0.18);
         }
 
         .loading {
             text-align: center;
             padding: 25px;
-            color: #667085;
+            color: #8e9cad;
         }
 
-        /* =========================
+        /* =========================================
            نافذة التعديل
-        ========================= */
+        ========================================= */
 
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55);
+
+            background:
+                rgba(0,0,0,0.78);
+
+            backdrop-filter: blur(6px);
+
             display: none;
             align-items: center;
             justify-content: center;
+
             padding: 20px;
+
             z-index: 1000;
         }
 
@@ -281,35 +602,63 @@
         }
 
         .modal-box {
-            background: white;
+            background:
+                linear-gradient(
+                    145deg,
+                    #081525,
+                    #050d19
+                );
+
             width: 100%;
             max-width: 600px;
+
             max-height: 90vh;
             overflow-y: auto;
-            border-radius: 15px;
+
+            border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.55);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             margin-bottom: 25px;
         }
 
         .modal-header h2 {
-            color: #0b1f3a;
+            color: #ffffff;
+            margin: 0;
         }
 
         .close-btn {
-            border: none;
-            background: #f1f3f6;
-            width: 35px;
-            height: 35px;
+            border: 1px solid rgba(255,255,255,0.10);
+
+            background: rgba(255,255,255,0.06);
+
+            color: #ffffff;
+
+            width: 36px;
+            height: 36px;
+
             border-radius: 50%;
+
             cursor: pointer;
             font-size: 20px;
+
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,122,24,0.15);
+            border-color: rgba(255,122,24,0.30);
+            color: var(--orange-light);
         }
 
         .modal-grid {
@@ -321,23 +670,35 @@
             display: flex;
             gap: 10px;
             margin-top: 22px;
+            flex-wrap: wrap;
         }
 
         .cancel-btn {
-            background: #e9edf3;
-            color: #344054;
+            background:
+                #182538;
+
+            color: #cbd5e1;
+            box-shadow: none;
         }
 
-        /* =========================
-           نافذة معلومات الوثيقة
-        ========================= */
+        .cancel-btn:hover {
+            background: #22344d;
+        }
+
+        /* =========================================
+           نافذة الوثيقة
+        ========================================= */
 
         .document-modal-box {
             max-width: 650px;
         }
 
         .document-info {
-            background: #f7f9fc;
+            background:
+                rgba(255,255,255,0.025);
+
+            border: 1px solid var(--border);
+
             border-radius: 12px;
             padding: 20px;
             margin-top: 15px;
@@ -346,9 +707,12 @@
         .document-info-row {
             display: flex;
             justify-content: space-between;
+
             gap: 20px;
+
             padding: 11px 0;
-            border-bottom: 1px solid #e2e8f0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.07);
         }
 
         .document-info-row:last-child {
@@ -357,28 +721,35 @@
 
         .document-info-label {
             font-weight: 800;
-            color: #344054;
+            color: #dbe4ef;
         }
 
         .document-info-value {
-            color: #172033;
+            color: #ffffff;
             text-align: left;
             direction: ltr;
         }
 
         .warning-box {
             margin-top: 18px;
+
             padding: 14px;
-            background: #fff7ed;
-            color: #9a3412;
-            border: 1px solid #fed7aa;
+
+            background:
+                rgba(255,122,24,0.07);
+
+            color: #ffb36d;
+
+            border: 1px solid rgba(255,122,24,0.20);
+
             border-radius: 10px;
+
             line-height: 1.8;
         }
 
-        /* =========================
+        /* =========================================
            بطاقة الوثيقة المخفية
-        ========================= */
+        ========================================= */
 
         #registrationDocument {
             display: none;
@@ -391,21 +762,31 @@
 
         .registration-paper {
             box-sizing: border-box;
+
             width: 210mm;
             height: 297mm;
+
             min-height: 0;
             max-height: 297mm;
+
             background: white;
+
             margin: 0 auto;
+
             padding: 12mm 14mm 10mm;
+
             color: #111827;
+
             font-family: "Cairo", sans-serif;
+
             overflow: hidden;
         }
 
         .registration-header {
             text-align: center;
+
             border-bottom: 2px solid #0b1f3a;
+
             padding-bottom: 9px;
             margin-bottom: 13px;
         }
@@ -447,25 +828,36 @@
 
         .document-number {
             display: inline-block;
+
             border: 1.5px solid #0b1f3a;
+
             padding: 5px 18px;
+
             border-radius: 7px;
+
             font-weight: 800;
+
             direction: ltr;
+
             margin-top: 2px;
         }
 
         .registration-details {
             border: 1px solid #d7deea;
+
             border-radius: 10px;
+
             overflow: hidden;
+
             margin-top: 12px;
         }
 
         .registration-row {
             display: grid;
             grid-template-columns: 35% 65%;
+
             border-bottom: 1px solid #d7deea;
+
             min-height: 38px;
         }
 
@@ -475,25 +867,39 @@
 
         .registration-label {
             background: #f4f7fb;
+
             padding: 8px 10px;
+
             font-weight: 800;
             font-size: 12px;
         }
 
         .registration-value {
             padding: 8px 10px;
+
             direction: ltr;
             text-align: left;
+
             word-break: break-word;
+
             font-size: 12px;
         }
 
         .registration-rights {
             margin-top: 12px;
+
             border: 1px solid #d7deea;
+
             border-radius: 10px;
+
             padding: 11px 13px;
-            background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fbff 0%,
+                    #ffffff 100%
+                );
         }
 
         .registration-rights h3 {
@@ -511,13 +917,20 @@
 
         .qr-section {
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             gap: 13px;
+
             margin-top: 9px;
+
             padding: 7px 10px;
+
             border: 1px dashed #b8c6d9;
+
             border-radius: 9px;
+
             background: #ffffff;
         }
 
@@ -543,13 +956,19 @@
         #registrationQr {
             width: 21mm;
             height: 21mm;
+
             min-width: 21mm;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             padding: 2px;
+
             border: 1px solid #e2e8f0;
+
             border-radius: 6px;
+
             background: #ffffff;
         }
 
@@ -561,26 +980,39 @@
 
         .qr-url {
             direction: ltr;
+
             font-size: 8px;
+
             color: #667085;
+
             word-break: break-all;
+
             margin-top: 2px;
         }
 
         .registration-footer {
             margin-top: 13px;
+
             padding-top: 7px;
+
             border-top: 1px solid #cbd5e1;
+
             text-align: center;
+
             font-size: 10px;
+
             color: #667085;
+
             line-height: 1.55;
         }
 
         .registration-footer .prayer-line {
             color: #0b1f3a;
+
             font-weight: 700;
+
             font-size: 12px;
+
             margin-bottom: 2px;
         }
 
@@ -596,22 +1028,97 @@
 
         .print-actions button {
             border: none;
+
             background: #1264c4;
+
             color: white;
+
             padding: 10px 22px;
+
             border-radius: 8px;
+
             font-family: inherit;
+
             font-weight: 700;
+
             cursor: pointer;
         }
 
+        /* =========================================
+           الفوتر
+        ========================================= */
+
+        footer {
+            margin-top: 55px;
+
+            padding: 30px 6%;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #030712,
+                    #081b36
+                );
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+
+            color: var(--muted);
+        }
+
+        .footer-dua {
+            color: #ffffff;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            margin-bottom: 15px;
+        }
+
+        .footer-dua::after {
+            content: "";
+
+            display: block;
+
+            width: 65px;
+            height: 2px;
+
+            background: var(--orange);
+
+            margin: 12px auto 0;
+
+            border-radius: 10px;
+        }
+
+        .footer-title {
+            color: #ffffff;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+        }
+
+        .footer-info {
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        /* =========================================
+           الهاتف
+        ========================================= */
+
         @media (max-width: 700px) {
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
 
             .header {
                 padding: 15px 4%;
+                flex-direction: column;
+                text-align: center;
             }
 
             .container {
@@ -622,6 +1129,26 @@
                 padding: 18px;
             }
 
+            .page-title h1 {
+                font-size: 25px;
+            }
+
+            .page-title p {
+                font-size: 13px;
+            }
+
+            .modal-box {
+                padding: 20px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .modal-actions .main-btn {
+                width: 100%;
+            }
+
             .registration-paper {
                 width: 100%;
                 height: auto;
@@ -630,9 +1157,15 @@
                 padding: 18px;
                 overflow: visible;
             }
+
+            .basmala {
+                font-size: 17px;
+            }
+
         }
 
         @media print {
+
             body * {
                 visibility: hidden !important;
             }
@@ -644,20 +1177,28 @@
 
             #registrationDocument {
                 display: block !important;
+
                 position: absolute;
+
                 left: 0;
                 top: 0;
+
                 width: 100%;
             }
 
             .registration-paper {
                 box-sizing: border-box;
+
                 width: 210mm;
                 height: 297mm;
+
                 min-height: 297mm;
                 max-height: 297mm;
+
                 margin: 0;
+
                 padding: 12mm 14mm 10mm;
+
                 overflow: hidden;
             }
 
@@ -673,11 +1214,29 @@
                 size: A4;
                 margin: 0;
             }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
+
+    <!-- =========================================
+         البسملة
+    ========================================== -->
+
+    <div class="basmala">
+        بسم الله الرحمن الرحيم
+    </div>
+
+
+    <!-- =========================================
+         الهيدر
+    ========================================== -->
 
     <header class="header">
 
@@ -685,14 +1244,24 @@
             📚 مكتبة الثانوية
         </div>
 
-        <a href="admin.html" class="back-btn" id="backBtn">
+        <a
+            href="admin.html"
+            class="back-btn"
+            id="backBtn">
+
             العودة إلى اللوحة
+
         </a>
 
     </header>
 
 
+    <!-- =========================================
+         المحتوى
+    ========================================== -->
+
     <main class="container">
+
 
         <div class="page-title">
 
@@ -707,9 +1276,9 @@
         </div>
 
 
-        <!-- =========================
+        <!-- =========================================
              إنشاء حساب
-        ========================== -->
+        ========================================== -->
 
         <section class="card">
 
@@ -773,7 +1342,9 @@
                             نوع الحساب
                         </label>
 
-                        <select id="role" required>
+                        <select
+                            id="role"
+                            required>
 
                             <option value="">
                                 اختر نوع الحساب
@@ -818,9 +1389,9 @@
         </section>
 
 
-        <!-- =========================
+        <!-- =========================================
              الحسابات الموجودة
-        ========================== -->
+        ========================================== -->
 
         <section class="card">
 
@@ -913,9 +1484,9 @@
     </main>
 
 
-    <!-- =========================
+    <!-- =========================================
          نافذة تعديل الحساب
-    ========================== -->
+    ========================================== -->
 
     <div
         id="editModal"
@@ -998,7 +1569,9 @@
                             نوع الحساب
                         </label>
 
-                        <select id="editRole" required>
+                        <select
+                            id="editRole"
+                            required>
 
                             <option value="admin">
                                 مدير
@@ -1054,9 +1627,9 @@
     </div>
 
 
-    <!-- =========================
+    <!-- =========================================
          نافذة معلومات الوثيقة
-    ========================== -->
+    ========================================== -->
 
     <div
         id="documentModal"
@@ -1106,9 +1679,9 @@
     </div>
 
 
-    <!-- =========================
+    <!-- =========================================
          وثيقة التسجيل للطباعة
-    ========================== -->
+    ========================================== -->
 
     <div id="registrationDocument">
 
@@ -1256,7 +1829,6 @@
 
                     <li>
                         -
-
                     </li>
 
                 </ul>
@@ -1266,15 +1838,23 @@
 
             <div class="qr-section">
 
-                <strong>
-                    رمز الدخول إلى المكتبة
-                </strong>
+                <div class="qr-info">
+
+                    <strong>
+                        رمز الدخول إلى المكتبة
+                    </strong>
+
+                    <span>
+                        امسح الرمز للوصول إلى منصة المكتبة الإلكترونية
+                    </span>
+
+                    <div class="qr-url">
+                        https://maktabati-1-rpeo.onrender.com
+                    </div>
+
+                </div>
 
                 <div id="registrationQr"></div>
-
-                <div class="qr-url">
-                    https://maktabati-1-rpeo.onrender.com
-                </div>
 
             </div>
 
@@ -1312,9 +1892,37 @@
     </div>
 
 
+    <!-- =========================================
+         الفوتر
+    ========================================== -->
+
+    <footer>
+
+        <div class="footer-dua">
+            اللهم علمنا ما جهلنا وزدنا علما
+        </div>
+
+        <div class="footer-title">
+            🏫 ثانوية مصاص رابح
+        </div>
+
+        <div class="footer-info">
+            مكتبة الثانوية الرقمية
+            <br>
+            مهندس النظام: شراف الدين بوردوسن
+            <br>
+            © 2026 — جميع الحقوق محفوظة
+        </div>
+
+    </footer>
+
+
+    <!-- Supabase -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- مكتبة QR Code -->
+    <!-- QR Code -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 
@@ -1327,8 +1935,10 @@
         const SUPABASE_URL =
             "https://xdkluojrvdhdtihblpwy.supabase.co";
 
+
         const SUPABASE_ANON_KEY =
             "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
 
         const supabaseClient =
             window.supabase.createClient(
@@ -1354,50 +1964,60 @@
                 "usersTableBody"
             );
 
+
         const createUserForm =
             document.getElementById(
                 "createUserForm"
             );
+
 
         const createMessage =
             document.getElementById(
                 "createMessage"
             );
 
+
         const createUserBtn =
             document.getElementById(
                 "createUserBtn"
             );
+
 
         const refreshBtn =
             document.getElementById(
                 "refreshBtn"
             );
 
+
         const editModal =
             document.getElementById(
                 "editModal"
             );
+
 
         const editUserForm =
             document.getElementById(
                 "editUserForm"
             );
 
+
         const editMessage =
             document.getElementById(
                 "editMessage"
             );
+
 
         const backBtn =
             document.getElementById(
                 "backBtn"
             );
 
+
         const documentModal =
             document.getElementById(
                 "documentModal"
             );
+
 
         const documentModalContent =
             document.getElementById(
@@ -1509,13 +2129,17 @@
                         text-align:center;
                         margin-top:100px;
                         font-family:Cairo,sans-serif;
+                        color:#ffffff;
+                        background:#030712;
+                        min-height:100vh;
+                        padding:40px;
                     ">
 
                         <h1>
                             🚫 غير مصرح
                         </h1>
 
-                        <p>
+                        <p style="color:#aab6c5;margin-top:10px;">
                             لم يتم العثور على بيانات الحساب.
                         </p>
 
@@ -1539,13 +2163,17 @@
                         text-align:center;
                         margin-top:100px;
                         font-family:Cairo,sans-serif;
+                        color:#ffffff;
+                        background:#030712;
+                        min-height:100vh;
+                        padding:40px;
                     ">
 
                         <h1>
                             🚫 غير مصرح
                         </h1>
 
-                        <p>
+                        <p style="color:#aab6c5;margin-top:10px;">
                             ليس لديك صلاحية للوصول إلى إدارة الحسابات.
                         </p>
 
@@ -2094,15 +2722,6 @@
                     );
 
 
-                    /*
-                       مهم:
-
-                       كلمة المرور متوفرة الآن فقط لأن
-                       المدير أدخلها لحظة إنشاء الحساب.
-
-                       الخادم لا يخزنها في جدول الوثائق.
-                    */
-
                     if (
                         result.registrationDocument
                     ) {
@@ -2229,11 +2848,6 @@
 
             createQRCode();
 
-
-            /*
-                ننتظر قليلا حتى يتم إنشاء QR
-                ثم نفتح نافذة الطباعة.
-            */
 
             setTimeout(
                 function() {
