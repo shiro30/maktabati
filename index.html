@@ -1,17 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <title>مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية</title>
+    <title>
+        مكتبة ثانوية مصاص رابح | المكتبة الإلكترونية
+    </title>
 
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        rel="icon"
+        type="image/png"
+        href="favicon.png">
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -152,6 +162,254 @@
 
 
         /* =====================================================
+           هويتنا
+        ===================================================== */
+
+        .identity-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .identity-section::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.07);
+            top: -120px;
+            left: -100px;
+            pointer-events: none;
+        }
+
+        .identity-section::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.06);
+            bottom: -100px;
+            right: -80px;
+            pointer-events: none;
+        }
+
+        .identity-intro {
+            max-width: 780px;
+            margin: 0 auto 35px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .identity-intro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 15px;
+            margin-bottom: 12px;
+            border-radius: 30px;
+            background: rgba(59, 130, 246, 0.10);
+            color: #2563eb;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .identity-intro h3 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            color: #0f172a;
+        }
+
+        .identity-intro p {
+            margin: 0;
+            color: #64748b;
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .identity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .identity-card {
+            position: relative;
+            padding: 26px 20px;
+            border-radius: 20px;
+            background: linear-gradient(
+                145deg,
+                #ffffff,
+                #f8fafc
+            );
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .identity-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.11);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        .identity-card-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            background: linear-gradient(
+                135deg,
+                #eff6ff,
+                #dbeafe
+            );
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 7px 18px rgba(37, 99, 235, 0.10);
+        }
+
+        .identity-card h3 {
+            margin: 0 0 9px;
+            font-size: 18px;
+            color: #0f172a;
+        }
+
+        .identity-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .identity-card-number {
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .identity-footer {
+            margin-top: 28px;
+            padding: 17px 22px;
+            border-radius: 16px;
+            background: linear-gradient(
+                135deg,
+                rgba(37, 99, 235, 0.08),
+                rgba(16, 185, 129, 0.06)
+            );
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            text-align: center;
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .identity-footer strong {
+            color: #1e40af;
+        }
+
+
+        /* =====================================================
+           الوضع الداكن - هويتنا
+        ===================================================== */
+
+        body.dark-mode .identity-section::before {
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        body.dark-mode .identity-section::after {
+            background: rgba(16, 185, 129, 0.10);
+        }
+
+        body.dark-mode .identity-intro-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border-color: rgba(96, 165, 250, 0.20);
+        }
+
+        body.dark-mode .identity-intro h3 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .identity-intro p {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .identity-card {
+            background: linear-gradient(
+                145deg,
+                #1e293b,
+                #172033
+            );
+            border-color: #334155;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+        }
+
+        body.dark-mode .identity-card:hover {
+            border-color: rgba(96, 165, 250, 0.40);
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+        }
+
+        body.dark-mode .identity-card-icon {
+            background: linear-gradient(
+                135deg,
+                #1e3a5f,
+                #1e40af
+            );
+            border-color: #315b8f;
+        }
+
+        body.dark-mode .identity-card h3 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .identity-card p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .identity-card-number {
+            background: #334155;
+            color: #94a3b8;
+        }
+
+        body.dark-mode .identity-footer {
+            background: linear-gradient(
+                135deg,
+                rgba(59, 130, 246, 0.12),
+                rgba(16, 185, 129, 0.08)
+            );
+            border-color: rgba(96, 165, 250, 0.15);
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .identity-footer strong {
+            color: #93c5fd;
+        }
+
+
+        /* =====================================================
            الشاشات الصغيرة
         ===================================================== */
 
@@ -181,6 +439,33 @@
                 margin-top: 15px;
                 margin-bottom: 18px;
             }
+
+            .identity-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .identity-intro h3 {
+                font-size: 24px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .identity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .identity-card {
+                padding: 22px 18px;
+            }
+
+            .identity-intro p {
+                font-size: 15px;
+            }
+
         }
 
     </style>
@@ -203,8 +488,7 @@
 
             <img
                 src="favicon.png"
-                alt="شعار مكتبة ثانوية مصاص رابح"
-            >
+                alt="شعار مكتبة ثانوية مصاص رابح">
 
         </div>
 
@@ -310,9 +594,7 @@
     <div class="hero-content">
 
         <div class="welcome">
-
             🏫 ثانوية مصاص رابح
-
         </div>
 
 
@@ -340,9 +622,7 @@
         </p>
 
 
-        <!-- =================================================
-             الدعاء
-        ================================================= -->
+        <!-- الدعاء -->
 
         <div class="prayer-message">
 
@@ -358,8 +638,7 @@
             <input
                 type="text"
                 id="searchInput"
-                placeholder="ابحث عن كتاب أو مؤلف أو مادة..."
-            >
+                placeholder="ابحث عن كتاب أو مؤلف أو مادة...">
 
             <button onclick="searchBooks()">
 
@@ -379,21 +658,15 @@
     <div class="hero-card">
 
         <div class="book-symbol">
-
             📖
-
         </div>
 
         <h2>
-
             مكتبة ثانوية مصاص رابح
-
         </h2>
 
         <p>
-
             اقرأ، تعلّم، واكتشف
-
         </p>
 
 
@@ -402,15 +675,11 @@
             <div>
 
                 <strong id="heroBooksCount">
-
                     —
-
                 </strong>
 
                 <span>
-
                     كتاب
-
                 </span>
 
             </div>
@@ -419,134 +688,12 @@
             <div>
 
                 <strong id="heroCategoriesCount">
-
                     —
-
                 </strong>
 
                 <span>
-
                     تصنيف
-
                 </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     SCHOOL IDENTITY
-===================================================== -->
-
-<section class="section">
-
-    <div class="section-heading">
-
-        <div>
-
-            <span>
-                هويتنا
-            </span>
-
-            <h2>
-                عن المكتبة
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div class="school-identity">
-
-
-        <div class="identity-item">
-
-            <div class="identity-icon">
-                🏫
-            </div>
-
-            <div>
-
-                <h3>
-                    المؤسسة التعليمية
-                </h3>
-
-                <p>
-                    ثانوية مصاص رابح
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="identity-item">
-
-            <div class="identity-icon">
-                📚
-            </div>
-
-            <div>
-
-                <h3>
-                    المنصة
-                </h3>
-
-                <p>
-                    مكتبة الثانوية الإلكترونية
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="identity-item">
-
-            <div class="identity-icon">
-                👨‍💻
-            </div>
-
-            <div>
-
-                <h3>
-                    مهندس النظام
-                </h3>
-
-                <p>
-                    شراف الدين بوردوسن
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="identity-item">
-
-            <div class="identity-icon">
-                📐
-            </div>
-
-            <div>
-
-                <h3>
-                    الصفة
-                </h3>
-
-                <p>
-                    أستاذ مادة الرياضيات
-                </p>
 
             </div>
 
@@ -580,13 +727,10 @@
 
 
         <a href="pages/categories.html">
-
             جميع التصنيفات ←
-
         </a>
 
     </div>
-
 
 
     <div class="categories">
@@ -602,8 +746,7 @@
 
                 <img
                     src="covers/mathematics.jpg"
-                    alt="الرياضيات"
-                >
+                    alt="الرياضيات">
 
             </div>
 
@@ -629,8 +772,7 @@
 
                 <img
                     src="covers/natural-sciences.jpg"
-                    alt="العلوم الطبيعية"
-                >
+                    alt="العلوم الطبيعية">
 
             </div>
 
@@ -656,8 +798,7 @@
 
                 <img
                     src="covers/physics.jpg"
-                    alt="الفيزياء"
-                >
+                    alt="الفيزياء">
 
             </div>
 
@@ -683,8 +824,7 @@
 
                 <img
                     src="covers/history-geography.jpg"
-                    alt="التاريخ والجغرافيا"
-                >
+                    alt="التاريخ والجغرافيا">
 
             </div>
 
@@ -710,8 +850,7 @@
 
                 <img
                     src="covers/philosophy.jpg"
-                    alt="الفلسفة"
-                >
+                    alt="الفلسفة">
 
             </div>
 
@@ -737,8 +876,7 @@
 
                 <img
                     src="covers/islamic-studies.jpg"
-                    alt="العلوم الإسلامية"
-                >
+                    alt="العلوم الإسلامية">
 
             </div>
 
@@ -764,8 +902,7 @@
 
                 <img
                     src="covers/languages.jpg"
-                    alt="اللغات"
-                >
+                    alt="اللغات">
 
             </div>
 
@@ -791,8 +928,7 @@
 
                 <img
                     src="covers/informatics.jpg"
-                    alt="الإعلام الآلي"
-                >
+                    alt="الإعلام الآلي">
 
             </div>
 
@@ -818,8 +954,7 @@
 
                 <img
                     src="covers/economics.jpg"
-                    alt="الاقتصاد"
-                >
+                    alt="الاقتصاد">
 
             </div>
 
@@ -832,6 +967,171 @@
             </p>
 
         </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SCHOOL IDENTITY
+     هويتنا - بعد التصنيفات
+===================================================== -->
+
+<section class="section identity-section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                من نحن؟
+            </span>
+
+            <h2>
+                هويتنا
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="identity-intro">
+
+        <div class="identity-intro-badge">
+
+            🏫 مكتبة ثانوية مصاص رابح
+
+        </div>
+
+
+        <h3>
+            المعرفة... رسالة وهوية
+        </h3>
+
+
+        <p>
+
+            مكتبتنا الإلكترونية فضاء معرفي رقمي يهدف إلى
+            تسهيل الوصول إلى الكتب والمراجع التعليمية،
+            ودعم مسيرة التعلم والبحث لدى أسرة ثانوية مصاص رابح.
+
+        </p>
+
+    </div>
+
+
+    <div class="identity-grid">
+
+
+        <!-- المؤسسة -->
+
+        <div class="identity-card">
+
+            <div class="identity-card-number">
+                01
+            </div>
+
+            <div class="identity-card-icon">
+                🏫
+            </div>
+
+            <h3>
+                المؤسسة التعليمية
+            </h3>
+
+            <p>
+                ثانوية مصاص رابح
+            </p>
+
+        </div>
+
+
+
+        <!-- المنصة -->
+
+        <div class="identity-card">
+
+            <div class="identity-card-number">
+                02
+            </div>
+
+            <div class="identity-card-icon">
+                📚
+            </div>
+
+            <h3>
+                المنصة
+            </h3>
+
+            <p>
+                مكتبة الثانوية الإلكترونية
+            </p>
+
+        </div>
+
+
+
+        <!-- المهندس -->
+
+        <div class="identity-card">
+
+            <div class="identity-card-number">
+                03
+            </div>
+
+            <div class="identity-card-icon">
+                👨‍💻
+            </div>
+
+            <h3>
+                مهندس النظام
+            </h3>
+
+            <p>
+                شراف الدين بوردوسن
+            </p>
+
+        </div>
+
+
+
+        <!-- الصفة -->
+
+        <div class="identity-card">
+
+            <div class="identity-card-number">
+                04
+            </div>
+
+            <div class="identity-card-icon">
+                📐
+            </div>
+
+            <h3>
+                الصفة
+            </h3>
+
+            <p>
+                أستاذ مادة الرياضيات
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="identity-footer">
+
+        <strong>
+            مكتبة ثانوية مصاص رابح
+        </strong>
+
+        مساحة للعلم والمعرفة،
+        تجمع بين الكتاب والتعليم والتكنولوجيا
+        لخدمة الأسرة التربوية.
 
     </div>
 
@@ -861,9 +1161,7 @@
 
 
         <a href="pages/books.html">
-
             عرض جميع الكتب ←
-
         </a>
 
     </div>
@@ -904,8 +1202,7 @@
 
                     <img
                         src="favicon.png"
-                        alt="شعار مكتبة ثانوية مصاص رابح"
-                    >
+                        alt="شعار مكتبة ثانوية مصاص رابح">
 
                 </div>
 
@@ -913,15 +1210,11 @@
                 <div>
 
                     <div class="logo-title">
-
                         مكتبة ثانوية مصاص رابح
-
                     </div>
 
                     <div class="logo-subtitle">
-
                         المكتبة الإلكترونية
-
                     </div>
 
                 </div>
@@ -1044,13 +1337,11 @@
 
         مهندس النظام:
         شراف الدين بوردوسن —
-
         أستاذ مادة الرياضيات
 
         <br>
 
         © 2026
-
         جميع الحقوق محفوظة
 
     </div>
@@ -1080,7 +1371,6 @@ const SUPABASE_URL =
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1116,7 +1406,9 @@ function getDashboardByRole(role) {
 
         default:
             return "pages/login.html";
+
     }
+
 }
 
 
@@ -1146,8 +1438,8 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-        }
 
+        }
 
 
         const {
@@ -1176,8 +1468,8 @@ async function loadUserAccount() {
                 "pages/login.html";
 
             return;
-        }
 
+        }
 
 
         const name =
@@ -1206,6 +1498,7 @@ async function loadUserAccount() {
                     dashboard;
 
                 return false;
+
             };
 
     }
@@ -1217,13 +1510,14 @@ async function loadUserAccount() {
             error
         );
 
-
         accountButton.textContent =
             "تسجيل الدخول";
 
         accountButton.href =
             "pages/login.html";
+
     }
+
 }
 
 
@@ -1300,6 +1594,7 @@ function applyTheme() {
         );
 
     }
+
 }
 
 
@@ -1383,6 +1678,7 @@ function playClickSound() {
         );
 
     }
+
 }
 
 
@@ -1499,6 +1795,88 @@ const latestBooksContainer =
 
 
 
+/*
+ * إصلاح مسار صورة الغلاف
+ *
+ * يقبل:
+ *
+ * DD.png
+ * covers/DD.png
+ * /covers/DD.png
+ * https://...
+ *
+ */
+
+function getBookCoverPath(cover) {
+
+    if (!cover) {
+        return "";
+    }
+
+
+    let value =
+        String(cover)
+            .trim()
+            .replace(/\\/g, "/");
+
+
+    if (!value) {
+        return "";
+    }
+
+
+    /* رابط خارجي */
+
+    if (
+        value.startsWith("http://") ||
+        value.startsWith("https://") ||
+        value.startsWith("data:")
+    ) {
+
+        return value;
+
+    }
+
+
+    /* إزالة ./ في البداية */
+
+    value =
+        value.replace(
+            /^\.\/+/,
+            ""
+        );
+
+
+    /* إذا كان المسار يبدأ بـ / */
+
+    if (
+        value.startsWith("/")
+    ) {
+
+        return value;
+
+    }
+
+
+    /* إذا كان يحتوي أصلًا على covers/ */
+
+    if (
+        value.startsWith("covers/")
+    ) {
+
+        return value;
+
+    }
+
+
+    /* اسم ملف فقط */
+
+    return "covers/" + value;
+
+}
+
+
+
 function createLatestBookCard(
     book,
     index
@@ -1514,29 +1892,39 @@ function createLatestBookCard(
         "book-card";
 
 
-    let coverHTML;
+    let coverHTML = `
+
+        <div class="book-placeholder">
+            📚
+        </div>
+
+    `;
 
 
-    if (book.cover) {
+    const coverPath =
+        getBookCoverPath(
+            book.cover
+        );
+
+
+    if (coverPath) {
 
         coverHTML = `
 
             <img
-                src="covers/${book.cover}"
-                alt="غلاف ${book.title}"
+                src="${coverPath}"
+                alt="غلاف ${book.title || ""}"
+                loading="lazy"
+                decoding="async"
+                onerror="
+                    this.style.display='none';
+                    this.parentElement.innerHTML='<div class=&quot;book-placeholder&quot;>📚</div>';
+                "
             >
 
         `;
 
     }
-
-    else {
-
-        coverHTML =
-            "📚";
-
-    }
-
 
 
     let buttonHTML;
@@ -1548,8 +1936,7 @@ function createLatestBookCard(
 
             <a
                 href="pages/book.html?book=${index}"
-                class="read-button"
-            >
+                class="read-button">
 
                 📖 قراءة الكتاب
 
@@ -1568,8 +1955,7 @@ function createLatestBookCard(
                 style="
                     opacity:0.5;
                     cursor:not-allowed;
-                "
-            >
+                ">
 
                 📖 الكتاب غير متوفر
 
@@ -1578,7 +1964,6 @@ function createLatestBookCard(
         `;
 
     }
-
 
 
     article.innerHTML = `
@@ -1618,8 +2003,7 @@ function createLatestBookCard(
                     color:#64748b;
                     font-size:14px;
                     margin-top:8px;
-                "
-            >
+                ">
 
                 ✍️ ${book.author || "غير محدد"}
 
@@ -1634,6 +2018,7 @@ function createLatestBookCard(
 
 
     return article;
+
 }
 
 
@@ -1656,23 +2041,20 @@ function displayLatestBooks() {
         latestBooksContainer.innerHTML = `
 
             <p>
-
                 لا توجد بيانات كتب محلية.
-
             </p>
 
         `;
 
         return;
-    }
 
+    }
 
 
     const latestBooks =
         booksData
             .slice(-4)
             .reverse();
-
 
 
     latestBooks.forEach(
@@ -1732,9 +2114,7 @@ function displayLatestBooks() {
                 booksData
                     .map(
                         function(book) {
-
                             return book.category;
-
                         }
                     )
                     .filter(Boolean)
