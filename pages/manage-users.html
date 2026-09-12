@@ -75,7 +75,7 @@
 
         /* =========================================
            البسملة
-        ========================================= */
+        ========================================== */
 
         .basmala {
             text-align: center;
@@ -102,7 +102,7 @@
 
         /* =========================================
            الهيدر
-        ========================================= */
+        ========================================== */
 
         .header {
             background:
@@ -160,7 +160,7 @@
 
         /* =========================================
            الحاوية
-        ========================================= */
+        ========================================== */
 
         .container {
             width: 92%;
@@ -170,7 +170,7 @@
 
         /* =========================================
            عنوان الصفحة
-        ========================================= */
+        ========================================== */
 
         .page-title {
             margin-bottom: 28px;
@@ -208,7 +208,7 @@
 
         /* =========================================
            البطاقات
-        ========================================= */
+        ========================================== */
 
         .card {
             background:
@@ -257,7 +257,7 @@
 
         /* =========================================
            النموذج
-        ========================================= */
+        ========================================== */
 
         .form-grid {
             display: grid;
@@ -311,8 +311,33 @@
         }
 
         /* =========================================
+           حقل مادة الأستاذ
+        ========================================== */
+
+        .teacher-subject-field {
+            display: none;
+        }
+
+        .teacher-subject-field.show,
+        .student-academic-field.show {
+            display: flex;
+        }
+
+        .student-academic-field {
+            display: none;
+            flex-direction: column;
+        }
+
+        .subject-hint {
+            color: #7f8da0;
+            font-size: 12px;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+
+        /* =========================================
            الأزرار الرئيسية
-        ========================================= */
+        ========================================== */
 
         .main-btn {
             margin-top: 20px;
@@ -384,7 +409,7 @@
 
         /* =========================================
            الجدول
-        ========================================= */
+        ========================================== */
 
         .table-wrapper {
             overflow-x: auto;
@@ -395,7 +420,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1050px;
+            min-width: 1180px;
         }
 
         th,
@@ -432,9 +457,18 @@
                 rgba(255,122,24,0.045);
         }
 
+        .subject-cell {
+            color: #ffb36d;
+            font-weight: 700;
+        }
+
+        .no-subject {
+            color: #667589;
+        }
+
         /* =========================================
            شارات الحسابات
-        ========================================= */
+        ========================================== */
 
         .badge {
             display: inline-block;
@@ -480,7 +514,7 @@
 
         /* =========================================
            الإجراءات
-        ========================================= */
+        ========================================== */
 
         .actions {
             display: flex;
@@ -544,7 +578,7 @@
 
         /* =========================================
            الرسائل
-        ========================================= */
+        ========================================== */
 
         .message {
             margin-top: 15px;
@@ -577,7 +611,7 @@
 
         /* =========================================
            نافذة التعديل
-        ========================================= */
+        ========================================== */
 
         .modal {
             position: fixed;
@@ -687,7 +721,7 @@
 
         /* =========================================
            نافذة الوثيقة
-        ========================================= */
+        ========================================== */
 
         .document-modal-box {
             max-width: 650px;
@@ -749,7 +783,7 @@
 
         /* =========================================
            بطاقة الوثيقة المخفية
-        ========================================= */
+        ========================================== */
 
         #registrationDocument {
             display: none;
@@ -1046,7 +1080,7 @@
 
         /* =========================================
            الفوتر
-        ========================================= */
+        ========================================== */
 
         footer {
             margin-top: 55px;
@@ -1107,7 +1141,7 @@
 
         /* =========================================
            الهاتف
-        ========================================= */
+        ========================================== */
 
         @media (max-width: 700px) {
 
@@ -1366,8 +1400,123 @@
 
                     </div>
 
+
+                    <!-- مادة الأستاذ -->
+
+                    <div
+                        class="field teacher-subject-field"
+                        id="teacherSubjectField">
+
+                        <label for="teacherSubject">
+                            📚 المادة التي يدرّسها الأستاذ
+                        </label>
+
+                        <select
+                            id="teacherSubject">
+
+                            <option value="">
+                                اختر المادة
+                            </option>
+
+                            <option value="الرياضيات">
+                                الرياضيات
+                            </option>
+
+                            <option value="العلوم الطبيعية">
+                                العلوم الطبيعية
+                            </option>
+
+                            <option value="العلوم الفيزيائية">
+                                العلوم الفيزيائية
+                            </option>
+
+                            <option value="التاريخ والجغرافيا">
+                                التاريخ والجغرافيا
+                            </option>
+
+                            <option value="الفلسفة">
+                                الفلسفة
+                            </option>
+
+                            <option value="العلوم الإسلامية">
+                                العلوم الإسلامية
+                            </option>
+
+                            <option value="اللغة العربية">
+                                اللغة العربية
+                            </option>
+
+                            <option value="اللغة الفرنسية">
+                                اللغة الفرنسية
+                            </option>
+
+                            <option value="اللغة الإنجليزية">
+                                اللغة الإنجليزية
+                            </option>
+
+                            <option value="الإعلام الآلي">
+                                الإعلام الآلي
+                            </option>
+
+                            <option value="التكنولوجيا">
+                                التكنولوجيا
+                            </option>
+
+                            <option value="الاقتصاد والمناجمنت">
+                                الاقتصاد والمناجمنت
+                            </option>
+
+                            <option value="التسيير المحاسبي والمالي">
+                                التسيير المحاسبي والمالي
+                            </option>
+
+                            <option value="القانون">
+                                القانون
+                            </option>
+
+                            <option value="التربية البدنية والرياضية">
+                                التربية البدنية والرياضية
+                            </option>
+
+                        </select>
+
+                        <div class="subject-hint">
+                            يحدد هذا الاختيار المحتوى الذي يمكن للأستاذ إدارته داخل منصة المؤسسة.
+                        </div>
+
+                    </div>
+
                 </div>
 
+
+                <div
+                    class="field student-academic-field"
+                    id="studentAcademicField">
+
+                    <label for="studentBranch">
+                        🏫 شعبة التلميذ
+                    </label>
+
+                    <select id="studentBranch">
+                        <option value="">اختر الشعبة</option>
+                        <option value="scientific">العلوم التجريبية</option>
+                        <option value="literature">الآداب</option>
+                        <option value="management">التسيير والاقتصاد</option>
+                    </select>
+
+                    <label for="studentYear" style="margin-top:10px;">📅 السنة الدراسية</label>
+                    <select id="studentYear">
+                        <option value="">اختر السنة</option>
+                        <option value="1">السنة الأولى</option>
+                        <option value="2">السنة الثانية</option>
+                        <option value="3">السنة الثالثة</option>
+                    </select>
+
+                    <div class="subject-hint">
+                        تحدد الشعبة والسنة الدروس والملاحظات التي تظهر للتلميذ في المنصة.
+                    </div>
+
+                </div>
 
                 <button
                     type="submit"
@@ -1443,6 +1592,10 @@
                             </th>
 
                             <th>
+                                المادة
+                            </th>
+
+                            <th>
                                 تاريخ الإنشاء
                             </th>
 
@@ -1464,7 +1617,7 @@
                         <tr>
 
                             <td
-                                colspan="7"
+                                colspan="8"
                                 class="loading">
 
                                 جار تحميل الحسابات...
@@ -1589,8 +1742,123 @@
 
                     </div>
 
+
+                    <!-- مادة الأستاذ في التعديل -->
+
+                    <div
+                        class="field teacher-subject-field"
+                        id="editTeacherSubjectField">
+
+                        <label for="editTeacherSubject">
+                            📚 المادة التي يدرّسها الأستاذ
+                        </label>
+
+                        <select
+                            id="editTeacherSubject">
+
+                            <option value="">
+                                اختر المادة
+                            </option>
+
+                            <option value="الرياضيات">
+                                الرياضيات
+                            </option>
+
+                            <option value="العلوم الطبيعية">
+                                العلوم الطبيعية
+                            </option>
+
+                            <option value="العلوم الفيزيائية">
+                                العلوم الفيزيائية
+                            </option>
+
+                            <option value="التاريخ والجغرافيا">
+                                التاريخ والجغرافيا
+                            </option>
+
+                            <option value="الفلسفة">
+                                الفلسفة
+                            </option>
+
+                            <option value="العلوم الإسلامية">
+                                العلوم الإسلامية
+                            </option>
+
+                            <option value="اللغة العربية">
+                                اللغة العربية
+                            </option>
+
+                            <option value="اللغة الفرنسية">
+                                اللغة الفرنسية
+                            </option>
+
+                            <option value="اللغة الإنجليزية">
+                                اللغة الإنجليزية
+                            </option>
+
+                            <option value="الإعلام الآلي">
+                                الإعلام الآلي
+                            </option>
+
+                            <option value="التكنولوجيا">
+                                التكنولوجيا
+                            </option>
+
+                            <option value="الاقتصاد والمناجمنت">
+                                الاقتصاد والمناجمنت
+                            </option>
+
+                            <option value="التسيير المحاسبي والمالي">
+                                التسيير المحاسبي والمالي
+                            </option>
+
+                            <option value="القانون">
+                                القانون
+                            </option>
+
+                            <option value="التربية البدنية والرياضية">
+                                التربية البدنية والرياضية
+                            </option>
+
+                        </select>
+
+                        <div class="subject-hint">
+                            يمكن للأستاذ إدارة محتوى مادته فقط داخل المنصة.
+                        </div>
+
+                    </div>
+
                 </div>
 
+
+                <div
+                    class="field student-academic-field"
+                    id="editStudentAcademicField">
+
+                    <label for="editStudentBranch">
+                        🏫 شعبة التلميذ
+                    </label>
+
+                    <select id="editStudentBranch">
+                        <option value="">اختر الشعبة</option>
+                        <option value="scientific">العلوم التجريبية</option>
+                        <option value="literature">الآداب</option>
+                        <option value="management">التسيير والاقتصاد</option>
+                    </select>
+
+                    <label for="editStudentYear" style="margin-top:10px;">📅 السنة الدراسية</label>
+                    <select id="editStudentYear">
+                        <option value="">اختر السنة</option>
+                        <option value="1">السنة الأولى</option>
+                        <option value="2">السنة الثانية</option>
+                        <option value="3">السنة الثالثة</option>
+                    </select>
+
+                    <div class="subject-hint">
+                        تحدد الشعبة والسنة الدروس والملاحظات التي تظهر للتلميذ في المنصة.
+                    </div>
+
+                </div>
 
                 <div
                     id="editMessage"
@@ -2025,6 +2293,50 @@
             );
 
 
+        const roleSelect =
+            document.getElementById(
+                "role"
+            );
+
+
+        const teacherSubjectField =
+            document.getElementById(
+                "teacherSubjectField"
+            );
+
+
+        const teacherSubject =
+            document.getElementById(
+                "teacherSubject"
+            );
+
+        const studentAcademicField = document.getElementById("studentAcademicField");
+        const studentBranch = document.getElementById("studentBranch");
+        const studentYear = document.getElementById("studentYear");
+
+
+        const editRoleSelect =
+            document.getElementById(
+                "editRole"
+            );
+
+
+        const editTeacherSubjectField =
+            document.getElementById(
+                "editTeacherSubjectField"
+            );
+
+
+        const editTeacherSubject =
+            document.getElementById(
+                "editTeacherSubject"
+            );
+
+        const editStudentAcademicField = document.getElementById("editStudentAcademicField");
+        const editStudentBranch = document.getElementById("editStudentBranch");
+        const editStudentYear = document.getElementById("editStudentYear");
+
+
         // ============================================
         // أسماء أنواع الحسابات
         // ============================================
@@ -2065,7 +2377,8 @@
             teacher: [
                 "الدخول إلى المكتبة.",
                 "قراءة الكتب والبحث فيها.",
-                "إضافة وإدارة الكتب الخاصة به حسب الصلاحيات."
+                "إدارة محتوى مادته داخل منصة المؤسسة.",
+                "إضافة وتعديل وحذف الملفات والملاحظات الخاصة بمادته."
             ],
 
             student: [
@@ -2075,6 +2388,82 @@
             ]
 
         };
+
+
+        // ============================================
+        // إظهار/إخفاء مادة الأستاذ
+        // ============================================
+
+        function updateTeacherSubjectField() {
+
+            const isTeacher =
+                roleSelect.value === "teacher";
+
+
+            teacherSubjectField.classList.toggle(
+                "show",
+                isTeacher
+            );
+
+
+            teacherSubject.required =
+                isTeacher;
+
+            const isStudent = roleSelect.value === "student";
+            studentAcademicField.classList.toggle("show", isStudent);
+            studentBranch.required = isStudent;
+            studentYear.required = isStudent;
+
+
+            if (!isTeacher) {
+
+                teacherSubject.value = "";
+
+            }
+
+        }
+
+
+        function updateEditTeacherSubjectField() {
+
+            const isTeacher =
+                editRoleSelect.value === "teacher";
+
+
+            editTeacherSubjectField.classList.toggle(
+                "show",
+                isTeacher
+            );
+
+
+            editTeacherSubject.required =
+                isTeacher;
+
+            const isStudent = editRoleSelect.value === "student";
+            editStudentAcademicField.classList.toggle("show", isStudent);
+            editStudentBranch.required = isStudent;
+            editStudentYear.required = isStudent;
+
+
+            if (!isTeacher) {
+
+                editTeacherSubject.value = "";
+
+            }
+
+        }
+
+
+        roleSelect.addEventListener(
+            "change",
+            updateTeacherSubjectField
+        );
+
+
+        editRoleSelect.addEventListener(
+            "change",
+            updateEditTeacherSubjectField
+        );
 
 
         // ============================================
@@ -2259,7 +2648,7 @@
                 <tr>
 
                     <td
-                        colspan="7"
+                        colspan="8"
                         class="loading">
 
                         جار تحميل الحسابات...
@@ -2335,7 +2724,7 @@
                     <tr>
 
                         <td
-                            colspan="7"
+                            colspan="8"
                             class="loading">
 
                             ❌ ${escapeHtml(
@@ -2369,7 +2758,7 @@
                     <tr>
 
                         <td
-                            colspan="7"
+                            colspan="8"
                             class="loading">
 
                             لا توجد حسابات.
@@ -2476,6 +2865,34 @@
                         }
 
 
+                        const subjectHtml =
+                            role === "teacher"
+
+                                ? (
+                                    user.subject
+
+                                        ? `
+                                            <span class="subject-cell">
+                                                📚 ${escapeHtml(
+                                                    user.subject
+                                                )}
+                                            </span>
+                                        `
+
+                                        : `
+                                            <span class="no-subject">
+                                                غير محددة
+                                            </span>
+                                        `
+                                )
+
+                                : `
+                                    <span class="no-subject">
+                                        —
+                                    </span>
+                                `;
+
+
                         return `
 
                             <tr>
@@ -2511,6 +2928,11 @@
 
                                     </span>
 
+                                </td>
+
+
+                                <td>
+                                    ${subjectHtml}
                                 </td>
 
 
@@ -2586,6 +3008,17 @@
                     ).value;
 
 
+                const subject =
+                    role === "teacher"
+
+                        ? teacherSubject.value.trim()
+
+                        : null;
+
+                const branch = role === "student" ? studentBranch.value : null;
+                const year = role === "student" ? Number(studentYear.value) : null;
+
+
                 if (!fullName) {
 
                     showMessage(
@@ -2641,6 +3074,34 @@
                 }
 
 
+                if (role === "student" && (!branch || !year || (branch === "management" && year === 1))) {
+                    showMessage(createMessage, "يرجى اختيار شعبة وسنة دراسية صحيحتين للتلميذ.", "error");
+                    return;
+                }
+
+                if (role === "student" && (!branch || !year || (branch === "management" && year === 1))) {
+                    showMessage(editMessage, "يرجى اختيار شعبة وسنة دراسية صحيحتين للتلميذ.", "error");
+                    return;
+                }
+
+                if (
+                    role === "teacher" &&
+                    !subject
+                ) {
+
+                    showMessage(
+                        createMessage,
+                        "يرجى اختيار المادة التي يدرّسها الأستاذ.",
+                        "error"
+                    );
+
+                    teacherSubject.focus();
+
+                    return;
+
+                }
+
+
                 try {
 
                     createUserBtn.disabled =
@@ -2690,7 +3151,13 @@
 
                                         password,
 
-                                        role
+                                        role,
+
+                                        subject,
+
+                                        branch,
+
+                                        year
 
                                     })
 
@@ -2734,6 +3201,8 @@
 
 
                     createUserForm.reset();
+
+                    updateTeacherSubjectField();
 
 
                     await loadUsers();
@@ -3082,6 +3551,33 @@
                         </div>
 
 
+                        ${
+                            accountUser.role === "teacher"
+
+                                ? `
+
+                                    <div class="document-info-row">
+
+                                        <span class="document-info-label">
+                                            المادة
+                                        </span>
+
+                                        <span class="subject-cell">
+                                            📚 ${escapeHtml(
+                                                accountUser.subject ||
+                                                "غير محددة"
+                                            )}
+                                        </span>
+
+                                    </div>
+
+                                `
+
+                                : ""
+
+                        }
+
+
                         <div class="document-info-row">
 
                             <span class="document-info-label">
@@ -3272,6 +3768,19 @@
                     : "student";
 
 
+            document.getElementById(
+                "editTeacherSubject"
+            ).value =
+                user.subject ||
+                "";
+
+            document.getElementById("editStudentBranch").value = user.branch || "";
+            document.getElementById("editStudentYear").value = user.year ? String(user.year) : "";
+
+
+            updateEditTeacherSubjectField();
+
+
             editMessage.className =
                 "message";
 
@@ -3380,6 +3889,61 @@
                     ).value;
 
 
+                const subject =
+                    role === "teacher"
+
+                        ? editTeacherSubject.value.trim()
+
+                        : null;
+
+                const branch = role === "student" ? editStudentBranch.value : null;
+                const year = role === "student" ? Number(editStudentYear.value) : null;
+
+
+                if (!fullName) {
+
+                    showMessage(
+                        editMessage,
+                        "يرجى إدخال الاسم الكامل.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!email) {
+
+                    showMessage(
+                        editMessage,
+                        "يرجى إدخال البريد الإلكتروني.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    role === "teacher" &&
+                    !subject
+                ) {
+
+                    showMessage(
+                        editMessage,
+                        "يرجى اختيار المادة التي يدرّسها الأستاذ.",
+                        "error"
+                    );
+
+                    editTeacherSubject.focus();
+
+                    return;
+
+                }
+
+
                 try {
 
                     const token =
@@ -3425,7 +3989,13 @@
 
                                         password,
 
-                                        role
+                                        role,
+
+                                        subject,
+
+                                        branch,
+
+                                        year
 
                                     })
 
@@ -3669,6 +4239,11 @@
         // ============================================
 
         async function initializePage() {
+
+            updateTeacherSubjectField();
+
+            updateEditTeacherSubjectField();
+
 
             const allowed =
                 await checkAccountManager();

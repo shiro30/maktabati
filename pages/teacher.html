@@ -1,976 +1,1432 @@
-```html
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>لوحة الأستاذ | المكتبة الإلكترونية - ثانوية مصاص رابح</title>
+```
+<title>لوحة الأستاذ | المكتبة الإلكترونية - ثانوية مصاص رابح</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    html {
+        scroll-behavior: smooth;
+    }
 
-        body {
-            font-family: "Cairo", sans-serif;
-            background:
-                radial-gradient(
-                    circle at top right,
-                    rgba(18, 53, 95, 0.22),
-                    transparent 32%
-                ),
-                linear-gradient(
-                    180deg,
-                    #030712 0%,
-                    #050b14 48%,
-                    #07111f 100%
-                );
-            color: #f4f7fb;
-            min-height: 100vh;
-        }
+    body {
+        font-family: "Cairo", sans-serif;
+        background:
+            radial-gradient(
+                circle at top right,
+                rgba(18, 53, 95, 0.22),
+                transparent 32%
+            ),
+            linear-gradient(
+                180deg,
+                #030712 0%,
+                #050b14 48%,
+                #07111f 100%
+            );
+        color: #f4f7fb;
+        min-height: 100vh;
+    }
 
-        /* =========================
-           BASMALA
-        ========================= */
+    /* =========================
+       BASMALA
+    ========================= */
 
-        .basmala {
-            text-align: center;
-            padding: 15px 20px 13px;
-            background: #02050a;
-            color: #ffffff;
-            font-size: 17px;
-            font-weight: 700;
-            border-bottom: 1px solid rgba(255, 122, 24, 0.18);
-        }
+    .basmala {
+        text-align: center;
+        padding: 15px 20px 13px;
+        background: #02050a;
+        color: #ffffff;
+        font-size: 17px;
+        font-weight: 700;
+        border-bottom: 1px solid rgba(255, 122, 24, 0.18);
+    }
 
-        .basmala::after {
-            content: "";
-            display: block;
-            width: 75px;
-            height: 2px;
-            margin: 9px auto 0;
-            border-radius: 20px;
-            background: linear-gradient(
-                90deg,
+    .basmala::after {
+        content: "";
+        display: block;
+        width: 75px;
+        height: 2px;
+        margin: 9px auto 0;
+        border-radius: 20px;
+        background: linear-gradient(
+            90deg,
+            #ff7a18,
+            #ff9a3d
+        );
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+        background:
+            linear-gradient(
+                135deg,
+                #030712 0%,
+                #081b36 55%,
+                #0d274b 100%
+            );
+        color: white;
+        padding: 18px 6%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        box-shadow:
+            0 8px 30px rgba(0, 0, 0, 0.35);
+        border-bottom: 1px solid rgba(255, 122, 24, 0.15);
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .brand-icon {
+        width: 54px;
+        height: 54px;
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 122, 24, 0.18),
+                rgba(18, 53, 95, 0.65)
+            );
+        border: 1px solid rgba(255, 154, 61, 0.30);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 27px;
+        flex-shrink: 0;
+        box-shadow:
+            0 8px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .brand-text h1 {
+        font-size: 21px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .brand-text p {
+        color: #c8d9ec;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .brand-text small {
+        display: block;
+        color: #ff9a3d;
+        font-size: 10px;
+        margin-top: 3px;
+    }
+
+    .top-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .user-name {
+        color: #e1ebf7;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .logout {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #b42318;
+        color: white;
+        padding: 9px 16px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 700;
+        transition: 0.2s;
+    }
+
+    .logout:hover {
+        background: #d92d20;
+        transform: translateY(-1px);
+    }
+
+    .dashboard-back {
+        display: none;
+        color: white;
+        text-decoration: none;
+        background: rgba(255, 122, 24, 0.12);
+        border: 1px solid rgba(255, 154, 61, 0.20);
+        padding: 9px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .dashboard-back:hover {
+        background: rgba(255, 122, 24, 0.20);
+    }
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+        width: 92%;
+        max-width: 1200px;
+        margin: 38px auto 60px;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #ff9a3d;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .back:hover {
+        color: #ffb066;
+        text-decoration: underline;
+    }
+
+    /* =========================
+       WELCOME
+    ========================= */
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+        margin-bottom: 8px;
+        color: #ffffff;
+        font-weight: 800;
+    }
+
+    .welcome p {
+        color: #aab8ca;
+        line-height: 1.9;
+    }
+
+    .official-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding: 7px 13px;
+        border-radius: 30px;
+        background: rgba(255, 122, 24, 0.09);
+        color: #ff9a3d;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid rgba(255, 122, 24, 0.22);
+    }
+
+    /* =========================
+       DASHBOARD CARDS
+    ========================= */
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-bottom: 35px;
+    }
+
+    .card {
+        position: relative;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(8, 27, 54, 0.97),
+                rgba(4, 10, 19, 0.99)
+            );
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.30);
+        border: 1px solid rgba(255, 255, 255, 0.065);
+        transition: 0.22s;
+        cursor: pointer;
+    }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 2px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 122, 24, 0.65),
+            transparent
+        );
+        opacity: 0;
+        transition: 0.22s;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow:
+            0 13px 35px rgba(0, 0, 0, 0.40);
+        border-color: rgba(255, 122, 24, 0.24);
+    }
+
+    .card:hover::before {
+        opacity: 1;
+    }
+
+    .card-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 13px;
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 122, 24, 0.15),
+                rgba(18, 53, 95, 0.72)
+            );
+        border: 1px solid rgba(255, 154, 61, 0.16);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+
+    .card h3 {
+        color: #ffffff;
+        margin-bottom: 7px;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .card p {
+        color: #9eacbd;
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .management-card {
+        border-color: rgba(255, 122, 24, 0.16);
+    }
+
+    .management-card .card-icon {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 122, 24, 0.22),
+                rgba(18, 53, 95, 0.85)
+            );
+    }
+
+    /* =========================
+       TEACHER PLATFORM IDENTITY
+    ========================= */
+
+    .teacher-platform-info {
+        display: none;
+        margin-bottom: 30px;
+        padding: 22px 25px;
+        border-radius: 15px;
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 122, 24, 0.08),
+                rgba(8, 27, 54, 0.96)
+            );
+        border: 1px solid rgba(255, 122, 24, 0.20);
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .teacher-platform-info.visible {
+        display: block;
+    }
+
+    .teacher-platform-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .teacher-platform-title h2 {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .teacher-subject-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        border-radius: 30px;
+        color: #111827;
+        background:
+            linear-gradient(
+                135deg,
                 #ff7a18,
                 #ff9a3d
             );
+        font-weight: 800;
+        font-size: 12px;
+    }
+
+    .teacher-platform-info p {
+        color: #aab8ca;
+        line-height: 1.9;
+        font-size: 13px;
+    }
+
+    /* =========================
+       PLATFORM MANAGEMENT
+    ========================= */
+
+    .platform-management {
+        display: none;
+    }
+
+    .platform-management.visible {
+        display: block;
+    }
+
+    .management-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .management-header h2 {
+        color: #ffffff;
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .close-management {
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(255, 255, 255, 0.05);
+        color: #c8d9ec;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 700;
+    }
+
+    .close-management:hover {
+        background: rgba(255, 122, 24, 0.12);
+        color: #ffffff;
+    }
+
+    .management-selector {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .management-subject-display {
+        grid-column: 1 / -1;
+        padding: 15px 18px;
+        border-radius: 10px;
+        background: rgba(255, 122, 24, 0.07);
+        border: 1px solid rgba(255, 122, 24, 0.16);
+        color: #ffb066;
+        font-weight: 700;
+    }
+
+    .management-subject-display strong {
+        color: #ffffff;
+    }
+
+    .management-form {
+        display: none;
+        padding: 25px;
+        margin-top: 20px;
+        border-radius: 13px;
+        background: rgba(3, 7, 18, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .management-form.visible {
+        display: block;
+    }
+
+    .management-form h3 {
+        color: #ffffff;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-weight: 600;
+        color: #d5deea;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        outline: none;
+        background: #07111f;
+        color: #f4f7fb;
+        transition: 0.2s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: #6f7f92;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #ff7a18;
+        box-shadow:
+            0 0 0 3px rgba(255, 122, 24, 0.10);
+    }
+
+    select option {
+        background: #07111f;
+        color: #ffffff;
+    }
+
+    textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .upload-box {
+        border: 2px dashed #3a4b60;
+        border-radius: 10px;
+        padding: 22px;
+        text-align: center;
+        background:
+            rgba(3, 7, 18, 0.55);
+        transition: 0.2s;
+    }
+
+    .upload-box:hover {
+        border-color: #ff7a18;
+        background:
+            rgba(255, 122, 24, 0.045);
+    }
+
+    .upload-box p {
+        color: #8f9fb2;
+        margin-bottom: 12px;
+        font-size: 13px;
+    }
+
+    .upload-box input {
+        border: none;
+        padding: 5px;
+        background: transparent;
+    }
+
+    .btn {
+        margin-top: 22px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        background:
+            linear-gradient(
+                135deg,
+                #ff7a18,
+                #ff9a3d
+            );
+        color: #111827;
+        font-family: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.2s;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+        box-shadow:
+            0 8px 22px rgba(255, 122, 24, 0.20);
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .secondary-btn {
+        margin-top: 22px;
+        margin-right: 8px;
+        padding: 11px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #d5deea;
+        font-family: inherit;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .secondary-btn:hover {
+        background: rgba(255, 122, 24, 0.10);
+        color: #ffffff;
+    }
+
+    /* =========================
+       PLATFORM ITEMS
+    ========================= */
+
+    .platform-items {
+        margin-top: 25px;
+    }
+
+    .platform-items h3 {
+        color: #ffffff;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+
+    .platform-item {
+        padding: 18px;
+        margin-bottom: 12px;
+        border-radius: 11px;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(8, 27, 54, 0.90),
+                rgba(4, 10, 19, 0.98)
+            );
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .platform-item-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .platform-item-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .platform-item-meta {
+        color: #8291a5;
+        font-size: 11px;
+        line-height: 1.8;
+    }
+
+    .platform-item-description {
+        color: #aab8ca;
+        font-size: 13px;
+        line-height: 1.8;
+        margin-top: 10px;
+    }
+
+    .platform-item-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        flex-shrink: 0;
+    }
+
+    .item-btn {
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(255, 255, 255, 0.05);
+        color: #dce5ef;
+        padding: 7px 11px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 11px;
+    }
+
+    .item-btn:hover {
+        background: rgba(255, 122, 24, 0.12);
+        border-color: rgba(255, 122, 24, 0.20);
+    }
+
+    .item-btn.delete {
+        color: #ff8d84;
+        background: rgba(180, 35, 24, 0.10);
+        border-color: rgba(255, 141, 132, 0.12);
+    }
+
+    .item-btn.delete:hover {
+        background: rgba(180, 35, 24, 0.20);
+    }
+
+    .item-btn.open {
+        color: #ffb066;
+    }
+
+    .note-type {
+        display: inline-flex;
+        padding: 4px 9px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+        background: rgba(255, 122, 24, 0.10);
+        color: #ffb066;
+        border: 1px solid rgba(255, 122, 24, 0.13);
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .empty,
+    .loading {
+        text-align: center;
+        padding: 30px;
+        color: #7f8ea1;
+    }
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
+    .message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        display: none;
+        line-height: 1.8;
+    }
+
+    .success {
+        display: block;
+        background: rgba(6, 118, 71, 0.14);
+        color: #6ce3ae;
+        border: 1px solid rgba(108, 227, 174, 0.16);
+    }
+
+    .error {
+        display: block;
+        background: rgba(180, 35, 24, 0.14);
+        color: #ff8d84;
+        border: 1px solid rgba(255, 141, 132, 0.15);
+    }
+
+    /* =========================
+       BOOKS TABLE
+    ========================= */
+
+    .books-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .books-table th,
+    .books-table td {
+        padding: 13px;
+        text-align: right;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .books-table th {
+        background: rgba(18, 53, 95, 0.45);
+        color: #dce5ef;
+        font-weight: 700;
+    }
+
+    .books-table td {
+        color: #aab8ca;
+    }
+
+    .books-table a {
+        color: #ff9a3d;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .books-table a:hover {
+        color: #ffb066;
+        text-decoration: underline;
+    }
+
+    .delete-btn {
+        border: 1px solid rgba(255, 141, 132, 0.15);
+        background: rgba(180, 35, 24, 0.14);
+        color: #ff8d84;
+        padding: 7px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+    }
+
+    .delete-btn:hover {
+        background: rgba(180, 35, 24, 0.25);
+    }
+
+    /* =========================
+       OFFICIAL INFORMATION
+    ========================= */
+
+    .official-info {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(8, 27, 54, 0.96),
+                rgba(4, 11, 20, 0.99)
+            );
+        border-right: 4px solid #ff7a18;
+    }
+
+    .official-info h2 {
+        margin-bottom: 17px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 11px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        color: #8f9fb2;
+    }
+
+    .info-value {
+        color: #f2f5f9;
+        font-weight: 700;
+        text-align: left;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        color: #748397;
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .footer strong {
+        color: #dce5ef;
+    }
+
+    .footer-engineer {
+        color: #ff9a3d;
+        font-weight: 700;
+    }
+
+    .footer-dua {
+        margin-top: 13px;
+        color: #ffb066;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+        .dashboard {
+            grid-template-columns: repeat(2, 1fr);
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        .form-grid,
+        .management-selector {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full,
+        .management-subject-display {
+            grid-column: auto;
+        }
+
+        .platform-item-top {
+            flex-direction: column;
+        }
+
+    }
+
+    @media (max-width: 650px) {
+
+        .basmala {
+            font-size: 15px;
+            padding: 13px 15px 11px;
+        }
 
         header {
-            background:
-                linear-gradient(
-                    135deg,
-                    #030712 0%,
-                    #081b36 55%,
-                    #0d274b 100%
-                );
-            color: white;
-            padding: 18px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.35);
-            border-bottom: 1px solid rgba(255, 122, 24, 0.15);
+            padding: 14px 4%;
+            flex-direction: column;
+            text-align: center;
         }
 
         .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
+            justify-content: center;
         }
 
         .brand-icon {
-            width: 54px;
-            height: 54px;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 122, 24, 0.18),
-                    rgba(18, 53, 95, 0.65)
-                );
-            border: 1px solid rgba(255, 154, 61, 0.30);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 27px;
-            flex-shrink: 0;
-            box-shadow:
-                0 8px 22px rgba(0, 0, 0, 0.25);
+            width: 45px;
+            height: 45px;
+            font-size: 23px;
         }
 
         .brand-text h1 {
-            font-size: 21px;
-            font-weight: 800;
-            color: #ffffff;
+            font-size: 17px;
         }
 
-        .brand-text p {
-            color: #c8d9ec;
-            font-size: 12px;
-            margin-top: 2px;
-        }
-
+        .brand-text p,
         .brand-text small {
-            display: block;
-            color: #ff9a3d;
             font-size: 10px;
-            margin-top: 3px;
         }
 
         .top-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
+            width: 100%;
+            flex-direction: column;
         }
 
         .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            justify-content: center;
         }
 
         .user-name {
-            color: #e1ebf7;
-            font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
         }
-
-        .logout {
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: #b42318;
-            color: white;
-            padding: 9px 16px;
-            border-radius: 9px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 700;
-            transition: 0.2s;
-        }
-
-        .logout:hover {
-            background: #d92d20;
-            transform: translateY(-1px);
-        }
-
-        .dashboard-back {
-            display: none;
-            color: white;
-            text-decoration: none;
-            background: rgba(255, 122, 24, 0.12);
-            border: 1px solid rgba(255, 154, 61, 0.20);
-            padding: 9px 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .dashboard-back:hover {
-            background: rgba(255, 122, 24, 0.20);
-        }
-
-        /* =========================
-           CONTAINER
-        ========================= */
 
         .container {
-            width: 92%;
-            max-width: 1200px;
-            margin: 38px auto 60px;
-        }
-
-        .back {
-            display: inline-block;
-            margin-bottom: 25px;
-            color: #ff9a3d;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .back:hover {
-            color: #ffb066;
-            text-decoration: underline;
-        }
-
-        /* =========================
-           WELCOME
-        ========================= */
-
-        .welcome {
-            margin-bottom: 30px;
+            width: 94%;
+            margin-top: 28px;
         }
 
         .welcome h1 {
-            font-size: 30px;
-            margin-bottom: 8px;
-            color: #ffffff;
-            font-weight: 800;
+            font-size: 24px;
         }
-
-        .welcome p {
-            color: #aab8ca;
-            line-height: 1.9;
-        }
-
-        .official-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 12px;
-            padding: 7px 13px;
-            border-radius: 30px;
-            background: rgba(255, 122, 24, 0.09);
-            color: #ff9a3d;
-            font-size: 12px;
-            font-weight: 700;
-            border: 1px solid rgba(255, 122, 24, 0.22);
-        }
-
-        /* =========================
-           DASHBOARD CARDS
-        ========================= */
 
         .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-            margin-bottom: 35px;
+            grid-template-columns: 1fr;
         }
-
-        .card {
-            position: relative;
-            overflow: hidden;
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(8, 27, 54, 0.97),
-                    rgba(4, 10, 19, 0.99)
-                );
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.30);
-            border: 1px solid rgba(255, 255, 255, 0.065);
-            transition: 0.22s;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            height: 2px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 122, 24, 0.65),
-                transparent
-            );
-            opacity: 0;
-            transition: 0.22s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow:
-                0 13px 35px rgba(0, 0, 0, 0.40);
-            border-color: rgba(255, 122, 24, 0.24);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 13px;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 122, 24, 0.15),
-                    rgba(18, 53, 95, 0.72)
-                );
-            border: 1px solid rgba(255, 154, 61, 0.16);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 16px;
-        }
-
-        .card h3 {
-            color: #ffffff;
-            margin-bottom: 7px;
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .card p {
-            color: #9eacbd;
-            font-size: 13px;
-            line-height: 1.9;
-        }
-
-        .card-link {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* =========================
-           SECTION
-        ========================= */
 
         .section {
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(8, 27, 54, 0.96),
-                    rgba(4, 10, 19, 0.99)
-                );
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.30);
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 20px;
         }
-
-        .section h2 {
-            color: #ffffff;
-            margin-bottom: 25px;
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        /* =========================
-           FORM
-        ========================= */
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .form-group.full {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            font-weight: 600;
-            color: #d5deea;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            outline: none;
-            background: #07111f;
-            color: #f4f7fb;
-            transition: 0.2s;
-        }
-
-        input::placeholder,
-        textarea::placeholder {
-            color: #6f7f92;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #ff7a18;
-            box-shadow:
-                0 0 0 3px rgba(255, 122, 24, 0.10);
-        }
-
-        select option {
-            background: #07111f;
-            color: #ffffff;
-        }
-
-        textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        .upload-box {
-            border: 2px dashed #3a4b60;
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            background:
-                rgba(3, 7, 18, 0.55);
-            transition: 0.2s;
-        }
-
-        .upload-box:hover {
-            border-color: #ff7a18;
-            background:
-                rgba(255, 122, 24, 0.045);
-        }
-
-        .upload-box p {
-            color: #8f9fb2;
-            margin-bottom: 12px;
-            font-size: 14px;
-        }
-
-        .upload-box input {
-            border: none;
-            padding: 5px;
-            background: transparent;
-        }
-
-        .btn {
-            margin-top: 22px;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff7a18,
-                    #ff9a3d
-                );
-            color: #111827;
-            font-family: inherit;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 15px;
-            transition: 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow:
-                0 8px 22px rgba(255, 122, 24, 0.20);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* =========================
-           MESSAGES
-        ========================= */
-
-        .message {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            display: none;
-            line-height: 1.8;
-        }
-
-        .success {
-            display: block;
-            background: rgba(6, 118, 71, 0.14);
-            color: #6ce3ae;
-            border: 1px solid rgba(108, 227, 174, 0.16);
-        }
-
-        .error {
-            display: block;
-            background: rgba(180, 35, 24, 0.14);
-            color: #ff8d84;
-            border: 1px solid rgba(255, 141, 132, 0.15);
-        }
-
-        /* =========================
-           BOOKS TABLE
-        ========================= */
 
         .books-table {
-            width: 100%;
-            border-collapse: collapse;
+            font-size: 13px;
+            display: block;
+            overflow-x: auto;
         }
 
         .books-table th,
         .books-table td {
-            padding: 13px;
-            text-align: right;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        .books-table th {
-            background: rgba(18, 53, 95, 0.45);
-            color: #dce5ef;
-            font-weight: 700;
-        }
-
-        .books-table td {
-            color: #aab8ca;
-        }
-
-        .books-table a {
-            color: #ff9a3d;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .books-table a:hover {
-            color: #ffb066;
-            text-decoration: underline;
-        }
-
-        .empty,
-        .loading {
-            text-align: center;
-            padding: 30px;
-            color: #7f8ea1;
-        }
-
-        .delete-btn {
-            border: 1px solid rgba(255, 141, 132, 0.15);
-            background: rgba(180, 35, 24, 0.14);
-            color: #ff8d84;
-            padding: 7px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 600;
-        }
-
-        .delete-btn:hover {
-            background: rgba(180, 35, 24, 0.25);
-        }
-
-        /* =========================
-           OFFICIAL INFORMATION
-        ========================= */
-
-        .official-info {
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(8, 27, 54, 0.96),
-                    rgba(4, 11, 20, 0.99)
-                );
-            border-right: 4px solid #ff7a18;
-        }
-
-        .official-info h2 {
-            margin-bottom: 17px;
+            padding: 8px;
+            white-space: nowrap;
         }
 
         .info-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 11px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            color: #8f9fb2;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .info-value {
-            color: #f2f5f9;
-            font-weight: 700;
-            text-align: left;
+            text-align: right;
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #748397;
-            font-size: 12px;
-            line-height: 2;
+        .management-header {
+            align-items: flex-start;
+            flex-direction: column;
         }
 
-        .footer strong {
-            color: #dce5ef;
+        .teacher-platform-title {
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .footer-engineer {
-            color: #ff9a3d;
-            font-weight: 700;
-        }
+    }
 
-        .footer-dua {
-            margin-top: 13px;
-            color: #ffb066;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        @media (max-width: 900px) {
-
-            .dashboard {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full {
-                grid-column: auto;
-            }
-
-        }
-
-        @media (max-width: 650px) {
-
-            .basmala {
-                font-size: 15px;
-                padding: 13px 15px 11px;
-            }
-
-            header {
-                padding: 14px 4%;
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .brand {
-                justify-content: center;
-            }
-
-            .brand-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 23px;
-            }
-
-            .brand-text h1 {
-                font-size: 17px;
-            }
-
-            .brand-text p,
-            .brand-text small {
-                font-size: 10px;
-            }
-
-            .top-actions {
-                width: 100%;
-                flex-direction: column;
-            }
-
-            .user-info {
-                justify-content: center;
-            }
-
-            .user-name {
-                font-size: 12px;
-            }
-
-            .container {
-                width: 94%;
-                margin-top: 28px;
-            }
-
-            .welcome h1 {
-                font-size: 24px;
-            }
-
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .books-table {
-                font-size: 13px;
-                display: block;
-                overflow-x: auto;
-            }
-
-            .books-table th,
-            .books-table td {
-                padding: 8px;
-                white-space: nowrap;
-            }
-
-            .info-row {
-                flex-direction: column;
-                gap: 4px;
-            }
-
-            .info-value {
-                text-align: right;
-            }
-
-        }
-
-    </style>
+</style>
+```
 
 </head>
 
 <body>
 
-<!-- =========================
-     BASMALA
-========================= -->
-
 <div class="basmala">
     بسم الله الرحمن الرحيم
 </div>
 
-
 <header>
 
-    <div class="brand">
+```
+<div class="brand">
 
-        <div class="brand-icon">
-            📚
-        </div>
+    <div class="brand-icon">
+        📚
+    </div>
 
-        <div class="brand-text">
+    <div class="brand-text">
 
-            <h1>
-                المكتبة الإلكترونية
-            </h1>
+        <h1>
+            المكتبة الإلكترونية
+        </h1>
 
-            <p>
-                ثانوية مصاص رابح
-            </p>
+        <p>
+            ثانوية مصاص رابح
+        </p>
 
-            <small>
-                المنصة الرقمية للمكتبة المدرسية
-            </small>
-
-        </div>
+        <small>
+            المنصة الرقمية للمكتبة المدرسية
+        </small>
 
     </div>
 
-
-    <div class="top-actions">
-
-        <a
-            id="dashboardBack"
-            class="dashboard-back"
-            href="teacher.html">
-
-            ⬅️ لوحة الأستاذ
-
-        </a>
+</div>
 
 
-        <div class="user-info">
-
-            <span
-                class="user-name"
-                id="userName">
-
-                جاري التحميل...
-
-            </span>
-
-
-            <button
-                class="logout"
-                id="logoutBtn">
-
-                تسجيل الخروج
-
-            </button>
-
-        </div>
-
-    </div>
-
-</header>
-
-
-<div class="container">
+<div class="top-actions">
 
     <a
-        href="../index.html"
-        class="back">
+        id="dashboardBack"
+        class="dashboard-back"
+        href="teacher.html">
 
-        ← العودة إلى المكتبة
+        ⬅️ لوحة الأستاذ
 
     </a>
 
 
-    <div class="welcome">
+    <div class="user-info">
 
-        <h1>
-            لوحة الأستاذ 👨‍🏫
-        </h1>
+        <span
+            class="user-name"
+            id="userName">
 
-        <p>
-            مرحبًا بك في لوحة الأستاذ الخاصة بالمكتبة الإلكترونية
-            لثانوية مصاص رابح.
-            يمكنك من هنا إضافة الكتب التعليمية ومتابعة الكتب
-            التي قمت برفعها إلى المكتبة.
-        </p>
+            جاري التحميل...
 
-        <div class="official-badge">
-            🏫 ثانوية مصاص رابح — المكتبة الإلكترونية
+        </span>
+
+
+        <button
+            class="logout"
+            id="logoutBtn">
+
+            تسجيل الخروج
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</header>
+
+<div class="container">
+
+```
+<a
+    href="../index.html"
+    class="back">
+
+    ← العودة إلى المكتبة
+
+</a>
+
+
+<div class="welcome">
+
+    <h1>
+        لوحة الأستاذ 👨‍🏫
+    </h1>
+
+    <p>
+        مرحبًا بك في لوحة الأستاذ الخاصة بالمكتبة الإلكترونية
+        لثانوية مصاص رابح.
+        يمكنك من هنا إدارة كتبك داخل المكتبة،
+        كما يمكنك إدارة دروسك وملاحظاتك داخل منصة المؤسسة.
+    </p>
+
+    <div class="official-badge">
+        🏫 ثانوية مصاص رابح — لوحة الأستاذ
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TEACHER PLATFORM INFO
+========================= -->
+
+<div
+    class="teacher-platform-info"
+    id="teacherPlatformInfo">
+
+    <div class="teacher-platform-title">
+
+        <h2>
+            🏫 منصة المؤسسة التعليمية
+        </h2>
+
+        <span
+            class="teacher-subject-badge"
+            id="teacherSubjectBadge">
+
+            📚 المادة: جاري التحميل...
+
+        </span>
+
+    </div>
+
+    <p>
+        من هنا يمكنك إدارة محتوى مادتك فقط.
+        صلاحياتك لا تسمح لك بإدارة مواد الأساتذة الآخرين.
+    </p>
+
+</div>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<div class="dashboard">
+
+    <a
+        href="#myBooks"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                📚
+            </div>
+
+            <h3>
+                كتبي
+            </h3>
+
+            <p>
+                عرض الكتب التي قمت بإضافتها
+                إلى المكتبة الإلكترونية.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="add-book.html"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⬆️
+            </div>
+
+            <h3>
+                إضافة كتاب
+            </h3>
+
+            <p>
+                رفع كتاب جديد وإتاحته للطلاب
+                داخل المكتبة.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="books.html"
+        class="card-link">
+
+        <div class="card">
+
+            <div class="card-icon">
+                👨‍🎓
+            </div>
+
+            <h3>
+                المكتبة
+            </h3>
+
+            <p>
+                مشاهدة الكتب الموجودة في
+                المكتبة الإلكترونية.
+            </p>
+
+        </div>
+
+    </a>
+
+
+
+
+    <a
+        href="platform.html"
+        class="card-link">
+
+        <div class="card management-card">
+            <div class="card-icon">🏫</div>
+            <h3>منصة المؤسسة</h3>
+            <p>إدارة الدروس والملاحظات الخاصة بمادتك.</p>
+        </div>
+
+    </a>
+
+    <!-- إدارة الدروس -->
+
+    <a
+        href="#lessonManagement"
+        class="card-link"
+        id="lessonsCard">
+
+        <div class="card management-card">
+
+            <div class="card-icon">
+                📚
+            </div>
+
+            <h3>
+                إدارة الدروس
+            </h3>
+
+            <p>
+                رفع ملفات الدروس بصيغة PDF
+                وتعديلها وحذفها ضمن مادتك.
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <!-- إدارة الملاحظات -->
+
+    <a
+        href="#noteManagement"
+        class="card-link"
+        id="notesCard">
+
+        <div class="card management-card">
+
+            <div class="card-icon">
+                📝
+            </div>
+
+            <h3>
+                إدارة الملاحظات
+            </h3>
+
+            <p>
+                نشر الواجبات والاختبارات والتذكيرات
+                والتعليقات الخاصة بمادتك.
+            </p>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+<!-- =========================
+     LESSON MANAGEMENT
+========================= -->
+
+<div
+    class="section platform-management"
+    id="lessonManagement">
+
+    <div class="management-header">
+
+        <h2>
+            📚 إدارة الدروس والملفات
+        </h2>
+
+        <button
+            class="close-management"
+            type="button"
+            onclick="closeManagement()">
+
+            ✕ إغلاق
+
+        </button>
+
+    </div>
+
+
+    <div class="management-selector">
+
+        <div class="form-group">
+
+            <label for="lessonBranch">
+                الشعبة
+            </label>
+
+            <select id="lessonBranch">
+
+                <option value="">
+                    اختر الشعبة
+                </option>
+
+                <option value="scientific">
+                    علوم تجريبية
+                </option>
+
+                <option value="literature">
+                    آداب وفلسفة
+                </option>
+
+                <option value="management">
+                    تسيير واقتصاد
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="lessonYear">
+                السنة
+            </label>
+
+            <select id="lessonYear">
+
+                <option value="">
+                    اختر السنة
+                </option>
+
+                <option value="1">
+                    السنة الأولى
+                </option>
+
+                <option value="2">
+                    السنة الثانية
+                </option>
+
+                <option value="3">
+                    السنة الثالثة
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="management-subject-display">
+
+            📚 المادة التي تدرّسها:
+            <strong id="lessonSubjectDisplay">
+                جاري التحميل...
+            </strong>
+
         </div>
 
     </div>
 
 
-    <!-- =========================
-         DASHBOARD
-    ========================= -->
-
-    <div class="dashboard">
-
-        <a
-            href="#myBooks"
-            class="card-link">
-
-            <div class="card">
-
-                <div class="card-icon">
-                    📚
-                </div>
-
-                <h3>
-                    كتبي
-                </h3>
-
-                <p>
-                    عرض الكتب التي قمت بإضافتها
-                    إلى المكتبة الإلكترونية.
-                </p>
-
-            </div>
-
-        </a>
-
-
-        <a
-            href="#addBook"
-            class="card-link">
-
-            <div class="card">
-
-                <div class="card-icon">
-                    ⬆️
-                </div>
-
-                <h3>
-                    إضافة كتاب
-                </h3>
-
-                <p>
-                    رفع كتاب جديد وإتاحته للطلاب
-                    داخل المكتبة.
-                </p>
-
-            </div>
-
-        </a>
-
-
-        <a
-            href="books.html"
-            class="card-link">
-
-            <div class="card">
-
-                <div class="card-icon">
-                    👨‍🎓
-                </div>
-
-                <h3>
-                    المكتبة
-                </h3>
-
-                <p>
-                    مشاهدة الكتب الموجودة في
-                    المكتبة الإلكترونية.
-                </p>
-
-            </div>
-
-        </a>
-
-    </div>
-
-
-    <!-- =========================
-         ADD BOOK
-    ========================= -->
-
     <div
-        class="section"
-        id="addBook">
+        class="management-form"
+        id="lessonFormBox">
 
-        <h2>
-            ➕ إضافة كتاب جديد
-        </h2>
+        <h3>
+            📤 رفع درس جديد
+        </h3>
 
 
-        <form id="bookForm">
+        <form id="lessonForm">
 
             <div class="form-grid">
 
-
                 <div class="form-group">
 
-                    <label for="title">
-                        عنوان الكتاب
+                    <label for="lessonTitle">
+                        عنوان الدرس
                     </label>
 
                     <input
                         type="text"
-                        id="title"
-                        name="title"
-                        placeholder="مثال: الرياضيات للسنة الثانية"
+                        id="lessonTitle"
+                        placeholder="مثال: الدوال العددية"
                         required>
 
                 </div>
@@ -978,136 +1434,36 @@
 
                 <div class="form-group">
 
-                    <label for="author">
-                        اسم المؤلف
-                    </label>
-
-                    <input
-                        type="text"
-                        id="author"
-                        name="author"
-                        placeholder="اسم المؤلف">
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="category">
-                        التصنيف
-                    </label>
-
-                    <select
-                        id="category"
-                        name="category"
-                        required>
-
-                        <option value="">
-                            اختر التصنيف
-                        </option>
-
-                        <option value="رياضيات">
-                            رياضيات
-                        </option>
-
-                        <option value="علوم">
-                            علوم
-                        </option>
-
-                        <option value="فيزياء">
-                            فيزياء
-                        </option>
-
-                        <option value="لغة عربية">
-                            لغة عربية
-                        </option>
-
-                        <option value="لغة فرنسية">
-                            لغة فرنسية
-                        </option>
-
-                        <option value="لغة إنجليزية">
-                            لغة إنجليزية
-                        </option>
-
-                        <option value="إعلام آلي">
-                            إعلام آلي
-                        </option>
-
-                        <option value="تاريخ وجغرافيا">
-                            تاريخ وجغرافيا
-                        </option>
-
-                        <option value="فلسفة">
-                            فلسفة
-                        </option>
-
-                        <option value="أخرى">
-                            أخرى
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="cover">
-                        غلاف الكتاب
+                    <label for="lessonPdf">
+                        ملف الدرس PDF
                     </label>
 
                     <div class="upload-box">
 
                         <p>
-                            اختر صورة غلاف الكتاب
+                            اختر ملف الدرس بصيغة PDF
                         </p>
 
                         <input
                             type="file"
-                            id="cover"
-                            name="cover"
-                            accept="image/*">
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label for="description">
-                        وصف الكتاب
-                    </label>
-
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="اكتب وصفًا مختصرًا للكتاب..."></textarea>
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label for="pdf">
-                        ملف الكتاب PDF
-                    </label>
-
-                    <div class="upload-box">
-
-                        <p>
-                            اختر ملف الكتاب بصيغة PDF
-                        </p>
-
-                        <input
-                            type="file"
-                            id="pdf"
-                            name="pdf"
+                            id="lessonPdf"
                             accept=".pdf,application/pdf"
                             required>
 
                     </div>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label for="lessonDescription">
+                        وصف الدرس
+                    </label>
+
+                    <textarea
+                        id="lessonDescription"
+                        placeholder="اكتب وصفًا مختصرًا للدرس..."></textarea>
 
                 </div>
 
@@ -1117,16 +1473,26 @@
             <button
                 type="submit"
                 class="btn"
-                id="submitBtn">
+                id="lessonSubmitBtn">
 
-                📤 إضافة الكتاب
+                📤 رفع الدرس
+
+            </button>
+
+
+            <button
+                type="button"
+                class="secondary-btn"
+                onclick="resetLessonForm()">
+
+                ↩️ إلغاء
 
             </button>
 
 
             <div
-                id="message"
-                class="message">
+                class="message"
+                id="lessonMessage">
             </div>
 
         </form>
@@ -1134,137 +1500,380 @@
     </div>
 
 
-    <!-- =========================
-         MY BOOKS
-    ========================= -->
+    <div class="platform-items">
 
-    <div
-        class="section"
-        id="myBooks">
+        <h3>
+            📖 الدروس المرفوعة في هذه المادة
+        </h3>
 
-        <h2>
-            📚 الكتب التي أضفتها
-        </h2>
-
-        <div id="booksContainer">
+        <div id="lessonList">
 
             <div class="loading">
-                جاري تحميل الكتب...
+                اختر الشعبة والسنة لعرض الدروس...
             </div>
 
         </div>
 
     </div>
 
+</div>
 
-    <!-- =========================
-         OFFICIAL INFORMATION
-    ========================= -->
 
-    <div class="section official-info">
+<!-- =========================
+     NOTE MANAGEMENT
+========================= -->
+
+<div
+    class="section platform-management"
+    id="noteManagement">
+
+    <div class="management-header">
 
         <h2>
-            🏫 هوية المؤسسة والنظام
+            📝 إدارة الملاحظات والإعلانات
         </h2>
 
+        <button
+            class="close-management"
+            type="button"
+            onclick="closeManagement()">
 
-        <div class="info-row">
+            ✕ إغلاق
 
-            <span class="info-label">
-                المؤسسة
-            </span>
+        </button>
 
-            <span class="info-value">
-                ثانوية مصاص رابح
-            </span>
+    </div>
+
+
+    <div class="management-selector">
+
+        <div class="form-group">
+
+            <label for="noteBranch">
+                الشعبة
+            </label>
+
+            <select id="noteBranch">
+
+                <option value="">
+                    اختر الشعبة
+                </option>
+
+                <option value="scientific">
+                    علوم تجريبية
+                </option>
+
+                <option value="literature">
+                    آداب وفلسفة
+                </option>
+
+                <option value="management">
+                    تسيير واقتصاد
+                </option>
+
+            </select>
 
         </div>
 
 
-        <div class="info-row">
+        <div class="form-group">
 
-            <span class="info-label">
-                المنصة
-            </span>
+            <label for="noteYear">
+                السنة
+            </label>
 
-            <span class="info-value">
-                المكتبة الإلكترونية للمؤسسة
-            </span>
+            <select id="noteYear">
+
+                <option value="">
+                    اختر السنة
+                </option>
+
+                <option value="1">
+                    السنة الأولى
+                </option>
+
+                <option value="2">
+                    السنة الثانية
+                </option>
+
+                <option value="3">
+                    السنة الثالثة
+                </option>
+
+            </select>
 
         </div>
 
 
-        <div class="info-row">
+        <div class="management-subject-display">
 
-            <span class="info-label">
-                مهندس النظام
-            </span>
-
-            <span class="info-value">
-                شراف الدين بوردوسن
-            </span>
-
-        </div>
-
-
-        <div class="info-row">
-
-            <span class="info-label">
-                الصفة
-            </span>
-
-            <span class="info-value">
-                أستاذ مادة الرياضيات
-            </span>
+            📝 المادة:
+            <strong id="noteSubjectDisplay">
+                جاري التحميل...
+            </strong>
 
         </div>
 
     </div>
 
 
-    <!-- =========================
-         FOOTER
-    ========================= -->
+    <div
+        class="management-form"
+        id="noteFormBox">
 
-    <footer class="footer">
+        <h3>
+            📌 نشر ملاحظة جديدة
+        </h3>
 
-        <div>
 
-            <strong>
-                المكتبة الإلكترونية — ثانوية مصاص رابح
-            </strong>
+        <form id="noteForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="noteType">
+                        نوع الملاحظة
+                    </label>
+
+                    <select id="noteType" required>
+
+                        <option value="">
+                            اختر نوع الملاحظة
+                        </option>
+
+                        <option value="general">
+                            📌 ملاحظة عامة
+                        </option>
+
+                        <option value="homework">
+                            📚 واجب منزلي
+                        </option>
+
+                        <option value="test">
+                            📝 اختبار
+                        </option>
+
+                        <option value="reminder">
+                            ⏰ تذكير
+                        </option>
+
+                        <option value="comment">
+                            💬 تعليق
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="noteTitle">
+                        عنوان الملاحظة
+                    </label>
+
+                    <input
+                        type="text"
+                        id="noteTitle"
+                        placeholder="مثال: واجب منزلي رقم 03"
+                        required>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label for="noteContent">
+                        محتوى الملاحظة
+                    </label>
+
+                    <textarea
+                        id="noteContent"
+                        placeholder="اكتب الملاحظة أو التعليمات هنا..."
+                        required></textarea>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn"
+                id="noteSubmitBtn">
+
+                📌 نشر الملاحظة
+
+            </button>
+
+
+            <button
+                type="button"
+                class="secondary-btn"
+                onclick="resetNoteForm()">
+
+                ↩️ إلغاء
+
+            </button>
+
+
+            <div
+                class="message"
+                id="noteMessage">
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="platform-items">
+
+        <h3>
+            💬 ملاحظاتي المنشورة
+        </h3>
+
+        <div id="noteList">
+
+            <div class="loading">
+                اختر الشعبة والسنة لعرض الملاحظات...
+            </div>
 
         </div>
 
-        <div>
-
-            مهندس النظام:
-            <span class="footer-engineer">
-                شراف الدين بوردوسن
-            </span>
-
-            — أستاذ مادة الرياضيات
-
-        </div>
-
-        <div>
-
-            جميع الحقوق محفوظة © 2026
-
-        </div>
-
-        <div class="footer-dua">
-            اللهم علمنا ما جهلنا وزدنا علما
-        </div>
-
-    </footer>
+    </div>
 
 </div>
 
 
 <!-- =========================
-     SUPABASE
+     MY BOOKS
 ========================= -->
+
+<div
+    class="section"
+    id="myBooks">
+
+    <h2>
+        📚 الكتب التي أضفتها
+    </h2>
+
+    <div id="booksContainer">
+
+        <div class="loading">
+            جاري تحميل الكتب...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     OFFICIAL INFORMATION
+========================= -->
+
+<div class="section official-info">
+
+    <h2>
+        🏫 هوية المؤسسة والنظام
+    </h2>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            المؤسسة
+        </span>
+
+        <span class="info-value">
+            ثانوية مصاص رابح
+        </span>
+
+    </div>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            المنصة
+        </span>
+
+        <span class="info-value">
+            المكتبة الإلكترونية للمؤسسة
+        </span>
+
+    </div>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            مهندس النظام
+        </span>
+
+        <span class="info-value">
+            شراف الدين بوردوسن
+        </span>
+
+    </div>
+
+
+    <div class="info-row">
+
+        <span class="info-label">
+            الصفة
+        </span>
+
+        <span class="info-value">
+            أستاذ مادة الرياضيات
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            المكتبة الإلكترونية — ثانوية مصاص رابح
+        </strong>
+
+    </div>
+
+    <div>
+
+        مهندس النظام:
+        <span class="footer-engineer">
+            شراف الدين بوردوسن
+        </span>
+
+        — أستاذ مادة الرياضيات
+
+    </div>
+
+    <div>
+
+        جميع الحقوق محفوظة © 2026
+
+    </div>
+
+    <div class="footer-dua">
+        اللهم علمنا ما جهلنا وزدنا علما
+    </div>
+
+</footer>
+```
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1284,6 +1893,24 @@ const supabaseClient =
 
 
 let currentUser = null;
+
+let currentProfile = null;
+
+let currentTeacherSubject = "";
+
+let currentManagementType = null;
+
+let currentLessonBranch = "";
+
+let currentLessonYear = "";
+
+let currentNoteBranch = "";
+
+let currentNoteYear = "";
+
+let editingLessonId = null;
+
+let editingNoteId = null;
 
 
 const userName =
@@ -1309,6 +1936,504 @@ const logoutBtn =
 
 
 /* =========================================
+   عناصر المنصة
+========================================= */
+
+const teacherPlatformInfo =
+    document.getElementById(
+        "teacherPlatformInfo"
+    );
+
+const teacherSubjectBadge =
+    document.getElementById(
+        "teacherSubjectBadge"
+    );
+
+const lessonBranch =
+    document.getElementById(
+        "lessonBranch"
+    );
+
+const lessonYear =
+    document.getElementById(
+        "lessonYear"
+    );
+
+const lessonSubjectDisplay =
+    document.getElementById(
+        "lessonSubjectDisplay"
+    );
+
+const lessonForm =
+    document.getElementById(
+        "lessonForm"
+    );
+
+const lessonFormBox =
+    document.getElementById(
+        "lessonFormBox"
+    );
+
+const lessonPdf =
+    document.getElementById(
+        "lessonPdf"
+    );
+
+const lessonSubmitBtn =
+    document.getElementById(
+        "lessonSubmitBtn"
+    );
+
+const lessonMessage =
+    document.getElementById(
+        "lessonMessage"
+    );
+
+const lessonList =
+    document.getElementById(
+        "lessonList"
+    );
+
+
+const noteBranch =
+    document.getElementById(
+        "noteBranch"
+    );
+
+const noteYear =
+    document.getElementById(
+        "noteYear"
+    );
+
+const noteSubjectDisplay =
+    document.getElementById(
+        "noteSubjectDisplay"
+    );
+
+const noteForm =
+    document.getElementById(
+        "noteForm"
+    );
+
+const noteFormBox =
+    document.getElementById(
+        "noteFormBox"
+    );
+
+const noteSubmitBtn =
+    document.getElementById(
+        "noteSubmitBtn"
+    );
+
+const noteMessage =
+    document.getElementById(
+        "noteMessage"
+    );
+
+const noteList =
+    document.getElementById(
+        "noteList"
+    );
+
+
+/* =========================================
+   بيانات المواد
+========================================= */
+
+const subjectsData = {
+
+    scientific: {
+
+        1: [
+            "الرياضيات",
+            "العلوم الطبيعية",
+            "العلوم الفيزيائية",
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "التاريخ والجغرافيا",
+            "العلوم الإسلامية",
+            "الإعلام الآلي",
+            "التكنولوجيا",
+            "التربية البدنية والرياضية"
+        ],
+
+        2: [
+            "الرياضيات",
+            "العلوم الطبيعية",
+            "العلوم الفيزيائية",
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "التاريخ والجغرافيا",
+            "العلوم الإسلامية",
+            "الفلسفة",
+            "التربية البدنية والرياضية"
+        ],
+
+        3: [
+            "الرياضيات",
+            "العلوم الطبيعية",
+            "العلوم الفيزيائية",
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "التاريخ والجغرافيا",
+            "الفلسفة",
+            "العلوم الإسلامية",
+            "التربية البدنية والرياضية"
+        ]
+
+    },
+
+
+    literature: {
+
+        1: [
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "الرياضيات",
+            "التاريخ والجغرافيا",
+            "العلوم الإسلامية",
+            "العلوم الطبيعية",
+            "العلوم الفيزيائية",
+            "الإعلام الآلي",
+            "التكنولوجيا",
+            "التربية البدنية والرياضية"
+        ],
+
+        2: [
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "الرياضيات",
+            "التاريخ والجغرافيا",
+            "الفلسفة",
+            "العلوم الإسلامية",
+            "العلوم الطبيعية",
+            "العلوم الفيزيائية",
+            "الإعلام الآلي",
+            "التربية البدنية والرياضية"
+        ],
+
+        3: [
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "الرياضيات",
+            "التاريخ والجغرافيا",
+            "الفلسفة",
+            "العلوم الإسلامية",
+            "التربية البدنية والرياضية"
+        ]
+
+    },
+
+
+    management: {
+
+        2: [
+            "الرياضيات",
+            "الاقتصاد والمناجمنت",
+            "التسيير المحاسبي والمالي",
+            "القانون",
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "التاريخ والجغرافيا",
+            "الفلسفة",
+            "العلوم الإسلامية",
+            "التربية البدنية والرياضية"
+        ],
+
+        3: [
+            "الرياضيات",
+            "الاقتصاد والمناجمنت",
+            "التسيير المحاسبي والمالي",
+            "القانون",
+            "اللغة العربية",
+            "اللغة الفرنسية",
+            "اللغة الإنجليزية",
+            "التاريخ والجغرافيا",
+            "الفلسفة",
+            "العلوم الإسلامية",
+            "التربية البدنية والرياضية"
+        ]
+
+    }
+
+};
+
+
+/* =========================================
+   تطبيع اسم المادة
+========================================= */
+
+function normalizeSubject(subject) {
+
+    if (!subject) {
+        return "";
+    }
+
+    const value =
+        String(subject)
+            .trim()
+            .replace(/\s+/g, " ");
+
+    const aliases = {
+
+        "رياضيات":
+            "الرياضيات",
+
+        "علوم":
+            "العلوم الطبيعية",
+
+        "العلوم":
+            "العلوم الطبيعية",
+
+        "فيزياء":
+            "العلوم الفيزيائية",
+
+        "لغة عربية":
+            "اللغة العربية",
+
+        "لغة فرنسية":
+            "اللغة الفرنسية",
+
+        "لغة إنجليزية":
+            "اللغة الإنجليزية",
+
+        "إعلام آلي":
+            "الإعلام الآلي",
+
+        "تاريخ وجغرافيا":
+            "التاريخ والجغرافيا",
+
+        "فلسفة":
+            "الفلسفة",
+
+        "علوم إسلامية":
+            "العلوم الإسلامية",
+
+        "تكنولوجيا":
+            "التكنولوجيا",
+
+        "تربية بدنية":
+            "التربية البدنية والرياضية",
+
+        "المحاسبة":
+            "التسيير المحاسبي والمالي"
+
+    };
+
+    return aliases[value] || value;
+
+}
+
+
+/* =========================================
+   أسماء الشعب
+========================================= */
+
+function getBranchName(branch) {
+
+    const names = {
+
+        scientific:
+            "علوم تجريبية",
+
+        literature:
+            "آداب وفلسفة",
+
+        management:
+            "تسيير واقتصاد"
+
+    };
+
+    return names[branch] || branch;
+
+}
+
+
+/* =========================================
+   التحقق من وجود المادة
+========================================= */
+
+function teacherTeachesSubject(
+    branch,
+    year
+) {
+
+    if (!currentTeacherSubject) {
+        return false;
+    }
+
+    const subjects =
+        subjectsData[branch]?.[year] || [];
+
+    return subjects.includes(
+        currentTeacherSubject
+    );
+
+}
+
+
+/* =========================================
+   تحديث خيارات السنوات
+========================================= */
+
+function updateYearOptions(
+    branch,
+    yearElement
+) {
+
+    const currentValue =
+        yearElement.value;
+
+    yearElement.innerHTML = `
+        <option value="">
+            اختر السنة
+        </option>
+    `;
+
+    const branchData =
+        subjectsData[branch];
+
+    if (!branchData) {
+        return;
+    }
+
+    Object.keys(branchData)
+        .sort()
+        .forEach(function(year) {
+
+            if (
+                !branchData[year].includes(
+                    currentTeacherSubject
+                )
+            ) {
+                return;
+            }
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value = year;
+
+            option.textContent =
+                "السنة " +
+                (
+                    year === "1"
+                        ? "الأولى"
+                        : year === "2"
+                            ? "الثانية"
+                            : "الثالثة"
+                );
+
+            yearElement.appendChild(
+                option
+            );
+
+        });
+
+    if (
+        currentValue &&
+        [...yearElement.options]
+            .some(
+                option =>
+                    option.value === currentValue
+            )
+    ) {
+
+        yearElement.value =
+            currentValue;
+
+    }
+
+}
+
+
+/* =========================================
+   تحديث خيارات الشعب
+========================================= */
+
+function updateBranchOptions(
+    branchElement,
+    yearElement
+) {
+
+    const branches =
+        [
+            "scientific",
+            "literature",
+            "management"
+        ];
+
+    const currentValue =
+        branchElement.value;
+
+    branchElement.innerHTML = `
+        <option value="">
+            اختر الشعبة
+        </option>
+    `;
+
+    branches.forEach(function(branch) {
+
+        const years =
+            subjectsData[branch];
+
+        const hasSubject =
+            Object.values(years || {})
+                .some(
+                    subjects =>
+                        subjects.includes(
+                            currentTeacherSubject
+                        )
+                );
+
+        if (!hasSubject) {
+            return;
+        }
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            branch;
+
+        option.textContent =
+            getBranchName(branch);
+
+        branchElement.appendChild(
+            option
+        );
+
+    });
+
+    if (
+        currentValue &&
+        [...branchElement.options]
+            .some(
+                option =>
+                    option.value === currentValue
+            )
+    ) {
+
+        branchElement.value =
+            currentValue;
+
+    }
+
+}
+
+
+/* =========================================
    التحقق من الأستاذ
 ========================================= */
 
@@ -1317,7 +2442,10 @@ async function checkTeacher() {
     const {
         data: { user },
         error
-    } = await supabaseClient.auth.getUser();
+    } =
+        await supabaseClient
+            .auth
+            .getUser();
 
 
     if (error || !user) {
@@ -1329,20 +2457,35 @@ async function checkTeacher() {
     }
 
 
-    currentUser = user;
+    currentUser =
+        user;
 
 
     const {
         data: profile,
         error: profileError
-    } = await supabaseClient
-        .from("profiles")
-        .select("full_name, role")
-        .eq("id", user.id)
-        .single();
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "full_name, role, subject"
+            )
+            .eq(
+                "id",
+                user.id
+            )
+            .single();
 
 
-    if (profileError || !profile) {
+    if (
+        profileError ||
+        !profile
+    ) {
+
+        console.error(
+            "Profile error:",
+            profileError
+        );
 
         alert(
             "تعذر التحقق من بيانات الحساب."
@@ -1355,7 +2498,14 @@ async function checkTeacher() {
     }
 
 
-    if (profile.role === "programmer") {
+    currentProfile =
+        profile;
+
+
+    if (
+        profile.role ===
+        "programmer"
+    ) {
 
         window.location.href =
             "programmer.html";
@@ -1364,7 +2514,10 @@ async function checkTeacher() {
     }
 
 
-    if (profile.role === "admin") {
+    if (
+        profile.role ===
+        "admin"
+    ) {
 
         window.location.href =
             "admin.html";
@@ -1373,7 +2526,10 @@ async function checkTeacher() {
     }
 
 
-    if (profile.role !== "teacher") {
+    if (
+        profile.role !==
+        "teacher"
+    ) {
 
         alert(
             "ليس لديك صلاحية الدخول إلى لوحة الأستاذ."
@@ -1386,22 +2542,2121 @@ async function checkTeacher() {
     }
 
 
+    currentTeacherSubject =
+        normalizeSubject(
+            profile.subject
+        );
+
+
     userName.textContent =
         "الأستاذ: " +
-        (profile.full_name || "مستخدم");
+        (
+            profile.full_name ||
+            user.email ||
+            "مستخدم"
+        );
 
 
     dashboardBack.href =
         "teacher.html";
 
+
     dashboardBack.textContent =
         "⬅️ لوحة الأستاذ";
+
 
     dashboardBack.style.display =
         "inline-block";
 
 
+    teacherPlatformInfo.classList.add(
+        "visible"
+    );
+
+
+    teacherSubjectBadge.textContent =
+        "📚 المادة: " +
+        (
+            currentTeacherSubject ||
+            "غير محددة"
+        );
+
+
+    lessonSubjectDisplay.textContent =
+        currentTeacherSubject ||
+        "غير محددة";
+
+
+    noteSubjectDisplay.textContent =
+        currentTeacherSubject ||
+        "غير محددة";
+
+
+    if (!currentTeacherSubject) {
+
+        lessonsCard.style.display =
+            "none";
+
+        notesCard.style.display =
+            "none";
+
+    }
+
+
+    updateBranchOptions(
+        lessonBranch,
+        lessonYear
+    );
+
+    updateBranchOptions(
+        noteBranch,
+        noteYear
+    );
+
+
     loadBooks();
+
+}
+
+
+/* =========================================
+   عناصر البطاقات
+========================================= */
+
+const lessonsCard =
+    document.getElementById(
+        "lessonsCard"
+    );
+
+const notesCard =
+    document.getElementById(
+        "notesCard"
+    );
+
+
+/* =========================================
+   فتح إدارة الدروس
+========================================= */
+
+lessonsCard.addEventListener(
+    "click",
+    function() {
+
+        if (!currentTeacherSubject) {
+
+            alert(
+                "لا توجد مادة مرتبطة بحسابك."
+            );
+
+            return;
+        }
+
+        openManagement(
+            "lessons"
+        );
+
+    }
+);
+
+
+/* =========================================
+   فتح إدارة الملاحظات
+========================================= */
+
+notesCard.addEventListener(
+    "click",
+    function() {
+
+        if (!currentTeacherSubject) {
+
+            alert(
+                "لا توجد مادة مرتبطة بحسابك."
+            );
+
+            return;
+        }
+
+        openManagement(
+            "notes"
+        );
+
+    }
+);
+
+
+/* =========================================
+   فتح قسم الإدارة
+========================================= */
+
+function openManagement(
+    type
+) {
+
+    currentManagementType =
+        type;
+
+
+    document
+        .querySelectorAll(
+            ".platform-management"
+        )
+        .forEach(
+            element =>
+                element.classList.remove(
+                    "visible"
+                )
+        );
+
+
+    if (
+        type ===
+        "lessons"
+    ) {
+
+        const section =
+            document.getElementById(
+                "lessonManagement"
+            );
+
+        section.classList.add(
+            "visible"
+        );
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        if (
+            currentLessonBranch &&
+            currentLessonYear
+        ) {
+
+            loadLessons();
+
+        }
+
+    }
+
+
+    if (
+        type ===
+        "notes"
+    ) {
+
+        const section =
+            document.getElementById(
+                "noteManagement"
+            );
+
+        section.classList.add(
+            "visible"
+        );
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        if (
+            currentNoteBranch &&
+            currentNoteYear
+        ) {
+
+            loadNotes();
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   إغلاق الإدارة
+========================================= */
+
+function closeManagement() {
+
+    document
+        .querySelectorAll(
+            ".platform-management"
+        )
+        .forEach(
+            element =>
+                element.classList.remove(
+                    "visible"
+                )
+        );
+
+    currentManagementType =
+        null;
+
+}
+
+
+/* =========================================
+   اختيار شعبة الدروس
+========================================= */
+
+lessonBranch.addEventListener(
+    "change",
+    function() {
+
+        currentLessonBranch =
+            this.value;
+
+        currentLessonYear =
+            "";
+
+        updateYearOptions(
+            currentLessonBranch,
+            lessonYear
+        );
+
+        lessonYear.value =
+            "";
+
+        lessonFormBox.classList.remove(
+            "visible"
+        );
+
+        lessonList.innerHTML = `
+            <div class="loading">
+                اختر السنة لعرض الدروس...
+            </div>
+        `;
+
+    }
+);
+
+
+/* =========================================
+   اختيار سنة الدروس
+========================================= */
+
+lessonYear.addEventListener(
+    "change",
+    function() {
+
+        currentLessonYear =
+            this.value;
+
+        if (
+            !currentLessonBranch ||
+            !currentLessonYear
+        ) {
+
+            lessonFormBox.classList.remove(
+                "visible"
+            );
+
+            return;
+        }
+
+
+        if (
+            !teacherTeachesSubject(
+                currentLessonBranch,
+                currentLessonYear
+            )
+        ) {
+
+            lessonFormBox.classList.remove(
+                "visible"
+            );
+
+            lessonList.innerHTML = `
+                <div class="error message">
+                    ❌ المادة التي تدرّسها غير موجودة في هذا المستوى.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        lessonFormBox.classList.add(
+            "visible"
+        );
+
+        loadLessons();
+
+    }
+);
+
+
+/* =========================================
+   اختيار شعبة الملاحظات
+========================================= */
+
+noteBranch.addEventListener(
+    "change",
+    function() {
+
+        currentNoteBranch =
+            this.value;
+
+        currentNoteYear =
+            "";
+
+        updateYearOptions(
+            currentNoteBranch,
+            noteYear
+        );
+
+        noteYear.value =
+            "";
+
+        noteFormBox.classList.remove(
+            "visible"
+        );
+
+        noteList.innerHTML = `
+            <div class="loading">
+                اختر السنة لعرض الملاحظات...
+            </div>
+        `;
+
+    }
+);
+
+
+/* =========================================
+   اختيار سنة الملاحظات
+========================================= */
+
+noteYear.addEventListener(
+    "change",
+    function() {
+
+        currentNoteYear =
+            this.value;
+
+        if (
+            !currentNoteBranch ||
+            !currentNoteYear
+        ) {
+
+            noteFormBox.classList.remove(
+                "visible"
+            );
+
+            return;
+        }
+
+
+        if (
+            !teacherTeachesSubject(
+                currentNoteBranch,
+                currentNoteYear
+            )
+        ) {
+
+            noteFormBox.classList.remove(
+                "visible"
+            );
+
+            noteList.innerHTML = `
+                <div class="error message">
+                    ❌ المادة التي تدرّسها غير موجودة في هذا المستوى.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        noteFormBox.classList.add(
+            "visible"
+        );
+
+        loadNotes();
+
+    }
+);
+
+
+/* =========================================
+   الحصول على جلسة Supabase
+========================================= */
+
+async function getAccessToken() {
+
+    const {
+        data: { session },
+        error
+    } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+    if (
+        error ||
+        !session
+    ) {
+
+        throw new Error(
+            "انتهت جلسة تسجيل الدخول."
+        );
+
+    }
+
+
+    return session.access_token;
+
+}
+
+
+/* =========================================
+   طلبات المنصة المصرح بها
+========================================= */
+
+async function platformFetch(
+    url,
+    options = {}
+) {
+
+    const token =
+        await getAccessToken();
+
+
+    const headers =
+        new Headers(
+            options.headers || {}
+        );
+
+
+    headers.set(
+        "Authorization",
+        "Bearer " + token
+    );
+
+
+    return fetch(
+        url,
+        {
+            ...options,
+            headers
+        }
+    );
+
+}
+
+
+/* =========================================
+   تحميل دروس المادة
+========================================= */
+
+async function loadLessons() {
+
+    if (
+        !currentLessonBranch ||
+        !currentLessonYear ||
+        !currentTeacherSubject
+    ) {
+
+        return;
+    }
+
+
+    lessonList.innerHTML = `
+        <div class="loading">
+            ⏳ جاري تحميل الدروس...
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await platformFetch(
+                "/api/platform/content?" +
+                new URLSearchParams({
+
+                    branch:
+                        currentLessonBranch,
+
+                    year:
+                        currentLessonYear,
+
+                    subject:
+                        currentTeacherSubject
+
+                }).toString()
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                result.error ||
+                "تعذر تحميل الدروس."
+            );
+
+        }
+
+
+        const files =
+            result.files ||
+            result.data?.files ||
+            [];
+
+
+        renderLessons(
+            files
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load platform lessons error:",
+            error
+        );
+
+
+        lessonList.innerHTML = `
+            <div class="message error">
+                ❌ تعذر تحميل الدروس:
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   عرض الدروس
+========================================= */
+
+function renderLessons(
+    files
+) {
+
+    if (
+        !files ||
+        files.length === 0
+    ) {
+
+        lessonList.innerHTML = `
+            <div class="empty">
+                لا توجد دروس مرفوعة في هذه المادة بعد.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = "";
+
+
+    files.forEach(
+        function(file) {
+
+            const date =
+                file.created_at
+                    ? new Date(
+                        file.created_at
+                    ).toLocaleDateString(
+                        "ar-DZ"
+                    )
+                    : "-";
+
+
+            const title =
+                file.title ||
+                "درس بدون عنوان";
+
+
+            const description =
+                file.description ||
+                "";
+
+
+            const pdfUrl =
+                "/api/platform/files/" +
+                encodeURIComponent(
+                    file.id
+                ) +
+                "/pdf";
+
+
+            html += `
+
+                <div class="platform-item">
+
+                    <div class="platform-item-top">
+
+                        <div>
+
+                            <div class="platform-item-title">
+
+                                📄
+                                ${escapeHtml(title)}
+
+                            </div>
+
+                            <div class="platform-item-meta">
+
+                                👨‍🏫
+                                ${escapeHtml(
+                                    file.uploader_name ||
+                                    file.uploaded_by_name ||
+                                    currentProfile?.full_name ||
+                                    "الأستاذ"
+                                )}
+
+                                —
+                                📅
+                                ${date}
+
+                            </div>
+
+                            ${
+                                description
+                                    ?
+                                    `
+                                    <div class="platform-item-description">
+
+                                        ${escapeHtml(
+                                            description
+                                        )}
+
+                                    </div>
+                                    `
+                                    :
+                                    ""
+                            }
+
+                        </div>
+
+
+                        <div class="platform-item-actions">
+
+                            <button
+                                type="button"
+                                class="item-btn open"
+                                onclick="openLessonPdf('${encodeURIComponent(file.id)}')">
+
+                                📖 فتح
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="item-btn"
+                                onclick="editLesson('${encodeURIComponent(file.id)}')">
+
+                                ✏️ تعديل
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="item-btn delete"
+                                onclick="deleteLesson('${encodeURIComponent(file.id)}')">
+
+                                🗑️ حذف
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    lessonList.innerHTML =
+        html;
+
+}
+
+
+/* =========================================
+   رفع / تعديل درس
+========================================= */
+
+lessonForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        if (
+            !currentLessonBranch ||
+            !currentLessonYear ||
+            !currentTeacherSubject
+        ) {
+
+            showPlatformMessage(
+                lessonMessage,
+                "يرجى اختيار الشعبة والسنة أولًا.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (
+            !teacherTeachesSubject(
+                currentLessonBranch,
+                currentLessonYear
+            )
+        ) {
+
+            showPlatformMessage(
+                lessonMessage,
+                "ليس لديك صلاحية إدارة هذه المادة.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const title =
+            document
+                .getElementById(
+                    "lessonTitle"
+                )
+                .value
+                .trim();
+
+
+        const description =
+            document
+                .getElementById(
+                    "lessonDescription"
+                )
+                .value
+                .trim();
+
+
+        if (!title) {
+
+            showPlatformMessage(
+                lessonMessage,
+                "يرجى كتابة عنوان الدرس.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        lessonSubmitBtn.disabled =
+            true;
+
+
+        try {
+
+            if (
+                editingLessonId
+            ) {
+
+                const response =
+                    await platformFetch(
+                        "/api/platform/files/" +
+                        encodeURIComponent(
+                            editingLessonId
+                        ),
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    title:
+                                        title,
+
+                                    description:
+                                        description
+
+                                })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        result.error ||
+                        "تعذر تعديل الدرس."
+                    );
+
+                }
+
+
+                showPlatformMessage(
+                    lessonMessage,
+                    "✅ تم تعديل الدرس بنجاح.",
+                    "success"
+                );
+
+            }
+
+            else {
+
+                const pdf =
+                    lessonPdf.files &&
+                    lessonPdf.files.length
+                        ? lessonPdf.files[0]
+                        : null;
+
+
+                if (!pdf) {
+
+                    throw new Error(
+                        "يرجى اختيار ملف PDF."
+                    );
+
+                }
+
+
+                const fileName =
+                    pdf.name.toLowerCase();
+
+
+                if (
+                    pdf.type !==
+                        "application/pdf" &&
+                    !fileName.endsWith(
+                        ".pdf"
+                    )
+                ) {
+
+                    throw new Error(
+                        "يجب أن يكون الملف بصيغة PDF."
+                    );
+
+                }
+
+
+                if (
+                    pdf.size >
+                    100 *
+                    1024 *
+                    1024
+                ) {
+
+                    throw new Error(
+                        "حجم الملف يجب ألا يتجاوز 100 ميغابايت."
+                    );
+
+                }
+
+
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "branch",
+                    currentLessonBranch
+                );
+
+
+                formData.append(
+                    "year",
+                    currentLessonYear
+                );
+
+
+                formData.append(
+                    "subject",
+                    currentTeacherSubject
+                );
+
+
+                formData.append(
+                    "title",
+                    title
+                );
+
+
+                formData.append(
+                    "description",
+                    description
+                );
+
+
+                formData.append(
+                    "pdf",
+                    pdf,
+                    pdf.name
+                );
+
+
+                const response =
+                    await platformFetch(
+                        "/api/platform/files/upload",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        result.error ||
+                        "فشل رفع الدرس."
+                    );
+
+                }
+
+
+                showPlatformMessage(
+                    lessonMessage,
+                    "✅ تم رفع الدرس بنجاح.",
+                    "success"
+                );
+
+            }
+
+
+            resetLessonForm();
+
+            await loadLessons();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Lesson upload error:",
+                error
+            );
+
+
+            showPlatformMessage(
+                lessonMessage,
+                "❌ " +
+                error.message,
+                "error"
+            );
+
+        }
+
+        finally {
+
+            lessonSubmitBtn.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   تعديل درس
+========================================= */
+
+function editLesson(
+    encodedId
+) {
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    editingLessonId =
+        id;
+
+
+    const item =
+        currentLessonFiles
+            .find(
+                file =>
+                    String(file.id) ===
+                    String(id)
+            );
+
+
+    if (!item) {
+
+        alert(
+            "تعذر العثور على الدرس."
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById(
+            "lessonTitle"
+        )
+        .value =
+        item.title || "";
+
+
+    document
+        .getElementById(
+            "lessonDescription"
+        )
+        .value =
+        item.description || "";
+
+
+    lessonPdf.required =
+        false;
+
+
+    lessonSubmitBtn.textContent =
+        "💾 حفظ تعديل الدرس";
+
+
+    lessonFormBox.classList.add(
+        "visible"
+    );
+
+
+    lessonFormBox.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+/* =========================================
+   تخزين ملفات الدروس الحالية
+========================================= */
+
+let currentLessonFiles = [];
+
+
+/* إعادة تعريف العرض مع التخزين */
+
+function renderLessons(
+    files
+) {
+
+    currentLessonFiles =
+        files || [];
+
+
+    if (
+        !files ||
+        files.length === 0
+    ) {
+
+        lessonList.innerHTML = `
+            <div class="empty">
+                لا توجد دروس مرفوعة في هذه المادة بعد.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = "";
+
+
+    files.forEach(
+        function(file) {
+
+            const date =
+                file.created_at
+                    ? new Date(
+                        file.created_at
+                    ).toLocaleDateString(
+                        "ar-DZ"
+                    )
+                    : "-";
+
+
+            const pdfUrl =
+                "/api/platform/files/" +
+                encodeURIComponent(
+                    file.id
+                ) +
+                "/pdf";
+
+
+            html += `
+
+                <div class="platform-item">
+
+                    <div class="platform-item-top">
+
+                        <div>
+
+                            <div class="platform-item-title">
+
+                                📄
+                                ${escapeHtml(
+                                    file.title ||
+                                    "درس بدون عنوان"
+                                )}
+
+                            </div>
+
+                            <div class="platform-item-meta">
+
+                                👨‍🏫
+                                ${escapeHtml(
+                                    file.uploader_name ||
+                                    file.uploaded_by_name ||
+                                    currentProfile?.full_name ||
+                                    "الأستاذ"
+                                )}
+
+                                —
+                                📅
+                                ${date}
+
+                            </div>
+
+                            ${
+                                file.description
+                                    ?
+                                    `
+                                    <div class="platform-item-description">
+
+                                        ${escapeHtml(
+                                            file.description
+                                        )}
+
+                                    </div>
+                                    `
+                                    :
+                                    ""
+                            }
+
+                        </div>
+
+
+                        <div class="platform-item-actions">
+
+                            <button
+                                type="button"
+                                class="item-btn open"
+                                onclick="openLessonPdf('${encodeURIComponent(file.id)}')">
+
+                                📖 فتح
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="item-btn"
+                                onclick="editLesson('${encodeURIComponent(file.id)}')">
+
+                                ✏️ تعديل
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="item-btn delete"
+                                onclick="deleteLesson('${encodeURIComponent(file.id)}')">
+
+                                🗑️ حذف
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    lessonList.innerHTML =
+        html;
+
+}
+
+
+/* =========================================
+   إعادة ضبط نموذج الدرس
+========================================= */
+
+function resetLessonForm() {
+
+    editingLessonId =
+        null;
+
+
+    lessonForm.reset();
+
+
+    lessonPdf.required =
+        true;
+
+
+    lessonSubmitBtn.textContent =
+        "📤 رفع الدرس";
+
+}
+
+
+/* =========================================
+   حذف درس
+========================================= */
+
+async function deleteLesson(
+    encodedId
+) {
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    if (
+        !confirm(
+            "هل أنت متأكد من حذف هذا الدرس؟"
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await platformFetch(
+                "/api/platform/files/" +
+                encodeURIComponent(
+                    id
+                ),
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                result.error ||
+                "تعذر حذف الدرس."
+            );
+
+        }
+
+
+        showPlatformMessage(
+            lessonMessage,
+            "✅ تم حذف الدرس.",
+            "success"
+        );
+
+
+        await loadLessons();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Delete lesson error:",
+            error
+        );
+
+
+        showPlatformMessage(
+            lessonMessage,
+            "❌ " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   فتح ملف الدرس
+========================================= */
+
+function openLessonPdf(
+    encodedId
+) {
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    window.open(
+        "/api/platform/files/" +
+        encodeURIComponent(
+            id
+        ) +
+        "/pdf",
+        "_blank"
+    );
+
+}
+
+
+/* =========================================
+   تحميل ملاحظات المادة
+========================================= */
+
+async function loadNotes() {
+
+    if (
+        !currentNoteBranch ||
+        !currentNoteYear ||
+        !currentTeacherSubject
+    ) {
+
+        return;
+    }
+
+
+    noteList.innerHTML = `
+        <div class="loading">
+            ⏳ جاري تحميل الملاحظات...
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await platformFetch(
+                "/api/platform/content?" +
+                new URLSearchParams({
+
+                    branch:
+                        currentNoteBranch,
+
+                    year:
+                        currentNoteYear,
+
+                    subject:
+                        currentTeacherSubject
+
+                }).toString()
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                result.error ||
+                "تعذر تحميل الملاحظات."
+            );
+
+        }
+
+
+        const notes =
+            result.notes ||
+            result.data?.notes ||
+            [];
+
+
+        renderNotes(
+            notes
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load notes error:",
+            error
+        );
+
+
+        noteList.innerHTML = `
+            <div class="message error">
+                ❌ تعذر تحميل الملاحظات:
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   تخزين الملاحظات
+========================================= */
+
+let currentNotes = [];
+
+
+/* =========================================
+   أسماء أنواع الملاحظات
+========================================= */
+
+function getNoteTypeName(
+    type
+) {
+
+    const names = {
+
+        general:
+            "📌 ملاحظة عامة",
+
+        homework:
+            "📚 واجب منزلي",
+
+        test:
+            "📝 اختبار",
+
+        reminder:
+            "⏰ تذكير",
+
+        comment:
+            "💬 تعليق"
+
+    };
+
+    return names[type] ||
+        "📌 ملاحظة";
+
+}
+
+
+/* =========================================
+   عرض الملاحظات
+========================================= */
+
+function renderNotes(
+    notes
+) {
+
+    currentNotes =
+        notes || [];
+
+
+    if (
+        !notes ||
+        notes.length === 0
+    ) {
+
+        noteList.innerHTML = `
+            <div class="empty">
+                لا توجد ملاحظات منشورة في هذه المادة بعد.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = "";
+
+
+    notes.forEach(
+        function(note) {
+
+            const date =
+                note.created_at
+                    ? new Date(
+                        note.created_at
+                    ).toLocaleDateString(
+                        "ar-DZ"
+                    )
+                    : "-";
+
+
+            html += `
+
+                <div class="platform-item">
+
+                    <div class="platform-item-top">
+
+                        <div>
+
+                            <div class="note-type">
+
+                                ${escapeHtml(
+                                    getNoteTypeName(
+                                        note.type
+                                    )
+                                )}
+
+                            </div>
+
+
+                            <div class="platform-item-title">
+
+                                ${escapeHtml(
+                                    note.title ||
+                                    "ملاحظة بدون عنوان"
+                                )}
+
+                            </div>
+
+
+                            <div class="platform-item-meta">
+
+                                👨‍🏫
+                                ${escapeHtml(
+                                    note.author_name ||
+                                    note.created_by_name ||
+                                    note.creator_name ||
+                                    currentProfile?.full_name ||
+                                    "الأستاذ"
+                                )}
+
+                                —
+                                📅
+                                ${date}
+
+                            </div>
+
+
+                            <div class="platform-item-description">
+
+                                ${escapeHtml(
+                                    note.content ||
+                                    ""
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="platform-item-actions">
+
+                            <button
+                                type="button"
+                                class="item-btn"
+                                onclick="editNote('${encodeURIComponent(note.id)}')">
+
+                                ✏️ تعديل
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="item-btn delete"
+                                onclick="deleteNote('${encodeURIComponent(note.id)}')">
+
+                                🗑️ حذف
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    noteList.innerHTML =
+        html;
+
+}
+
+
+/* =========================================
+   نشر / تعديل ملاحظة
+========================================= */
+
+noteForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        if (
+            !currentNoteBranch ||
+            !currentNoteYear ||
+            !currentTeacherSubject
+        ) {
+
+            showPlatformMessage(
+                noteMessage,
+                "يرجى اختيار الشعبة والسنة أولًا.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (
+            !teacherTeachesSubject(
+                currentNoteBranch,
+                currentNoteYear
+            )
+        ) {
+
+            showPlatformMessage(
+                noteMessage,
+                "ليس لديك صلاحية إدارة هذه المادة.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const type =
+            document
+                .getElementById(
+                    "noteType"
+                )
+                .value;
+
+
+        const title =
+            document
+                .getElementById(
+                    "noteTitle"
+                )
+                .value
+                .trim();
+
+
+        const content =
+            document
+                .getElementById(
+                    "noteContent"
+                )
+                .value
+                .trim();
+
+
+        if (
+            !type ||
+            !title ||
+            !content
+        ) {
+
+            showPlatformMessage(
+                noteMessage,
+                "يرجى ملء جميع بيانات الملاحظة.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        noteSubmitBtn.disabled =
+            true;
+
+
+        try {
+
+            const payload = {
+
+                branch:
+                    currentNoteBranch,
+
+                year:
+                    currentNoteYear,
+
+                subject:
+                    currentTeacherSubject,
+
+                type:
+                    type,
+
+                title:
+                    title,
+
+                content:
+                    content
+
+            };
+
+
+            let response;
+
+
+            if (
+                editingNoteId
+            ) {
+
+                response =
+                    await platformFetch(
+                        "/api/platform/notes/" +
+                        encodeURIComponent(
+                            editingNoteId
+                        ),
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    payload
+                                )
+
+                        }
+                    );
+
+            }
+
+            else {
+
+                response =
+                    await platformFetch(
+                        "/api/platform/notes",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    payload
+                                )
+
+                        }
+                    );
+
+            }
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    result.error ||
+                    "تعذر حفظ الملاحظة."
+                );
+
+            }
+
+
+            showPlatformMessage(
+                noteMessage,
+                editingNoteId
+                    ?
+                    "✅ تم تعديل الملاحظة."
+                    :
+                    "✅ تم نشر الملاحظة.",
+                "success"
+            );
+
+
+            resetNoteForm();
+
+
+            await loadNotes();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Note save error:",
+                error
+            );
+
+
+            showPlatformMessage(
+                noteMessage,
+                "❌ " +
+                error.message,
+                "error"
+            );
+
+        }
+
+        finally {
+
+            noteSubmitBtn.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   تعديل ملاحظة
+========================================= */
+
+function editNote(
+    encodedId
+) {
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    const note =
+        currentNotes.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!note) {
+
+        alert(
+            "تعذر العثور على الملاحظة."
+        );
+
+        return;
+    }
+
+
+    editingNoteId =
+        id;
+
+
+    document
+        .getElementById(
+            "noteType"
+        )
+        .value =
+        note.type || "";
+
+
+    document
+        .getElementById(
+            "noteTitle"
+        )
+        .value =
+        note.title || "";
+
+
+    document
+        .getElementById(
+            "noteContent"
+        )
+        .value =
+        note.content || "";
+
+
+    noteSubmitBtn.textContent =
+        "💾 حفظ تعديل الملاحظة";
+
+
+    noteFormBox.classList.add(
+        "visible"
+    );
+
+
+    noteFormBox.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+/* =========================================
+   إعادة ضبط الملاحظة
+========================================= */
+
+function resetNoteForm() {
+
+    editingNoteId =
+        null;
+
+
+    noteForm.reset();
+
+
+    noteSubmitBtn.textContent =
+        "📌 نشر الملاحظة";
+
+}
+
+
+/* =========================================
+   حذف ملاحظة
+========================================= */
+
+async function deleteNote(
+    encodedId
+) {
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    if (
+        !confirm(
+            "هل أنت متأكد من حذف هذه الملاحظة؟"
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await platformFetch(
+                "/api/platform/notes/" +
+                encodeURIComponent(
+                    id
+                ),
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                result.error ||
+                "تعذر حذف الملاحظة."
+            );
+
+        }
+
+
+        showPlatformMessage(
+            noteMessage,
+            "✅ تم حذف الملاحظة.",
+            "success"
+        );
+
+
+        await loadNotes();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Delete note error:",
+            error
+        );
+
+
+        showPlatformMessage(
+            noteMessage,
+            "❌ " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   رسالة المنصة
+========================================= */
+
+function showPlatformMessage(
+    element,
+    text,
+    type
+) {
+
+    element.textContent =
+        text;
+
+
+    element.className =
+        "message " +
+        type;
+
+
+    element.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 
 }
 
@@ -1422,13 +4677,20 @@ async function loadBooks() {
     const {
         data: books,
         error
-    } = await supabaseClient
-        .from("books")
-        .select("*")
-        .eq("uploaded_by", currentUser.id)
-        .order("created_at", {
-            ascending: false
-        });
+    } =
+        await supabaseClient
+            .from("books")
+            .select("*")
+            .eq(
+                "uploaded_by",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
 
     if (error) {
@@ -1449,7 +4711,10 @@ async function loadBooks() {
     }
 
 
-    if (!books || books.length === 0) {
+    if (
+        !books ||
+        books.length === 0
+    ) {
 
         booksContainer.innerHTML = `
             <div class="empty">
@@ -1483,69 +4748,83 @@ async function loadBooks() {
     `;
 
 
-    books.forEach(function(book) {
+    books.forEach(
+        function(book) {
 
-        const date =
-            new Date(book.created_at)
-                .toLocaleDateString("ar-DZ");
+            const date =
+                new Date(
+                    book.created_at
+                )
+                    .toLocaleDateString(
+                        "ar-DZ"
+                    );
 
 
-        html += `
+            html += `
 
-            <tr>
+                <tr>
 
-                <td>
-                    ${escapeHtml(book.title)}
-                </td>
+                    <td>
+                        ${escapeHtml(
+                            book.title
+                        )}
+                    </td>
 
-                <td>
-                    ${escapeHtml(book.author || "-")}
-                </td>
+                    <td>
+                        ${escapeHtml(
+                            book.author ||
+                            "-"
+                        )}
+                    </td>
 
-                <td>
-                    ${escapeHtml(book.category || "-")}
-                </td>
+                    <td>
+                        ${escapeHtml(
+                            book.category ||
+                            "-"
+                        )}
+                    </td>
 
-                <td>
-                    ${date}
-                </td>
+                    <td>
+                        ${date}
+                    </td>
 
-                <td>
+                    <td>
 
-                    ${
-                        book.drive_file_id
-                        ?
-                        `
-                        <a
-                            href="book.html?id=${encodeURIComponent(book.id)}">
+                        ${
+                            book.drive_file_id
+                                ?
+                                `
+                                <a
+                                    href="book.html?id=${encodeURIComponent(book.id)}">
 
-                            📖 فتح الكتاب
+                                    📖 فتح الكتاب
 
-                        </a>
-                        `
-                        :
-                        "-"
-                    }
+                                </a>
+                                `
+                                :
+                                "-"
+                        }
 
-                </td>
+                    </td>
 
-                <td>
+                    <td>
 
-                    <button
-                        class="delete-btn"
-                        onclick="deleteBook(${book.id})">
+                        <button
+                            class="delete-btn"
+                            onclick="deleteBook('${encodeURIComponent(book.id)}')">
 
-                        حذف
+                            حذف
 
-                    </button>
+                        </button>
 
-                </td>
+                    </td>
 
-            </tr>
+                </tr>
 
-        `;
+            `;
 
-    });
+        }
+    );
 
 
     html += `
@@ -1561,337 +4840,18 @@ async function loadBooks() {
 
 
 /* =========================================
-   إضافة الكتاب
-========================================= */
-
-form.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-
-        const {
-            data: { session }
-        } = await supabaseClient
-            .auth
-            .getSession();
-
-
-        if (!session) {
-
-            showMessage(
-                "يجب تسجيل الدخول أولًا.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const title =
-            document
-                .getElementById("title")
-                .value
-                .trim();
-
-
-        const author =
-            document
-                .getElementById("author")
-                .value
-                .trim();
-
-
-        const category =
-            document
-                .getElementById("category")
-                .value;
-
-
-        const description =
-            document
-                .getElementById("description")
-                .value
-                .trim();
-
-
-        const pdfInput =
-            document.getElementById("pdf");
-
-
-        const pdf =
-            pdfInput.files &&
-            pdfInput.files.length > 0
-                ? pdfInput.files[0]
-                : null;
-
-
-        if (!title || !category || !pdf) {
-
-            showMessage(
-                "يرجى ملء البيانات المطلوبة واختيار ملف PDF.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const fileName =
-            pdf.name.toLowerCase();
-
-
-        if (
-            pdf.type !== "application/pdf" &&
-            !fileName.endsWith(".pdf")
-        ) {
-
-            showMessage(
-                "يجب أن يكون الملف بصيغة PDF.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if (
-            pdf.size >
-            100 * 1024 * 1024
-        ) {
-
-            showMessage(
-                "حجم ملف PDF يجب ألا يتجاوز 100 ميغابايت.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        submitBtn.disabled =
-            true;
-
-        submitBtn.textContent =
-            "⏳ جارٍ رفع الكتاب...";
-
-
-        try {
-
-            const formData =
-                new FormData();
-
-
-            formData.append(
-                "title",
-                title
-            );
-
-
-            formData.append(
-                "author",
-                author
-            );
-
-
-            formData.append(
-                "category",
-                category
-            );
-
-
-            formData.append(
-                "description",
-                description
-            );
-
-
-            formData.append(
-                "pdf",
-                pdf,
-                pdf.name
-            );
-
-
-            console.log(
-                "========== بيانات الرفع =========="
-            );
-
-
-            console.log(
-                "title:",
-                title
-            );
-
-
-            console.log(
-                "author:",
-                author
-            );
-
-
-            console.log(
-                "category:",
-                category
-            );
-
-
-            console.log(
-                "description:",
-                description
-            );
-
-
-            console.log(
-                "pdf:",
-                pdf.name,
-                pdf.type,
-                pdf.size
-            );
-
-
-            for (
-                const [key, value]
-                of formData.entries()
-            ) {
-
-                if (
-                    value instanceof File
-                ) {
-
-                    console.log(
-                        key,
-                        "=> FILE:",
-                        value.name,
-                        value.type,
-                        value.size
-                    );
-
-                } else {
-
-                    console.log(
-                        key,
-                        "=>",
-                        value
-                    );
-
-                }
-
-            }
-
-
-            console.log(
-                "=================================="
-            );
-
-
-            const response =
-                await fetch(
-                    "/api/books/upload",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Authorization":
-                                "Bearer " +
-                                session.access_token
-                        },
-
-                        body: formData
-                    }
-                );
-
-
-            const responseText =
-                await response.text();
-
-
-            let result;
-
-
-            try {
-
-                result =
-                    JSON.parse(
-                        responseText
-                    );
-
-            } catch {
-
-                result = {
-                    message:
-                        responseText
-                };
-
-            }
-
-
-            console.log(
-                "Server response:",
-                result
-            );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    result.message ||
-                    result.error ||
-                    "فشل رفع الكتاب."
-                );
-
-            }
-
-
-            showMessage(
-                "✅ تمت إضافة الكتاب ورفعه إلى Google Drive بنجاح.",
-                "success"
-            );
-
-
-            form.reset();
-
-
-            await loadBooks();
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Book upload error:",
-                error
-            );
-
-
-            showMessage(
-                "❌ حدث خطأ أثناء إضافة الكتاب: " +
-                error.message,
-                "error"
-            );
-
-        }
-
-        finally {
-
-            submitBtn.disabled =
-                false;
-
-            submitBtn.textContent =
-                "📤 إضافة الكتاب";
-
-        }
-
-    }
-);
-
-
-/* =========================================
    حذف كتاب
 ========================================= */
 
-async function deleteBook(id) {
+async function deleteBook(
+    encodedId
+) {
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
 
     const confirmed =
         confirm(
@@ -1908,9 +4868,10 @@ async function deleteBook(id) {
 
         const {
             data: { session }
-        } = await supabaseClient
-            .auth
-            .getSession();
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
 
 
         if (!session) {
@@ -1924,14 +4885,18 @@ async function deleteBook(id) {
 
         const {
             error
-        } = await supabaseClient
-            .from("books")
-            .delete()
-            .eq("id", id)
-            .eq(
-                "uploaded_by",
-                currentUser.id
-            );
+        } =
+            await supabaseClient
+                .from("books")
+                .delete()
+                .eq(
+                    "id",
+                    id
+                )
+                .eq(
+                    "uploaded_by",
+                    currentUser.id
+                );
 
 
         if (error) {
@@ -2002,7 +4967,8 @@ function showMessage(
 
 
     message.className =
-        "message " + type;
+        "message " +
+        type;
 
 
     message.scrollIntoView({
@@ -2017,9 +4983,13 @@ function showMessage(
    حماية النصوص
 ========================================= */
 
-function escapeHtml(text) {
+function escapeHtml(
+    text
+) {
 
-    return String(text)
+    return String(
+        text ?? ""
+    )
         .replace(
             /&/g,
             "&amp;"
@@ -2054,4 +5024,3 @@ checkTeacher();
 
 </body>
 </html>
-
