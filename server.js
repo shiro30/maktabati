@@ -332,6 +332,45 @@ const upload = multer({
 });
 
 /* =========================================================
+   MULTER - ملفات منصة المؤسسة
+========================================================= */
+
+const platformUpload = multer({
+    storage: multer.memoryStorage(),
+
+    limits: {
+        fileSize:
+            100 * 1024 * 1024,
+        files: 1
+    },
+
+    fileFilter: function (
+        req,
+        file,
+        cb
+    ) {
+        const fileName =
+            file.originalname.toLowerCase();
+
+        if (
+            file.fieldname === "pdf" &&
+            (
+                file.mimetype === "application/pdf" ||
+                fileName.endsWith(".pdf")
+            )
+        ) {
+            return cb(null, true);
+        }
+
+        cb(
+            new Error(
+                "ملفات منصة المؤسسة يجب أن تكون بصيغة PDF."
+            )
+        );
+    }
+});
+
+/* =========================================================
    EXPRESS
 ========================================================= */
 
@@ -429,7 +468,7 @@ async function verifyUser(req) {
             await supabase
                 .from("profiles")
                 .select(
-                    "id, full_name, role"
+                    "id, full_name, role, subject"
                 )
                 .eq(
                     "id",
@@ -454,6 +493,19 @@ async function verifyUser(req) {
                     "لم يتم العثور على ملف المستخدم."
             };
         }
+
+        const metadata =
+            user.user_metadata || {};
+
+        profile.branch =
+            profile.branch ||
+            metadata.branch ||
+            null;
+
+        profile.year =
+            profile.year ||
+            metadata.year ||
+            null;
 
         return {
             success: true,
@@ -534,6 +586,216 @@ async function verifyAccountManager(req) {
 }
 
 /* =========================================================
+   التحقق من صلاحيات منصة المؤسسة
+========================================================= */
+
+async function verifyPlatformUser(req) {
+    const verification =
+        await verifyUser(req);
+
+    if (!verification.success) {
+        return verification;
+    }
+
+    const profile =
+        verification.profile;
+
+    const role =
+        profile.role;
+
+    /*
+       المبرمج والمدير:
+       صلاحية كاملة في جميع مواد المنصة.
+    */
+
+    if (
+        role === "programmer" ||
+        role === "admin"
+    ) {
+        return {
+            success: true,
+            user: verification.user,
+            profile: profile,
+            fullAccess: true,
+            readOnly: false
+        };
+    }
+
+    /*
+       الأستاذ:
+       صلاحية كاملة داخل مادته فقط.
+    */
+
+    if (role === "teacher") {
+        if (
+            !profile.subject ||
+            !String(profile.subject).trim()
+        ) {
+            return {
+                success: false,
+                status: 403,
+                message:
+                    "لم يتم تحديد المادة الخاصة بهذا الأستاذ."
+            };
+        }
+
+        return {
+            success: true,
+            user: verification.user,
+            profile: profile,
+            fullAccess: false,
+            readOnly: false,
+            teacherSubject:
+                String(profile.subject).trim()
+        };
+    }
+
+    /*
+       التلميذ:
+       مشاهدة فقط.
+    */
+
+    if (role === "student") {
+        const studentBranch =
+            String(profile.branch || "").trim();
+
+        const studentYear =
+            Number(profile.year);
+
+        if (
+            !studentBranch ||
+            ![1, 2, 3].includes(studentYear)
+        ) {
+            return {
+                success: false,
+                status: 403,
+                message:
+                    "لم يتم تحديد الشعبة والسنة الدراسية لحساب التلميذ."
+            };
+        }
+
+        return {
+            success: true,
+            user: verification.user,
+            profile: profile,
+            fullAccess: false,
+            readOnly: true,
+            studentBranch: studentBranch,
+            studentYear: studentYear
+        };
+    }
+
+    return {
+        success: false,
+        status: 403,
+        message:
+            "ليس لديك صلاحية للدخول إلى منصة المؤسسة."
+    };
+}
+
+/* =========================================================
+   التحقق من أن الأستاذ يعمل داخل مادته فقط
+========================================================= */
+
+function teacherCanAccessSubject(
+    verification,
+    subject
+) {
+    if (
+        verification.fullAccess
+    ) {
+        return true;
+    }
+
+    if (
+        verification.profile.role ===
+        "teacher"
+    ) {
+        return (
+            String(subject || "").trim() ===
+            String(
+                verification.teacherSubject || ""
+            ).trim()
+        );
+    }
+
+    /*
+       التلميذ يستطيع المشاهدة.
+    */
+
+    if (
+        verification.profile.role ===
+        "student"
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
+/* =========================================================
+   التحقق من بيانات موقع المنصة
+========================================================= */
+
+function validatePlatformLocation(
+    branch,
+    year,
+    subject
+) {
+    const allowedBranches = [
+        "scientific",
+        "literature",
+        "management"
+    ];
+
+    if (
+        !allowedBranches.includes(
+            branch
+        )
+    ) {
+        return {
+            valid: false,
+            message:
+                "الشعبة غير صالحة."
+        };
+    }
+
+    const numericYear =
+        Number(year);
+
+    if (
+        ![1, 2, 3].includes(
+            numericYear
+        )
+    ) {
+        return {
+            valid: false,
+            message:
+                "السنة الدراسية غير صالحة."
+        };
+    }
+
+    if (
+        !subject ||
+        !String(subject).trim()
+    ) {
+        return {
+            valid: false,
+            message:
+                "المادة غير محددة."
+        };
+    }
+
+    return {
+        valid: true,
+        branch: branch,
+        year: numericYear,
+        subject:
+            String(subject).trim()
+    };
+}
+
+/* =========================================================
    إنشاء رقم وثيقة رسمي
 ========================================================= */
 
@@ -611,12 +873,11 @@ app.post(
                 fullName,
                 email,
                 password,
-                role
+                role,
+                subject,
+                branch,
+                year
             } = req.body;
-
-            /* ---------------------------------------------
-               التحقق من البيانات
-            --------------------------------------------- */
 
             if (
                 !fullName ||
@@ -643,6 +904,17 @@ app.post(
 
             const cleanPassword =
                 String(password);
+
+            const cleanSubject =
+                subject
+                    ? String(subject).trim()
+                    : "";
+
+            const cleanBranch =
+                branch ? String(branch).trim() : "";
+
+            const cleanYear =
+                Number(year);
 
             if (
                 cleanFullName.length < 2
@@ -684,9 +956,38 @@ app.post(
                     });
             }
 
-            /* ---------------------------------------------
-               التحقق من المدير أو المبرمج
-            --------------------------------------------- */
+            if (
+                role === "teacher" &&
+                !cleanSubject
+            ) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "يرجى اختيار المادة التي يدرّسها الأستاذ."
+                    });
+            }
+
+            const finalSubject =
+                role === "teacher"
+                    ? cleanSubject
+                    : null;
+
+            if (role === "student") {
+                if (!["scientific", "literature", "management"].includes(cleanBranch)) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "يرجى اختيار شعبة التلميذ."
+                    });
+                }
+                if (![1, 2, 3].includes(cleanYear) || (cleanBranch === "management" && cleanYear === 1)) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "يرجى اختيار سنة دراسية صحيحة للتلميذ."
+                    });
+                }
+            }
 
             const verification =
                 await verifyAccountManager(
@@ -705,10 +1006,6 @@ app.post(
                     });
             }
 
-            /* ---------------------------------------------
-               إنشاء حساب Supabase
-            --------------------------------------------- */
-
             const result =
                 await supabase.auth.admin
                     .createUser({
@@ -719,7 +1016,13 @@ app.post(
                             cleanPassword,
 
                         email_confirm:
-                            true
+                            true,
+
+                        user_metadata: {
+                            full_name: cleanFullName,
+                            branch: role === "student" ? cleanBranch : null,
+                            year: role === "student" ? cleanYear : null
+                        }
                     });
 
             if (result.error) {
@@ -735,10 +1038,6 @@ app.post(
             const newUser =
                 result.data.user;
 
-            /* ---------------------------------------------
-               إنشاء Profile
-            --------------------------------------------- */
-
             const profileResult =
                 await supabase
                     .from("profiles")
@@ -750,7 +1049,10 @@ app.post(
                             cleanFullName,
 
                         role:
-                            role
+                            role,
+
+                        subject:
+                            finalSubject
                     });
 
             if (profileResult.error) {
@@ -764,23 +1066,15 @@ app.post(
                     .json({
                         success: false,
                         message:
+                            profileResult.error?.message ||
                             "تم إنشاء الحساب لكن حدث خطأ أثناء حفظ بياناته."
                     });
             }
-
-            /* ---------------------------------------------
-               إنشاء وثيقة التسجيل
-            --------------------------------------------- */
 
             let documentNumber =
                 generateDocumentNumber();
 
             let documentResult = null;
-
-            /*
-               نحاول أكثر من مرة في حالة نادرة
-               لتجنب تكرار رقم الوثيقة.
-            */
 
             for (
                 let attempt = 0;
@@ -819,11 +1113,6 @@ app.post(
                     break;
                 }
 
-                /*
-                   إذا كان الخطأ ليس بسبب
-                   التكرار، نتوقف.
-                */
-
                 const errorMessage =
                     documentResult.error
                         .message || "";
@@ -849,10 +1138,6 @@ app.post(
                         : "Unknown error"
                 );
 
-                /*
-                   حذف الحساب إذا فشل إصدار الوثيقة.
-                */
-
                 await supabase
                     .from("profiles")
                     .delete()
@@ -871,20 +1156,14 @@ app.post(
                     .json({
                         success: false,
                         message:
-                            "تعذر إصدار وثيقة التسجيل، لذلك لم يتم إنشاء الحساب."
+                            (documentResult?.error?.message
+                                ? `تعذر إصدار وثيقة التسجيل: ${documentResult.error.message}`
+                                : "تعذر إصدار وثيقة التسجيل، لذلك لم يتم إنشاء الحساب.")
                     });
             }
 
             const registrationDocument =
                 documentResult.data;
-
-            /* ---------------------------------------------
-               بيانات الوثيقة
-               
-               ملاحظة أمنية:
-               password تُرسل فقط في هذه الاستجابة.
-               لا يتم تخزينها في Supabase.
-            --------------------------------------------- */
 
             return res.json({
                 success: true,
@@ -903,7 +1182,10 @@ app.post(
                         cleanFullName,
 
                     role:
-                        role
+                        role,
+
+                    subject:
+                        finalSubject
                 },
 
                 registrationDocument: {
@@ -934,6 +1216,9 @@ app.post(
                     role:
                         role,
 
+                    subject:
+                        finalSubject,
+
                     issuedBy:
                         verification.profile
                             .full_name,
@@ -954,6 +1239,7 @@ app.post(
                 .json({
                     success: false,
                     message:
+                        error?.message ||
                         "حدث خطأ داخلي في الخادم."
                 });
         }
@@ -1009,7 +1295,7 @@ app.get(
                 await supabase
                     .from("profiles")
                     .select(
-                        "id, full_name, role, created_at"
+                        "id, full_name, role, subject, created_at"
                     );
 
             if (profilesResult.error) {
@@ -1057,6 +1343,17 @@ app.get(
                                     ? profile.role
                                     : "غير محدد",
 
+                            subject:
+                                profile
+                                    ? profile.subject || null
+                                    : null,
+
+                            branch:
+                                user.user_metadata?.branch || null,
+
+                            year:
+                                user.user_metadata?.year || null,
+
                             createdAt:
                                 profile
                                     ? profile.created_at
@@ -1093,7 +1390,6 @@ app.get(
 
 /* =========================================================
    معلومات وثيقة مستخدم
-   لا تحتوي على كلمة المرور
 ========================================================= */
 
 app.get(
@@ -1180,7 +1476,7 @@ app.get(
                 await supabase
                     .from("profiles")
                     .select(
-                        "id, full_name, role"
+                        "id, full_name, role, subject"
                     )
                     .eq(
                         "id",
@@ -1239,7 +1535,11 @@ app.get(
 
                     role:
                         profileResult.data
-                            .role
+                            .role,
+
+                    subject:
+                        profileResult.data
+                            .subject || null
                 }
             });
 
@@ -1275,7 +1575,10 @@ app.put(
                 fullName,
                 email,
                 password,
-                role
+                role,
+                subject,
+                branch,
+                year
             } = req.body;
 
             const verification =
@@ -1299,7 +1602,7 @@ app.put(
                 await supabase
                     .from("profiles")
                     .select(
-                        "id, full_name, role"
+                        "id, full_name, role, subject"
                     )
                     .eq(
                         "id",
@@ -1365,6 +1668,45 @@ app.put(
                     });
             }
 
+            const finalRole =
+                role || targetProfile.role;
+
+            const cleanSubject =
+                subject
+                    ? String(subject).trim()
+                    : "";
+
+            if (
+                finalRole === "teacher" &&
+                !cleanSubject
+            ) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "يرجى اختيار المادة التي يدرّسها الأستاذ."
+                    });
+            }
+
+            const finalSubject =
+                finalRole === "teacher"
+                    ? cleanSubject
+                    : null;
+
+            const cleanBranch =
+                branch ? String(branch).trim() : "";
+            const cleanYear = Number(year);
+
+            if (finalRole === "student") {
+                if (!["scientific", "literature", "management"].includes(cleanBranch)) {
+                    return res.status(400).json({ success: false, message: "يرجى اختيار شعبة التلميذ." });
+                }
+                if (![1, 2, 3].includes(cleanYear) || (cleanBranch === "management" && cleanYear === 1)) {
+                    return res.status(400).json({ success: false, message: "يرجى اختيار سنة دراسية صحيحة للتلميذ." });
+                }
+            }
+
             const authUpdates = {};
 
             if (
@@ -1399,6 +1741,17 @@ app.put(
                 authUpdates.password =
                     password;
             }
+
+            authUpdates.user_metadata = {
+                full_name:
+                    fullName !== undefined
+                        ? String(fullName || "").trim()
+                        : targetProfile.full_name,
+                branch:
+                    finalRole === "student" ? cleanBranch : null,
+                year:
+                    finalRole === "student" ? cleanYear : null
+            };
 
             if (
                 Object.keys(
@@ -1441,6 +1794,9 @@ app.put(
                 profileUpdates.role =
                     role;
             }
+
+            profileUpdates.subject =
+                finalSubject;
 
             if (
                 Object.keys(
@@ -1578,12 +1934,6 @@ app.delete(
                     });
             }
 
-            /*
-               registration_documents مرتبط بـ auth.users
-               بـ ON DELETE CASCADE، لذلك سيُحذف تلقائيًا
-               مع الحساب.
-            */
-
             const deleteProfileResult =
                 await supabase
                     .from("profiles")
@@ -1644,6 +1994,1312 @@ app.delete(
                     message:
                         "حدث خطأ داخلي في الخادم."
                 });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - جلب محتوى المادة
+========================================================= */
+
+app.get(
+    "/api/platform/me",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res.status(verification.status).json({
+                    success: false,
+                    message: verification.message
+                });
+            }
+
+            const metadata = verification.user.user_metadata || {};
+            const profile = verification.profile || {};
+
+            return res.json({
+                success: true,
+                user: {
+                    id: verification.user.id,
+                    email: verification.user.email || null,
+                    full_name:
+                        profile.full_name ||
+                        metadata.full_name ||
+                        metadata.name ||
+                        verification.user.email ||
+                        "المستخدم",
+                    role: profile.role || null,
+                    subject: profile.subject || null,
+                    branch: profile.branch || metadata.branch || null,
+                    year: profile.year || metadata.year || null
+                }
+            });
+        } catch (error) {
+            console.error("Platform current-user error:", error);
+            return res.status(500).json({
+                success: false,
+                message: error?.message || "تعذر تحميل بيانات المستخدم."
+            });
+        }
+    }
+);
+
+app.get(
+    "/api/platform/content",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            const location =
+                validatePlatformLocation(
+                    req.query.branch,
+                    req.query.year,
+                    req.query.subject
+                );
+
+            if (!location.valid) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            location.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "teacher" &&
+                !teacherCanAccessSubject(
+                    verification,
+                    location.subject
+                )
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "لا يمكنك الوصول إلى محتوى مادة أخرى."
+                    });
+            }
+
+            if (verification.profile.role === "student") {
+                if (
+                    verification.studentBranch !== location.branch ||
+                    verification.studentYear !== location.year
+                ) {
+                    return res
+                        .status(403)
+                        .json({
+                            success: false,
+                            message:
+                                "يمكنك مشاهدة محتوى شعبتك وسنتك الدراسية فقط."
+                        });
+                }
+            }
+
+            const filesResult =
+                await supabase
+                    .from("platform_files")
+                    .select(
+                        `
+                        id,
+                        branch,
+                        year,
+                        subject,
+                        title,
+                        description,
+                        drive_file_id,
+                        drive_file_url,
+                        uploaded_by,
+                        created_at,
+                        updated_at
+                        `
+                    )
+                    .eq(
+                        "branch",
+                        location.branch
+                    )
+                    .eq(
+                        "year",
+                        location.year
+                    )
+                    .eq(
+                        "subject",
+                        location.subject
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending:
+                                false
+                        }
+                    );
+
+            if (filesResult.error) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            filesResult.error.message
+                    });
+            }
+
+            const notesResult =
+                await supabase
+                    .from("platform_notes")
+                    .select(
+                        `
+                        id,
+                        branch,
+                        year,
+                        subject,
+                        type,
+                        title,
+                        content,
+                        created_by,
+                        created_at,
+                        updated_at
+                        `
+                    )
+                    .eq(
+                        "branch",
+                        location.branch
+                    )
+                    .eq(
+                        "year",
+                        location.year
+                    )
+                    .eq(
+                        "subject",
+                        location.subject
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending:
+                                false
+                        }
+                    );
+
+            if (notesResult.error) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            notesResult.error.message
+                    });
+            }
+
+            const fileRows = filesResult.data || [];
+            const noteRows = notesResult.data || [];
+
+            const creatorIds = [
+                ...fileRows.map(item => item.uploaded_by),
+                ...noteRows.map(item => item.created_by)
+            ].filter(Boolean);
+
+            let creatorMap = {};
+
+            if (creatorIds.length) {
+                const creatorsResult = await supabase
+                    .from("profiles")
+                    .select("id, full_name")
+                    .in("id", [...new Set(creatorIds)]);
+
+                if (!creatorsResult.error) {
+                    creatorMap = Object.fromEntries(
+                        (creatorsResult.data || []).map(item => [
+                            item.id,
+                            item.full_name || "المؤسسة"
+                        ])
+                    );
+                }
+            }
+
+            const files = fileRows.map(item => ({
+                ...item,
+                uploader_name:
+                    creatorMap[item.uploaded_by] || "المؤسسة"
+            }));
+
+            const notes = noteRows.map(item => ({
+                ...item,
+                creator_name:
+                    creatorMap[item.created_by] || "المؤسسة"
+            }));
+
+            return res.json({
+                success: true,
+                user: {
+                    id: verification.user.id,
+                    full_name:
+                        verification.profile.full_name ||
+                        verification.user.user_metadata?.full_name ||
+                        verification.user.email,
+                    role: verification.profile.role,
+                    subject: verification.profile.subject || null,
+                    branch: verification.profile.branch || null,
+                    year: verification.profile.year || null
+                },
+                location: {
+                    branch: location.branch,
+                    year: location.year,
+                    subject: location.subject
+                },
+                permissions: {
+                    fullAccess: !!verification.fullAccess,
+                    readOnly: !!verification.readOnly,
+                    teacher: verification.profile.role === "teacher",
+                    role: verification.profile.role,
+                    teacherSubject: verification.teacherSubject || null,
+                    studentBranch: verification.studentBranch || null,
+                    studentYear: verification.studentYear || null,
+                    canManageFiles:
+                        !!verification.fullAccess ||
+                        verification.profile.role === "teacher",
+                    canManageNotes:
+                        !!verification.fullAccess ||
+                        verification.profile.role === "teacher"
+                },
+                files: files,
+                notes: notes
+            });
+
+        } catch (error) {
+            console.error(
+                "Platform content error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message:
+                        "حدث خطأ أثناء جلب محتوى المنصة."
+                });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - رفع درس PDF
+========================================================= */
+
+app.post(
+    "/api/platform/files/upload",
+
+    platformUpload.single("pdf"),
+
+    async function (req, res) {
+        let uploadedFileId = null;
+
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "student"
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "التلميذ لا يملك صلاحية رفع الملفات."
+                    });
+            }
+
+            const location =
+                validatePlatformLocation(
+                    req.body.branch,
+                    req.body.year,
+                    req.body.subject
+                );
+
+            if (!location.valid) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            location.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "teacher" &&
+                !teacherCanAccessSubject(
+                    verification,
+                    location.subject
+                )
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "لا يمكنك رفع ملفات في مادة أخرى."
+                    });
+            }
+
+            const pdfFile =
+                req.file;
+
+            if (!pdfFile) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "يرجى اختيار ملف PDF."
+                    });
+            }
+
+            const title =
+                req.body.title
+                    ? String(
+                        req.body.title
+                    ).trim()
+                    : "";
+
+            const description =
+                req.body.description
+                    ? String(
+                        req.body.description
+                    ).trim()
+                    : "";
+
+            if (!title) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "يرجى إدخال عنوان الملف."
+                    });
+            }
+
+            if (!drive) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "Google Drive غير متصل بالخادم."
+                    });
+            }
+
+            const platformFolderId =
+                process.env
+                    .GOOGLE_DRIVE_FOLDER_ID;
+
+            if (!platformFolderId) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "لم يتم إعداد مجلد Google Drive الخاص بالمنصة."
+                    });
+            }
+
+            const safeFileName =
+                path.basename(
+                    pdfFile.originalname
+                );
+
+            const uploaded =
+                await drive.files.create({
+                    requestBody: {
+                        name:
+                            safeFileName,
+
+                        parents: [
+                            platformFolderId
+                        ]
+                    },
+
+                    media: {
+                        mimeType:
+                            "application/pdf",
+
+                        body:
+                            Readable.from(
+                                pdfFile.buffer
+                            )
+                    },
+
+                    fields:
+                        "id,name,webViewLink,webContentLink"
+                });
+
+            uploadedFileId =
+                uploaded.data.id;
+
+            if (!uploadedFileId) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "تعذر الحصول على معرف الملف."
+                    });
+            }
+
+            await drive.permissions.create({
+                fileId:
+                    uploadedFileId,
+
+                requestBody: {
+                    role:
+                        "reader",
+
+                    type:
+                        "anyone"
+                },
+
+                fields:
+                    "id"
+            });
+
+            const webViewLink =
+                uploaded.data.webViewLink ||
+                (
+                    "https://drive.google.com/file/d/" +
+                    uploadedFileId +
+                    "/view"
+                );
+
+            const insertResult =
+                await supabase
+                    .from("platform_files")
+                    .insert({
+                        branch:
+                            location.branch,
+
+                        year:
+                            location.year,
+
+                        subject:
+                            location.subject,
+
+                        title:
+                            title,
+
+                        description:
+                            description ||
+                            null,
+
+                        drive_file_id:
+                            uploadedFileId,
+
+                        drive_file_url:
+                            webViewLink,
+
+                        uploaded_by:
+                            verification.user.id
+                    })
+                    .select()
+                    .single();
+
+            if (
+                insertResult.error ||
+                !insertResult.data
+            ) {
+                console.error(
+                    "Platform file insert error:",
+                    insertResult.error
+                );
+
+                try {
+                    await drive.files.delete({
+                        fileId:
+                            uploadedFileId
+                    });
+                } catch (deleteError) {
+                    console.error(
+                        "تعذر حذف ملف المنصة:",
+                        deleteError
+                    );
+                }
+
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "تم رفع الملف لكن تعذر حفظه في قاعدة البيانات."
+                    });
+            }
+
+            return res.json({
+                success: true,
+
+                message:
+                    "تم رفع الملف إلى منصة المؤسسة بنجاح.",
+
+                file:
+                    insertResult.data
+            });
+
+        } catch (error) {
+            console.error(
+                "Platform file upload error:",
+                error
+            );
+
+            if (
+                uploadedFileId &&
+                drive
+            ) {
+                try {
+                    await drive.files.delete({
+                        fileId:
+                            uploadedFileId
+                    });
+                } catch (deleteError) {
+                    console.error(
+                        "تعذر حذف الملف بعد الخطأ:",
+                        deleteError
+                    );
+                }
+            }
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message:
+                        error.message ||
+                        "حدث خطأ أثناء رفع ملف المنصة."
+                });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - إضافة ملاحظة
+========================================================= */
+
+app.post(
+    "/api/platform/notes",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "student"
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "التلميذ لا يستطيع إضافة الملاحظات."
+                    });
+            }
+
+            const location =
+                validatePlatformLocation(
+                    req.body.branch,
+                    req.body.year,
+                    req.body.subject
+                );
+
+            if (!location.valid) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            location.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "teacher" &&
+                !teacherCanAccessSubject(
+                    verification,
+                    location.subject
+                )
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "لا يمكنك إضافة ملاحظات في مادة أخرى."
+                    });
+            }
+
+            const title =
+                req.body.title
+                    ? String(
+                        req.body.title
+                    ).trim()
+                    : "";
+
+            const content =
+                req.body.content
+                    ? String(
+                        req.body.content
+                    ).trim()
+                    : "";
+
+            const rawType =
+                req.body.type
+                    ? String(req.body.type).trim().toLowerCase()
+                    : "general";
+
+            const type =
+                rawType === "test"
+                    ? "exam"
+                    : rawType;
+
+            const allowedTypes = [
+                "general",
+                "homework",
+                "exam",
+                "reminder",
+                "comment"
+            ];
+
+            if (
+                !allowedTypes.includes(
+                    type
+                )
+            ) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "نوع الملاحظة غير صالح."
+                    });
+            }
+
+            if (!title || !content) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "العنوان والمحتوى مطلوبان."
+                    });
+            }
+
+            const result =
+                await supabase
+                    .from("platform_notes")
+                    .insert({
+                        branch:
+                            location.branch,
+
+                        year:
+                            location.year,
+
+                        subject:
+                            location.subject,
+
+                        type:
+                            type,
+
+                        title:
+                            title,
+
+                        content:
+                            content,
+
+                        created_by:
+                            verification.user.id
+                    })
+                    .select()
+                    .single();
+
+            if (result.error) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            result.error.message
+                    });
+            }
+
+            return res.json({
+                success: true,
+
+                message:
+                    "تمت إضافة الملاحظة بنجاح.",
+
+                note:
+                    result.data
+            });
+
+        } catch (error) {
+            console.error(
+                "Platform note create error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message:
+                        "حدث خطأ أثناء إضافة الملاحظة."
+                });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - تعديل ملاحظة
+========================================================= */
+
+app.put(
+    "/api/platform/notes/:id",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "student"
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "ليس لديك صلاحية تعديل الملاحظات."
+                    });
+            }
+
+            const noteResult =
+                await supabase
+                    .from("platform_notes")
+                    .select("*")
+                    .eq(
+                        "id",
+                        req.params.id
+                    )
+                    .single();
+
+            if (
+                noteResult.error ||
+                !noteResult.data
+            ) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message:
+                            "الملاحظة غير موجودة."
+                    });
+            }
+
+            const note =
+                noteResult.data;
+
+            if (
+                !teacherCanAccessSubject(
+                    verification,
+                    note.subject
+                )
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "لا يمكنك تعديل ملاحظة تابعة لمادة أخرى."
+                    });
+            }
+
+            const updates = {};
+
+            if (
+                req.body.title !==
+                undefined
+            ) {
+                updates.title =
+                    String(
+                        req.body.title
+                    ).trim();
+            }
+
+            if (
+                req.body.content !==
+                undefined
+            ) {
+                updates.content =
+                    String(
+                        req.body.content
+                    ).trim();
+            }
+
+            if (
+                req.body.type !==
+                undefined
+            ) {
+                const allowedTypes = [
+                    "general",
+                    "homework",
+                    "exam",
+                    "reminder",
+                    "comment"
+                ];
+
+                const rawType =
+                    String(req.body.type).trim().toLowerCase();
+
+                const type =
+                    rawType === "test"
+                        ? "exam"
+                        : rawType;
+
+                if (
+                    !allowedTypes.includes(
+                        type
+                    )
+                ) {
+                    return res
+                        .status(400)
+                        .json({
+                            success: false,
+                            message:
+                                "نوع الملاحظة غير صالح."
+                        });
+                }
+
+                updates.type =
+                    type;
+            }
+
+            if (
+                Object.keys(
+                    updates
+                ).length === 0
+            ) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        message:
+                            "لا توجد بيانات لتعديلها."
+                    });
+            }
+
+            const result =
+                await supabase
+                    .from("platform_notes")
+                    .update(
+                        updates
+                    )
+                    .eq(
+                        "id",
+                        req.params.id
+                    )
+                    .select()
+                    .single();
+
+            if (result.error) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            result.error.message
+                    });
+            }
+
+            return res.json({
+                success: true,
+
+                message:
+                    "تم تعديل الملاحظة بنجاح.",
+
+                note:
+                    result.data
+            });
+
+        } catch (error) {
+            console.error(
+                "Platform note update error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message:
+                        "حدث خطأ أثناء تعديل الملاحظة."
+                });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - حذف ملاحظة
+========================================================= */
+
+app.delete(
+    "/api/platform/notes/:id",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            if (
+                verification.profile.role ===
+                "student"
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "ليس لديك صلاحية حذف الملاحظات."
+                    });
+            }
+
+            const noteResult =
+                await supabase
+                    .from("platform_notes")
+                    .select(
+                        "id, subject, created_by"
+                    )
+                    .eq(
+                        "id",
+                        req.params.id
+                    )
+                    .single();
+
+            if (
+                noteResult.error ||
+                !noteResult.data
+            ) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message:
+                            "الملاحظة غير موجودة."
+                    });
+            }
+
+            if (
+                !teacherCanAccessSubject(
+                    verification,
+                    noteResult.data.subject
+                )
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "لا يمكنك حذف ملاحظة تابعة لمادة أخرى."
+                    });
+            }
+
+            const result =
+                await supabase
+                    .from("platform_notes")
+                    .delete()
+                    .eq(
+                        "id",
+                        req.params.id
+                    );
+
+            if (result.error) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            result.error.message
+                    });
+            }
+
+            return res.json({
+                success: true,
+                message:
+                    "تم حذف الملاحظة بنجاح."
+            });
+
+        } catch (error) {
+            console.error(
+                "Platform note delete error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message:
+                        "حدث خطأ أثناء حذف الملاحظة."
+                });
+        }
+    }
+);
+
+
+/* =========================================================
+   منصة المؤسسة - تسجيل مشاهدة الملاحظة
+========================================================= */
+
+app.post(
+    "/api/platform/notes/:id/view",
+    async function (req, res) {
+        try {
+            const verification = await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res.status(verification.status).json({
+                    success: false,
+                    message: verification.message
+                });
+            }
+
+            if (verification.profile.role !== "student") {
+                return res.json({ success: true });
+            }
+
+            const noteResult = await supabase
+                .from("platform_notes")
+                .select("id, branch, year, subject")
+                .eq("id", req.params.id)
+                .single();
+
+            if (noteResult.error || !noteResult.data) {
+                return res.status(404).json({
+                    success: false,
+                    message: "الملاحظة غير موجودة."
+                });
+            }
+
+            const note = noteResult.data;
+
+            if (
+                note.branch !== verification.studentBranch ||
+                Number(note.year) !== Number(verification.studentYear)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message: "لا يمكنك تسجيل مشاهدة هذه الملاحظة."
+                });
+            }
+
+            const result = await supabase
+                .from("platform_note_views")
+                .upsert(
+                    {
+                        note_id: note.id,
+                        user_id: verification.user.id,
+                        viewed_at: new Date().toISOString()
+                    },
+                    {
+                        onConflict: "note_id,user_id"
+                    }
+                );
+
+            if (result.error) {
+                console.warn("Note view tracking warning:", result.error.message);
+                return res.json({
+                    success: true,
+                    tracking: false
+                });
+            }
+
+            return res.json({
+                success: true,
+                tracking: true
+            });
+        } catch (error) {
+            console.error("Note view error:", error);
+            return res.json({
+                success: true,
+                tracking: false
+            });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - من شاهد الملاحظة
+========================================================= */
+
+app.get(
+    "/api/platform/notes/:id/viewers",
+    async function (req, res) {
+        try {
+            const verification = await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res.status(verification.status).json({
+                    success: false,
+                    message: verification.message
+                });
+            }
+
+            if (
+                verification.profile.role !== "teacher" &&
+                verification.profile.role !== "admin" &&
+                verification.profile.role !== "programmer"
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message: "هذه المعلومات متاحة للطاقم المخول فقط."
+                });
+            }
+
+            const noteResult = await supabase
+                .from("platform_notes")
+                .select("id, subject, created_by")
+                .eq("id", req.params.id)
+                .single();
+
+            if (noteResult.error || !noteResult.data) {
+                return res.status(404).json({
+                    success: false,
+                    message: "الملاحظة غير موجودة."
+                });
+            }
+
+            if (
+                verification.profile.role === "teacher" &&
+                !teacherCanAccessSubject(verification, noteResult.data.subject)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message: "يمكن للأستاذ مشاهدة متابعات ملاحظات مادته فقط."
+                });
+            }
+
+            const viewsResult = await supabase
+                .from("platform_note_views")
+                .select("user_id, viewed_at")
+                .eq("note_id", req.params.id)
+                .order("viewed_at", { ascending: false });
+
+            if (viewsResult.error) {
+                return res.status(500).json({
+                    success: false,
+                    message:
+                        "لم يتم إعداد سجل مشاهدات الملاحظات في قاعدة البيانات."
+                });
+            }
+
+            const ids = (viewsResult.data || []).map(v => v.user_id).filter(Boolean);
+            let profiles = [];
+
+            if (ids.length) {
+                const profilesResult = await supabase
+                    .from("profiles")
+                    .select("id, full_name")
+                    .in("id", [...new Set(ids)]);
+
+                if (!profilesResult.error) {
+                    profiles = profilesResult.data || [];
+                }
+            }
+
+            const names = Object.fromEntries(
+                profiles.map(p => [p.id, p.full_name || "تلميذ"])
+            );
+
+            return res.json({
+                success: true,
+                viewers: (viewsResult.data || []).map(v => ({
+                    user_id: v.user_id,
+                    full_name: names[v.user_id] || "تلميذ",
+                    viewed_at: v.viewed_at
+                }))
+            });
+        } catch (error) {
+            console.error("Note viewers error:", error);
+            return res.status(500).json({
+                success: false,
+                message: "حدث خطأ أثناء جلب قائمة المشاهدين."
+            });
         }
     }
 );
@@ -1918,10 +3574,6 @@ app.post(
                     });
             }
 
-            /* =================================================
-               رفع PDF
-            ================================================= */
-
             const safePdfFileName =
                 path.basename(
                     pdfFile.originalname
@@ -2031,10 +3683,6 @@ app.post(
                 "https://drive.google.com/file/d/" +
                 uploadedPdfId +
                 "/view";
-
-            /* =================================================
-               رفع صورة الغلاف
-            ================================================= */
 
             const safeCoverFileName =
                 path.basename(
@@ -2185,10 +3833,6 @@ app.post(
                 "رابط الغلاف:",
                 coverUrl
             );
-
-            /* =================================================
-               حفظ الكتاب في Supabase
-            ================================================= */
 
             console.log(
                 "جاري حفظ بيانات الكتاب والغلاف في Supabase..."
@@ -3196,6 +4840,625 @@ app.get(
 );
 
 /* =========================================================
+   منصة المؤسسة - فتح ملف PDF
+========================================================= */
+
+
+/* =========================================================
+   منصة المؤسسة - تعديل ملف درس
+========================================================= */
+
+app.put(
+    "/api/platform/files/:id",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res.status(verification.status).json({
+                    success: false,
+                    message: verification.message
+                });
+            }
+
+            if (verification.profile.role === "student") {
+                return res.status(403).json({
+                    success: false,
+                    message: "التلميذ لا يملك صلاحية تعديل الدروس."
+                });
+            }
+
+            const fileResult = await supabase
+                .from("platform_files")
+                .select("id, title, description, branch, year, subject, uploaded_by")
+                .eq("id", req.params.id)
+                .single();
+
+            if (fileResult.error || !fileResult.data) {
+                return res.status(404).json({
+                    success: false,
+                    message: "الدرس غير موجود."
+                });
+            }
+
+            const file = fileResult.data;
+
+            if (
+                verification.profile.role === "teacher" &&
+                !teacherCanAccessSubject(verification, file.subject)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message: "يمكن للأستاذ تعديل دروس مادته فقط."
+                });
+            }
+
+            const title = String(req.body.title || "").trim();
+            const description = String(req.body.description || "").trim();
+
+            if (!title) {
+                return res.status(400).json({
+                    success: false,
+                    message: "عنوان الدرس مطلوب."
+                });
+            }
+
+            const updateResult = await supabase
+                .from("platform_files")
+                .update({
+                    title,
+                    description,
+                    updated_at: new Date().toISOString()
+                })
+                .eq("id", req.params.id);
+
+            if (updateResult.error) {
+                return res.status(500).json({
+                    success: false,
+                    message: updateResult.error.message
+                });
+            }
+
+            return res.json({
+                success: true,
+                message: "تم تعديل بيانات الدرس بنجاح."
+            });
+        } catch (error) {
+            console.error("Platform file update error:", error);
+            return res.status(500).json({
+                success: false,
+                message: "حدث خطأ أثناء تعديل الدرس."
+            });
+        }
+    }
+);
+
+/* =========================================================
+   منصة المؤسسة - حذف ملف درس
+========================================================= */
+
+app.delete(
+    "/api/platform/files/:id",
+    async function (req, res) {
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res.status(verification.status).json({
+                    success: false,
+                    message: verification.message
+                });
+            }
+
+            if (verification.profile.role === "student") {
+                return res.status(403).json({
+                    success: false,
+                    message: "التلميذ لا يملك صلاحية حذف الدروس."
+                });
+            }
+
+            const fileResult = await supabase
+                .from("platform_files")
+                .select("id, subject, uploaded_by, drive_file_id")
+                .eq("id", req.params.id)
+                .single();
+
+            if (fileResult.error || !fileResult.data) {
+                return res.status(404).json({
+                    success: false,
+                    message: "الدرس غير موجود."
+                });
+            }
+
+            const file = fileResult.data;
+
+            if (
+                verification.profile.role === "teacher" &&
+                !teacherCanAccessSubject(verification, file.subject)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message: "يمكن للأستاذ حذف دروس مادته فقط."
+                });
+            }
+
+            if (drive && file.drive_file_id) {
+                try {
+                    await drive.files.delete({
+                        fileId: file.drive_file_id
+                    });
+                } catch (driveError) {
+                    console.warn(
+                        "Google Drive delete warning:",
+                        driveError.message
+                    );
+                }
+            }
+
+            const deleteResult = await supabase
+                .from("platform_files")
+                .delete()
+                .eq("id", req.params.id);
+
+            if (deleteResult.error) {
+                return res.status(500).json({
+                    success: false,
+                    message: deleteResult.error.message
+                });
+            }
+
+            return res.json({
+                success: true,
+                message: "تم حذف الدرس بنجاح."
+            });
+        } catch (error) {
+            console.error("Platform file delete error:", error);
+            return res.status(500).json({
+                success: false,
+                message: "حدث خطأ أثناء حذف الدرس."
+            });
+        }
+    }
+);
+
+app.get(
+    "/api/platform/files/:id/pdf",
+    async function (req, res) {
+        let driveStream = null;
+
+        try {
+            const verification =
+                await verifyPlatformUser(req);
+
+            if (!verification.success) {
+                return res
+                    .status(
+                        verification.status
+                    )
+                    .json({
+                        success: false,
+                        message:
+                            verification.message
+                    });
+            }
+
+            const fileResult =
+                await supabase
+                    .from("platform_files")
+                    .select(
+                        "id, title, branch, year, subject, drive_file_id"
+                    )
+                    .eq(
+                        "id",
+                        req.params.id
+                    )
+                    .single();
+
+            if (
+                fileResult.error ||
+                !fileResult.data
+            ) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message:
+                            "ملف المنصة غير موجود."
+                    });
+            }
+
+            const platformFile =
+                fileResult.data;
+
+            if (verification.profile.role === "student") {
+                const fileBranch = platformFile.branch;
+                const fileYear = Number(platformFile.year);
+
+                if (
+                    fileBranch !== verification.studentBranch ||
+                    fileYear !== verification.studentYear
+                ) {
+                    return res.status(403).json({
+                        success: false,
+                        message: "لا يمكنك الوصول إلى هذا الدرس."
+                    });
+                }
+            }
+
+            /*
+               الأستاذ يستطيع فتح ملفات مادته فقط.
+            */
+
+            if (
+                verification.profile.role ===
+                "teacher" &&
+                !teacherCanAccessSubject(
+                    verification,
+                    platformFile.subject
+                )
+            ) {
+                return res
+                    .status(403)
+                    .json({
+                        success: false,
+                        message:
+                            "لا يمكنك الوصول إلى ملف تابع لمادة أخرى."
+                    });
+            }
+
+            if (
+                !platformFile.drive_file_id
+            ) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message:
+                            "ملف PDF غير مرتبط بهذا العنصر."
+                    });
+            }
+
+            if (!drive) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "Google Drive غير متصل بالخادم."
+                    });
+            }
+
+            const metadataResponse =
+                await drive.files.get({
+                    fileId:
+                        platformFile.drive_file_id,
+
+                    fields:
+                        "id,name,size,mimeType"
+                });
+
+            const fileSize =
+                Number(
+                    metadataResponse.data.size
+                );
+
+            if (
+                !Number.isFinite(fileSize) ||
+                fileSize <= 0
+            ) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "تعذر معرفة حجم ملف PDF."
+                    });
+            }
+
+            const safeTitle =
+                (
+                    platformFile.title ||
+                    "platform-file"
+                )
+                    .replace(
+                        /[\/\\:*?"<>|]/g,
+                        "_"
+                    )
+                    .trim() ||
+                "platform-file";
+
+            res.setHeader(
+                "Content-Type",
+                "application/pdf"
+            );
+
+            res.setHeader(
+                "Content-Disposition",
+                `inline; filename*=UTF-8''${encodeURIComponent(
+                    safeTitle
+                )}.pdf`
+            );
+
+            res.setHeader(
+                "Accept-Ranges",
+                "bytes"
+            );
+
+            res.setHeader(
+                "Cache-Control",
+                "private, max-age=3600"
+            );
+
+            if (!req.headers.range) {
+                res.setHeader(
+                    "Content-Length",
+                    String(fileSize)
+                );
+
+                const driveResponse =
+                    await drive.files.get(
+                        {
+                            fileId:
+                                platformFile.drive_file_id,
+
+                            alt:
+                                "media"
+                        },
+                        {
+                            responseType:
+                                "stream"
+                        }
+                    );
+
+                driveStream =
+                    driveResponse.data;
+
+                driveStream.on(
+                    "error",
+                    function (error) {
+                        console.error(
+                            "Platform PDF stream error:",
+                            error
+                        );
+
+                        if (!res.headersSent) {
+                            res
+                                .status(500)
+                                .end();
+                        } else {
+                            res.end();
+                        }
+                    }
+                );
+
+                req.on(
+                    "close",
+                    function () {
+                        if (
+                            driveStream &&
+                            !driveStream.destroyed
+                        ) {
+                            driveStream.destroy();
+                        }
+                    }
+                );
+
+                driveStream.pipe(
+                    res
+                );
+
+                return;
+            }
+
+            const rangeHeader =
+                req.headers.range;
+
+            const rangeMatch =
+                rangeHeader.match(
+                    /^bytes=(\d*)-(\d*)$/
+                );
+
+            if (!rangeMatch) {
+                res.setHeader(
+                    "Content-Range",
+                    `bytes */${fileSize}`
+                );
+
+                return res
+                    .status(416)
+                    .end();
+            }
+
+            let start =
+                rangeMatch[1] !== ""
+                    ? Number(
+                        rangeMatch[1]
+                    )
+                    : null;
+
+            let end =
+                rangeMatch[2] !== ""
+                    ? Number(
+                        rangeMatch[2]
+                    )
+                    : null;
+
+            if (
+                start === null &&
+                end !== null
+            ) {
+                const suffixLength =
+                    end;
+
+                if (
+                    suffixLength <= 0
+                ) {
+                    res.setHeader(
+                        "Content-Range",
+                        `bytes */${fileSize}`
+                    );
+
+                    return res
+                        .status(416)
+                        .end();
+                }
+
+                start =
+                    Math.max(
+                        fileSize -
+                            suffixLength,
+                        0
+                    );
+
+                end =
+                    fileSize - 1;
+            }
+
+            if (
+                start !== null &&
+                end === null
+            ) {
+                end =
+                    fileSize - 1;
+            }
+
+            if (
+                start === null ||
+                end === null ||
+                !Number.isInteger(start) ||
+                !Number.isInteger(end) ||
+                start < 0 ||
+                end < 0 ||
+                start >= fileSize ||
+                start > end
+            ) {
+                res.setHeader(
+                    "Content-Range",
+                    `bytes */${fileSize}`
+                );
+
+                return res
+                    .status(416)
+                    .end();
+            }
+
+            if (
+                end >= fileSize
+            ) {
+                end =
+                    fileSize - 1;
+            }
+
+            const chunkSize =
+                end - start + 1;
+
+            res.status(206);
+
+            res.setHeader(
+                "Content-Range",
+                `bytes ${start}-${end}/${fileSize}`
+            );
+
+            res.setHeader(
+                "Content-Length",
+                String(chunkSize)
+            );
+
+            res.setHeader(
+                "Accept-Ranges",
+                "bytes"
+            );
+
+            const driveResponse =
+                await drive.files.get(
+                    {
+                        fileId:
+                            platformFile.drive_file_id,
+
+                        alt:
+                            "media"
+                    },
+                    {
+                        responseType:
+                            "stream",
+
+                        headers: {
+                            Range:
+                                `bytes=${start}-${end}`
+                        }
+                    }
+                );
+
+            driveStream =
+                driveResponse.data;
+
+            driveStream.on(
+                "error",
+                function (error) {
+                    console.error(
+                        "Platform PDF Range stream error:",
+                        error
+                    );
+
+                    if (!res.headersSent) {
+                        res
+                            .status(500)
+                            .end();
+                    } else {
+                        res.end();
+                    }
+                }
+            );
+
+            req.on(
+                "close",
+                function () {
+                    if (
+                        driveStream &&
+                        !driveStream.destroyed
+                    ) {
+                        driveStream.destroy();
+                    }
+                }
+            );
+
+            driveStream.pipe(
+                res
+            );
+
+        } catch (error) {
+            console.error(
+                "Platform PDF reader error:",
+                error
+            );
+
+            if (
+                driveStream &&
+                !driveStream.destroyed
+            ) {
+                driveStream.destroy();
+            }
+
+            if (!res.headersSent) {
+                return res
+                    .status(500)
+                    .json({
+                        success: false,
+                        message:
+                            "تعذر فتح ملف منصة المؤسسة.",
+                        error:
+                            error.message
+                    });
+            }
+
+            res.end();
+        }
+    }
+);
+
+/* =========================================================
    معالجة أخطاء MULTER
 ========================================================= */
 
@@ -3315,6 +5578,18 @@ async function startServer() {
 
                 console.log(
                     "نظام وثائق التسجيل: مفعّل"
+                );
+
+                console.log(
+                    "نظام مواد الأساتذة: مفعّل"
+                );
+
+                console.log(
+                    "منصة المؤسسة: مفعّلة"
+                );
+
+                console.log(
+                    "صلاحيات منصة المؤسسة: مفعّلة"
                 );
 
                 console.log(
