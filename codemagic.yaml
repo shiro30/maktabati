@@ -22,8 +22,7 @@ workflows:
           xcode-project build-ipa \
             --project "$CM_BUILD_DIR/ios/App/App.xcodeproj" \
             --scheme "App" \
-            --config Release \
-            --no-codesign
+            --config Release
 
     artifacts:
       - build/ios/ipa/*.ipa
