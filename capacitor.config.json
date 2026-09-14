@@ -1,0 +1,9 @@
+{
+  "appId": "dz.maktabati.app",
+  "appName": "مكتبتي",
+  "webDir": "www",
+  "server": {
+    "url": "https://maktabati-1-rpeo.onrender.com",
+    "cleartext": false
+  }
+}
