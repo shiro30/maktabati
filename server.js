@@ -799,6 +799,61 @@ function validatePlatformLocation(
    إنشاء رقم وثيقة رسمي
 ========================================================= */
 
+
+
+/* =========================================================
+   نظام الإشعارات + سجل دخول التلاميذ
+========================================================= */
+
+async function createSystemNotification({
+    title,
+    message,
+    type = "general",
+    targetType = "all",
+    targetUserId = null,
+    targetBranch = null,
+    targetYear = null,
+    targetSubject = null,
+    link = null,
+    createdBy = null
+}) {
+    try {
+        const result = await supabase
+            .from("notifications")
+            .insert({
+                title: String(title || "إشعار جديد").trim(),
+                message: String(message || "").trim(),
+                type,
+                target_type: targetType,
+                target_user_id: targetUserId,
+                target_branch: targetBranch,
+                target_year: targetYear,
+                target_subject: targetSubject,
+                link,
+                created_by: createdBy,
+                is_active: true
+            });
+
+        if (result.error) {
+            console.error("Notification insert error:", result.error);
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error("Notification creation error:", error);
+        return false;
+    }
+}
+
+function getStudentAudience(profile, userId) {
+    return {
+        userId,
+        branch: profile?.branch ? String(profile.branch).trim() : null,
+        year: profile?.year ? Number(profile.year) : null
+    };
+}
+
 function generateDocumentNumber() {
     const year =
         new Date().getFullYear();
@@ -2566,6 +2621,18 @@ app.post(
                     });
             }
 
+            await createSystemNotification({
+                title: "ملف جديد من الأستاذ",
+                message: `تمت إضافة الملف «${title}» إلى منصة المؤسسة.`,
+                type: "file",
+                targetType: "class",
+                targetBranch: location.branch,
+                targetYear: location.year,
+                targetSubject: location.subject,
+                link: `pages/platform.html`,
+                createdBy: verification.user.id
+            });
+
             return res.json({
                 success: true,
 
@@ -2774,6 +2841,18 @@ app.post(
                             result.error.message
                     });
             }
+
+            await createSystemNotification({
+                title: "ملاحظة جديدة",
+                message: `لديك ملاحظة جديدة: «${title}».`,
+                type: "note",
+                targetType: "class",
+                targetBranch: location.branch,
+                targetYear: location.year,
+                targetSubject: location.subject,
+                link: `pages/platform.html`,
+                createdBy: verification.user.id
+            });
 
             return res.json({
                 success: true,
@@ -3303,6 +3382,195 @@ app.get(
         }
     }
 );
+
+
+
+/* =========================================================
+   الإشعارات - جلب إشعارات التلميذ
+========================================================= */
+app.get("/api/notifications", async function (req, res) {
+    try {
+        const verification = await verifyUser(req);
+        if (!verification.success) {
+            return res.status(verification.status).json({ success:false, message:verification.message });
+        }
+        if (verification.profile.role !== "student") {
+            return res.status(403).json({ success:false, message:"الإشعارات مخصصة لحسابات التلاميذ." });
+        }
+
+        const audience = getStudentAudience(verification.profile, verification.user.id);
+        if (!audience.branch || !audience.year) {
+            return res.json({ success:true, notifications:[], unreadCount:0 });
+        }
+
+        const result = await supabase
+            .from("notifications")
+            .select("id,title,message,type,target_type,target_user_id,target_branch,target_year,target_subject,link,created_at")
+            .eq("is_active", true)
+            .or(
+                `target_type.eq.all,and(target_type.eq.user,target_user_id.eq.${audience.userId}),and(target_type.eq.class,target_branch.eq.${audience.branch},target_year.eq.${audience.year})`
+            )
+            .order("created_at", { ascending:false })
+            .limit(100);
+
+        if (result.error) throw result.error;
+
+        const ids = (result.data || []).map(item => item.id);
+        let readIds = new Set();
+        if (ids.length) {
+            const reads = await supabase
+                .from("notification_reads")
+                .select("notification_id")
+                .eq("user_id", audience.userId)
+                .in("notification_id", ids);
+            if (!reads.error) readIds = new Set((reads.data || []).map(x => x.notification_id));
+        }
+
+        const notifications = (result.data || []).map(item => ({
+            ...item,
+            read: readIds.has(item.id)
+        }));
+
+        return res.json({
+            success:true,
+            notifications,
+            unreadCount: notifications.filter(item => !item.read).length
+        });
+    } catch (error) {
+        console.error("Get notifications error:", error);
+        return res.status(500).json({ success:false, message:"تعذر تحميل الإشعارات." });
+    }
+});
+
+app.post("/api/notifications/:id/read", async function (req, res) {
+    try {
+        const verification = await verifyUser(req);
+        if (!verification.success) return res.status(verification.status).json({ success:false, message:verification.message });
+        if (verification.profile.role !== "student") return res.status(403).json({ success:false, message:"غير مسموح." });
+
+        const notification = await supabase
+            .from("notifications")
+            .select("id,target_type,target_user_id,target_branch,target_year")
+            .eq("id", req.params.id)
+            .single();
+        if (notification.error || !notification.data) return res.status(404).json({ success:false, message:"الإشعار غير موجود." });
+
+        const n = notification.data;
+        const branch = String(verification.profile.branch || "");
+        const year = Number(verification.profile.year);
+        const allowed =
+            n.target_type === "all" ||
+            (n.target_type === "user" && n.target_user_id === verification.user.id) ||
+            (n.target_type === "class" && n.target_branch === branch && Number(n.target_year) === year);
+        if (!allowed) return res.status(403).json({ success:false, message:"لا يمكنك الوصول إلى هذا الإشعار." });
+
+        const result = await supabase.from("notification_reads").upsert({
+            notification_id: n.id,
+            user_id: verification.user.id,
+            read_at: new Date().toISOString()
+        }, { onConflict:"notification_id,user_id" });
+        if (result.error) throw result.error;
+        return res.json({ success:true });
+    } catch (error) {
+        console.error("Mark notification read error:", error);
+        return res.status(500).json({ success:false, message:"تعذر تحديث الإشعار." });
+    }
+});
+
+app.post("/api/notifications/read-all", async function (req, res) {
+    try {
+        const verification = await verifyUser(req);
+        if (!verification.success) return res.status(verification.status).json({ success:false, message:verification.message });
+        if (verification.profile.role !== "student") return res.status(403).json({ success:false, message:"غير مسموح." });
+        const branch = String(verification.profile.branch || "");
+        const year = Number(verification.profile.year);
+        const result = await supabase
+            .from("notifications")
+            .select("id")
+            .eq("is_active", true)
+            .or(`target_type.eq.all,and(target_type.eq.user,target_user_id.eq.${verification.user.id}),and(target_type.eq.class,target_branch.eq.${branch},target_year.eq.${year})`);
+        if (result.error) throw result.error;
+        const rows = (result.data || []).map(n => ({ notification_id:n.id, user_id:verification.user.id, read_at:new Date().toISOString() }));
+        if (rows.length) {
+            const reads = await supabase.from("notification_reads").upsert(rows, { onConflict:"notification_id,user_id" });
+            if (reads.error) throw reads.error;
+        }
+        return res.json({ success:true });
+    } catch (error) {
+        console.error("Read all notifications error:", error);
+        return res.status(500).json({ success:false, message:"تعذر تعليم الإشعارات كمقروءة." });
+    }
+});
+
+/* =========================================================
+   سجل دخول التلميذ
+========================================================= */
+app.post("/api/auth/login-activity", async function (req, res) {
+    try {
+        const verification = await verifyUser(req);
+        if (!verification.success) return res.status(verification.status).json({ success:false, message:verification.message });
+        const profile = verification.profile;
+        const result = await supabase.from("login_activity").insert({
+            user_id: verification.user.id,
+            role: profile.role,
+            branch: profile.branch || null,
+            year: profile.year ? Number(profile.year) : null,
+            logged_in_at: new Date().toISOString()
+        });
+        if (result.error) throw result.error;
+        return res.json({ success:true });
+    } catch (error) {
+        console.error("Login activity error:", error);
+        return res.status(500).json({ success:false, message:"تعذر تسجيل نشاط الدخول." });
+    }
+});
+
+/* =========================================================
+   التقرير الشهري لدخول التلاميذ
+========================================================= */
+app.get("/api/admin/monthly-student-logins", async function (req, res) {
+    try {
+        const verification = await verifyAccountManager(req);
+        if (!verification.success) return res.status(verification.status).json({ success:false, message:verification.message });
+
+        const month = /^\\d{4}-\\d{2}$/.test(String(req.query.month || ""))
+            ? String(req.query.month)
+            : new Date().toISOString().slice(0,7);
+        const start = `${month}-01T00:00:00.000Z`;
+        const next = new Date(Date.UTC(Number(month.slice(0,4)), Number(month.slice(5,7)), 1));
+        const end = next.toISOString();
+
+        const activity = await supabase
+            .from("login_activity")
+            .select("user_id, branch, year, logged_in_at")
+            .eq("role", "student")
+            .gte("logged_in_at", start)
+            .lt("logged_in_at", end)
+            .order("logged_in_at", { ascending:false });
+        if (activity.error) throw activity.error;
+
+        const ids = [...new Set((activity.data || []).map(x => x.user_id).filter(Boolean))];
+        let names = {};
+        if (ids.length) {
+            const profiles = await supabase.from("profiles").select("id, full_name, role").in("id", ids);
+            if (!profiles.error) names = Object.fromEntries((profiles.data || []).map(x => [x.id, x.full_name || "تلميذ"]));
+        }
+
+        const grouped = new Map();
+        for (const row of activity.data || []) {
+            if (!grouped.has(row.user_id)) grouped.set(row.user_id, { user_id:row.user_id, full_name:names[row.user_id] || "تلميذ", branch:row.branch || "", year:row.year || "", login_count:0, first_login:row.logged_in_at, last_login:row.logged_in_at });
+            const item = grouped.get(row.user_id);
+            item.login_count += 1;
+            if (new Date(row.logged_in_at) < new Date(item.first_login)) item.first_login = row.logged_in_at;
+            if (new Date(row.logged_in_at) > new Date(item.last_login)) item.last_login = row.logged_in_at;
+        }
+
+        return res.json({ success:true, month, totalStudents:grouped.size, totalLogins:(activity.data || []).length, students:[...grouped.values()] });
+    } catch (error) {
+        console.error("Monthly student logins error:", error);
+        return res.status(500).json({ success:false, message:"تعذر استخراج التقرير الشهري." });
+    }
+});
 
 /* =========================================================
    رفع كتاب PDF + غلاف
@@ -3926,6 +4194,15 @@ app.post(
 
             const book =
                 bookResult.data;
+
+            await createSystemNotification({
+                title: "تمت إضافة كتاب جديد",
+                message: `تمت إضافة كتاب «${book.title}» إلى المكتبة الإلكترونية.`,
+                type: "book",
+                targetType: "all",
+                link: `pages/book.html?id=${encodeURIComponent(book.id)}`,
+                createdBy: verification.user.id
+            });
 
             console.log(
                 "تم حفظ الكتاب والغلاف في Supabase بنجاح. ID:",

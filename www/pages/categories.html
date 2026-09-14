@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>التصنيفات | مكتبة ثانوية مصاص رابح</title>
+
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        /* =========================================
+           الهوية البصرية
+        ========================================== */
+
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
+
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
+
+            --white: #ffffff;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+
+            --border: rgba(148, 163, 184, 0.14);
+
+            --shadow:
+                0 14px 40px rgba(0, 0, 0, 0.35);
+
+            --orange-shadow:
+                0 14px 35px rgba(255, 122, 24, 0.18);
+        }
+
+
+        /* =========================================
+           الصفحة
+        ========================================== */
+
+        body {
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(18, 53, 95, 0.45),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom left,
+                    rgba(255, 122, 24, 0.07),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--black),
+                    var(--black-soft) 45%,
+                    #061426
+                );
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            position: relative;
+        }
+
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.035;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.5) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.5) 1px,
+                    transparent 1px
+                );
+
+            background-size: 40px 40px;
+
+            z-index: 0;
+        }
+
+
+        main,
+        footer,
+        .institution-bar,
+        .navbar {
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        /* =========================================
+           الشريط العلوي
+        ========================================== */
+
+        .navbar {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(3, 7, 18, 0.97),
+                    rgba(8, 27, 54, 0.97)
+                );
+
+            border-bottom:
+                1px solid rgba(255, 122, 24, 0.35);
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.35);
+        }
+
+
+        .navbar::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: -1px;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+
+            opacity: 0.8;
+        }
+
+
+        .logo-icon {
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--navy-2),
+                    var(--black-soft)
+                ) !important;
+
+            border:
+                1px solid rgba(255, 122, 24, 0.45) !important;
+
+            box-shadow:
+                0 0 22px rgba(255, 122, 24, 0.12);
+        }
+
+
+        .logo-title {
+            color: var(--white) !important;
+        }
+
+
+        .logo-subtitle {
+            color: var(--muted) !important;
+        }
+
+
+        .navbar nav a {
+            color: #cbd5e1 !important;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .navbar nav a:hover {
+            color: var(--orange-light) !important;
+        }
+
+
+        .navbar nav a.active {
+            color: var(--orange) !important;
+        }
+
+
+        /* =========================================
+           زر الحساب
+        ========================================== */
+
+        .account-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 16px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy-2),
+                    var(--navy)
+                );
+
+            border:
+                1px solid rgba(255, 122, 24, 0.35);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+
+            white-space: nowrap;
+        }
+
+
+        .account-btn:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy-3),
+                    var(--navy-2)
+                );
+
+            border-color:
+                rgba(255, 122, 24, 0.65);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 22px rgba(255, 122, 24, 0.12);
+        }
+
+
+        /* =========================================
+           شريط المؤسسة
+        ========================================== */
+
+        .institution-bar {
+            background:
+                linear-gradient(
+                    135deg,
+                    #030712,
+                    #081b36 55%,
+                    #0d274b
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 15px 20px;
+
+            border-radius: 0 0 16px 16px;
+
+            border-bottom:
+                1px solid rgba(255, 122, 24, 0.35);
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.3);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .institution-bar::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+        }
+
+
+        .institution-bar strong {
+            display: block;
+
+            color: white;
+
+            font-size: 18px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .institution-bar span {
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            opacity: 1;
+        }
+
+
+        /* =========================================
+           صفحة التصنيفات
+        ========================================== */
+
+        .categories-page {
+            min-height: 600px;
+        }
+
+
+        /* =========================================
+           عنوان القسم
+        ========================================== */
+
+        .section-heading {
+            position: relative;
+
+            padding-right: 18px;
+        }
+
+
+        .section-heading::before {
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+
+            top: 4px;
+
+            width: 4px;
+
+            height: 70px;
+
+            border-radius: 5px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            box-shadow:
+                0 0 15px rgba(255, 122, 24, 0.35);
+        }
+
+
+        .section-heading span {
+            color: var(--orange-light) !important;
+        }
+
+
+        .section-heading h2 {
+            color: var(--white) !important;
+
+            text-shadow:
+                0 3px 20px rgba(0, 0, 0, 0.4);
+        }
+
+
+        .section-heading p {
+            color: var(--muted) !important;
+        }
+
+
+        /* =========================================
+           حاوية التصنيفات
+        ========================================== */
+
+        .categories-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 24px;
+
+            margin-top: 30px;
+        }
+
+
+        /* =========================================
+           بطاقة التصنيف
+        ========================================== */
+
+        .category-card {
+            position: relative;
+
+            display: block;
+
+            min-height: 270px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            text-decoration: none;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13, 39, 75, 0.96),
+                    rgba(3, 7, 18, 0.98)
+                );
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.35);
+
+            transition:
+                transform 0.28s ease,
+                box-shadow 0.28s ease,
+                border-color 0.28s ease;
+        }
+
+
+        .category-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--orange),
+                    var(--orange-light),
+                    var(--orange)
+                );
+
+            opacity: 0.95;
+
+            z-index: 5;
+        }
+
+
+        .category-card:hover {
+            transform: translateY(-8px);
+
+            border-color:
+                rgba(255, 122, 24, 0.45);
+
+            box-shadow:
+                0 22px 50px rgba(0, 0, 0, 0.45),
+                0 0 25px rgba(255, 122, 24, 0.08);
+        }
+
+
+        /* =========================================
+           صورة التصنيف
+        ========================================== */
+
+        .category-image {
+            position: relative;
+
+            width: 100%;
+
+            height: 210px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy),
+                    var(--black-soft)
+                );
+        }
+
+
+        .category-image img {
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            opacity: 0.88;
+
+            transition:
+                transform 0.5s ease,
+                filter 0.5s ease,
+                opacity 0.5s ease;
+        }
+
+
+        .category-card:hover .category-image img {
+            transform: scale(1.07);
+
+            filter:
+                brightness(0.88)
+                saturate(1.08);
+
+            opacity: 0.96;
+        }
+
+
+        /* =========================================
+           طبقة فوق الصورة
+        ========================================== */
+
+        .category-image::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(3, 7, 18, 0.96),
+                    rgba(3, 7, 18, 0.38) 48%,
+                    rgba(3, 7, 18, 0.05) 80%,
+                    transparent
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================
+           خط برتقالي فوق الصورة
+        ========================================== */
+
+        .category-image::before {
+            content: "";
+
+            position: absolute;
+
+            left: 18px;
+            right: 18px;
+            bottom: 0;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+
+            z-index: 3;
+
+            opacity: 0.8;
+        }
+
+
+        /* =========================================
+           اسم التصنيف
+        ========================================== */
+
+        .category-title-overlay {
+            position: absolute;
+
+            right: 18px;
+
+            left: 18px;
+
+            bottom: 16px;
+
+            z-index: 4;
+
+            color: white;
+        }
+
+
+        .category-title-overlay h3 {
+            margin: 0;
+
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: 800;
+
+            text-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.7);
+        }
+
+
+        /* =========================================
+           محتوى البطاقة
+        ========================================== */
+
+        .category-content {
+            padding: 17px 18px 19px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(13, 39, 75, 0.58),
+                    rgba(3, 7, 18, 0.85)
+                );
+        }
+
+
+        .category-content p {
+            margin: 0 0 12px;
+
+            color: #aebdce;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           عدد الكتب
+        ========================================== */
+
+        .category-count {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 6px 12px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(255, 122, 24, 0.1);
+
+            border:
+                1px solid rgba(255, 122, 24, 0.28);
+
+            color: var(--orange-light);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 4px 15px rgba(255, 122, 24, 0.05);
+        }
+
+
+        /* =========================================
+           حالة التحميل
+        ========================================== */
+
+        .loading-message {
+            text-align: center;
+
+            padding: 20px;
+
+            margin-top: 24px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            background:
+                rgba(8, 27, 54, 0.55);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+        }
+
+
+        /* =========================================
+           رسالة الخطأ
+        ========================================== */
+
+        .error-message {
+            text-align: center;
+
+            padding: 20px;
+
+            color: #fecaca;
+
+            background:
+                rgba(127, 29, 29, 0.25);
+
+            border:
+                1px solid rgba(248, 113, 113, 0.3);
+
+            border-radius: 12px;
+
+            margin: 20px 0;
+        }
+
+
+        /* =========================================
+           معلومات المبرمج
+        ========================================== */
+
+        .programmer-info {
+            max-width: 800px;
+
+            margin: 40px auto 0;
+
+            padding: 24px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13, 39, 75, 0.9),
+                    rgba(3, 7, 18, 0.96)
+                );
+
+            border:
+                1px solid rgba(255, 122, 24, 0.22);
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.3);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .programmer-info::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--orange),
+                    transparent
+                );
+        }
+
+
+        .programmer-info strong {
+            display: block;
+
+            color: var(--orange-light);
+
+            font-size: 16px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .programmer-info span {
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           التذييل
+        ========================================== */
+
+        footer {
+            background:
+                linear-gradient(
+                    135deg,
+                    #02050b,
+                    #050b15,
+                    #081b36
+                ) !important;
+
+            border-top:
+                1px solid rgba(255, 122, 24, 0.25);
+
+            box-shadow:
+                0 -8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+
+        footer .copyright {
+            color: #94a3b8 !important;
+        }
+
+
+        footer strong {
+            color: white !important;
+        }
+
+
+        footer span {
+            color: #64748b !important;
+        }
+
+
+        /* =========================================
+           الأجهزة اللوحية
+        ========================================== */
+
+        @media (max-width: 1000px) {
+
+            .categories-container {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =========================================
+           الهاتف
+        ========================================== */
+
+        @media (max-width: 768px) {
+
+            .institution-bar {
+                padding: 12px 10px;
+            }
+
+
+            .institution-bar strong {
+                font-size: 16px;
+            }
+
+
+            .institution-bar span {
+                font-size: 12px;
+            }
+
+
+            .account-btn {
+                padding: 9px 12px;
+
+                font-size: 13px;
+            }
+
+
+            .section-heading {
+                padding-right: 15px;
+            }
+
+
+            .section-heading::before {
+                height: 62px;
+            }
+
+
+            .categories-container {
+                grid-template-columns: 1fr;
+
+                gap: 18px;
+            }
+
+
+            .category-card {
+                min-height: 250px;
+            }
+
+
+            .category-image {
+                height: 205px;
+            }
+
+
+            .category-title-overlay h3 {
+                font-size: 20px;
+            }
+
+
+            .programmer-info {
+                margin-top: 30px;
+
+                padding: 20px 16px;
+            }
+
+        }
+
+
+        /* =========================================
+           الهواتف الصغيرة
+        ========================================== */
+
+        @media (max-width: 420px) {
+
+            .category-image {
+                height: 190px;
+            }
+
+
+            .category-content {
+                padding: 14px 16px 16px;
+            }
+
+
+            .category-title-overlay {
+                right: 15px;
+
+                left: 15px;
+
+                bottom: 14px;
+            }
+
+
+            .category-title-overlay h3 {
+                font-size: 19px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         الشريط العلوي
+    ========================================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+
+                <img
+                    src="../favicon.png"
+                    alt="شعار مكتبة ثانوية مصاص رابح"
+                >
+
+            </div>
+
+            <div>
+
+                <div class="logo-title">
+                    مكتبة ثانوية مصاص رابح
+                </div>
+
+                <div class="logo-subtitle">
+                    المكتبة الرقمية للمؤسسة
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="../index.html">
+                الرئيسية
+            </a>
+
+            <a href="books.html">
+                الكتب
+            </a>
+
+            <a
+                href="categories.html"
+                class="active"
+            >
+                التصنيفات
+            </a>
+
+            <a href="about.html">
+                عن المكتبة
+            </a>
+
+        </nav>
+
+
+        <a
+            href="login.html"
+            class="account-btn"
+            id="accountButton"
+        >
+            🔐 تسجيل الدخول
+        </a>
+
+    </header>
+
+
+    <!-- =========================================
+         هوية المؤسسة
+    ========================================== -->
+
+    <div class="institution-bar">
+
+        <strong>
+            🏫 ثانوية مصاص رابح
+        </strong>
+
+        <span>
+            المكتبة الرقمية للمؤسسة
+        </span>
+
+    </div>
+
+
+    <!-- =========================================
+         المحتوى
+    ========================================== -->
+
+    <main>
+
+        <section class="section categories-page">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>
+                        المكتبة الرقمية للمؤسسة
+                    </span>
+
+                    <h2>
+                        تصنيفات الكتب
+                    </h2>
+
+                    <p>
+                        تصفح الكتب والمراجع التعليمية حسب المادة الدراسية.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 التصنيفات
+            ========================================== -->
+
+            <div class="categories-container">
+
+
+                <!-- =====================================
+                     الرياضيات
+                ====================================== -->
+
+                <a
+                    href="books.html?category=الرياضيات"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/mathematics.jpg"
+                            alt="الرياضيات"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                الرياضيات
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب ومراجع الرياضيات
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="الرياضيات"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     العلوم الطبيعية
+                ====================================== -->
+
+                <a
+                    href="books.html?category=العلوم الطبيعية"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/natural-sciences.jpg"
+                            alt="العلوم الطبيعية"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                العلوم الطبيعية
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب ومراجع العلوم الطبيعية
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="العلوم الطبيعية"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     العلوم الفيزيائية
+                ====================================== -->
+
+                <a
+                    href="books.html?category=العلوم الفيزيائية"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/physics.jpg"
+                            alt="العلوم الفيزيائية"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                العلوم الفيزيائية
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب ومراجع الفيزياء والكيمياء
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="العلوم الفيزيائية"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     التاريخ والجغرافيا
+                ====================================== -->
+
+                <a
+                    href="books.html?category=التاريخ والجغرافيا"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/history-geography.jpg"
+                            alt="التاريخ والجغرافيا"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                التاريخ والجغرافيا
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب التاريخ والجغرافيا والحضارات
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="التاريخ والجغرافيا"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     الفلسفة
+                ====================================== -->
+
+                <a
+                    href="books.html?category=الفلسفة"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/philosophy.jpg"
+                            alt="الفلسفة"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                الفلسفة
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب ومراجع الفلسفة
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="الفلسفة"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     العلوم الإسلامية
+                ====================================== -->
+
+                <a
+                    href="books.html?category=العلوم الإسلامية"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/islamic-studies.jpg"
+                            alt="العلوم الإسلامية"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                العلوم الإسلامية
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب ومراجع العلوم الإسلامية
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="العلوم الإسلامية"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     اللغات
+                ====================================== -->
+
+                <a
+                    href="books.html?category=اللغات"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/languages.jpg"
+                            alt="اللغات"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                اللغات
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            العربية والفرنسية والإنجليزية
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="اللغات"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     الإعلام الآلي
+                ====================================== -->
+
+                <a
+                    href="books.html?category=الإعلام الآلي"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/informatics.jpg"
+                            alt="الإعلام الآلي"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                الإعلام الآلي
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            البرمجة والحاسوب والتكنولوجيا
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="الإعلام الآلي"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =====================================
+                     الاقتصاد والمحاسبة
+                ====================================== -->
+
+                <a
+                    href="books.html?category=الاقتصاد والمحاسبة"
+                    class="category-card"
+                >
+
+                    <div class="category-image">
+
+                        <img
+                            src="../covers/economics.jpg"
+                            alt="الاقتصاد والمحاسبة"
+                            loading="lazy"
+                        >
+
+                        <div class="category-title-overlay">
+
+                            <h3>
+                                الاقتصاد والمحاسبة
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <p>
+                            كتب الاقتصاد والمحاسبة والتسيير
+                        </p>
+
+                        <span
+                            class="category-count"
+                            data-category="الاقتصاد والمحاسبة"
+                        >
+                            جاري الحساب...
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- =========================================
+                 حالة التحميل
+            ========================================== -->
+
+            <div
+                id="categoriesStatus"
+                class="loading-message"
+            >
+                جاري تحميل بيانات الكتب...
+            </div>
+
+
+            <!-- =========================================
+                 معلومات النظام
+            ========================================== -->
+
+            <div class="programmer-info">
+
+                <strong>
+                    👨‍💻 مهندس النظام: شراف الدين بوردوسن
+                </strong>
+
+                <span>
+                    أستاذ مادة الرياضيات
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         التذييل
+    ========================================== -->
+
+    <footer>
+
+        <div class="copyright">
+
+            <strong>
+                🏫 ثانوية مصاص رابح
+            </strong>
+
+            <br>
+
+            مكتبة الثانوية الرقمية
+
+            <br>
+
+            <span style="font-size:13px;">
+
+                مهندس النظام:
+                شراف الدين بوردوسن —
+                أستاذ مادة الرياضيات
+
+            </span>
+
+            <br>
+            <br>
+
+            © 2026 — جميع الحقوق محفوظة
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================
+         Supabase
+    ========================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+        /* =========================================
+           إعداد Supabase
+        ========================================== */
+
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        /* =========================================
+           زر الحساب
+        ========================================== */
+
+        const accountButton =
+            document.getElementById(
+                "accountButton"
+            );
+
+
+        /* =========================================
+           تحديد لوحة المستخدم
+        ========================================== */
+
+        function getDashboard(role) {
+
+            switch (role) {
+
+                case "programmer":
+                    return "programmer.html";
+
+                case "admin":
+                    return "admin.html";
+
+                case "teacher":
+                    return "teacher.html";
+
+                case "student":
+                    return "student.html";
+
+                default:
+                    return "login.html";
+            }
+
+        }
+
+
+        /* =========================================
+           تحديث زر الحساب
+        ========================================== */
+
+        async function updateAccountButton() {
+
+            try {
+
+                const {
+                    data: {
+                        session
+                    }
+                } =
+                    await supabaseClient.auth.getSession();
+
+
+                if (!session) {
+
+                    accountButton.href =
+                        "login.html";
+
+                    accountButton.textContent =
+                        "🔐 تسجيل الدخول";
+
+                    return;
+                }
+
+
+                const user =
+                    session.user;
+
+
+                const {
+                    data: profile,
+                    error
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select("full_name, role")
+                        .eq("id", user.id)
+                        .single();
+
+
+                if (error || !profile) {
+
+                    accountButton.href =
+                        "login.html";
+
+                    accountButton.textContent =
+                        "👤 حسابي";
+
+                    return;
+                }
+
+
+                accountButton.href =
+                    getDashboard(
+                        profile.role
+                    );
+
+
+                accountButton.textContent =
+                    "👤 " +
+                    profile.full_name;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في تحميل الحساب:",
+                    error
+                );
+
+                accountButton.href =
+                    "login.html";
+
+                accountButton.textContent =
+                    "🔐 تسجيل الدخول";
+            }
+
+        }
+
+
+        /* =========================================
+           متابعة حالة تسجيل الدخول
+        ========================================== */
+
+        supabaseClient.auth.onAuthStateChange(
+            function () {
+                updateAccountButton();
+            }
+        );
+
+
+        updateAccountButton();
+
+
+        /* =========================================
+           توحيد أسماء التصنيفات
+        ========================================== */
+
+        function normalizeCategory(category) {
+
+            if (!category) {
+                return "";
+            }
+
+
+            const value =
+                String(category)
+                    .trim()
+                    .replace(
+                        /\s+/g,
+                        " "
+                    );
+
+
+            if (
+                value === "رياضيات" ||
+                value === "الرياضيات"
+            ) {
+
+                return "الرياضيات";
+            }
+
+
+            if (
+                value === "علوم" ||
+                value === "العلوم" ||
+                value === "علم الطبيعة" ||
+                value === "العلوم الطبيعية"
+            ) {
+
+                return "العلوم الطبيعية";
+            }
+
+
+            return value;
+        }
+
+
+        /* =========================================
+           تحميل أعداد الكتب
+        ========================================== */
+
+        async function loadCategoryCounts() {
+
+            const status =
+                document.getElementById(
+                    "categoriesStatus"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/books"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "الخادم لم يرجع استجابة صحيحة."
+                    );
+
+                }
+
+
+                const result =
+                    await response.json();
+
+
+                console.log(
+                    "استجابة /api/books:",
+                    result
+                );
+
+
+                if (
+                    !result.success ||
+                    !Array.isArray(result.books)
+                ) {
+
+                    throw new Error(
+                        "بيانات الكتب القادمة من الخادم غير صالحة."
+                    );
+
+                }
+
+
+                const books =
+                    result.books;
+
+
+                console.log(
+                    "عدد الكتب:",
+                    books.length
+                );
+
+
+                /* =====================================
+                   حساب عدد الكتب لكل تصنيف
+                ====================================== */
+
+                const categoryCounts = {};
+
+
+                books.forEach(
+                    function (book) {
+
+                        if (
+                            !book ||
+                            !book.category
+                        ) {
+                            return;
+                        }
+
+
+                        const category =
+                            normalizeCategory(
+                                book.category
+                            );
+
+
+                        if (
+                            !categoryCounts[category]
+                        ) {
+
+                            categoryCounts[category] =
+                                0;
+                        }
+
+
+                        categoryCounts[category]++;
+
+                    }
+                );
+
+
+                console.log(
+                    "أعداد الكتب حسب التصنيف:",
+                    categoryCounts
+                );
+
+
+                /* =====================================
+                   عرض الأعداد داخل البطاقات
+                ====================================== */
+
+                document
+                    .querySelectorAll(
+                        ".category-count"
+                    )
+                    .forEach(
+                        function (element) {
+
+                            const category =
+                                element.getAttribute(
+                                    "data-category"
+                                );
+
+
+                            const count =
+                                categoryCounts[
+                                    category
+                                ] || 0;
+
+
+                            if (count === 0) {
+
+                                element.textContent =
+                                    "لا توجد كتب";
+
+                            }
+
+                            else if (count === 1) {
+
+                                element.textContent =
+                                    "كتاب واحد";
+
+                            }
+
+                            else {
+
+                                element.textContent =
+                                    count +
+                                    " كتب";
+
+                            }
+
+                        }
+                    );
+
+
+                /* =====================================
+                   إخفاء رسالة التحميل
+                ====================================== */
+
+                status.style.display =
+                    "none";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "خطأ في تحميل بيانات التصنيفات:",
+                    error
+                );
+
+
+                status.className =
+                    "error-message";
+
+
+                status.textContent =
+                    "تعذر تحميل بيانات الكتب. تأكد من تشغيل الخادم.";
+
+            }
+
+        }
+
+
+        /* =========================================
+           تشغيل الصفحة
+        ========================================== */
+
+        loadCategoryCounts();
+
+    </script>
+
+</body>
+
+</html>

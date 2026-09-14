@@ -1,0 +1,6434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>منصة المؤسسة | مكتبة ثانوية مصاص رابح</title>
+
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --black: #030712;
+            --black-soft: #070d18;
+            --navy: #081b36;
+            --navy-2: #0d274b;
+            --navy-3: #12355f;
+
+            --orange: #ff7a18;
+            --orange-light: #ff9a3d;
+
+            --white: #ffffff;
+            --text: #f5f7fa;
+            --muted: #aab6c6;
+
+            --border: rgba(255,255,255,.09);
+            --shadow: 0 18px 50px rgba(0,0,0,.35);
+
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --yellow: #eab308;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Cairo", sans-serif;
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(18,53,95,.28),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(255,122,24,.08),
+                    transparent 30%
+                ),
+                var(--black);
+            color: var(--text);
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::selection {
+            background: var(--orange);
+            color: #fff;
+        }
+
+        .basmala {
+            text-align: center;
+            padding: 20px 15px 8px;
+            color: #f4f4f4;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .top-header {
+            width: min(1250px, calc(100% - 30px));
+            margin: 10px auto 0;
+            padding: 22px 26px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(13,39,75,.96),
+                    rgba(7,13,24,.98)
+                );
+            box-shadow: var(--shadow);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            color: #fff;
+            font-size: 29px;
+
+            box-shadow:
+                0 8px 25px rgba(255,122,24,.25);
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(20px,3vw,30px);
+            font-weight: 900;
+        }
+
+        .brand p {
+            margin: 3px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.04);
+            color: #fff;
+
+            padding: 10px 16px;
+            border-radius: 12px;
+
+            cursor: pointer;
+            transition: .25s ease;
+            font-weight: 700;
+        }
+
+        .header-btn:hover {
+            border-color: rgba(255,122,24,.55);
+            background: rgba(255,122,24,.12);
+            transform: translateY(-2px);
+        }
+
+        .header-btn.primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+            border-color: transparent;
+        }
+
+        /* =========================
+           USER BAR
+        ========================= */
+
+        .user-bar {
+            width: min(1250px, calc(100% - 30px));
+            margin: 14px auto 0;
+
+            padding: 15px 19px;
+
+            border: 1px solid rgba(255,122,24,.22);
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,122,24,.075),
+                    rgba(13,39,75,.35)
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,122,24,.13);
+            border: 1px solid rgba(255,122,24,.22);
+
+            font-size: 23px;
+        }
+
+        .user-name {
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .user-role {
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .user-status {
+            padding: 8px 13px;
+            border-radius: 999px;
+
+            background: rgba(34,197,94,.1);
+            border: 1px solid rgba(34,197,94,.22);
+
+            color: #72e6a0;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           INSTITUTION
+        ========================= */
+
+        .institution-bar {
+            width: min(1250px, calc(100% - 30px));
+            margin: 15px auto 0;
+
+            border: 1px solid rgba(255,122,24,.22);
+            background: rgba(255,122,24,.06);
+
+            border-radius: 16px;
+            padding: 12px 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .institution-name {
+            font-weight: 800;
+        }
+
+        .institution-description {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: min(1250px, calc(100% - 30px));
+            margin: 35px auto 70px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 7px 14px;
+
+            border-radius: 999px;
+
+            background: rgba(255,122,24,.1);
+            border: 1px solid rgba(255,122,24,.2);
+
+            color: var(--orange-light);
+
+            font-size: 13px;
+            font-weight: 800;
+
+            margin-bottom: 13px;
+        }
+
+        .hero h2 {
+            margin: 0;
+
+            font-size: clamp(27px,5vw,45px);
+            font-weight: 900;
+
+            line-height: 1.35;
+        }
+
+        .hero p {
+            max-width: 760px;
+            margin: 12px auto 0;
+
+            color: var(--muted);
+
+            line-height: 2;
+            font-size: 15px;
+        }
+
+        /* =========================
+           BREADCRUMB
+        ========================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            padding: 13px 17px;
+            margin-bottom: 25px;
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.025);
+
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .breadcrumb .current {
+            color: var(--orange-light);
+            font-weight: 800;
+        }
+
+        /* =========================
+           TITLES
+        ========================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            margin: 30px 0 18px;
+        }
+
+        .section-title h3 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .section-title span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+           BRANCHES
+        ========================= */
+
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 18px;
+        }
+
+        .branch-card {
+            position: relative;
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 22px;
+
+            padding: 27px 23px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,39,75,.85),
+                    rgba(7,13,24,.97)
+                );
+
+            cursor: pointer;
+            transition: .3s ease;
+
+            min-height: 205px;
+        }
+
+        .branch-card::after {
+            content: "";
+
+            position: absolute;
+
+            left: -35px;
+            bottom: -45px;
+
+            width: 140px;
+            height: 140px;
+
+            border-radius: 50%;
+
+            background: rgba(255,122,24,.07);
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+
+            border-color: rgba(255,122,24,.5);
+
+            box-shadow:
+                0 18px 40px rgba(0,0,0,.28);
+        }
+
+        .branch-card.active {
+            border-color: var(--orange);
+
+            box-shadow:
+                0 0 0 1px rgba(255,122,24,.2),
+                0 18px 45px rgba(255,122,24,.08);
+        }
+
+        .branch-icon {
+            width: 60px;
+            height: 60px;
+
+            border-radius: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,122,24,.11);
+            border: 1px solid rgba(255,122,24,.2);
+
+            font-size: 30px;
+            margin-bottom: 16px;
+        }
+
+        .branch-card h4 {
+            margin: 0 0 7px;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .branch-card p {
+            margin: 0;
+
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 13px;
+        }
+
+        /* =========================
+           YEARS
+        ========================= */
+
+        .years-section,
+        .subjects-section,
+        .subject-content {
+            display: none;
+            animation: fadeIn .3s ease;
+        }
+
+        .years-section.visible,
+        .subjects-section.visible,
+        .subject-content.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .years-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+        }
+
+        .year-card {
+            border: 1px solid var(--border);
+            border-radius: 17px;
+
+            padding: 22px;
+
+            background: rgba(255,255,255,.025);
+
+            cursor: pointer;
+            transition: .25s ease;
+
+            text-align: center;
+        }
+
+        .year-card:hover {
+            background: rgba(255,122,24,.07);
+            border-color: rgba(255,122,24,.35);
+
+            transform: translateY(-3px);
+        }
+
+        .year-card.active {
+            background: rgba(255,122,24,.1);
+            border-color: var(--orange);
+        }
+
+        .year-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--orange-light);
+        }
+
+        .year-title {
+            margin-top: 4px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           SUBJECTS
+        ========================= */
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 14px;
+        }
+
+        .subject-card {
+            border: 1px solid var(--border);
+            border-radius: 17px;
+
+            padding: 19px 15px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,39,75,.5),
+                    rgba(255,255,255,.02)
+                );
+
+            cursor: pointer;
+            transition: .25s ease;
+
+            text-align: center;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+
+            border-color: rgba(255,122,24,.42);
+
+            background: rgba(255,122,24,.07);
+        }
+
+        .subject-card.active {
+            border-color: var(--orange);
+            background: rgba(255,122,24,.1);
+        }
+
+        .subject-icon {
+            font-size: 29px;
+            margin-bottom: 9px;
+        }
+
+        .subject-name {
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           SUBJECT HEADER
+        ========================= */
+
+        .subject-header {
+            margin-top: 28px;
+
+            padding: 23px;
+
+            border-radius: 20px;
+
+            border: 1px solid rgba(255,122,24,.22);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,122,24,.1),
+                    rgba(13,39,75,.5)
+                );
+        }
+
+        .subject-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .subject-heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .subject-heading-icon {
+            width: 57px;
+            height: 57px;
+
+            border-radius: 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,122,24,.13);
+            border: 1px solid rgba(255,122,24,.2);
+
+            font-size: 29px;
+        }
+
+        .subject-heading h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .subject-heading p {
+            margin: 3px 0 0;
+
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* =========================
+           PERMISSION
+        ========================= */
+
+        .permission-badge {
+            display: none;
+
+            padding: 8px 13px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .permission-badge.visible {
+            display: inline-flex;
+        }
+
+        .permission-badge.full {
+            background: rgba(34,197,94,.12);
+            color: #6ee7a0;
+            border: 1px solid rgba(34,197,94,.25);
+        }
+
+        .permission-badge.teacher {
+            background: rgba(59,130,246,.12);
+            color: #7db5ff;
+            border: 1px solid rgba(59,130,246,.25);
+        }
+
+        .permission-badge.readonly {
+            background: rgba(255,255,255,.06);
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .access-info {
+            margin: 17px 0;
+
+            padding: 14px 16px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+
+            color: var(--muted);
+
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .access-info strong {
+            color: #fff;
+        }
+
+        /* =========================
+           ALERT
+        ========================= */
+
+        .alert {
+            display: none;
+
+            margin: 15px 0;
+
+            padding: 12px 15px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .alert.visible {
+            display: block;
+        }
+
+        .alert.success {
+            background: rgba(34,197,94,.1);
+            color: #78e7a0;
+            border: 1px solid rgba(34,197,94,.2);
+        }
+
+        .alert.error {
+            background: rgba(239,68,68,.1);
+            color: #ff9292;
+            border: 1px solid rgba(239,68,68,.2);
+        }
+
+        .alert.info {
+            background: rgba(59,130,246,.1);
+            color: #86b8ff;
+            border: 1px solid rgba(59,130,246,.2);
+        }
+
+        /* =========================
+           TABS
+        ========================= */
+
+        .content-tabs {
+            display: flex;
+            gap: 10px;
+
+            margin: 20px 0;
+
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            padding: 11px 18px;
+
+            background: rgba(255,255,255,.035);
+            color: var(--muted);
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            transition: .25s ease;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            border-color: rgba(255,122,24,.35);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            border-color: transparent;
+        }
+
+        .content-panel {
+            display: none;
+        }
+
+        .content-panel.active {
+            display: block;
+            animation: fadeIn .25s ease;
+        }
+
+        /* =========================
+           PANEL
+        ========================= */
+
+        .panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            flex-wrap: wrap;
+
+            margin-bottom: 16px;
+        }
+
+        .panel-head h4 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 900;
+        }
+
+        .panel-head p {
+            margin: 3px 0 0;
+
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* =========================
+           MANAGEMENT BOX
+        ========================= */
+
+        .management-box {
+            display: none;
+
+            margin-bottom: 20px;
+
+            padding: 20px;
+
+            border-radius: 17px;
+
+            border: 1px solid var(--border);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,39,75,.55),
+                    rgba(255,255,255,.025)
+                );
+        }
+
+        .management-box.visible {
+            display: block;
+            animation: fadeIn .25s ease;
+        }
+
+        .management-box h5 {
+            margin: 0 0 15px;
+
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .management-box .box-description {
+            margin: -7px 0 16px;
+
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #d8dee8;
+            font-weight: 700;
+        }
+
+        .form-control {
+            width: 100%;
+
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            background: rgba(0,0,0,.25);
+            color: #fff;
+
+            padding: 11px 13px;
+
+            outline: none;
+
+            transition: .2s ease;
+        }
+
+        .form-control:focus {
+            border-color: rgba(255,122,24,.65);
+
+            box-shadow:
+                0 0 0 3px rgba(255,122,24,.08);
+        }
+
+        textarea.form-control {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        select.form-control option {
+            background: #0b1729;
+            color: #fff;
+        }
+
+        .form-actions {
+            display: flex;
+
+            gap: 9px;
+
+            margin-top: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            border: 0;
+            border-radius: 11px;
+
+            padding: 10px 15px;
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            transition: .25s ease;
+        }
+
+        .action-btn.primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange),
+                    var(--orange-light)
+                );
+
+            color: #fff;
+        }
+
+        .action-btn.secondary {
+            background: rgba(255,255,255,.06);
+
+            color: #fff;
+
+            border: 1px solid var(--border);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           FILES
+        ========================= */
+
+        .files-list,
+        .notes-list {
+            display: grid;
+            gap: 13px;
+        }
+
+        .file-card {
+            position: relative;
+
+            border: 1px solid var(--border);
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(13,39,75,.15)
+                );
+
+            padding: 18px;
+
+            transition: .25s ease;
+        }
+
+        .file-card:hover {
+            border-color: rgba(255,122,24,.32);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,.18);
+        }
+
+        .file-main {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .file-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .file-title {
+            margin: 0 0 7px;
+
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .file-description {
+            margin: 0;
+
+            color: var(--muted);
+
+            line-height: 1.9;
+
+            font-size: 13px;
+
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .file-meta {
+            margin-top: 10px;
+
+            color: #7f8ca0;
+
+            font-size: 11px;
+
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .file-actions {
+            display: flex;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+
+            flex-shrink: 0;
+        }
+
+        .mini-btn {
+            border: 1px solid var(--border);
+
+            background: rgba(255,255,255,.04);
+
+            color: #fff;
+
+            padding: 7px 10px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            transition: .2s ease;
+        }
+
+        .mini-btn:hover {
+            border-color: rgba(255,122,24,.4);
+
+            background: rgba(255,122,24,.09);
+
+            transform: translateY(-1px);
+        }
+
+        .mini-btn.download {
+            background: rgba(34,197,94,.08);
+
+            color: #7be6a0;
+
+            border-color: rgba(34,197,94,.2);
+        }
+
+        .mini-btn.danger {
+            color: #ff9292;
+
+            border-color: rgba(239,68,68,.18);
+        }
+
+        /* =========================
+           NOTES
+        ========================= */
+
+        .note-card {
+            position: relative;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            padding: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,39,75,.42),
+                    rgba(255,255,255,.025)
+                );
+
+            transition: .25s ease;
+        }
+
+        .note-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+
+            width: 5px;
+            height: 100%;
+
+            background: var(--orange);
+        }
+
+        .note-card:hover {
+            transform: translateY(-2px);
+
+            border-color: rgba(255,122,24,.3);
+
+            box-shadow:
+                0 14px 35px rgba(0,0,0,.2);
+        }
+
+        .note-main {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .note-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .note-type {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 5px 10px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+            font-weight: 900;
+
+            margin-bottom: 9px;
+        }
+
+        .note-type.homework {
+            background: rgba(59,130,246,.12);
+            color: #83b8ff;
+        }
+
+        .note-type.test {
+            background: rgba(234,179,8,.12);
+            color: #f4d56b;
+        }
+
+        .note-type.comment {
+            background: rgba(34,197,94,.12);
+            color: #78e7a0;
+        }
+
+        .note-type.reminder {
+            background: rgba(255,122,24,.12);
+            color: var(--orange-light);
+        }
+
+        .note-type.general {
+            background: rgba(255,255,255,.07);
+            color: #cbd5e1;
+        }
+
+        .note-title {
+            margin: 0 0 8px;
+
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .note-content {
+            margin: 0;
+
+            color: #c5cfdd;
+
+            line-height: 2;
+
+            font-size: 13px;
+
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .note-meta {
+            margin-top: 12px;
+
+            color: #7f8ca0;
+
+            font-size: 11px;
+
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .note-actions {
+            display: flex;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+
+            flex-shrink: 0;
+        }
+
+        /* =========================
+           EMPTY / LOADING
+        ========================= */
+
+        .empty-state {
+            text-align: center;
+
+            padding: 50px 20px;
+
+            border: 1px dashed rgba(255,255,255,.12);
+
+            border-radius: 17px;
+
+            color: var(--muted);
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h5 {
+            margin: 0 0 6px;
+
+            color: #fff;
+
+            font-size: 17px;
+        }
+
+        .empty-state p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .loading {
+            text-align: center;
+
+            padding: 30px;
+
+            color: var(--muted);
+        }
+
+        .spinner {
+            width: 28px;
+            height: 28px;
+
+            border: 3px solid rgba(255,255,255,.1);
+
+            border-top-color: var(--orange);
+
+            border-radius: 50%;
+
+            animation: spin .8s linear infinite;
+
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================
+           PDF VIEWER
+        ========================= */
+
+        .pdf-viewer {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1000;
+
+            background: rgba(0,0,0,.9);
+
+            padding: 25px;
+        }
+
+        .pdf-viewer.visible {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdf-container {
+            width: min(1100px,100%);
+
+            height: min(90vh,850px);
+
+            background: #111827;
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.5);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-toolbar {
+            padding: 11px 14px;
+
+            background: #070d18;
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+        .pdf-toolbar-title {
+            font-size: 13px;
+            font-weight: 800;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+        }
+
+        .pdf-toolbar-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+        .pdf-close {
+            border: 0;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 9px;
+
+            background: rgba(239,68,68,.1);
+
+            color: #ff8c8c;
+
+            cursor: pointer;
+
+            font-size: 18px;
+        }
+
+        .platform-pdf-pages {
+            flex: 1;
+            width: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: #525252;
+            padding: 18px 10px 30px;
+            direction: ltr;
+        }
+
+        .platform-pdf-page {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto 18px;
+            background: #fff;
+            box-shadow: 0 4px 18px rgba(0,0,0,.35);
+            position: relative;
+        }
+
+        .platform-pdf-page canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .platform-pdf-page-number {
+            position: absolute;
+            bottom: 7px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,.72);
+            color: #fff;
+            padding: 4px 9px;
+            border-radius: 7px;
+            font-size: 11px;
+            direction: rtl;
+        }
+
+        .platform-pdf-placeholder {
+            min-height: 120px;
+            display: grid;
+            place-items: center;
+            padding: 25px;
+            color: #555;
+            direction: rtl;
+        }
+
+        .platform-pdf-loading {
+            position: absolute;
+            inset: 46px 0 0;
+            z-index: 5;
+            display: grid;
+            place-items: center;
+            align-content: center;
+            gap: 10px;
+            background: #525252;
+            color: #fff;
+            direction: rtl;
+        }
+
+        .platform-pdf-loading.hidden { display: none; }
+
+        .platform-pdf-loading span {
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+
+            background: rgba(0,0,0,.3);
+
+            padding: 30px 20px;
+
+            text-align: center;
+        }
+
+        .footer-dua {
+            color: var(--orange-light);
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+        .footer-copy {
+            color: #718096;
+
+            font-size: 11px;
+
+            line-height: 1.8;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width:1050px) {
+            .subjects-grid {
+                grid-template-columns: repeat(3,1fr);
+            }
+        }
+
+        @media (max-width:850px) {
+            .branches-grid,
+            .years-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subjects-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .top-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .header-actions {
+                justify-content: stretch;
+            }
+
+            .header-btn {
+                flex: 1;
+            }
+        }
+
+        @media (max-width:600px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .file-main,
+            .note-main {
+                flex-direction: column;
+            }
+
+            .file-actions,
+            .note-actions {
+                width: 100%;
+            }
+
+            .institution-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-bar {
+                align-items: flex-start;
+            }
+
+            main {
+                margin-top: 25px;
+            }
+
+            .pdf-viewer {
+                padding: 8px;
+            }
+
+            .pdf-container {
+                height: 94vh;
+            }
+        }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+
+    <div class="basmala">
+        بسم الله الرحمن الرحيم
+    </div>
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏫
+            </div>
+
+            <div>
+                <h1>منصة المؤسسة</h1>
+
+                <p>
+                    المنصة التعليمية الرقمية لثانوية مصاص رابح
+                </p>
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <a
+                class="header-btn"
+                href="../index.html"
+            >
+                🏠 الرئيسية
+            </a>
+
+            <a
+                class="header-btn"
+                id="accountButton"
+                href="login.html"
+            >
+                🔐 تسجيل الدخول
+            </a>
+
+        </div>
+
+    </header>
+
+    <div
+        class="user-bar"
+        id="userBar"
+    >
+
+        <div class="user-info">
+
+            <div
+                class="user-avatar"
+                id="userAvatar"
+            >
+                👤
+            </div>
+
+            <div>
+
+                <div
+                    class="user-name"
+                    id="userName"
+                >
+                    زائر المنصة
+                </div>
+
+                <div
+                    class="user-role"
+                    id="userRole"
+                >
+                    لم يتم تسجيل الدخول
+                </div>
+
+            </div>
+
+        </div>
+
+        <div
+            class="user-status"
+            id="userStatus"
+        >
+            👁️ وضع العرض
+        </div>
+
+    </div>
+
+    <div class="institution-bar">
+
+        <div class="institution-name">
+            🏫 ثانوية مصاص رابح
+        </div>
+
+        <div class="institution-description">
+            فضاء الدروس والوثائق والملاحظات والمتابعة البيداغوجية
+        </div>
+
+    </div>
+
+    <main>
+
+        <section class="hero">
+
+            <div class="eyebrow">
+                📚 التعليم الثانوي
+            </div>
+
+            <h2>
+                منصة المؤسسة التعليمية
+            </h2>
+
+            <p>
+                اختر الشعبة ثم السنة ثم المادة للوصول إلى الدروس والوثائق
+                والملاحظات والواجبات والتنبيهات الخاصة بالمادة.
+            </p>
+
+        </section>
+
+        <div
+            class="breadcrumb"
+            id="breadcrumb"
+        >
+            <span>🏫 منصة المؤسسة</span>
+            <span>›</span>
+            <span class="current">اختر الشعبة</span>
+        </div>
+
+        <section>
+
+            <div class="section-title">
+
+                <h3>
+                    الشعب التعليمية
+                </h3>
+
+                <span>
+                    اختر الشعبة للمتابعة
+                </span>
+
+            </div>
+
+            <div class="branches-grid">
+
+                <div
+                    class="branch-card"
+                    id="branch-scientific"
+                    onclick="selectBranch('scientific')"
+                >
+
+                    <div class="branch-icon">
+                        🧬
+                    </div>
+
+                    <h4>
+                        علوم تجريبية
+                    </h4>
+
+                    <p>
+                        فضاء تلاميذ شعبة العلوم التجريبية بمختلف سنواتها وموادها.
+                    </p>
+
+                </div>
+
+                <div
+                    class="branch-card"
+                    id="branch-literature"
+                    onclick="selectBranch('literature')"
+                >
+
+                    <div class="branch-icon">
+                        📖
+                    </div>
+
+                    <h4>
+                        آداب وفلسفة
+                    </h4>
+
+                    <p>
+                        فضاء تلاميذ شعبة الآداب والفلسفة بمختلف سنواتها وموادها.
+                    </p>
+
+                </div>
+
+                <div
+                    class="branch-card"
+                    id="branch-management"
+                    onclick="selectBranch('management')"
+                >
+
+                    <div class="branch-icon">
+                        📊
+                    </div>
+
+                    <h4>
+                        تسيير واقتصاد
+                    </h4>
+
+                    <p>
+                        فضاء تلاميذ شعبة تسيير واقتصاد بسنواتها وموادها المتخصصة.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section
+            class="years-section"
+            id="yearsSection"
+        >
+
+            <div class="section-title">
+
+                <h3>
+                    المستويات الدراسية
+                </h3>
+
+                <span id="selectedBranchText"></span>
+
+            </div>
+
+            <div
+                class="years-grid"
+                id="yearsGrid"
+            >
+
+                <div
+                    class="year-card"
+                    id="year-1"
+                    onclick="selectYear(1)"
+                >
+
+                    <div class="year-number">
+                        1
+                    </div>
+
+                    <div class="year-title">
+                        السنة الأولى
+                    </div>
+
+                </div>
+
+                <div
+                    class="year-card"
+                    id="year-2"
+                    onclick="selectYear(2)"
+                >
+
+                    <div class="year-number">
+                        2
+                    </div>
+
+                    <div class="year-title">
+                        السنة الثانية
+                    </div>
+
+                </div>
+
+                <div
+                    class="year-card"
+                    id="year-3"
+                    onclick="selectYear(3)"
+                >
+
+                    <div class="year-number">
+                        3
+                    </div>
+
+                    <div class="year-title">
+                        السنة الثالثة
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section
+            class="subjects-section"
+            id="subjectsSection"
+        >
+
+            <div class="section-title">
+
+                <h3>
+                    المواد الدراسية
+                </h3>
+
+                <span id="selectedYearText"></span>
+
+            </div>
+
+            <div
+                class="subjects-grid"
+                id="subjectsGrid"
+            ></div>
+
+        </section>
+
+        <section
+            class="subject-content"
+            id="subjectContent"
+        >
+
+            <div class="subject-header">
+
+                <div class="subject-header-top">
+
+                    <div class="subject-heading">
+
+                        <div
+                            class="subject-heading-icon"
+                            id="selectedSubjectIcon"
+                        >
+                            📚
+                        </div>
+
+                        <div>
+
+                            <h3
+                                id="selectedSubjectTitle"
+                            >
+                                المادة
+                            </h3>
+
+                            <p
+                                id="selectedSubjectPath"
+                            >
+                                الشعبة › السنة › المادة
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="permission-badge"
+                        id="permissionBadge"
+                    ></div>
+
+                </div>
+
+            </div>
+
+            <div
+                class="access-info"
+                id="accessInfo"
+            >
+                يرجى اختيار مادة لعرض محتواها.
+            </div>
+
+            <div
+                class="alert"
+                id="platformAlert"
+            ></div>
+
+            <div class="content-tabs">
+
+                <button
+                    class="tab-btn active"
+                    id="filesTab"
+                    onclick="switchTab('files')"
+                >
+                    📄 الدروس والملفات
+                </button>
+
+                <button
+                    class="tab-btn"
+                    id="notesTab"
+                    onclick="switchTab('notes')"
+                >
+                    📝 الملاحظات والتنبيهات
+                </button>
+
+            </div>
+
+            <div
+                class="content-panel active"
+                id="filesPanel"
+            >
+
+                <div class="panel-head">
+
+                    <div>
+
+                        <h4>
+                            📚 الدروس والوثائق
+                        </h4>
+
+                        <p>
+                            ملفات PDF الخاصة بالمادة والمستوى المحدد.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="management-box"
+                    id="fileManagementBox"
+                >
+
+                    <h5>
+                        📤 رفع درس أو وثيقة
+                    </h5>
+
+                    <p class="box-description">
+                        يمكنك رفع درس بصيغة PDF لهذه المادة. الأستاذ يدير مادته فقط، بينما المدير والمبرمج لهما صلاحيات كاملة.
+                    </p>
+
+                    <form id="fileForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="fileTitle">
+                                    عنوان الدرس
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="fileTitle"
+                                    class="form-control"
+                                    placeholder="مثال: الدرس الأول في الدوال"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="fileInput">
+                                    ملف PDF
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="fileInput"
+                                    class="form-control"
+                                    accept="application/pdf,.pdf"
+                                >
+
+                            </div>
+
+                            <div class="form-group full">
+
+                                <label for="fileDescription">
+                                    وصف الدرس
+                                </label>
+
+                                <textarea
+                                    id="fileDescription"
+                                    class="form-control"
+                                    placeholder="اكتب وصفا مختصرا للدرس..."
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                class="action-btn primary"
+                                id="fileSubmitButton"
+                            >
+                                📤 رفع الدرس
+                            </button>
+
+                            <button
+                                type="button"
+                                class="action-btn secondary"
+                                onclick="resetFileForm()"
+                            >
+                                إلغاء
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div
+                    class="files-list"
+                    id="filesList"
+                >
+
+                    <div class="loading">
+
+                        <div class="spinner"></div>
+
+                        جار تحميل الملفات...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                class="content-panel"
+                id="notesPanel"
+            >
+
+                <div class="panel-head">
+
+                    <div>
+
+                        <h4>
+                            📝 فضاء الملاحظات والتنبيهات
+                        </h4>
+
+                        <p>
+                            هنا ينشر الأستاذ الواجبات والاختبارات والتذكيرات والملاحظات الخاصة بالتلاميذ.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="management-box"
+                    id="noteManagementBox"
+                >
+
+                    <h5>
+                        ✍️ كتابة ملاحظة جديدة
+                    </h5>
+
+                    <p class="box-description">
+                        ستظهر الملاحظة لجميع التلاميذ الذين يطلعون على هذه المادة.
+                    </p>
+
+                    <form id="noteForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="noteType">
+                                    نوع الملاحظة
+                                </label>
+
+                                <select
+                                    id="noteType"
+                                    class="form-control"
+                                    required
+                                >
+
+                                    <option value="general">
+                                        📌 ملاحظة عامة
+                                    </option>
+
+                                    <option value="homework">
+                                        📚 واجب منزلي
+                                    </option>
+
+                                    <option value="exam">
+                                        📝 اختبار / فرض
+                                    </option>
+
+                                    <option value="reminder">
+                                        ⏰ تذكير
+                                    </option>
+
+                                    <option value="comment">
+                                        💬 تعليق
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="noteTitle">
+                                    عنوان الملاحظة
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="noteTitle"
+                                    class="form-control"
+                                    placeholder="مثال: واجب منزلي"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="form-group full">
+
+                                <label for="noteContent">
+                                    نص الملاحظة
+                                </label>
+
+                                <textarea
+                                    id="noteContent"
+                                    class="form-control"
+                                    placeholder="اكتب هنا تفاصيل الواجب أو الاختبار أو التنبيه..."
+                                    required
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                class="action-btn primary"
+                                id="noteSubmitButton"
+                            >
+                                📌 نشر الملاحظة
+                            </button>
+
+                            <button
+                                type="button"
+                                class="action-btn secondary"
+                                onclick="resetNoteForm()"
+                            >
+                                إلغاء
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div
+                    class="notes-list"
+                    id="notesList"
+                >
+
+                    <div class="loading">
+
+                        <div class="spinner"></div>
+
+                        جار تحميل الملاحظات...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div
+        class="pdf-viewer"
+        id="pdfViewer"
+        onclick="closePdfIfOutside(event)"
+    >
+
+        <div class="pdf-container">
+
+            <div class="pdf-toolbar">
+
+                <div
+                    class="pdf-toolbar-title"
+                    id="pdfViewerTitle"
+                >
+                    عرض الملف
+                </div>
+
+                <div class="pdf-toolbar-actions">
+
+                    <button
+                        class="mini-btn download"
+                        id="pdfDownloadButton"
+                        type="button"
+                    >
+                        ⬇️ تحميل
+                    </button>
+
+                    <button
+                        class="pdf-close"
+                        type="button"
+                        onclick="closePdfViewer()"
+                        title="إغلاق"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="platform-pdf-loading" id="platformPdfLoading">
+                <div class="spinner"></div>
+                <strong id="platformPdfLoadingText">جاري تحميل الدرس...</strong>
+                <span id="platformPdfLoadingPercent">0%</span>
+            </div>
+
+            <div class="platform-pdf-pages" id="platformPdfPages"></div>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        <div class="footer-dua">
+            اللهم علمنا ما جهلنا وزدنا علما
+        </div>
+
+        <div class="footer-copy">
+
+            مكتبة ثانوية مصاص رابح الإلكترونية ©
+
+            <span id="currentYear"></span>
+
+            — منصة المؤسسة التعليمية
+
+        </div>
+
+    </footer>
+
+   <script>
+        "use strict";
+
+        /* =========================================================
+           SUPABASE
+        ========================================================= */
+
+        const SUPABASE_URL =
+            "https://xdkluojrvdhdtihblpwy.supabase.co";
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_znxrXQ3DJxs8D5O--_TCcQ_6tXDfpFK";
+
+        let supabaseClient = null;
+
+        try {
+
+            if (
+                window.supabase &&
+                window.supabase.createClient
+            ) {
+
+                supabaseClient =
+                    window.supabase.createClient(
+                        SUPABASE_URL,
+                        SUPABASE_ANON_KEY
+                    );
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Supabase initialization error:",
+                error
+            );
+        }
+
+
+        /* =========================================================
+           DATA
+        ========================================================= */
+
+        const subjectsData = {
+
+            scientific: {
+
+                1: [
+                    "الرياضيات",
+                    "العلوم الطبيعية",
+                    "العلوم الفيزيائية",
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "التاريخ والجغرافيا",
+                    "العلوم الإسلامية",
+                    "الإعلام الآلي",
+                    "التكنولوجيا",
+                    "التربية البدنية والرياضية"
+                ],
+
+                2: [
+                    "الرياضيات",
+                    "العلوم الطبيعية",
+                    "العلوم الفيزيائية",
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "التاريخ والجغرافيا",
+                    "العلوم الإسلامية",
+                    "الفلسفة",
+                    "التربية البدنية والرياضية"
+                ],
+
+                3: [
+                    "الرياضيات",
+                    "العلوم الطبيعية",
+                    "العلوم الفيزيائية",
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "التاريخ والجغرافيا",
+                    "الفلسفة",
+                    "العلوم الإسلامية",
+                    "التربية البدنية والرياضية"
+                ]
+
+            },
+
+            literature: {
+
+                1: [
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "الرياضيات",
+                    "التاريخ والجغرافيا",
+                    "العلوم الإسلامية",
+                    "العلوم الطبيعية",
+                    "العلوم الفيزيائية",
+                    "الإعلام الآلي",
+                    "التكنولوجيا",
+                    "التربية البدنية والرياضية"
+                ],
+
+                2: [
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "الرياضيات",
+                    "التاريخ والجغرافيا",
+                    "الفلسفة",
+                    "العلوم الإسلامية",
+                    "العلوم الطبيعية",
+                    "العلوم الفيزيائية",
+                    "الإعلام الآلي",
+                    "التربية البدنية والرياضية"
+                ],
+
+                3: [
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "الرياضيات",
+                    "التاريخ والجغرافيا",
+                    "الفلسفة",
+                    "العلوم الإسلامية",
+                    "التربية البدنية والرياضية"
+                ]
+
+            },
+
+            management: {
+
+                2: [
+                    "الرياضيات",
+                    "الاقتصاد والمناجمنت",
+                    "التسيير المحاسبي والمالي",
+                    "القانون",
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "التاريخ والجغرافيا",
+                    "الفلسفة",
+                    "العلوم الإسلامية",
+                    "التربية البدنية والرياضية"
+                ],
+
+                3: [
+                    "الرياضيات",
+                    "الاقتصاد والمناجمنت",
+                    "التسيير المحاسبي والمالي",
+                    "القانون",
+                    "اللغة العربية",
+                    "اللغة الفرنسية",
+                    "اللغة الإنجليزية",
+                    "التاريخ والجغرافيا",
+                    "الفلسفة",
+                    "العلوم الإسلامية",
+                    "التربية البدنية والرياضية"
+                ]
+
+            }
+
+        };
+
+
+        /* =========================================================
+           ICONS
+        ========================================================= */
+
+        function getSubjectIcon(subject) {
+
+            const icons = {
+
+                "الرياضيات": "📐",
+                "العلوم الطبيعية": "🧬",
+                "العلوم الفيزيائية": "⚛️",
+
+                "لغة عربية": "📖",
+                "اللغة العربية": "📖",
+
+                "لغة فرنسية": "🇫🇷",
+                "اللغة الفرنسية": "🇫🇷",
+
+                "لغة إنجليزية": "🇬🇧",
+                "اللغة الإنجليزية": "🇬🇧",
+
+                "تاريخ وجغرافيا": "🌍",
+                "التاريخ والجغرافيا": "🌍",
+
+                "فلسفة": "💭",
+                "الفلسفة": "💭",
+
+                "علوم إسلامية": "☪️",
+                "العلوم الإسلامية": "☪️",
+
+                "إعلام آلي": "💻",
+                "الإعلام الآلي": "💻",
+
+                "تكنولوجيا": "⚙️",
+                "التكنولوجيا": "⚙️",
+
+                "تربية بدنية": "🏃",
+                "التربية البدنية والرياضية": "🏃",
+
+                "الاقتصاد والمناجمنت": "📈",
+
+                "المحاسبة": "🧮",
+                "التسيير المحاسبي والمالي": "🧮",
+
+                "القانون": "⚖️"
+
+            };
+
+            return icons[subject] || "📚";
+        }
+
+
+        /* =========================================================
+           STATE
+        ========================================================= */
+
+        let currentBranch = null;
+        let currentYear = null;
+        let currentSubject = null;
+
+        let currentUser = null;
+        let currentUserRole = null;
+        let currentUserSubject = null;
+        let currentUserName = null;
+        let currentUserBranch = null;
+        let currentUserYear = null;
+
+        let currentFiles = [];
+        let currentNotes = [];
+
+        let editingFileId = null;
+        let editingNoteId = null;
+
+        let currentPdfId = null;
+
+        let platformPdfDocument = null;
+        let platformPdfLoadingTask = null;
+        let platformPdfTotalPages = 0;
+        let platformPdfRenderedPages = 0;
+
+        let currentPermissions = {
+            canManageFiles: false,
+            canManageNotes: false,
+            canUploadFiles: false,
+            canEditFiles: false,
+            canDeleteFiles: false,
+            canCreateNotes: false,
+            canEditNotes: false,
+            canDeleteNotes: false
+        };
+
+
+        /* =========================================================
+           HELPERS
+        ========================================================= */
+
+        function getBranchName(branch) {
+
+            const names = {
+
+                scientific: "علوم تجريبية",
+                literature: "آداب وفلسفة",
+                management: "تسيير واقتصاد"
+
+            };
+
+            return names[branch] || "";
+        }
+
+
+        function getYearName(year) {
+
+            return (
+                `السنة ${
+                    year === 1
+                        ? "الأولى"
+                        : year === 2
+                            ? "الثانية"
+                            : "الثالثة"
+                }`
+            );
+        }
+
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+            }
+
+            return String(value)
+                .replace(/&/g,"&amp;")
+                .replace(/</g,"&lt;")
+                .replace(/>/g,"&gt;")
+                .replace(/"/g,"&quot;")
+                .replace(/'/g,"&#039;");
+        }
+
+
+        function formatDate(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            const date =
+                new Date(value);
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "";
+            }
+
+            return date.toLocaleDateString(
+                "ar-DZ",
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+        }
+
+
+        function getCurrentPath() {
+
+            if (!currentBranch) {
+                return "منصة المؤسسة";
+            }
+
+            if (!currentYear) {
+
+                return (
+                    `منصة المؤسسة › ${
+                        getBranchName(currentBranch)
+                    }`
+                );
+            }
+
+            if (!currentSubject) {
+
+                return (
+                    `منصة المؤسسة › ${
+                        getBranchName(currentBranch)
+                    } › ${
+                        getYearName(currentYear)
+                    }`
+                );
+            }
+
+            return (
+                `منصة المؤسسة › ${
+                    getBranchName(currentBranch)
+                } › ${
+                    getYearName(currentYear)
+                } › ${
+                    currentSubject
+                }`
+            );
+        }
+
+
+        function showAlert(
+            message,
+            type = "info"
+        ) {
+
+            const alert =
+                document.getElementById(
+                    "platformAlert"
+                );
+
+            if (!alert) {
+                return;
+            }
+
+            alert.textContent =
+                message;
+
+            alert.className =
+                `alert visible ${type}`;
+
+            clearTimeout(
+                window.__platformAlertTimer
+            );
+
+            window.__platformAlertTimer =
+                setTimeout(
+                    () => {
+
+                        alert.className =
+                            "alert";
+
+                    },
+                    5000
+                );
+        }
+
+
+        /* =========================================================
+           ROLE
+        ========================================================= */
+
+        function normalizeRole(role) {
+
+            if (!role) {
+                return null;
+            }
+
+            const value =
+                String(role)
+                    .trim()
+                    .toLowerCase();
+
+            if (
+                value === "programmer" ||
+                value === "مبرمج"
+            ) {
+
+                return "programmer";
+            }
+
+            if (
+                value === "admin" ||
+                value === "administrator" ||
+                value === "مدير" ||
+                value === "المدير"
+            ) {
+
+                return "admin";
+            }
+
+            if (
+                value === "teacher" ||
+                value === "professor" ||
+                value === "أستاذ" ||
+                value === "استاذ"
+            ) {
+
+                return "teacher";
+            }
+
+            if (
+                value === "student" ||
+                value === "تلميذ" ||
+                value === "طالب"
+            ) {
+
+                return "student";
+            }
+
+            return value;
+        }
+
+
+        function getRoleName(role) {
+
+            const roles = {
+
+                programmer: "👨‍💻 المبرمج",
+
+                admin: "👔 المدير",
+
+                teacher: "👨‍🏫 الأستاذ",
+
+                student: "👨‍🎓 التلميذ"
+
+            };
+
+            return (
+                roles[normalizeRole(role)] ||
+                "👤 المستخدم"
+            );
+        }
+
+
+        /* =========================================================
+           SESSION
+        ========================================================= */
+
+        async function getSession() {
+
+            if (!supabaseClient) {
+                return null;
+            }
+
+            try {
+
+                const result =
+                    await supabaseClient.auth.getSession();
+
+                return (
+                    result?.data?.session ||
+                    null
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "getSession:",
+                    error
+                );
+
+                return null;
+            }
+        }
+
+
+        function readLocalUserData() {
+
+            const keys = [
+                "user",
+                "userData",
+                "profile",
+                "currentUser",
+                "maktabati_user"
+            ];
+
+            for (
+                const key of keys
+            ) {
+
+                try {
+
+                    const raw =
+                        localStorage.getItem(
+                            key
+                        );
+
+                    if (!raw) {
+                        continue;
+                    }
+
+                    const data =
+                        JSON.parse(raw);
+
+                    if (
+                        data &&
+                        (
+                            data.role ||
+                            data.full_name ||
+                            data.subject
+                        )
+                    ) {
+
+                        return data;
+                    }
+
+                } catch (_) {}
+            }
+
+            return null;
+        }
+
+
+        function extractUserData(source) {
+
+            if (!source) {
+                return;
+            }
+
+            const role =
+                source.role ||
+                source.user_role ||
+                source.app_role;
+
+            const subject =
+                source.subject ||
+                source.teacher_subject;
+
+            const branch =
+                source.branch ||
+                source.student_branch;
+
+            const year =
+                source.year ||
+                source.student_year;
+
+            const name =
+                source.full_name ||
+                source.name ||
+                source.display_name;
+
+            if (role) {
+
+                currentUserRole =
+                    normalizeRole(role);
+            }
+
+            if (subject) {
+
+                currentUserSubject =
+                    String(subject).trim();
+            }
+
+            if (branch) {
+                currentUserBranch = String(branch).trim();
+            }
+
+            if (year) {
+                currentUserYear = Number(year);
+            }
+
+            if (name) {
+
+                currentUserName =
+                    name;
+            }
+        }
+
+
+        async function loadCurrentUser() {
+
+            currentUser = null;
+            currentUserRole = null;
+            currentUserSubject = null;
+            currentUserBranch = null;
+            currentUserYear = null;
+            currentUserName = null;
+
+            currentPermissions = {
+                canManageFiles: false,
+                canManageNotes: false,
+                canUploadFiles: false,
+                canEditFiles: false,
+                canDeleteFiles: false,
+                canCreateNotes: false,
+                canEditNotes: false,
+                canDeleteNotes: false
+            };
+
+            const session =
+                await getSession();
+
+            if (!session?.user) {
+
+                updateUserDisplay();
+                updateAccountButton();
+
+                return null;
+            }
+
+            currentUser =
+                session.user;
+
+            // بيانات الجلسة هي نقطة البداية، لكن بيانات profiles من الخادم
+            // هي المصدر الموثوق للاسم والدور والشعبة والسنة.
+            const metadata = session.user.user_metadata || {};
+            currentUserName =
+                metadata.full_name ||
+                metadata.name ||
+                metadata.display_name ||
+                session.user.email ||
+                "المستخدم";
+
+            extractUserData(metadata);
+            extractUserData(session.user.app_metadata);
+
+            try {
+                const response = await authorizedFetch("/api/platform/me");
+                const result = await response.json();
+
+                if (response.ok && result?.success && result.user) {
+                    const serverUser = result.user;
+
+                    currentUserName =
+                        serverUser.full_name ||
+                        currentUserName ||
+                        session.user.email ||
+                        "المستخدم";
+
+                    if (serverUser.role) {
+                        currentUserRole = normalizeRole(serverUser.role);
+                    }
+                    if (serverUser.subject) {
+                        currentUserSubject = String(serverUser.subject).trim();
+                    }
+                    if (serverUser.branch) {
+                        currentUserBranch = String(serverUser.branch).trim();
+                    }
+                    if (serverUser.year) {
+                        currentUserYear = Number(serverUser.year);
+                    }
+                }
+            } catch (error) {
+                // لا نعطل المنصة إذا تعذر جلب الملف؛ نستخدم بيانات الجلسة كاحتياط.
+                console.warn("Platform profile fallback:", error);
+            }
+
+            // لا نقرأ localStorage لتحديد الاسم أو الصلاحيات حتى لا تستبدل
+            // بيانات حساب قديم ببيانات الحساب الحالي.
+            updateUserDisplay();
+            updateAccountButton();
+
+            return session;
+        }
+
+
+        /* =========================================================
+           USER DISPLAY
+        ========================================================= */
+
+        function updateUserDisplay() {
+
+            const nameElement =
+                document.getElementById(
+                    "userName"
+                );
+
+            const roleElement =
+                document.getElementById(
+                    "userRole"
+                );
+
+            const statusElement =
+                document.getElementById(
+                    "userStatus"
+                );
+
+            const avatarElement =
+                document.getElementById(
+                    "userAvatar"
+                );
+
+            if (
+                !nameElement ||
+                !roleElement ||
+                !statusElement ||
+                !avatarElement
+            ) {
+
+                return;
+            }
+
+            if (!currentUser) {
+
+                nameElement.textContent =
+                    "زائر المنصة";
+
+                roleElement.textContent =
+                    "لم يتم تسجيل الدخول";
+
+                statusElement.textContent =
+                    "👁️ وضع العرض";
+
+                avatarElement.textContent =
+                    "👤";
+
+                return;
+            }
+
+            nameElement.textContent =
+                currentUserName ||
+                currentUser.email ||
+                "مستخدم المنصة";
+
+            let roleText =
+                getRoleName(
+                    currentUserRole
+                );
+
+            if (
+                normalizeRole(currentUserRole) ===
+                    "teacher" &&
+                currentUserSubject
+            ) {
+
+                roleText +=
+                    ` — المادة: ${currentUserSubject}`;
+            }
+
+            roleElement.textContent =
+                roleText;
+
+            if (
+                normalizeRole(currentUserRole) ===
+                    "programmer"
+            ) {
+
+                avatarElement.textContent =
+                    "👨‍💻";
+
+                statusElement.textContent =
+                    "🔐 مبرمج — صلاحيات كاملة";
+
+            } else if (
+                normalizeRole(currentUserRole) ===
+                    "admin"
+            ) {
+
+                avatarElement.textContent =
+                    "👔";
+
+                statusElement.textContent =
+                    "🔐 مدير — صلاحيات كاملة";
+
+            } else if (
+                normalizeRole(currentUserRole) ===
+                    "teacher"
+            ) {
+
+                avatarElement.textContent =
+                    "👨‍🏫";
+
+                statusElement.textContent =
+                    currentUserSubject
+                        ? `📚 أستاذ — ${currentUserSubject}`
+                        : "👨‍🏫 أستاذ";
+
+            } else {
+
+                avatarElement.textContent =
+                    "👨‍🎓";
+
+                statusElement.textContent =
+                    "👁️ وضع العرض";
+            }
+        }
+
+
+        function updateAccountButton() {
+
+            const button =
+                document.getElementById(
+                    "accountButton"
+                );
+
+            if (!button) {
+                return;
+            }
+
+            if (currentUser) {
+
+                const role =
+                    normalizeRole(currentUserRole);
+
+                const dashboardByRole = {
+                    programmer: "programmer.html",
+                    admin: "admin.html",
+                    teacher: "teacher.html",
+                    student: "student.html"
+                };
+
+                const displayName =
+                    String(currentUserName || currentUser.email || "المستخدم").trim();
+
+                button.textContent =
+                    "👤 " + displayName;
+                button.title =
+                    displayName;
+
+                button.href =
+                    dashboardByRole[role] || "login.html";
+
+            } else {
+
+                button.textContent =
+                    "🔐 تسجيل الدخول";
+
+                button.href =
+                    "login.html";
+            }
+        }
+
+
+        /* =========================================================
+           PERMISSIONS
+        ========================================================= */
+
+        function isFullAccess() {
+
+            return (
+                normalizeRole(currentUserRole) ===
+                    "admin" ||
+                normalizeRole(currentUserRole) ===
+                    "programmer"
+            );
+        }
+
+
+        function teacherCanAccessSubject() {
+
+            if (
+                normalizeRole(currentUserRole) !==
+                "teacher"
+            ) {
+
+                return false;
+            }
+
+            if (
+                !currentUserSubject ||
+                !currentSubject
+            ) {
+
+                return false;
+            }
+
+            return (
+                currentUserSubject
+                    .trim() ===
+                currentSubject
+                    .trim()
+            );
+        }
+
+
+        function canManageCurrentSubject() {
+
+            if (isFullAccess()) {
+                return true;
+            }
+
+            if (
+                teacherCanAccessSubject()
+            ) {
+
+                return true;
+            }
+
+            return (
+                Boolean(
+                    currentPermissions.canManageFiles
+                ) ||
+                Boolean(
+                    currentPermissions.canManageNotes
+                ) ||
+                Boolean(
+                    currentPermissions.canUploadFiles
+                ) ||
+                Boolean(
+                    currentPermissions.canCreateNotes
+                )
+            );
+        }
+
+
+        function applyServerPermissions(
+            permissions
+        ) {
+
+            if (!permissions) {
+                return;
+            }
+
+            currentPermissions = {
+                ...currentPermissions,
+                ...permissions
+            };
+
+            if (
+                permissions.canManageFiles !==
+                    undefined
+            ) {
+
+                currentPermissions.canManageFiles =
+                    Boolean(
+                        permissions.canManageFiles
+                    );
+            }
+
+            if (
+                permissions.canManageNotes !==
+                    undefined
+            ) {
+
+                currentPermissions.canManageNotes =
+                    Boolean(
+                        permissions.canManageNotes
+                    );
+            }
+
+            if (
+                currentPermissions.canManageFiles
+            ) {
+
+                currentPermissions.canUploadFiles = true;
+                currentPermissions.canEditFiles = true;
+                currentPermissions.canDeleteFiles = true;
+            }
+
+            if (
+                currentPermissions.canManageNotes
+            ) {
+
+                currentPermissions.canCreateNotes = true;
+                currentPermissions.canEditNotes = true;
+                currentPermissions.canDeleteNotes = true;
+            }
+        }
+
+
+        function updatePermissionUI() {
+
+            const badge =
+                document.getElementById(
+                    "permissionBadge"
+                );
+
+            const fileBox =
+                document.getElementById(
+                    "fileManagementBox"
+                );
+
+            const noteBox =
+                document.getElementById(
+                    "noteManagementBox"
+                );
+
+            const accessInfo =
+                document.getElementById(
+                    "accessInfo"
+                );
+
+            if (
+                !badge ||
+                !fileBox ||
+                !noteBox ||
+                !accessInfo
+            ) {
+
+                return;
+            }
+
+            badge.className =
+                "permission-badge";
+
+            fileBox.classList.remove(
+                "visible"
+            );
+
+            noteBox.classList.remove(
+                "visible"
+            );
+
+            if (!currentSubject) {
+
+                accessInfo.textContent =
+                    "اختر مادة لعرض محتواها.";
+
+                return;
+            }
+
+            if (isFullAccess()) {
+
+                badge.textContent =
+                    "🔐 صلاحيات كاملة";
+
+                badge.classList.add(
+                    "visible",
+                    "full"
+                );
+
+                accessInfo.innerHTML =
+                    "<strong>الصلاحيات:</strong> يمكنك إدارة محتوى المنصة بالكامل.";
+
+                fileBox.classList.add(
+                    "visible"
+                );
+
+                noteBox.classList.add(
+                    "visible"
+                );
+
+                return;
+            }
+
+            if (
+                teacherCanAccessSubject()
+            ) {
+
+                badge.textContent =
+                    "👨‍🏫 أستاذ المادة";
+
+                badge.classList.add(
+                    "visible",
+                    "teacher"
+                );
+
+                accessInfo.innerHTML =
+                    `<strong>صلاحيات الأستاذ:</strong> يمكنك إدارة مادة <strong>${escapeHtml(currentSubject)}</strong> فقط.`;
+
+                fileBox.classList.add(
+                    "visible"
+                );
+
+                noteBox.classList.add(
+                    "visible"
+                );
+
+                return;
+            }
+
+            if (
+                currentPermissions.canManageFiles ||
+                currentPermissions.canManageNotes ||
+                currentPermissions.canUploadFiles ||
+                currentPermissions.canCreateNotes
+            ) {
+
+                badge.textContent =
+                    "🔐 صلاحية إدارة";
+
+                badge.classList.add(
+                    "visible",
+                    "full"
+                );
+
+                accessInfo.innerHTML =
+                    "<strong>الصلاحيات:</strong> لديك صلاحيات إدارة المحتوى المسموح به في هذه المادة.";
+
+                if (
+                    currentPermissions.canManageFiles ||
+                    currentPermissions.canUploadFiles
+                ) {
+
+                    fileBox.classList.add(
+                        "visible"
+                    );
+                }
+
+                if (
+                    currentPermissions.canManageNotes ||
+                    currentPermissions.canCreateNotes
+                ) {
+
+                    noteBox.classList.add(
+                        "visible"
+                    );
+                }
+
+                return;
+            }
+
+            if (normalizeRole(currentUserRole) === "student") {
+                badge.textContent = "👨‍🎓 تلميذ";
+                badge.classList.add("visible", "readonly");
+                accessInfo.innerHTML =
+                    "<strong>وضع التلميذ:</strong> يمكنك مشاهدة وتحميل دروس شعبتك وسنتك الدراسية فقط.";
+                fileBox.classList.remove("visible");
+                noteBox.classList.remove("visible");
+                return;
+            }
+
+            if (
+                normalizeRole(currentUserRole) ===
+                "teacher"
+            ) {
+
+                badge.textContent =
+                    "🔒 مادة أخرى";
+
+                badge.classList.add(
+                    "visible",
+                    "readonly"
+                );
+
+                accessInfo.innerHTML =
+                    `<strong>وضع العرض:</strong> صلاحياتك كأستاذ محصورة في مادة <strong>${escapeHtml(currentUserSubject || "مادتك")}</strong> فقط.`;
+
+                return;
+            }
+
+            badge.textContent =
+                "👁️ قراءة فقط";
+
+            badge.classList.add(
+                "visible",
+                "readonly"
+            );
+
+            accessInfo.innerHTML =
+                "<strong>وضع العرض:</strong> يمكنك مشاهدة الدروس والملاحظات وتحميل الملفات.";
+        }
+
+
+        /* =========================================================
+           AUTHORIZED FETCH
+        ========================================================= */
+
+        async function authorizedFetch(
+            url,
+            options = {}
+        ) {
+
+            const session =
+                await getSession();
+
+            if (!session) {
+
+                throw new Error(
+                    "يجب تسجيل الدخول أولا."
+                );
+            }
+
+            const headers =
+                new Headers(
+                    options.headers || {}
+                );
+
+            headers.set(
+                "Authorization",
+                `Bearer ${session.access_token}`
+            );
+
+            return fetch(
+                url,
+                {
+                    ...options,
+                    headers
+                }
+            );
+        }
+
+
+        /* =========================================================
+           BRANCH
+        ========================================================= */
+
+        function applyStudentRestrictions() {
+            if (normalizeRole(currentUserRole) !== "student") return;
+
+            document.querySelectorAll(".branch-card").forEach(card => {
+                const id = String(card.id || "").replace("branch-", "");
+                card.style.display = id === currentUserBranch ? "" : "none";
+            });
+
+            document.querySelectorAll(".year-card").forEach(card => {
+                const id = String(card.id || "").replace("year-", "");
+                card.style.display = Number(id) === Number(currentUserYear) ? "" : "none";
+            });
+        }
+
+        function selectBranch(branch) {
+
+            const role = normalizeRole(currentUserRole);
+
+            if (role === "student") {
+                if (!currentUserBranch || branch !== currentUserBranch) {
+                    showAlert("لا يمكنك الدخول إلا إلى شعبتك الدراسية المحددة في حسابك.", "error");
+                    return;
+                }
+            }
+
+            if (!subjectsData[branch]) {
+                return;
+            }
+
+            currentBranch = branch;
+            currentYear = null;
+            currentSubject = null;
+
+            currentFiles = [];
+            currentNotes = [];
+
+            currentPermissions = {
+                canManageFiles: false,
+                canManageNotes: false,
+                canUploadFiles: false,
+                canEditFiles: false,
+                canDeleteFiles: false,
+                canCreateNotes: false,
+                canEditNotes: false,
+                canDeleteNotes: false
+            };
+
+            document
+                .querySelectorAll(".branch-card")
+                .forEach(card => card.classList.remove("active"));
+
+            const branchCard =
+                document.getElementById(`branch-${branch}`);
+
+            if (branchCard) {
+                branchCard.classList.add("active");
+            }
+
+            document
+                .querySelectorAll(".year-card")
+                .forEach(card => {
+                    card.classList.remove("active");
+
+                    const year =
+                        Number(String(card.id || "").replace("year-", ""));
+
+                    let visible = Boolean(
+                        subjectsData[branch] &&
+                        subjectsData[branch][year]
+                    );
+
+                    if (role === "student") {
+                        visible =
+                            visible &&
+                            Number(currentUserYear) === year;
+                    }
+
+                    if (role === "teacher") {
+                        visible =
+                            visible &&
+                            Boolean(currentUserSubject) &&
+                            subjectsData[branch][year].some(
+                                subject =>
+                                    String(subject).trim() ===
+                                    String(currentUserSubject).trim()
+                            );
+                    }
+
+                    card.style.display =
+                        visible ? "" : "none";
+                });
+
+            const yearsSection =
+                document.getElementById("yearsSection");
+
+            if (yearsSection) {
+                yearsSection.classList.add("visible");
+            }
+
+            const subjectsSection =
+                document.getElementById("subjectsSection");
+
+            if (subjectsSection) {
+                subjectsSection.classList.remove("visible");
+            }
+
+            const subjectContent =
+                document.getElementById("subjectContent");
+
+            if (subjectContent) {
+                subjectContent.classList.remove("visible");
+            }
+
+            applyStudentRestrictions();
+
+            const selectedBranchText =
+                document.getElementById("selectedBranchText");
+
+            if (selectedBranchText) {
+                selectedBranchText.textContent =
+                    getBranchName(branch);
+            }
+
+            updateBreadcrumb();
+
+            setTimeout(() => {
+                if (yearsSection) {
+                    yearsSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            }, 50);
+        }
+
+
+        /* =========================================================
+           YEAR
+
+        ========================================================= */
+
+        function selectYear(year) {
+
+            if (normalizeRole(currentUserRole) === "student") {
+                if (!currentUserYear || Number(year) !== Number(currentUserYear)) {
+                    showAlert("لا يمكنك الدخول إلا إلى سنتك الدراسية المحددة في حسابك.", "error");
+                    return;
+                }
+            }
+
+            if (normalizeRole(currentUserRole) === "teacher") {
+                const teacherSubjects =
+                    subjectsData[currentBranch]?.[year] || [];
+
+                if (
+                    !currentUserSubject ||
+                    !teacherSubjects.some(
+                        subject =>
+                            String(subject).trim() ===
+                            String(currentUserSubject).trim()
+                    )
+                ) {
+                    showAlert("المادة المرتبطة بحسابك غير متاحة في هذا المستوى.", "error");
+                    return;
+                }
+            }
+
+            if (
+                !currentBranch ||
+                !subjectsData[currentBranch] ||
+                !subjectsData[currentBranch][year]
+            ) {
+
+                return;
+            }
+
+            currentYear = year;
+            currentSubject = null;
+
+            document
+                .querySelectorAll(
+                    ".year-card"
+                )
+                .forEach(card => {
+
+                    card.classList.remove(
+                        "active"
+                    );
+
+                });
+
+            const yearCard =
+                document.getElementById(
+                    `year-${year}`
+                );
+
+            if (yearCard) {
+
+                yearCard.classList.add(
+                    "active"
+                );
+            }
+
+            renderSubjects();
+
+            const subjectsSection =
+                document.getElementById(
+                    "subjectsSection"
+                );
+
+            if (subjectsSection) {
+
+                subjectsSection.classList.add(
+                    "visible"
+                );
+            }
+
+            const subjectContent =
+                document.getElementById(
+                    "subjectContent"
+                );
+
+            if (subjectContent) {
+
+                subjectContent.classList.remove(
+                    "visible"
+                );
+            }
+
+            const selectedYearText =
+                document.getElementById(
+                    "selectedYearText"
+                );
+
+            if (selectedYearText) {
+
+                selectedYearText.textContent =
+                    `${getBranchName(currentBranch)} — ${getYearName(year)}`;
+            }
+
+            updateBreadcrumb();
+
+            setTimeout(
+                () => {
+
+                    if (subjectsSection) {
+
+                        subjectsSection.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    }
+
+                },
+                50
+            );
+        }
+
+
+        /* =========================================================
+           SUBJECTS
+        ========================================================= */
+
+        function renderSubjects() {
+
+            const grid =
+                document.getElementById(
+                    "subjectsGrid"
+                );
+
+            if (!grid) {
+                return;
+            }
+
+            grid.innerHTML = "";
+
+            if (
+                !currentBranch ||
+                !currentYear ||
+                !subjectsData[currentBranch] ||
+                !subjectsData[currentBranch][currentYear]
+            ) {
+                return;
+            }
+
+            let subjects =
+                subjectsData[currentBranch][currentYear].slice();
+
+            /*
+             * الأستاذ يرى مادته فقط داخل كل شعبة وسنة
+             * التي تدرّس فيها هذه المادة.
+             */
+            if (normalizeRole(currentUserRole) === "teacher") {
+                subjects = currentUserSubject
+                    ? subjects.filter(
+                        subject =>
+                            String(subject).trim() ===
+                            String(currentUserSubject).trim()
+                    )
+                    : [];
+            }
+
+            if (!subjects.length) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📚</div>
+                        <h5>لا توجد مادة متاحة</h5>
+                        <p>المادة المرتبطة بحساب الأستاذ غير موجودة في هذا المستوى.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            subjects.forEach(subject => {
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "subject-card";
+
+                card.onclick =
+                    () => {
+                        selectSubject(subject, card);
+                    };
+
+                card.innerHTML = `
+                    <div class="subject-icon">
+                        ${getSubjectIcon(subject)}
+                    </div>
+
+                    <div class="subject-name">
+                        ${escapeHtml(subject)}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+
+        /* =========================================================
+           SUBJECT
+        ========================================================= */
+
+        async function selectSubject(
+            subject,
+            card = null
+        ) {
+
+            if (
+                !currentBranch ||
+                !currentYear ||
+                !subject
+            ) {
+
+                return;
+            }
+
+            currentSubject =
+                subject;
+
+            currentPermissions = {
+                canManageFiles: false,
+                canManageNotes: false,
+                canUploadFiles: false,
+                canEditFiles: false,
+                canDeleteFiles: false,
+                canCreateNotes: false,
+                canEditNotes: false,
+                canDeleteNotes: false
+            };
+
+            document
+                .querySelectorAll(
+                    ".subject-card"
+                )
+                .forEach(item => {
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+                });
+
+            if (card) {
+
+                card.classList.add(
+                    "active"
+                );
+            }
+
+            const iconElement =
+                document.getElementById(
+                    "selectedSubjectIcon"
+                );
+
+            if (iconElement) {
+
+                iconElement.textContent =
+                    getSubjectIcon(
+                        subject
+                    );
+            }
+
+            const titleElement =
+                document.getElementById(
+                    "selectedSubjectTitle"
+                );
+
+            if (titleElement) {
+
+                titleElement.textContent =
+                    subject;
+            }
+
+            const pathElement =
+                document.getElementById(
+                    "selectedSubjectPath"
+                );
+
+            if (pathElement) {
+
+                pathElement.textContent =
+                    getCurrentPath();
+            }
+
+            const contentElement =
+                document.getElementById(
+                    "subjectContent"
+                );
+
+            if (contentElement) {
+
+                contentElement.classList.add(
+                    "visible"
+                );
+            }
+
+            updateBreadcrumb();
+
+            updatePermissionUI();
+
+            switchTab("files");
+
+            await loadSubjectContent();
+
+            setTimeout(
+                () => {
+
+                    if (contentElement) {
+
+                        contentElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    }
+
+                },
+                50
+            );
+        }
+
+
+        /* =========================================================
+           BREADCRUMB
+        ========================================================= */
+
+        function updateBreadcrumb() {
+
+            const breadcrumb =
+                document.getElementById(
+                    "breadcrumb"
+                );
+
+            if (!breadcrumb) {
+                return;
+            }
+
+            breadcrumb.innerHTML = "";
+
+            const parts = [
+                "🏫 منصة المؤسسة"
+            ];
+
+            if (currentBranch) {
+
+                parts.push(
+                    getBranchName(
+                        currentBranch
+                    )
+                );
+            }
+
+            if (currentYear) {
+
+                parts.push(
+                    getYearName(
+                        currentYear
+                    )
+                );
+            }
+
+            if (currentSubject) {
+
+                parts.push(
+                    currentSubject
+                );
+
+            } else if (
+                !currentBranch
+            ) {
+
+                parts.push(
+                    "اختر الشعبة"
+                );
+            }
+
+            parts.forEach(
+                (part,index) => {
+
+                    const span =
+                        document.createElement(
+                            "span"
+                        );
+
+                    span.textContent =
+                        part;
+
+                    if (
+                        index ===
+                        parts.length - 1
+                    ) {
+
+                        span.className =
+                            "current";
+                    }
+
+                    breadcrumb.appendChild(
+                        span
+                    );
+
+                    if (
+                        index <
+                        parts.length - 1
+                    ) {
+
+                        const separator =
+                            document.createElement(
+                                "span"
+                            );
+
+                        separator.textContent =
+                            "›";
+
+                        breadcrumb.appendChild(
+                            separator
+                        );
+                    }
+                }
+            );
+        }
+
+
+        /* =========================================================
+           LOAD CONTENT
+        ========================================================= */
+
+        async function loadSubjectContent() {
+
+            if (
+                !currentBranch ||
+                !currentYear ||
+                !currentSubject
+            ) {
+
+                return;
+            }
+
+            const filesList =
+                document.getElementById(
+                    "filesList"
+                );
+
+            const notesList =
+                document.getElementById(
+                    "notesList"
+                );
+
+            if (!filesList || !notesList) {
+                return;
+            }
+
+            filesList.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    جار تحميل الملفات...
+                </div>
+            `;
+
+            notesList.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    جار تحميل الملاحظات...
+                </div>
+            `;
+
+            try {
+
+                const query =
+                    new URLSearchParams({
+
+                        branch:
+                            currentBranch,
+
+                        year:
+                            String(
+                                currentYear
+                            ),
+
+                        subject:
+                            currentSubject
+
+                    });
+
+                const response =
+                    await authorizedFetch(
+                        `/api/platform/content?${query.toString()}`,
+                        {
+                            method: "GET"
+                        }
+                    );
+
+                if (!response.ok) {
+
+                    let message =
+                        "تعذر تحميل محتوى المادة.";
+
+                    try {
+
+                        const errorData =
+                            await response.json();
+
+                        message =
+                            errorData?.error ||
+                            errorData?.message ||
+                            message;
+
+                    } catch (_) {}
+
+                    throw new Error(
+                        message
+                    );
+                }
+
+                const data =
+                    await response.json();
+
+                if (data?.user) {
+
+                    currentUserRole =
+                        normalizeRole(
+                            data.user.role ||
+                            currentUserRole
+                        );
+
+                    currentUserSubject =
+                        data.user.subject ||
+                        currentUserSubject;
+
+                    currentUserName =
+                        data.user.full_name ||
+                        currentUserName;
+
+                    updateUserDisplay();
+                }
+
+                applyServerPermissions(
+                    data?.permissions
+                );
+
+                if (
+                    data?.permissions?.role
+                ) {
+
+                    currentUserRole =
+                        normalizeRole(
+                            data.permissions.role
+                        );
+                }
+
+                if (
+                    data?.permissions?.user_role
+                ) {
+
+                    currentUserRole =
+                        normalizeRole(
+                            data.permissions.user_role
+                        );
+                }
+
+                if (
+                    data?.permissions?.subject &&
+                    !currentUserSubject
+                ) {
+
+                    currentUserSubject =
+                        String(
+                            data.permissions.subject
+                        ).trim();
+                }
+
+                updateUserDisplay();
+                updatePermissionUI();
+
+                currentFiles =
+                    Array.isArray(
+                        data?.files
+                    )
+                        ? data.files
+                        : [];
+
+                currentNotes =
+                    Array.isArray(
+                        data?.notes
+                    )
+                        ? data.notes
+                        : [];
+
+                renderFiles();
+                renderNotes();
+
+            } catch (error) {
+
+                console.error(
+                    "loadSubjectContent:",
+                    error
+                );
+
+                filesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📄</div>
+
+                        <h5>
+                            تعذر تحميل الملفات
+                        </h5>
+
+                        <p>
+                            ${escapeHtml(
+                                error.message ||
+                                "حدث خطأ غير متوقع."
+                            )}
+                        </p>
+                    </div>
+                `;
+
+                notesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+
+                        <h5>
+                            تعذر تحميل الملاحظات
+                        </h5>
+
+                        <p>
+                            ${escapeHtml(
+                                error.message ||
+                                "حدث خطأ غير متوقع."
+                            )}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+
+        /* =========================================================
+           FILE RENDER
+        ========================================================= */
+
+        function renderFiles() {
+
+            const container =
+                document.getElementById(
+                    "filesList"
+                );
+
+            if (!container) {
+                return;
+            }
+
+            if (!currentFiles.length) {
+
+                container.innerHTML = `
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📄
+                        </div>
+
+                        <h5>
+                            لا توجد ملفات بعد
+                        </h5>
+
+                        <p>
+                            لم تتم إضافة أي درس أو وثيقة لهذه المادة حاليا.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+            container.innerHTML = "";
+
+            currentFiles.forEach(
+                file => {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+                    card.className =
+                        "file-card";
+
+                    const title =
+                        file.title ||
+                        file.name ||
+                        "ملف بدون عنوان";
+
+                    const description =
+                        file.description ||
+                        "لا يوجد وصف لهذا الملف.";
+
+                    const id =
+                        String(
+                            file.id
+                        );
+
+                    const canEdit =
+                        canEditFile(
+                            file
+                        );
+
+                    const canDelete =
+                        canDeleteFile(
+                            file
+                        );
+
+                    card.innerHTML = `
+
+                        <div class="file-main">
+
+                            <div class="file-info">
+
+                                <h5 class="file-title">
+                                    📄 ${escapeHtml(title)}
+                                </h5>
+
+                                <p class="file-description">
+                                    ${escapeHtml(description)}
+                                </p>
+
+                                <div class="file-meta">
+
+                                    <span>
+                                        👤 ${
+                                            escapeHtml(
+                                                file.uploader_name ||
+                                                file.uploaded_by_name ||
+                                                "المؤسسة"
+                                            )
+                                        }
+                                    </span>
+
+                                    <span>
+                                        📅 ${
+                                            escapeHtml(
+                                                formatDate(
+                                                    file.created_at
+                                                )
+                                            )
+                                        }
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="file-actions">
+
+                                <button
+                                    class="mini-btn"
+                                    type="button"
+                                    onclick="openPdf(
+                                        '${escapeHtml(id)}',
+                                        '${escapeHtml(title)}'
+                                    )"
+                                >
+                                    👁️ مشاهدة
+                                </button>
+
+                                <button
+                                    class="mini-btn download"
+                                    type="button"
+                                    onclick="downloadPdf(
+                                        '${escapeHtml(id)}',
+                                        '${escapeHtml(title)}'
+                                    )"
+                                >
+                                    ⬇️ تحميل
+                                </button>
+
+                                ${
+                                    canEdit
+                                        ? `
+
+                                            <button
+                                                class="mini-btn"
+                                                type="button"
+                                                onclick="editFile('${escapeHtml(id)}')"
+                                            >
+                                                ✏️ تعديل
+                                            </button>
+
+                                          `
+                                        : ""
+                                }
+
+                                ${
+                                    canDelete
+                                        ? `
+
+                                            <button
+                                                class="mini-btn danger"
+                                                type="button"
+                                                onclick="deleteFile('${escapeHtml(id)}')"
+                                            >
+                                                🗑️ حذف
+                                            </button>
+
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                        </div>
+                    `;
+
+                    container.appendChild(
+                        card
+                    );
+
+                }
+            );
+        }
+
+
+        /* =========================================================
+           FILE PERMISSIONS
+        ========================================================= */
+
+        function canManageFile() {
+
+            return (
+                isFullAccess() ||
+                teacherCanAccessSubject() ||
+                Boolean(
+                    currentPermissions.canManageFiles
+                ) ||
+                Boolean(
+                    currentPermissions.canUploadFiles
+                ) ||
+                Boolean(
+                    currentPermissions.canEditFiles
+                ) ||
+                Boolean(
+                    currentPermissions.canDeleteFiles
+                )
+            );
+        }
+
+
+        function canEditFile(file) {
+            if (isFullAccess()) return true;
+            if (normalizeRole(currentUserRole) === "teacher") {
+                return Boolean(
+                    file &&
+                    String(file.subject || "").trim() ===
+                    String(currentUserSubject || "").trim()
+                );
+            }
+            return Boolean(currentPermissions.canManageFiles || currentPermissions.canEditFiles);
+        }
+
+        function canDeleteFile(file) {
+            if (isFullAccess()) return true;
+            if (normalizeRole(currentUserRole) === "teacher") {
+                return Boolean(
+                    file &&
+                    String(file.subject || "").trim() ===
+                    String(currentUserSubject || "").trim()
+                );
+            }
+            return Boolean(currentPermissions.canManageFiles || currentPermissions.canDeleteFiles);
+        }
+
+
+        function canUploadFile() {
+
+            return (
+                isFullAccess() ||
+                teacherCanAccessSubject() ||
+                Boolean(
+                    currentPermissions.canManageFiles
+                ) ||
+                Boolean(
+                    currentPermissions.canUploadFiles
+                )
+            );
+        }
+
+
+        /* =========================================================
+           NOTES RENDER
+        ========================================================= */
+
+        function renderNotes() {
+
+            const container =
+                document.getElementById(
+                    "notesList"
+                );
+
+            if (!container) {
+                return;
+            }
+
+            if (!currentNotes.length) {
+
+                container.innerHTML = `
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📝
+                        </div>
+
+                        <h5>
+                            لا توجد ملاحظات بعد
+                        </h5>
+
+                        <p>
+                            لم تتم إضافة واجبات أو اختبارات أو تنبيهات لهذه المادة.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+            container.innerHTML = "";
+
+            currentNotes.forEach(
+                note => {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+                    card.className =
+                        "note-card";
+
+                    const type =
+                        normalizeNoteType(note.type || "general");
+
+                    const typeData =
+                        getNoteTypeData(
+                            type
+                        );
+
+                    const title =
+                        note.title ||
+                        "ملاحظة";
+
+                    const content =
+                        note.content ||
+                        "";
+
+                    const canEdit =
+                        canEditNote(
+                            note
+                        );
+
+                    const canDelete =
+                        canDeleteNote(
+                            note
+                        );
+
+                    card.innerHTML = `
+
+                        <div class="note-main">
+
+                            <div class="note-info">
+
+                                <div
+                                    class="note-type ${escapeHtml(type)}"
+                                >
+                                    ${typeData.icon}
+                                    ${escapeHtml(typeData.label)}
+                                </div>
+
+                                <h5 class="note-title">
+                                    ${escapeHtml(title)}
+                                </h5>
+
+                                <p class="note-content">
+                                    ${escapeHtml(content)}
+                                </p>
+
+                                <div class="note-meta">
+
+                                    <span>
+                                        👤 ${
+                                            escapeHtml(
+                                                note.creator_name ||
+                                                note.created_by_name ||
+                                                "المؤسسة"
+                                            )
+                                        }
+                                    </span>
+
+                                    <span>
+                                        📅 ${
+                                            escapeHtml(
+                                                formatDate(
+                                                    note.created_at
+                                                )
+                                            )
+                                        }
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="note-actions">
+
+                            ${
+                                (isFullAccess() || normalizeRole(currentUserRole) === "teacher")
+                                    ? `<button class="mini-btn" type="button" onclick="loadNoteViewers('${escapeHtml(String(note.id))}')">👁️ من شاهدها</button>`
+                                    : ""
+                            }
+
+                                ${
+                                    canEdit
+                                        ? `
+
+                                            <button
+                                                class="mini-btn"
+                                                type="button"
+                                                onclick="editNote('${escapeHtml(String(note.id))}')"
+                                            >
+                                                ✏️ تعديل
+                                            </button>
+
+                                          `
+                                        : ""
+                                }
+
+                                ${
+                                    canDelete
+                                        ? `
+
+                                            <button
+                                                class="mini-btn danger"
+                                                type="button"
+                                                onclick="deleteNote('${escapeHtml(String(note.id))}')"
+                                            >
+                                                🗑️ حذف
+                                            </button>
+
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                        </div>
+                    `;
+
+                    container.appendChild(
+                        card
+                    );
+                }
+            );
+        }
+
+
+        /* =========================================================
+           NOTE PERMISSIONS
+        ========================================================= */
+
+        function canManageNote() {
+
+            return (
+                isFullAccess() ||
+                teacherCanAccessSubject() ||
+                Boolean(
+                    currentPermissions.canManageNotes
+                ) ||
+                Boolean(
+                    currentPermissions.canCreateNotes
+                ) ||
+                Boolean(
+                    currentPermissions.canEditNotes
+                ) ||
+                Boolean(
+                    currentPermissions.canDeleteNotes
+                )
+            );
+        }
+
+
+        function canCreateNote() {
+
+            return (
+                isFullAccess() ||
+                teacherCanAccessSubject() ||
+                Boolean(
+                    currentPermissions.canManageNotes
+                ) ||
+                Boolean(
+                    currentPermissions.canCreateNotes
+                )
+            );
+        }
+
+
+        function canEditNote(note) {
+            if (isFullAccess()) return true;
+            if (normalizeRole(currentUserRole) === "teacher") {
+                return Boolean(
+                    note &&
+                    String(note.subject || "").trim() ===
+                    String(currentUserSubject || "").trim()
+                );
+            }
+            return Boolean(currentPermissions.canManageNotes || currentPermissions.canEditNotes);
+        }
+
+        function canDeleteNote(note) {
+            if (isFullAccess()) return true;
+            if (normalizeRole(currentUserRole) === "teacher") {
+                return Boolean(
+                    note &&
+                    String(note.subject || "").trim() ===
+                    String(currentUserSubject || "").trim()
+                );
+            }
+            return Boolean(currentPermissions.canManageNotes || currentPermissions.canDeleteNotes);
+        }
+
+
+        function normalizeNoteType(type) {
+            const normalized = String(type || "general").trim().toLowerCase();
+            return normalized === "test" ? "exam" : normalized;
+        }
+
+        function getNoteTypeData(type) {
+
+            const data = {
+
+                homework: {
+                    icon: "📚",
+                    label: "واجب منزلي"
+                },
+
+                exam: {
+                    icon: "📝",
+                    label: "اختبار / فرض"
+                },
+
+                reminder: {
+                    icon: "⏰",
+                    label: "تذكير"
+                },
+
+                comment: {
+                    icon: "💬",
+                    label: "تعليق"
+                },
+
+                general: {
+                    icon: "📌",
+                    label: "ملاحظة عامة"
+                }
+
+            };
+
+            return (
+                data[type] ||
+                data.general
+            );
+        }
+
+
+        /* =========================================================
+           TABS
+        ========================================================= */
+
+        function switchTab(tab) {
+
+            const filesTab =
+                document.getElementById(
+                    "filesTab"
+                );
+
+            const notesTab =
+                document.getElementById(
+                    "notesTab"
+                );
+
+            const filesPanel =
+                document.getElementById(
+                    "filesPanel"
+                );
+
+            const notesPanel =
+                document.getElementById(
+                    "notesPanel"
+                );
+
+            if (
+                !filesTab ||
+                !notesTab ||
+                !filesPanel ||
+                !notesPanel
+            ) {
+
+                return;
+            }
+
+            if (tab === "files") {
+
+                filesTab.classList.add(
+                    "active"
+                );
+
+                notesTab.classList.remove(
+                    "active"
+                );
+
+                filesPanel.classList.add(
+                    "active"
+                );
+
+                notesPanel.classList.remove(
+                    "active"
+                );
+
+            } else {
+
+                filesTab.classList.remove(
+                    "active"
+                );
+
+                notesTab.classList.add(
+                    "active"
+                );
+
+                filesPanel.classList.remove(
+                    "active"
+                );
+
+                notesPanel.classList.add(
+                    "active"
+                );
+            }
+        }
+
+
+        /* =========================================================
+           FILE FORM
+           رفع جديد + تعديل موجود في معالج واحد
+        ========================================================= */
+
+        const fileForm =
+            document.getElementById(
+                "fileForm"
+            );
+
+        if (fileForm) {
+
+            fileForm.addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+                    if (!currentSubject) {
+
+                        showAlert(
+                            "اختر مادة أولا.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    const title =
+                        document
+                            .getElementById(
+                                "fileTitle"
+                            )
+                            .value
+                            .trim();
+
+                    const description =
+                        document
+                            .getElementById(
+                                "fileDescription"
+                            )
+                            .value
+                            .trim();
+
+                    const fileInput =
+                        document.getElementById(
+                            "fileInput"
+                        );
+
+                    const file =
+                        fileInput?.files?.[0];
+
+                    if (!title) {
+
+                        showAlert(
+                            "اكتب عنوان الدرس.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+
+                    /* =====================================================
+                       تعديل درس موجود
+                    ===================================================== */
+
+                    if (editingFileId) {
+
+                        if (
+                            !canEditFile()
+                        ) {
+
+                            showAlert(
+                                "ليس لديك صلاحية تعديل هذا الدرس.",
+                                "error"
+                            );
+
+                            return;
+                        }
+
+                        try {
+
+                            showAlert(
+                                "جار حفظ تعديل الدرس...",
+                                "info"
+                            );
+
+                            const response =
+                                await authorizedFetch(
+                                    `/api/platform/files/${encodeURIComponent(editingFileId)}`,
+                                    {
+                                        method: "PUT",
+
+                                        headers: {
+                                            "Content-Type":
+                                                "application/json"
+                                        },
+
+                                        body:
+                                            JSON.stringify({
+                                                title,
+                                                description
+                                            })
+                                    }
+                                );
+
+                            const data =
+                                await response
+                                    .json()
+                                    .catch(
+                                        () => ({})
+                                    );
+
+                            if (!response.ok) {
+
+                                throw new Error(
+                                    data?.error ||
+                                    data?.message ||
+                                    "فشل تعديل الدرس."
+                                );
+                            }
+
+                            showAlert(
+                                "تم تعديل الدرس بنجاح.",
+                                "success"
+                            );
+
+                            resetFileForm();
+
+                            await loadSubjectContent();
+
+                        } catch (error) {
+
+                            console.error(
+                                "update file:",
+                                error
+                            );
+
+                            showAlert(
+                                error.message ||
+                                "حدث خطأ أثناء تعديل الدرس.",
+                                "error"
+                            );
+                        }
+
+                        return;
+                    }
+
+
+                    /* =====================================================
+                       رفع درس جديد
+                    ===================================================== */
+
+                    if (
+                        !canUploadFile()
+                    ) {
+
+                        showAlert(
+                            "ليس لديك صلاحية رفع ملفات في هذه المادة.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    if (!file) {
+
+                        showAlert(
+                            "اختر ملف PDF.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    if (
+                        file.type !==
+                            "application/pdf" &&
+                        !file.name
+                            .toLowerCase()
+                            .endsWith(".pdf")
+                    ) {
+
+                        showAlert(
+                            "يجب اختيار ملف بصيغة PDF.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    try {
+
+                        const formData =
+                            new FormData();
+
+                        formData.append(
+                            "pdf",
+                            file
+                        );
+
+                        formData.append(
+                            "title",
+                            title
+                        );
+
+                        formData.append(
+                            "description",
+                            description
+                        );
+
+                        formData.append(
+                            "branch",
+                            currentBranch
+                        );
+
+                        formData.append(
+                            "year",
+                            String(
+                                currentYear
+                            )
+                        );
+
+                        formData.append(
+                            "subject",
+                            currentSubject
+                        );
+
+                        showAlert(
+                            "جار رفع الدرس، يرجى الانتظار...",
+                            "info"
+                        );
+
+                        const response =
+                            await authorizedFetch(
+                                "/api/platform/files/upload",
+                                {
+                                    method: "POST",
+                                    body: formData
+                                }
+                            );
+
+                        const data =
+                            await response
+                                .json()
+                                .catch(
+                                    () => ({})
+                                );
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data?.error ||
+                                data?.message ||
+                                "فشل رفع الدرس."
+                            );
+                        }
+
+                        showAlert(
+                            "تم رفع الدرس بنجاح.",
+                            "success"
+                        );
+
+                        resetFileForm();
+
+                        await loadSubjectContent();
+
+                    } catch (error) {
+
+                        console.error(
+                            "upload file:",
+                            error
+                        );
+
+                        showAlert(
+                            error.message ||
+                            "حدث خطأ أثناء رفع الدرس.",
+                            "error"
+                        );
+                    }
+                }
+            );
+        }
+
+
+        function resetFileForm() {
+
+            editingFileId = null;
+
+            const form =
+                document.getElementById(
+                    "fileForm"
+                );
+
+            const input =
+                document.getElementById(
+                    "fileInput"
+                );
+
+            if (form) {
+                form.reset();
+            }
+
+            if (input) {
+
+                input.required =
+                    true;
+            }
+
+            const button =
+                document.getElementById(
+                    "fileSubmitButton"
+                );
+
+            if (button) {
+
+                button.textContent =
+                    "📤 رفع الدرس";
+            }
+        }
+
+
+        /* =========================================================
+           EDIT FILE
+        ========================================================= */
+
+        function editFile(id) {
+
+            if (
+                !canEditFile()
+            ) {
+
+                showAlert(
+                    "ليس لديك صلاحية تعديل هذا الدرس.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const file =
+                currentFiles.find(
+                    item =>
+                        String(item.id) ===
+                        String(id)
+                );
+
+            if (!file) {
+                return;
+            }
+
+            editingFileId =
+                file.id;
+
+            const titleInput =
+                document.getElementById(
+                    "fileTitle"
+                );
+
+            const descriptionInput =
+                document.getElementById(
+                    "fileDescription"
+                );
+
+            const input =
+                document.getElementById(
+                    "fileInput"
+                );
+
+            const button =
+                document.getElementById(
+                    "fileSubmitButton"
+                );
+
+            if (titleInput) {
+
+                titleInput.value =
+                    file.title ||
+                    "";
+            }
+
+            if (descriptionInput) {
+
+                descriptionInput.value =
+                    file.description ||
+                    "";
+            }
+
+            if (input) {
+
+                input.value =
+                    "";
+
+                input.required =
+                    false;
+            }
+
+            if (button) {
+
+                button.textContent =
+                    "💾 حفظ تعديل الدرس";
+            }
+
+            const managementBox =
+                document.getElementById(
+                    "fileManagementBox"
+                );
+
+            if (managementBox) {
+
+                managementBox.classList.add(
+                    "visible"
+                );
+
+                managementBox.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }
+
+
+        /* =========================================================
+           DELETE FILE
+        ========================================================= */
+
+        async function deleteFile(id) {
+
+            if (
+                !canDeleteFile()
+            ) {
+
+                showAlert(
+                    "ليس لديك صلاحية حذف هذا الدرس.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const file =
+                currentFiles.find(
+                    item =>
+                        String(item.id) ===
+                        String(id)
+                );
+
+            const title =
+                file?.title ||
+                "هذا الدرس";
+
+            if (
+                !confirm(
+                    `هل أنت متأكد من حذف "${title}"؟`
+                )
+            ) {
+
+                return;
+            }
+
+            try {
+
+                showAlert(
+                    "جار حذف الدرس...",
+                    "info"
+                );
+
+                const response =
+                    await authorizedFetch(
+                        `/api/platform/files/${encodeURIComponent(id)}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+                const data =
+                    await response
+                        .json()
+                        .catch(
+                            () => ({})
+                        );
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data?.error ||
+                        data?.message ||
+                        "فشل حذف الدرس."
+                    );
+                }
+
+                showAlert(
+                    "تم حذف الدرس بنجاح.",
+                    "success"
+                );
+
+                await loadSubjectContent();
+
+            } catch (error) {
+
+                console.error(
+                    "delete file:",
+                    error
+                );
+
+                showAlert(
+                    error.message ||
+                    "حدث خطأ أثناء حذف الدرس.",
+                    "error"
+                );
+            }
+        }
+
+
+        /* =========================================================
+           NOTES FORM
+        ========================================================= */
+
+        const noteForm =
+            document.getElementById(
+                "noteForm"
+            );
+
+        if (noteForm) {
+
+            noteForm.addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+                    if (!currentSubject) {
+
+                        showAlert(
+                            "اختر مادة أولا.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    const type =
+                        document
+                            .getElementById(
+                                "noteType"
+                            )
+                            .value;
+
+                    const title =
+                        document
+                            .getElementById(
+                                "noteTitle"
+                            )
+                            .value
+                            .trim();
+
+                    const content =
+                        document
+                            .getElementById(
+                                "noteContent"
+                            )
+                            .value
+                            .trim();
+
+
+                    /* =================================================
+                       تعديل ملاحظة
+                    ================================================= */
+
+                    if (editingNoteId) {
+
+                        if (
+                            !canEditNote()
+                        ) {
+
+                            showAlert(
+                                "ليس لديك صلاحية تعديل هذه الملاحظة.",
+                                "error"
+                            );
+
+                            return;
+                        }
+
+                        if (
+                            !title ||
+                            !content
+                        ) {
+
+                            showAlert(
+                                "أدخل عنوان الملاحظة ومحتواها.",
+                                "error"
+                            );
+
+                            return;
+                        }
+
+                        await updateNote(
+                            editingNoteId,
+                            type,
+                            title,
+                            content
+                        );
+
+                        return;
+                    }
+
+
+                    /* =================================================
+                       إنشاء ملاحظة جديدة
+                    ================================================= */
+
+                    if (
+                        !canCreateNote()
+                    ) {
+
+                        showAlert(
+                            "ليس لديك صلاحية إضافة ملاحظات لهذه المادة.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    if (
+                        !title ||
+                        !content
+                    ) {
+
+                        showAlert(
+                            "أدخل عنوان الملاحظة ومحتواها.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    try {
+
+                        showAlert(
+                            "جار نشر الملاحظة...",
+                            "info"
+                        );
+
+                        const response =
+                            await authorizedFetch(
+                                "/api/platform/notes",
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            branch:
+                                                currentBranch,
+
+                                            year:
+                                                currentYear,
+
+                                            subject:
+                                                currentSubject,
+
+                                            type,
+
+                                            title,
+
+                                            content
+
+                                        })
+                                }
+                            );
+
+                        const data =
+                            await response
+                                .json()
+                                .catch(
+                                    () => ({})
+                                );
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data?.error ||
+                                data?.message ||
+                                "فشل نشر الملاحظة."
+                            );
+                        }
+
+                        showAlert(
+                            "تم نشر الملاحظة بنجاح.",
+                            "success"
+                        );
+
+                        resetNoteForm();
+
+                        await loadSubjectContent();
+
+                    } catch (error) {
+
+                        console.error(
+                            "create note:",
+                            error
+                        );
+
+                        showAlert(
+                            error.message ||
+                            "حدث خطأ أثناء نشر الملاحظة.",
+                            "error"
+                        );
+                    }
+                }
+            );
+        }
+
+
+        function resetNoteForm() {
+
+            editingNoteId = null;
+
+            const form =
+                document.getElementById(
+                    "noteForm"
+                );
+
+            if (form) {
+                form.reset();
+            }
+
+            const button =
+                document.getElementById(
+                    "noteSubmitButton"
+                );
+
+            if (button) {
+
+                button.textContent =
+                    "📌 نشر الملاحظة";
+            }
+        }
+
+
+        /* =========================================================
+           EDIT NOTE
+        ========================================================= */
+
+        function editNote(id) {
+
+            if (
+                !canEditNote()
+            ) {
+
+                showAlert(
+                    "ليس لديك صلاحية تعديل هذه الملاحظة.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const note =
+                currentNotes.find(
+                    item =>
+                        String(item.id) ===
+                        String(id)
+                );
+
+            if (!note) {
+                return;
+            }
+
+            editingNoteId =
+                note.id;
+
+            const typeInput =
+                document.getElementById(
+                    "noteType"
+                );
+
+            const titleInput =
+                document.getElementById(
+                    "noteTitle"
+                );
+
+            const contentInput =
+                document.getElementById(
+                    "noteContent"
+                );
+
+            const button =
+                document.getElementById(
+                    "noteSubmitButton"
+                );
+
+            if (typeInput) {
+
+                typeInput.value =
+                    note.type ||
+                    "general";
+            }
+
+            if (titleInput) {
+
+                titleInput.value =
+                    note.title ||
+                    "";
+            }
+
+            if (contentInput) {
+
+                contentInput.value =
+                    note.content ||
+                    "";
+            }
+
+            if (button) {
+
+                button.textContent =
+                    "💾 حفظ تعديل الملاحظة";
+            }
+
+            const managementBox =
+                document.getElementById(
+                    "noteManagementBox"
+                );
+
+            if (managementBox) {
+
+                managementBox.classList.add(
+                    "visible"
+                );
+
+                managementBox.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }
+
+
+        /* =========================================================
+           UPDATE NOTE
+        ========================================================= */
+
+        async function updateNote(
+            id,
+            type,
+            title,
+            content
+        ) {
+
+            if (
+                !canEditNote()
+            ) {
+
+                showAlert(
+                    "ليس لديك صلاحية تعديل هذه الملاحظة.",
+                    "error"
+                );
+
+                return;
+            }
+
+            try {
+
+                showAlert(
+                    "جار حفظ تعديل الملاحظة...",
+                    "info"
+                );
+
+                const response =
+                    await authorizedFetch(
+                        `/api/platform/notes/${encodeURIComponent(id)}`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    type,
+                                    title,
+                                    content
+                                })
+                        }
+                    );
+
+                const data =
+                    await response
+                        .json()
+                        .catch(
+                            () => ({})
+                        );
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data?.error ||
+                        data?.message ||
+                        "فشل تعديل الملاحظة."
+                    );
+                }
+
+                showAlert(
+                    "تم تعديل الملاحظة بنجاح.",
+                    "success"
+                );
+
+                resetNoteForm();
+
+                await loadSubjectContent();
+
+            } catch (error) {
+
+                console.error(
+                    "update note:",
+                    error
+                );
+
+                showAlert(
+                    error.message ||
+                    "حدث خطأ أثناء تعديل الملاحظة.",
+                    "error"
+                );
+            }
+        }
+
+
+        /* =========================================================
+           DELETE NOTE
+        ========================================================= */
+
+        async function deleteNote(id) {
+
+            if (
+                !canDeleteNote()
+            ) {
+
+                showAlert(
+                    "ليس لديك صلاحية حذف هذه الملاحظة.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const note =
+                currentNotes.find(
+                    item =>
+                        String(item.id) ===
+                        String(id)
+                );
+
+            const title =
+                note?.title ||
+                "هذه الملاحظة";
+
+            if (
+                !confirm(
+                    `هل أنت متأكد من حذف "${title}"؟`
+                )
+            ) {
+
+                return;
+            }
+
+            try {
+
+                showAlert(
+                    "جار حذف الملاحظة...",
+                    "info"
+                );
+
+                const response =
+                    await authorizedFetch(
+                        `/api/platform/notes/${encodeURIComponent(id)}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+                const data =
+                    await response
+                        .json()
+                        .catch(
+                            () => ({})
+                        );
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data?.error ||
+                        data?.message ||
+                        "فشل حذف الملاحظة."
+                    );
+                }
+
+                showAlert(
+                    "تم حذف الملاحظة بنجاح.",
+                    "success"
+                );
+
+                await loadSubjectContent();
+
+            } catch (error) {
+
+                console.error(
+                    "delete note:",
+                    error
+                );
+
+                showAlert(
+                    error.message ||
+                    "حدث خطأ أثناء حذف الملاحظة.",
+                    "error"
+                );
+            }
+        }
+
+
+        async function markNoteViewed(noteId) {
+            if (!noteId || normalizeRole(currentUserRole) !== "student") return;
+            try {
+                await authorizedFetch(`/api/platform/notes/${encodeURIComponent(noteId)}/view`, {
+                    method: "POST"
+                });
+            } catch (error) {
+                console.warn("Note view tracking:", error);
+            }
+        }
+
+        async function loadNoteViewers(noteId) {
+            try {
+                const response = await authorizedFetch(
+                    `/api/platform/notes/${encodeURIComponent(noteId)}/viewers`,
+                    { method: "GET" }
+                );
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || "تعذر جلب المشاهدين.");
+                alert(
+                    (data.viewers || []).length
+                        ? "من شاهد الملاحظة:\n\n" + data.viewers.map(v => v.full_name || v.email).join("\n")
+                        : "لم يشاهد هذه الملاحظة أي تلميذ بعد."
+                );
+            } catch (error) {
+                showAlert(error.message || "تعذر جلب المشاهدين.", "error");
+            }
+        }
+
+        /* =========================================================
+           PDF
+        ========================================================= */
+
+        function getPdfUrl(id, download = false) {
+            return `/api/platform/files/${encodeURIComponent(id)}/pdf${download ? "?download=1" : ""}`;
+        }
+
+        function createPlatformPdfPage(pageNumber) {
+            const page = document.createElement("div");
+            page.className = "platform-pdf-page";
+            page.dataset.page = String(pageNumber);
+            page.innerHTML = `<div class="platform-pdf-placeholder">⏳ جاري تجهيز الصفحة ${pageNumber}...</div>`;
+            return page;
+        }
+
+        async function renderPlatformPdfPage(pdf, pageNumber) {
+            const page = await pdf.getPage(pageNumber);
+            const container = document.querySelector(`.platform-pdf-page[data-page="${pageNumber}"]`);
+            const pagesBox = document.getElementById("platformPdfPages");
+            if (!container || !pagesBox) return;
+
+            const baseViewport = page.getViewport({ scale: 1 });
+            const maxWidth = Math.max(320, Math.min(pagesBox.clientWidth - 20, 1000));
+            const scale = maxWidth / baseViewport.width;
+            const viewport = page.getViewport({ scale });
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            container.innerHTML = "";
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.floor(viewport.width * dpr);
+            canvas.height = Math.floor(viewport.height * dpr);
+            canvas.style.width = `${Math.floor(viewport.width)}px`;
+            canvas.style.height = `${Math.floor(viewport.height)}px`;
+
+            await page.render({
+                canvasContext: canvas.getContext("2d", { alpha: false }),
+                viewport,
+                transform: [dpr, 0, 0, dpr, 0, 0]
+            }).promise;
+
+            container.appendChild(canvas);
+            const label = document.createElement("div");
+            label.className = "platform-pdf-page-number";
+            label.textContent = `الصفحة ${pageNumber} من ${platformPdfTotalPages}`;
+            container.appendChild(label);
+            platformPdfRenderedPages = Math.max(platformPdfRenderedPages, pageNumber);
+
+            const loadingText = document.getElementById("platformPdfLoadingText");
+            if (loadingText) loadingText.textContent = `تم تجهيز ${platformPdfRenderedPages} من ${platformPdfTotalPages} صفحة`;
+        }
+
+        async function openPdf(id, title) {
+            if (!id) return;
+
+            currentPdfId = String(id);
+            const viewer = document.getElementById("pdfViewer");
+            const pages = document.getElementById("platformPdfPages");
+            const loading = document.getElementById("platformPdfLoading");
+            const loadingText = document.getElementById("platformPdfLoadingText");
+            const loadingPercent = document.getElementById("platformPdfLoadingPercent");
+            const viewerTitle = document.getElementById("pdfViewerTitle");
+
+            if (!viewer || !pages || !loading) return;
+
+            try {
+                if (platformPdfLoadingTask) {
+                    try { await platformPdfLoadingTask.destroy(); } catch (_) {}
+                }
+
+                pages.innerHTML = "";
+                loading.classList.remove("hidden");
+                loadingText.textContent = "جاري تحميل الدرس...";
+                loadingPercent.textContent = "0%";
+                viewerTitle.textContent = title || "عرض الدرس";
+                viewer.classList.add("visible");
+                document.body.style.overflow = "hidden";
+
+                const session = await getSession();
+                if (!session) throw new Error("يجب تسجيل الدخول أولا.");
+                if (!window.pdfjsLib) throw new Error("تعذر تشغيل قارئ PDF.");
+
+                pdfjsLib.GlobalWorkerOptions.workerSrc =
+                    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+                platformPdfLoadingTask = pdfjsLib.getDocument({
+                    url: getPdfUrl(id),
+                    httpHeaders: { Authorization: `Bearer ${session.access_token}` },
+                    rangeChunkSize: 1024 * 1024,
+                    disableAutoFetch: false,
+                    disableStream: false
+                });
+
+                platformPdfLoadingTask.onProgress = progress => {
+                    if (progress && progress.total > 0) {
+                        loadingPercent.textContent = `${Math.round((progress.loaded / progress.total) * 100)}%`;
+                    }
+                };
+
+                platformPdfDocument = await platformPdfLoadingTask.promise;
+                platformPdfTotalPages = platformPdfDocument.numPages;
+                platformPdfRenderedPages = 0;
+
+                const fragment = document.createDocumentFragment();
+                for (let n = 1; n <= platformPdfTotalPages; n++) {
+                    fragment.appendChild(createPlatformPdfPage(n));
+                }
+                pages.appendChild(fragment);
+
+                for (let n = 1; n <= platformPdfTotalPages; n++) {
+                    await renderPlatformPdfPage(platformPdfDocument, n);
+                    if (n === 1) loading.classList.add("hidden");
+                }
+
+                loading.classList.add("hidden");
+            } catch (error) {
+                console.error("Platform PDF error:", error);
+                loadingText.textContent = error.message || "تعذر عرض الدرس.";
+                loadingPercent.textContent = "❌";
+            }
+        }
+
+        async function downloadPdf(id, title) {
+            if (!id) return;
+
+            try {
+                const session = await getSession();
+                if (!session?.access_token) {
+                    throw new Error("يجب تسجيل الدخول أولا.");
+                }
+
+                const response = await fetch(
+                    getPdfUrl(id, true),
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${session.access_token}`
+                        }
+                    }
+                );
+
+                if (!response.ok) {
+                    let message = "تعذر تحميل ملف PDF.";
+                    try {
+                        const data = await response.json();
+                        message = data?.message || data?.error || message;
+                    } catch (_) {}
+                    throw new Error(message);
+                }
+
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = blobUrl;
+                link.download = `${title || "الدرس"}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+            } catch (error) {
+                console.error("Platform PDF download error:", error);
+                showAlert(
+                    error.message || "تعذر تحميل الدرس.",
+                    "error"
+                );
+            }
+        }
+
+        function closePdfViewer() {
+
+            const viewer =
+                document.getElementById(
+                    "pdfViewer"
+                );
+
+            const frame =
+                document.getElementById(
+                    "pdfFrame"
+                );
+
+            if (viewer) {
+
+                viewer.classList.remove(
+                    "visible"
+                );
+            }
+
+            if (frame) {
+
+                frame.src =
+                    "";
+            }
+
+            currentPdfId =
+                null;
+
+            document.body.style.overflow =
+                "";
+        }
+
+
+        function closePdfIfOutside(
+            event
+        ) {
+
+            if (
+                event.target &&
+                event.target.id ===
+                    "pdfViewer"
+            ) {
+
+                closePdfViewer();
+            }
+        }
+
+
+        const pdfDownloadButton =
+            document.getElementById(
+                "pdfDownloadButton"
+            );
+
+        if (pdfDownloadButton) {
+
+            pdfDownloadButton.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        currentPdfId
+                    ) {
+
+                        const titleElement =
+                            document.getElementById(
+                                "pdfViewerTitle"
+                            );
+
+                        downloadPdf(
+                            currentPdfId,
+                            titleElement
+                                ? titleElement.textContent
+                                : "document"
+                        );
+                    }
+                }
+            );
+        }
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closePdfViewer();
+                }
+            }
+        );
+
+
+        /* =========================================================
+           AUTH LISTENER
+        ========================================================= */
+
+        function setupAuthListener() {
+
+            if (!supabaseClient) {
+                return;
+            }
+
+            supabaseClient.auth.onAuthStateChange(
+                () => {
+
+                    setTimeout(
+                        async () => {
+
+                            await loadCurrentUser();
+
+                            if (
+                                currentSubject
+                            ) {
+
+                                await loadSubjectContent();
+
+                            }
+
+                        },
+                        100
+                    );
+                }
+            );
+        }
+
+
+        /* =========================================================
+           INITIALIZATION
+        ========================================================= */
+
+        async function initializePlatform() {
+
+            const currentYearElement =
+                document.getElementById(
+                    "currentYear"
+                );
+
+            if (currentYearElement) {
+
+                currentYearElement.textContent =
+                    new Date()
+                        .getFullYear();
+            }
+
+            await loadCurrentUser();
+
+            applyStudentRestrictions();
+
+            /*
+             * التلميذ لا يرى اختيارًا عامًا للشعب والسنوات:
+             * نفتح له مباشرة شعبته وسنته المسجلتين في حسابه.
+             */
+            if (
+                normalizeRole(currentUserRole) === "student" &&
+                currentUserBranch &&
+                [1, 2, 3].includes(Number(currentUserYear)) &&
+                subjectsData[currentUserBranch]?.[Number(currentUserYear)]
+            ) {
+                selectBranch(currentUserBranch);
+
+                setTimeout(() => {
+                    selectYear(Number(currentUserYear));
+                }, 80);
+            }
+
+            setupAuthListener();
+
+            updateBreadcrumb();
+
+            const yearsSection =
+                document.getElementById(
+                    "yearsSection"
+                );
+
+            const subjectsSection =
+                document.getElementById(
+                    "subjectsSection"
+                );
+
+            const subjectContent =
+                document.getElementById(
+                    "subjectContent"
+                );
+
+            if (yearsSection) {
+
+                yearsSection.classList.remove(
+                    "visible"
+                );
+            }
+
+            if (subjectsSection) {
+
+                subjectsSection.classList.remove(
+                    "visible"
+                );
+            }
+
+            if (subjectContent) {
+
+                subjectContent.classList.remove(
+                    "visible"
+                );
+            }
+
+            /*
+             * عند إنشاء درس جديد، اختيار PDF مطلوب.
+             * عند التعديل يصبح غير مطلوب.
+             */
+            const fileInput =
+                document.getElementById(
+                    "fileInput"
+                );
+
+            if (fileInput) {
+
+                fileInput.required =
+                    true;
+            }
+        }
+
+
+        initializePlatform();
+
+</script>
+
+</body>
+</html>
