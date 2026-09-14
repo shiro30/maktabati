@@ -658,16 +658,6 @@
 
         }
 
-    
-        .notification-bell{position:relative;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:9px 13px;font-size:20px;cursor:pointer;line-height:1;}
-        .notification-badge{position:absolute;top:-7px;right:-7px;min-width:21px;height:21px;padding:2px 5px;border-radius:999px;background:#ef4444;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #07101d;}
-        .notification-overlay{position:fixed;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(5px);display:none;align-items:flex-start;justify-content:center;padding:70px 16px 20px;z-index:99999;}
-        .notification-overlay.active{display:flex;}
-        .notification-panel{width:min(680px,100%);max-height:80vh;overflow:hidden;background:#07101d;border:1px solid #1b3658;border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.55);}
-        .notification-header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:20px;border-bottom:1px solid #172b46;background:#0a1728;}
-        .notification-header h2{margin:0;color:#fff;font-size:20px}.notification-header p{margin:4px 0 0;color:#94a3b8;font-size:12px}.notification-close{width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:24px;cursor:pointer}.notification-actions{padding:10px 15px;border-bottom:1px solid #172b46;text-align:left}.notification-actions button{border:1px solid #27466b;background:#102845;color:#fff;border-radius:9px;padding:8px 12px;cursor:pointer;font-family:inherit}.notification-list{max-height:58vh;overflow:auto;padding:12px}.notification-item{padding:15px;border:1px solid #1b3658;border-radius:13px;background:#0a1728;margin-bottom:10px;cursor:pointer;transition:.2s}.notification-item:hover{transform:translateY(-1px);border-color:#315a86}.notification-item.unread{border-right:4px solid #ff7a18;background:#0d1c30}.notification-item h3{margin:0 0 5px;color:#fff;font-size:15px}.notification-item p{margin:0;color:#cbd5e1;font-size:13px;line-height:1.8}.notification-item small{display:block;margin-top:8px;color:#64748b}.notification-empty{text-align:center;color:#94a3b8;padding:35px 15px}
-        @media(max-width:600px){.notification-bell{padding:8px 10px}.notification-overlay{padding-top:45px}.notification-panel{max-height:86vh}.notification-list{max-height:66vh}}
-
     </style>
 
 </head>
@@ -697,11 +687,7 @@
                 📚 المكتبة
             </a>
 
-            <button type="button" id="notificationBell" class="notification-bell" aria-label="الإشعارات" title="الإشعارات">
-            🔔<span id="notificationBadge" class="notification-badge" style="display:none;">0</span>
-        </button>
-
-        <div class="user-info">
+            <div class="user-info">
 
                 <span
                     class="user-name"
@@ -955,25 +941,6 @@
 
     </div>
 
-
-
-    <div id="notificationOverlay" class="notification-overlay" aria-hidden="true">
-        <div class="notification-panel">
-            <div class="notification-header">
-                <div>
-                    <h2>🔔 الإشعارات</h2>
-                    <p>آخر الإشعارات الخاصة بحسابك</p>
-                </div>
-                <button type="button" id="closeNotifications" class="notification-close">×</button>
-            </div>
-            <div class="notification-actions">
-                <button type="button" id="markAllNotifications">تعليم الكل كمقروء</button>
-            </div>
-            <div id="notificationList" class="notification-list">
-                <div class="notification-empty">جار تحميل الإشعارات...</div>
-            </div>
-        </div>
-    </div>
 
     <!-- الفوتر -->
 
@@ -1424,48 +1391,6 @@
         checkStudent();
 
     </script>
-
-
-<script>
-(function(){
-    const bell=document.getElementById('notificationBell');
-    const badge=document.getElementById('notificationBadge');
-    const overlay=document.getElementById('notificationOverlay');
-    const closeBtn=document.getElementById('closeNotifications');
-    const list=document.getElementById('notificationList');
-    const markAll=document.getElementById('markAllNotifications');
-    if(!bell||!overlay) return;
-
-    async function token(){
-        const {data}=await supabaseClient.auth.getSession();
-        return data?.session?.access_token||null;
-    }
-    async function loadNotifications(openPanel=false){
-        try{
-            const t=await token(); if(!t) return;
-            const r=await fetch('/api/notifications',{headers:{Authorization:'Bearer '+t}});
-            const d=await r.json(); if(!r.ok||!d.success) return;
-            const count=Number(d.unreadCount||0);
-            badge.textContent=count>99?'99+':String(count);
-            badge.style.display=count?'flex':'none';
-            if(!openPanel) return;
-            if(!d.notifications?.length){list.innerHTML='<div class="notification-empty">لا توجد إشعارات حاليًا.</div>';return;}
-            list.innerHTML=d.notifications.map(n=>`<div class="notification-item ${n.read?'':'unread'}" data-id="${n.id}" data-link="${n.link||''}"><h3>${escapeHtml(n.title)}</h3><p>${escapeHtml(n.message)}</p><small>${new Date(n.created_at).toLocaleString('ar-DZ')}</small></div>`).join('');
-            list.querySelectorAll('.notification-item').forEach(el=>el.addEventListener('click',async()=>{
-                try{await fetch('/api/notifications/'+encodeURIComponent(el.dataset.id)+'/read',{method:'POST',headers:{Authorization:'Bearer '+await token()}});}catch(e){}
-                const link=el.dataset.link; if(link) window.location.href=link; else loadNotifications(true);
-            }));
-        }catch(e){console.error('Notifications:',e);}
-    }
-    function escapeHtml(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-    bell.addEventListener('click',()=>{overlay.classList.add('active');overlay.setAttribute('aria-hidden','false');loadNotifications(true);});
-    closeBtn.addEventListener('click',()=>{overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true');});
-    overlay.addEventListener('click',e=>{if(e.target===overlay) closeBtn.click();});
-    markAll.addEventListener('click',async()=>{try{const t=await token();await fetch('/api/notifications/read-all',{method:'POST',headers:{Authorization:'Bearer '+t}});loadNotifications(true);}catch(e){}});
-    loadNotifications();
-    setInterval(()=>loadNotifications(),15000);
-})();
-</script>
 
 </body>
 

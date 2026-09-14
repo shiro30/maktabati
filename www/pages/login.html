@@ -1454,17 +1454,6 @@
                     }
 
 
-                    try {
-                        await fetch("/api/auth/login-activity", {
-                            method: "POST",
-                            headers: {
-                                "Authorization": "Bearer " + data.session.access_token
-                            }
-                        });
-                    } catch (activityError) {
-                        console.warn("تعذر تسجيل نشاط الدخول:", activityError);
-                    }
-
                     loginMessage.style.color =
                         "#4ade80";
 
