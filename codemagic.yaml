@@ -17,12 +17,26 @@ workflows:
         script: |
           ./node_modules/.bin/cap sync ios
 
+      - name: Create export options
+        script: |
+          cat > "$CM_BUILD_DIR/export_options.plist" << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>development</string>
+          </dict>
+          </plist>
+          EOF
+
       - name: Build iOS
         script: |
           xcode-project build-ipa \
             --project "$CM_BUILD_DIR/ios/App/App.xcodeproj" \
             --scheme "App" \
-            --config Release
+            --config Release \
+            --export-options-plist "$CM_BUILD_DIR/export_options.plist"
 
     artifacts:
       - build/ios/ipa/*.ipa
