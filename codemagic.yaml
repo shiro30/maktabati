@@ -1,0 +1,30 @@
+workflows:
+  ios-test:
+    name: Maktabati iOS Test
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    environment:
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm ci
+
+      - name: Sync Capacitor iOS
+        script: |
+          npx cap sync ios
+
+      - name: Build iOS
+        script: |
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/ios/App/App.xcworkspace" \
+            --scheme "App" \
+            --config Release \
+            --no-codesign
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
