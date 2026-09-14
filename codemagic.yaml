@@ -15,7 +15,7 @@ workflows:
 
       - name: Sync Capacitor iOS
         script: |
-          npx cap sync ios
+          ./node_modules/.bin/cap sync ios
 
       - name: Build iOS
         script: |
