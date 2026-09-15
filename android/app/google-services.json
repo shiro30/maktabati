@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "831063333302",
+    "project_id": "maktabati-43349",
+    "storage_bucket": "maktabati-43349.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831063333302:android:74e78e9f76e7294427c917",
+        "android_client_info": {
+          "package_name": "dz.maktabati.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY7n5WCwYrpN1k7D1_AD2r4MfDoe26zIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

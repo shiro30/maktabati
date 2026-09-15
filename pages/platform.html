@@ -2093,6 +2093,24 @@
 
                             </div>
 
+                            <div class="form-group homework-only-field" id="homeworkFileGroup" style="display:none;">
+                                <label for="homeworkFile">ملف PDF للواجب</label>
+                                <input type="file" id="homeworkFile" class="form-control" accept="application/pdf,.pdf">
+                            </div>
+
+                            <div class="form-group homework-only-field" id="homeworkDeadlineGroup" style="display:none;">
+                                <label for="homeworkDeadline">مدة التسليم</label>
+                                <select id="homeworkDeadline" class="form-control">
+                                    <option value="12">12 ساعة</option>
+                                    <option value="24" selected>24 ساعة</option>
+                                    <option value="48">48 ساعة</option>
+                                    <option value="72">72 ساعة</option>
+                                    <option value="168">7 أيام</option>
+                                    <option value="custom">مدة مخصصة</option>
+                                </select>
+                                <input type="number" id="homeworkCustomHours" class="form-control" min="1" max="720" step="1" placeholder="عدد الساعات" style="display:none;margin-top:8px;">
+                            </div>
+
                         </div>
 
                         <div class="form-actions">
@@ -2265,6 +2283,12 @@
 
                     </form>
 
+                </div>
+
+                <div id="homeworkTeacherBox" class="management-box" style="display:none; margin-top:18px;">
+                    <h5>👨‍🎓 واجبات التلاميذ</h5>
+                    <p class="box-description">متابعة تسليم الحلول حسب الواجب، مع اسم التلميذ والقسم والسنة ووقت التسليم.</p>
+                    <div id="homeworkTeacherList"></div>
                 </div>
 
                 <div
@@ -4322,6 +4346,7 @@
 
                 renderFiles();
                 renderNotes();
+                loadHomeworkSubmissions();
 
             } catch (error) {
 
@@ -4506,6 +4531,8 @@
                                     ⬇️ تحميل
                                 </button>
 
+                                ${(isFullAccess() || normalizeRole(currentUserRole) === "teacher") ? `<button class="mini-btn" type="button" onclick="loadFileViewers('${escapeHtml(id)}')">👁️ من شاهدها</button>` : ""}
+
                                 ${
                                     canEdit
                                         ? `
@@ -4546,6 +4573,8 @@
                     container.appendChild(
                         card
                     );
+
+                    if (normalizeRole(currentUserRole) === "student") markNoteViewed(note.id);
 
                 }
             );
@@ -4738,6 +4767,15 @@
                                     </span>
 
                                 </div>
+
+                                ${type === "homework" ? `
+                                    <div class="homework-details" style="margin-top:12px;padding:12px;border:1px solid rgba(59,130,246,.25);border-radius:12px;">
+                                        <div><strong>⏳ الوقت المتبقي:</strong> <span class="homework-countdown" data-deadline="${escapeHtml(note.submission_deadline || "")}">جار الحساب...</span></div>
+                                        <div style="font-size:12px;color:#94a3b8;margin-top:4px;"><strong>آخر أجل:</strong> ${escapeHtml(formatDate(note.submission_deadline))}</div>
+                                        ${note.homework_file_url ? `<button class="mini-btn download" type="button" onclick="window.open('${escapeHtml(note.homework_file_url)}','_blank')">📄 فتح PDF الواجب</button>` : ""}
+                                        ${normalizeRole(currentUserRole) === "student" ? `<div style="margin-top:10px;"><div style="font-size:12px;color:#94a3b8;margin-bottom:6px;">${note.my_submission ? `✅ تم تسليم حل بتاريخ ${escapeHtml(formatDate(note.my_submission.submitted_at))} — يمكنك استبداله قبل انتهاء المهلة.` : "لم يتم تسليم الحل بعد."}</div><input type="file" accept="application/pdf,.pdf" id="solution-${escapeHtml(String(note.id))}" class="form-control"><button class="mini-btn" type="button" onclick="submitHomework('${escapeHtml(String(note.id))}')">📤 ${note.my_submission ? "استبدال الحل" : "تسليم الحل"}</button><span id="solution-status-${escapeHtml(String(note.id))}" style="display:block;margin-top:6px;font-size:12px;color:#94a3b8;"></span></div>` : ""}
+                                    </div>
+                                ` : ""}
 
                             </div>
 
@@ -5280,6 +5318,8 @@
             if (form) {
                 form.reset();
             }
+            const homeworkFile=document.getElementById("homeworkFile"); if(homeworkFile) homeworkFile.value="";
+            toggleHomeworkFields();
 
             if (input) {
 
@@ -5496,6 +5536,13 @@
            NOTES FORM
         ========================================================= */
 
+        const noteTypeInput = document.getElementById("noteType");
+        const homeworkFileGroup = document.getElementById("homeworkFileGroup");
+        const homeworkDeadlineGroup = document.getElementById("homeworkDeadlineGroup");
+        function toggleHomeworkFields(){ const active=noteTypeInput?.value === "homework" && !editingNoteId; if(homeworkFileGroup) homeworkFileGroup.style.display=active?"block":"none"; if(homeworkDeadlineGroup) homeworkDeadlineGroup.style.display=active?"block":"none"; const custom=document.getElementById("homeworkCustomHours"); if(custom) custom.style.display=(active && document.getElementById("homeworkDeadline")?.value === "custom")?"block":"none"; }
+        noteTypeInput?.addEventListener("change",toggleHomeworkFields);
+        document.getElementById("homeworkDeadline")?.addEventListener("change",toggleHomeworkFields);
+
         const noteForm =
             document.getElementById(
                 "noteForm"
@@ -5615,6 +5662,19 @@
                     }
 
                     try {
+
+                        if(type === "homework") {
+                            const homeworkFile=document.getElementById("homeworkFile")?.files?.[0];
+                            const deadlineValue=document.getElementById("homeworkDeadline")?.value||"24";
+                            const hours=deadlineValue === "custom" ? Number(document.getElementById("homeworkCustomHours")?.value) : Number(deadlineValue);
+                            if(!homeworkFile) { showAlert("اختر ملف PDF للواجب.","error"); return; }
+                            const formData=new FormData(); formData.append("branch",currentBranch); formData.append("year",currentYear); formData.append("subject",currentSubject); formData.append("title",title); formData.append("content",content); formData.append("deadline_hours",hours); formData.append("pdf",homeworkFile);
+                            showAlert("جار نشر الواجب...","info");
+                            const response=await authorizedFetch("/api/platform/homework",{method:"POST",body:formData});
+                            const data=await response.json().catch(()=>({}));
+                            if(!response.ok) throw new Error(data.message||"فشل نشر الواجب.");
+                            showAlert("تم نشر الواجب بنجاح.","success"); resetNoteForm(); await loadSubjectContent(); await loadHomeworkSubmissions(); return;
+                        }
 
                         showAlert(
                             "جار نشر الملاحظة...",
@@ -6004,6 +6064,45 @@
         }
 
 
+        function updateHomeworkCountdowns() {
+            document.querySelectorAll(".homework-countdown").forEach(el => {
+                const deadline=new Date(el.dataset.deadline||"").getTime();
+                if(!Number.isFinite(deadline)){el.textContent="غير محدد";return;}
+                const diff=deadline-Date.now();
+                if(diff<=0){el.textContent="انتهت المهلة";el.style.color="#ef4444";return;}
+                const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),sec=Math.floor((diff%60000)/1000);
+                el.textContent=`${h}س ${m}د ${sec}ث`;
+            });
+        }
+        setInterval(updateHomeworkCountdowns,1000);
+
+        async function loadFileViewers(fileId) {
+            try {
+                const response = await authorizedFetch(`/api/platform/files/${encodeURIComponent(fileId)}/viewers`, {method:"GET"});
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || "تعذر جلب المشاهدين.");
+                const rows = data.viewers || [];
+                const unviewed=data.unviewed||[];
+                alert((rows.length ? "من شاهد الملف:\n\n" + rows.map(v => `${v.full_name || "تلميذ"} — ${formatDate(v.viewed_at)} — السنة ${v.year}`).join("\n") : "لم يشاهد هذا الملف أي تلميذ بعد.") + (unviewed.length ? `\n\nلم يشاهده بعد (${unviewed.length}):\n` + unviewed.map(v => v.full_name || "تلميذ").join("\n") : ""));
+            } catch(error) { showAlert(error.message || "تعذر جلب المشاهدين.","error"); }
+        }
+
+        async function submitHomework(noteId) {
+            const input=document.getElementById(`solution-${noteId}`), status=document.getElementById(`solution-status-${noteId}`), file=input?.files?.[0];
+            if(!file) { showAlert("اختر ملف PDF للحل أولا.","error"); return; }
+            if(file.type && file.type!=="application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) { showAlert("الحل يجب أن يكون بصيغة PDF.","error"); return; }
+            const form=new FormData(); form.append("pdf",file);
+            try { status.textContent="⏳ جار رفع الحل..."; const response=await authorizedFetch(`/api/platform/homework/${encodeURIComponent(noteId)}/submit`,{method:"POST",body:form}); const data=await response.json().catch(()=>({})); if(!response.ok) throw new Error(data.message||"فشل تسليم الحل."); status.textContent="✅ تم التسليم بنجاح ويمكنك استبداله قبل انتهاء المهلة."; input.value=""; showAlert("تم تسليم الحل بنجاح.","success"); } catch(error) { status.textContent=""; showAlert(error.message||"تعذر تسليم الحل.","error"); }
+        }
+
+        async function loadHomeworkSubmissions() {
+            const box=document.getElementById("homeworkTeacherBox"), list=document.getElementById("homeworkTeacherList");
+            if(!box||!list||!["teacher","admin","programmer"].includes(normalizeRole(currentUserRole))) return;
+            if(!currentBranch||!currentYear||!currentSubject) return;
+            box.style.display="block"; list.innerHTML='<div class="loading">جار تحميل واجبات التلاميذ...</div>';
+            try { const response=await authorizedFetch(`/api/platform/homework/submissions?branch=${encodeURIComponent(currentBranch)}&year=${encodeURIComponent(currentYear)}&subject=${encodeURIComponent(currentSubject)}`); const data=await response.json(); if(!response.ok) throw new Error(data.message||"تعذر جلب الواجبات."); if(!(data.homeworks||[]).length){list.innerHTML='<div class="empty-state"><div class="empty-icon">📚</div><h5>لا توجد واجبات</h5></div>';return;} list.innerHTML=(data.homeworks||[]).map(hw=>`<div style="margin:12px 0;padding:14px;border:1px solid #1b3658;border-radius:14px;background:#0a1728;"><h4 style="margin:0 0 8px;color:#fff;">📚 ${escapeHtml(hw.title)}</h4><div style="color:#94a3b8;font-size:12px;margin-bottom:10px;">آخر أجل: ${escapeHtml(formatDate(hw.submission_deadline))}</div>${(hw.students||[]).map(st=>`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 0;border-top:1px solid rgba(148,163,184,.12);"><span>${escapeHtml(st.full_name)} — السنة ${escapeHtml(st.year)}</span><span>${st.submitted ? `✅ تم التسليم — ${escapeHtml(formatDate(st.submitted_at))} ${st.file_url?`<a href="${escapeHtml(st.file_url)}" target="_blank" rel="noopener" style="color:#60a5fa;margin-right:8px;">📄 فتح الحل</a>`:""}` : `⏳ ${escapeHtml(st.status)}`}</span></div>`).join("")}</div>`).join(""); } catch(error) { list.innerHTML=`<div class="empty-state">${escapeHtml(error.message||"تعذر جلب الواجبات.")}</div>`; }
+        }
+
         async function markNoteViewed(noteId) {
             if (!noteId || normalizeRole(currentUserRole) !== "student") return;
             try {
@@ -6023,11 +6122,8 @@
                 );
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.message || "تعذر جلب المشاهدين.");
-                alert(
-                    (data.viewers || []).length
-                        ? "من شاهد الملاحظة:\n\n" + data.viewers.map(v => v.full_name || v.email).join("\n")
-                        : "لم يشاهد هذه الملاحظة أي تلميذ بعد."
-                );
+                const viewers=data.viewers||[], unviewed=data.unviewed||[];
+                alert((viewers.length ? "من شاهد الملاحظة:\n\n" + viewers.map(v => `${v.full_name || "تلميذ"} — ${formatDate(v.viewed_at)} — السنة ${v.year}`).join("\n") : "لم يشاهد هذه الملاحظة أي تلميذ بعد.") + (unviewed.length ? `\n\nلم يشاهدها بعد (${unviewed.length}):\n` + unviewed.map(v => v.full_name || "تلميذ").join("\n") : ""));
             } catch (error) {
                 showAlert(error.message || "تعذر جلب المشاهدين.", "error");
             }

@@ -839,11 +839,69 @@ async function createSystemNotification({
             return false;
         }
 
+        const notificationRow = result.data && result.data[0] ? result.data[0] : null;
+        try {
+            await sendPushForNotification({
+                id: notificationRow?.id || null,
+                title: String(title || "إشعار جديد").trim(),
+                message: String(message || "").trim(),
+                targetType, targetUserId, targetBranch, targetYear, link
+            });
+        } catch (pushError) {
+            console.warn("Push notification skipped:", pushError?.message || pushError);
+        }
+
         return true;
     } catch (error) {
         console.error("Notification creation error:", error);
         return false;
     }
+}
+
+async function getFirebaseAccessToken() {
+    const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    if (!raw) return null;
+    let credentials;
+    try { credentials = JSON.parse(raw); } catch (_) { throw new Error("FIREBASE_SERVICE_ACCOUNT_JSON غير صالح."); }
+    if (!credentials.project_id || !credentials.client_email || !credentials.private_key) throw new Error("بيانات حساب خدمة Firebase غير مكتملة.");
+    const auth = new google.auth.JWT(credentials.client_email, null, String(credentials.private_key).replace(/\\n/g, "\n"), ["https://www.googleapis.com/auth/firebase.messaging"]);
+    const token = await auth.getAccessToken();
+    return { accessToken: token.token, projectId: credentials.project_id };
+}
+
+async function getPushAudienceUserIds({ targetType, targetUserId, targetBranch, targetYear }) {
+    if (targetType === "user") return targetUserId ? [String(targetUserId)] : [];
+    const result = await supabase.auth.admin.listUsers({ page:1, perPage:1000 });
+    if (result.error) throw result.error;
+    const users = result.data.users || [];
+    const profileResult = await supabase.from("profiles").select("id,role").in("id", users.map(u => u.id));
+    const roles = Object.fromEntries((profileResult.data || []).map(p => [p.id, p.role]));
+    return users.filter(user => {
+        if (roles[user.id] && String(roles[user.id]).toLowerCase() !== "student") return false;
+        if (targetType === "class") return String(user.user_metadata?.branch || "").trim() === String(targetBranch || "").trim() && Number(user.user_metadata?.year) === Number(targetYear);
+        return true;
+    }).map(user => user.id);
+}
+
+async function sendPushForNotification({ id, title, message, targetType, targetUserId, targetBranch, targetYear, link }) {
+    const firebase = await getFirebaseAccessToken();
+    if (!firebase) return { configured:false, sent:0 };
+    const userIds = await getPushAudienceUserIds({ targetType, targetUserId, targetBranch, targetYear });
+    if (!userIds.length) return { configured:true, sent:0 };
+    const tokensResult = await supabase.from("push_device_tokens").select("token,user_id").in("user_id", userIds);
+    if (tokensResult.error) throw tokensResult.error;
+    const tokens = [...new Set((tokensResult.data || []).map(x => x.token).filter(Boolean))];
+    let sent=0;
+    for (const token of tokens) {
+        const response = await fetch(`https://fcm.googleapis.com/v1/projects/${encodeURIComponent(firebase.projectId)}/messages:send`, {
+            method:"POST",
+            headers:{Authorization:`Bearer ${firebase.accessToken}`,"Content-Type":"application/json"},
+            body:JSON.stringify({message:{token,notification:{title:String(title||"إشعار جديد"),body:String(message||"")},data:{notification_id:String(id||""),title:String(title||"إشعار جديد"),message:String(message||""),link:String(link||"pages/student.html")},android:{priority:"HIGH",notification:{channel_id:"maktabati_notifications"}}}})
+        });
+        if(response.ok) sent++;
+        else { const text=await response.text().catch(()=>""); console.warn("FCM send failed:",response.status,text.slice(0,500)); if(response.status===400||response.status===404) await supabase.from("push_device_tokens").delete().eq("token",token); }
+    }
+    return { configured:true, sent };
 }
 
 function getStudentAudience(profile, userId) {
@@ -2231,7 +2289,11 @@ app.get(
                         content,
                         created_by,
                         created_at,
-                        updated_at
+                        updated_at,
+                        homework_file_drive_id,
+                        homework_file_url,
+                        homework_file_name,
+                        submission_deadline
                         `
                     )
                     .eq(
@@ -2266,6 +2328,17 @@ app.get(
 
             const fileRows = filesResult.data || [];
             const noteRows = notesResult.data || [];
+
+            if (verification.profile.role === "student" && noteRows.some(n => n.type === "homework")) {
+                const homeworkIds = noteRows.filter(n => n.type === "homework").map(n => n.id);
+                const submissionsResult = await supabase.from("homework_submissions").select("note_id,file_name,file_url,submitted_at,updated_at").eq("student_id", verification.user.id).in("note_id", homeworkIds);
+                if (!submissionsResult.error) {
+                    const submissionMap = Object.fromEntries((submissionsResult.data || []).map(x => [x.note_id, x]));
+                    for (const note of noteRows) {
+                        if (note.type === "homework") note.my_submission = submissionMap[note.id] || null;
+                    }
+                }
+            }
 
             const creatorIds = [
                 ...fileRows.map(item => item.uploaded_by),
@@ -2677,6 +2750,79 @@ app.post(
         }
     }
 );
+
+/* =========================================================
+   نظام الواجبات المنزلية
+========================================================= */
+async function uploadPdfToPlatformDrive(pdfFile){
+    if(!drive) throw new Error("Google Drive غير متصل بالخادم.");
+    const folderId=process.env.GOOGLE_DRIVE_FOLDER_ID;
+    if(!folderId) throw new Error("لم يتم إعداد مجلد Google Drive الخاص بالمنصة.");
+    const uploaded=await drive.files.create({requestBody:{name:path.basename(pdfFile.originalname),parents:[folderId]},media:{mimeType:"application/pdf",body:Readable.from(pdfFile.buffer)},fields:"id,name,webViewLink"});
+    if(!uploaded.data.id) throw new Error("تعذر الحصول على معرف ملف PDF.");
+    await drive.permissions.create({fileId:uploaded.data.id,requestBody:{role:"reader",type:"anyone"},fields:"id"});
+    return {id:uploaded.data.id,name:uploaded.data.name||path.basename(pdfFile.originalname),url:uploaded.data.webViewLink||`https://drive.google.com/file/d/${uploaded.data.id}/view`};
+}
+
+app.post("/api/platform/homework",platformUpload.single("pdf"),async function(req,res){
+    let uploadedId=null;
+    try{
+        const verification=await verifyPlatformUser(req); if(!verification.success) return res.status(verification.status).json({success:false,message:verification.message});
+        if(verification.profile.role==="student") return res.status(403).json({success:false,message:"التلميذ لا يستطيع إنشاء الواجبات."});
+        const location=validatePlatformLocation(req.body.branch,req.body.year,req.body.subject); if(!location.valid) return res.status(400).json({success:false,message:location.message});
+        if(verification.profile.role==="teacher"&&!teacherCanAccessSubject(verification,location.subject)) return res.status(403).json({success:false,message:"لا يمكنك إنشاء واجب في مادة أخرى."});
+        const title=String(req.body.title||"").trim(), content=String(req.body.content||"").trim(), hours=Number(req.body.deadline_hours), pdf=req.file;
+        if(!title||!content) return res.status(400).json({success:false,message:"العنوان والتعليمات مطلوبان."});
+        if(!pdf) return res.status(400).json({success:false,message:"يرجى اختيار ملف PDF للواجب."});
+        if(!Number.isFinite(hours)||hours<=0||hours>720) return res.status(400).json({success:false,message:"مدة التسليم غير صالحة."});
+        const uploaded=await uploadPdfToPlatformDrive(pdf); uploadedId=uploaded.id;
+        const deadline=new Date(Date.now()+hours*3600000).toISOString();
+        const result=await supabase.from("platform_notes").insert({branch:location.branch,year:location.year,subject:location.subject,type:"homework",title,content,created_by:verification.user.id,homework_file_drive_id:uploaded.id,homework_file_url:uploaded.url,homework_file_name:uploaded.name,submission_deadline:deadline}).select().single();
+        if(result.error) throw result.error;
+        await createSystemNotification({title:"واجب منزلي جديد",message:`تم نشر واجب جديد: «${title}».`,type:"homework",targetType:"class",targetBranch:location.branch,targetYear:location.year,targetSubject:location.subject,link:"pages/platform.html",createdBy:verification.user.id});
+        return res.json({success:true,message:"تم نشر الواجب بنجاح.",note:result.data});
+    }catch(error){if(uploadedId&&drive){try{await drive.files.delete({fileId:uploadedId});}catch(_){}} console.error("Homework create error:",error);return res.status(500).json({success:false,message:error?.message||"حدث خطأ أثناء إنشاء الواجب."});}
+});
+
+app.post("/api/platform/homework/:id/submit",platformUpload.single("pdf"),async function(req,res){
+    let uploadedId=null;
+    try{
+        const verification=await verifyPlatformUser(req); if(!verification.success) return res.status(verification.status).json({success:false,message:verification.message});
+        if(verification.profile.role!=="student") return res.status(403).json({success:false,message:"تسليم الحل متاح للتلاميذ فقط."});
+        const noteResult=await supabase.from("platform_notes").select("id,branch,year,type,submission_deadline").eq("id",req.params.id).single();
+        if(noteResult.error||!noteResult.data) return res.status(404).json({success:false,message:"الواجب غير موجود."});
+        const note=noteResult.data;
+        if(note.type!=="homework") return res.status(400).json({success:false,message:"هذا العنصر ليس واجبا منزليا."});
+        if(note.branch!==verification.studentBranch||Number(note.year)!==Number(verification.studentYear)) return res.status(403).json({success:false,message:"لا يمكنك تسليم حل هذا الواجب."});
+        if(!note.submission_deadline||new Date(note.submission_deadline)<=new Date()) return res.status(410).json({success:false,message:"انتهت مهلة تسليم هذا الواجب."});
+        if(!req.file) return res.status(400).json({success:false,message:"يرجى اختيار ملف PDF للحل."});
+        const uploaded=await uploadPdfToPlatformDrive(req.file); uploadedId=uploaded.id;
+        const old=await supabase.from("homework_submissions").select("drive_file_id").eq("note_id",note.id).eq("student_id",verification.user.id).maybeSingle();
+        const now=new Date().toISOString();
+        const result=await supabase.from("homework_submissions").upsert({note_id:note.id,student_id:verification.user.id,drive_file_id:uploaded.id,file_name:uploaded.name,file_url:uploaded.url,submitted_at:now,updated_at:now},{onConflict:"note_id,student_id"}).select().single();
+        if(result.error) throw result.error;
+        if(old.data?.drive_file_id&&drive){try{await drive.files.delete({fileId:old.data.drive_file_id});}catch(_){}}
+        return res.json({success:true,message:"تم تسليم الحل بنجاح.",submission:result.data});
+    }catch(error){if(uploadedId&&drive){try{await drive.files.delete({fileId:uploadedId});}catch(_){}} console.error("Homework submission error:",error);return res.status(500).json({success:false,message:error?.message||"حدث خطأ أثناء تسليم الحل."});}
+});
+
+app.get("/api/platform/homework/submissions",async function(req,res){
+    try{
+        const verification=await verifyPlatformUser(req); if(!verification.success) return res.status(verification.status).json({success:false,message:verification.message});
+        if(!["teacher","admin","programmer"].includes(verification.profile.role)) return res.status(403).json({success:false,message:"غير مسموح."});
+        const branch=String(req.query.branch||"").trim(),year=Number(req.query.year),subject=String(req.query.subject||"").trim();
+        if(!branch||![1,2,3].includes(year)||!subject) return res.status(400).json({success:false,message:"بيانات الواجب غير مكتملة."});
+        if(verification.profile.role==="teacher"&&!teacherCanAccessSubject(verification,subject)) return res.status(403).json({success:false,message:"لا يمكنك مشاهدة واجبات مادة أخرى."});
+        const notes=await supabase.from("platform_notes").select("id,title,content,branch,year,subject,submission_deadline,created_at").eq("type","homework").eq("branch",branch).eq("year",year).eq("subject",subject).order("created_at",{ascending:false}); if(notes.error) throw notes.error;
+        const users=await supabase.auth.admin.listUsers({page:1,perPage:1000}); if(users.error) throw users.error;
+        const profiles=await supabase.from("profiles").select("id,full_name"); if(profiles.error) throw profiles.error;
+        const names=Object.fromEntries((profiles.data||[]).map(p=>[p.id,p.full_name||"تلميذ"]));
+        const students=(users.data.users||[]).filter(u=>String(u.user_metadata?.branch||"").trim()===branch&&Number(u.user_metadata?.year)===year).map(u=>({id:u.id,full_name:names[u.id]||u.user_metadata?.full_name||u.email||"تلميذ",branch,year}));
+        const homeworks=[];
+        for(const note of notes.data||[]){const sub=await supabase.from("homework_submissions").select("student_id,file_name,file_url,submitted_at,updated_at").eq("note_id",note.id);if(sub.error)throw sub.error;const by=Object.fromEntries((sub.data||[]).map(x=>[x.student_id,x]));const expired=new Date(note.submission_deadline)<=new Date();homeworks.push({...note,students:students.map(st=>{const x=by[st.id];return {...st,submitted:!!x,submitted_at:x?.submitted_at||null,file_name:x?.file_name||null,file_url:x?.file_url||null,status:x?"تم التسليم":(expired?"انتهت المهلة":"لم يتم التسليم")};})});}
+        return res.json({success:true,homeworks});
+    }catch(error){console.error("Homework list error:",error);return res.status(500).json({success:false,message:error?.message||"تعذر جلب واجبات التلاميذ."});}
+});
 
 /* =========================================================
    منصة المؤسسة - إضافة ملاحظة
@@ -3365,12 +3511,18 @@ app.get(
                 profiles.map(p => [p.id, p.full_name || "تلميذ"])
             );
 
+            const allUsers = await supabase.auth.admin.listUsers({ page:1, perPage:1000 });
+            const students = (allUsers.data?.users || []).filter(u => String(u.user_metadata?.branch || "").trim() === String(noteResult.data.branch || "").trim() && Number(u.user_metadata?.year) === Number(noteResult.data.year));
+            const viewedIds = new Set(ids.map(String));
             return res.json({
                 success: true,
                 viewers: (viewsResult.data || []).map(v => ({
-                    user_id: v.user_id,
-                    full_name: names[v.user_id] || "تلميذ",
-                    viewed_at: v.viewed_at
+                    user_id: v.user_id, full_name: names[v.user_id] || "تلميذ", viewed_at: v.viewed_at,
+                    branch: noteResult.data.branch, year: Number(noteResult.data.year)
+                })),
+                unviewed: students.filter(u => !viewedIds.has(String(u.id))).map(u => ({
+                    user_id:u.id, full_name:names[u.id] || u.user_metadata?.full_name || u.email || "تلميذ",
+                    branch:noteResult.data.branch, year:Number(noteResult.data.year)
                 }))
             });
         } catch (error) {
@@ -3384,6 +3536,22 @@ app.get(
 );
 
 
+
+/* =========================================================
+   تسجيل جهاز Android لاستقبال Push عبر FCM
+========================================================= */
+app.post("/api/push/register", async function(req,res){
+    try{
+        const verification=await verifyUser(req);
+        if(!verification.success) return res.status(verification.status).json({success:false,message:verification.message});
+        if(verification.profile.role!=="student") return res.status(403).json({success:false,message:"تسجيل Push متاح للتلاميذ فقط."});
+        const token=String(req.body?.token||"").trim();
+        if(!token) return res.status(400).json({success:false,message:"رمز FCM مفقود."});
+        const result=await supabase.from("push_device_tokens").upsert({user_id:verification.user.id,token,platform:String(req.body?.platform||"android"),updated_at:new Date().toISOString()},{onConflict:"token"});
+        if(result.error) throw result.error;
+        return res.json({success:true});
+    }catch(error){console.error("Push register error:",error);return res.status(500).json({success:false,message:"تعذر تسجيل جهاز الإشعارات."});}
+});
 
 /* =========================================================
    الإشعارات - جلب إشعارات التلميذ
@@ -5300,6 +5468,26 @@ app.delete(
     }
 );
 
+app.get("/api/platform/files/:id/viewers", async function(req,res){
+    try{
+        const verification=await verifyPlatformUser(req);
+        if(!verification.success) return res.status(verification.status).json({success:false,message:verification.message});
+        if(!["teacher","admin","programmer"].includes(verification.profile.role)) return res.status(403).json({success:false,message:"هذه المعلومات متاحة للطاقم المخول فقط."});
+        const file=await supabase.from("platform_files").select("id,subject,branch,year").eq("id",req.params.id).single();
+        if(file.error||!file.data) return res.status(404).json({success:false,message:"الملف غير موجود."});
+        if(verification.profile.role==="teacher"&&!teacherCanAccessSubject(verification,file.data.subject)) return res.status(403).json({success:false,message:"يمكن للأستاذ مشاهدة متابعات مادته فقط."});
+        const views=await supabase.from("platform_file_views").select("user_id,viewed_at").eq("file_id",req.params.id).order("viewed_at",{ascending:false});
+        if(views.error) throw views.error;
+        const ids=[...new Set((views.data||[]).map(v=>v.user_id).filter(Boolean))];
+        const profiles=ids.length?(await supabase.from("profiles").select("id,full_name").in("id",ids)).data||[]:[];
+        const names=Object.fromEntries(profiles.map(x=>[x.id,x.full_name||"تلميذ"]));
+        const allUsers=await supabase.auth.admin.listUsers({page:1,perPage:1000});
+        const students=(allUsers.data?.users||[]).filter(u=>String(u.user_metadata?.branch||"").trim()===String(file.data.branch||"").trim()&&Number(u.user_metadata?.year)===Number(file.data.year));
+        const viewedIds=new Set(ids.map(String));
+        return res.json({success:true,viewers:(views.data||[]).map(v=>({user_id:v.user_id,full_name:names[v.user_id]||"تلميذ",viewed_at:v.viewed_at,branch:file.data.branch,year:Number(file.data.year)})),unviewed:students.filter(u=>!viewedIds.has(String(u.id))).map(u=>({user_id:u.id,full_name:names[u.id]||u.user_metadata?.full_name||u.email||"تلميذ",branch:file.data.branch,year:Number(file.data.year)}))});
+    }catch(error){console.error("File viewers error:",error);return res.status(500).json({success:false,message:"حدث خطأ أثناء جلب قائمة المشاهدين."});}
+});
+
 app.get(
     "/api/platform/files/:id/pdf",
     async function (req, res) {
@@ -5348,6 +5536,12 @@ app.get(
 
             const platformFile =
                 fileResult.data;
+
+            if (verification.profile.role === "student") {
+                try {
+                    await supabase.from("platform_file_views").upsert({file_id:platformFile.id,user_id:verification.user.id,viewed_at:new Date().toISOString()},{onConflict:"file_id,user_id"});
+                } catch (viewError) { console.warn("File view tracking warning:", viewError?.message || viewError); }
+            }
 
             if (verification.profile.role === "student") {
                 const fileBranch = platformFile.branch;

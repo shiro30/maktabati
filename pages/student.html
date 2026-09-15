@@ -1467,6 +1467,13 @@
 })();
 </script>
 
+
+<script>
+(function(){
+ async function setupPush(){try{const Push=window.Capacitor?.Plugins?.PushNotifications;if(!Push)return;const s=(await supabaseClient.auth.getSession())?.data?.session;if(!s)return;let p=await Push.checkPermissions();if(p.receive!=="granted")p=await Push.requestPermissions();if(p.receive!=="granted")return;try{await Push.createChannel({id:"maktabati_notifications",name:"إشعارات مكتبتي",description:"إشعارات جديدة من مكتبتي",importance:5,sound:"default",visibility:1});}catch(_){}Push.addListener("registration",async d=>{try{await fetch("/api/push/register",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({token:d.value,platform:"android"})});}catch(e){console.warn(e);}});Push.addListener("registrationError",e=>console.warn(e));Push.addListener("pushNotificationActionPerformed",a=>{const link=a?.notification?.data?.link;if(link)window.location.href=String(link);});await Push.register();}catch(e){console.warn("Push setup:",e);}}
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setupPush);else setupPush();
+})();
+</script>
 </body>
 
 </html>

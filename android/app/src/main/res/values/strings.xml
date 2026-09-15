@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">مكتبتي</string>
+    <string name="title_activity_main">مكتبتي</string>
+    <string name="package_name">dz.maktabati.app</string>
+    <string name="custom_url_scheme">dz.maktabati.app</string>
+</resources>
