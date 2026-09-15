@@ -691,6 +691,10 @@
         margin-top: 10px;
     }
 
+    .homework-only-field {
+        transition: opacity .2s ease;
+    }
+
     .platform-item-actions {
         display: flex;
         flex-wrap: wrap;
@@ -1682,6 +1686,44 @@
                 </div>
 
 
+                <div class="form-group homework-only-field" id="teacherHomeworkFileGroup" style="display:none;">
+
+                    <label for="teacherHomeworkFile">📄 ملف PDF للواجب</label>
+
+                    <input
+                        type="file"
+                        id="teacherHomeworkFile"
+                        class="form-control"
+                        accept="application/pdf,.pdf">
+
+                </div>
+
+                <div class="form-group homework-only-field" id="teacherHomeworkDeadlineGroup" style="display:none;">
+
+                    <label for="teacherHomeworkDeadline">⏳ مدة التسليم</label>
+
+                    <select id="teacherHomeworkDeadline" class="form-control">
+                        <option value="12">12 ساعة</option>
+                        <option value="24" selected>24 ساعة</option>
+                        <option value="48">48 ساعة</option>
+                        <option value="72">72 ساعة</option>
+                        <option value="168">7 أيام</option>
+                        <option value="custom">مدة مخصصة</option>
+                    </select>
+
+                    <input
+                        type="number"
+                        id="teacherHomeworkCustomHours"
+                        class="form-control"
+                        min="1"
+                        max="720"
+                        step="1"
+                        placeholder="عدد الساعات"
+                        style="display:none;margin-top:8px;">
+
+                </div>
+
+
                 <div class="form-group full">
 
                     <label for="noteContent">
@@ -2014,6 +2056,22 @@ const noteForm =
     document.getElementById(
         "noteForm"
     );
+
+const teacherHomeworkType =
+    document.getElementById("noteType");
+
+if (teacherHomeworkType) {
+    teacherHomeworkType.addEventListener("change", updateTeacherHomeworkFields);
+}
+
+const teacherHomeworkDeadline =
+    document.getElementById("teacherHomeworkDeadline");
+
+if (teacherHomeworkDeadline) {
+    teacherHomeworkDeadline.addEventListener("change", updateTeacherHomeworkFields);
+}
+
+updateTeacherHomeworkFields();
 
 const noteFormBox =
     document.getElementById(
@@ -4043,6 +4101,32 @@ async function loadNotes() {
 
 
 /* =========================================
+   حقول الواجب المنزلي
+========================================= */
+
+function updateTeacherHomeworkFields() {
+
+    const type = document.getElementById("noteType")?.value || "";
+    const isHomework = type === "homework";
+
+    const fileGroup = document.getElementById("teacherHomeworkFileGroup");
+    const deadlineGroup = document.getElementById("teacherHomeworkDeadlineGroup");
+    const fileInput = document.getElementById("teacherHomeworkFile");
+    const deadline = document.getElementById("teacherHomeworkDeadline");
+    const custom = document.getElementById("teacherHomeworkCustomHours");
+
+    if (fileGroup) fileGroup.style.display = isHomework ? "block" : "none";
+    if (deadlineGroup) deadlineGroup.style.display = isHomework ? "block" : "none";
+    if (fileInput) fileInput.required = isHomework;
+
+    if (custom) {
+        const showCustom = isHomework && deadline?.value === "custom";
+        custom.style.display = showCustom ? "block" : "none";
+        custom.required = showCustom;
+    }
+}
+
+/* =========================================
    تخزين الملاحظات
 ========================================= */
 
@@ -4315,81 +4399,77 @@ noteForm.addEventListener(
 
         try {
 
-            const payload = {
-
-                branch:
-                    currentNoteBranch,
-
-                year:
-                    currentNoteYear,
-
-                subject:
-                    currentTeacherSubject,
-
-                type:
-                    type,
-
-                title:
-                    title,
-
-                content:
-                    content
-
-            };
-
-
             let response;
 
+            if (type === "homework" && !editingNoteId) {
 
-            if (
-                editingNoteId
-            ) {
+                const fileInput = document.getElementById("teacherHomeworkFile");
+                const deadlineSelect = document.getElementById("teacherHomeworkDeadline");
+                const customHours = document.getElementById("teacherHomeworkCustomHours");
+                const file = fileInput?.files?.[0];
 
-                response =
-                    await platformFetch(
-                        "/api/platform/notes/" +
-                        encodeURIComponent(
-                            editingNoteId
-                        ),
+                if (!file) {
+                    throw new Error("يرجى اختيار ملف PDF للواجب.");
+                }
+
+                if (file.type && file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+                    throw new Error("ملف الواجب يجب أن يكون بصيغة PDF.");
+                }
+
+                let deadlineHours = deadlineSelect?.value || "24";
+                if (deadlineHours === "custom") {
+                    deadlineHours = customHours?.value || "";
+                }
+                deadlineHours = Number(deadlineHours);
+
+                if (!Number.isFinite(deadlineHours) || deadlineHours < 1 || deadlineHours > 720) {
+                    throw new Error("يرجى تحديد مدة تسليم صحيحة بين ساعة و720 ساعة.");
+                }
+
+                const formData = new FormData();
+                formData.append("branch", currentNoteBranch);
+                formData.append("year", String(currentNoteYear));
+                formData.append("subject", currentTeacherSubject);
+                formData.append("title", title);
+                formData.append("content", content);
+                formData.append("deadline_hours", String(deadlineHours));
+                formData.append("pdf", file);
+
+                response = await platformFetch(
+                    "/api/platform/homework",
+                    { method: "POST", body: formData }
+                );
+
+            } else {
+
+                const payload = {
+                    branch: currentNoteBranch,
+                    year: currentNoteYear,
+                    subject: currentTeacherSubject,
+                    type: type,
+                    title: title,
+                    content: content
+                };
+
+                if (editingNoteId) {
+                    response = await platformFetch(
+                        "/api/platform/notes/" + encodeURIComponent(editingNoteId),
                         {
                             method: "PUT",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    payload
-                                )
-
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
                         }
                     );
-
-            }
-
-            else {
-
-                response =
-                    await platformFetch(
+                } else {
+                    response = await platformFetch(
                         "/api/platform/notes",
                         {
                             method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    payload
-                                )
-
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
                         }
                     );
-
+                }
             }
 
 
@@ -4513,6 +4593,11 @@ function editNote(
         .value =
         note.content || "";
 
+    updateTeacherHomeworkFields();
+
+    document
+        .getElementById("teacherHomeworkFile")
+        ?.removeAttribute("required");
 
     noteSubmitBtn.textContent =
         "💾 حفظ تعديل الملاحظة";
@@ -4543,6 +4628,7 @@ function resetNoteForm() {
 
     noteForm.reset();
 
+    updateTeacherHomeworkFields();
 
     noteSubmitBtn.textContent =
         "📌 نشر الملاحظة";
