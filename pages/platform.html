@@ -4442,6 +4442,7 @@
 
                     card.className =
                         "file-card";
+                    card.dataset.fileId = String(file.id || "");
 
                     const title =
                         file.title ||
@@ -4696,6 +4697,7 @@
 
                     card.className =
                         "note-card";
+                    card.dataset.noteId = String(note.id || "");
 
                     const type =
                         normalizeNoteType(note.type || "general");
@@ -6522,9 +6524,75 @@
         }
 
 
-        initializePlatform();
+        async function openNotificationTarget() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const branch = params.get("branch");
+                const year = Number(params.get("year"));
+                const subject = params.get("subject");
+                const fileId = params.get("file_id");
+                const noteId = params.get("note_id");
+                const title = params.get("title") || "";
+                if (!branch || !Number.isFinite(year) || !subject || (!fileId && !noteId)) return;
+
+                if (!currentBranch) selectBranch(branch);
+                if (String(currentBranch || "") !== String(branch)) return;
+                if (!currentYear) selectYear(year);
+                if (Number(currentYear) !== year) return;
+
+                await new Promise(resolve => setTimeout(resolve, 120));
+                if (String(currentSubject || "") !== String(subject)) {
+                    await selectSubject(subject);
+                }
+                await new Promise(resolve => setTimeout(resolve, 120));
+
+                if (fileId) {
+                    const file = currentFiles.find(item => String(item.id) === String(fileId));
+                    if (file) {
+                        openPdf(String(file.id), file.title || file.name || title || "الملف");
+                        return;
+                    }
+                }
+
+                if (noteId) {
+                    const note = currentNotes.find(item => String(item.id) === String(noteId));
+                    const card = document.querySelector(`[data-note-id="${CSS.escape(String(noteId))}"]`);
+                    if (card) {
+                        card.scrollIntoView({behavior:"smooth", block:"center"});
+                        card.style.outline = "2px solid #3b82f6";
+                        setTimeout(() => { card.style.outline = ""; }, 2500);
+                    }
+                    if (note && normalizeRole(currentUserRole) === "student") {
+                        markNoteViewed(note.id);
+                    }
+                }
+            } catch (error) {
+                console.warn("Notification target:", error);
+            }
+        }
+
+        initializePlatform().then(() => {
+            setTimeout(openNotificationTarget, 450);
+        });
 
 </script>
 
+
+<script>
+(function(){
+  if(document.getElementById("universalBackButton")) return;
+  const button=document.createElement("button");
+  button.id="universalBackButton";
+  button.type="button";
+  button.textContent="↩ الصفحة السابقة";
+  button.setAttribute("aria-label","العودة إلى الصفحة السابقة");
+  button.style.cssText="position:fixed;left:16px;bottom:16px;z-index:99990;border:1px solid rgba(148,163,184,.35);background:rgba(15,23,42,.94);color:#fff;border-radius:12px;padding:9px 13px;font:600 13px/1.2 Arial,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25);backdrop-filter:blur(6px);";
+  button.addEventListener("click",function(){
+    if(window.history.length>1){window.history.back();}
+    else{window.location.href=location.pathname.indexOf("/pages/")!==-1?"../index.html":"index.html";}
+  });
+  document.body.appendChild(button);
+})();
+</script>
 </body>
 </html>

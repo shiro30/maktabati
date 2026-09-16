@@ -2702,7 +2702,7 @@ app.post(
                 targetBranch: location.branch,
                 targetYear: location.year,
                 targetSubject: location.subject,
-                link: `pages/platform.html`,
+                link: `pages/platform.html?branch=${encodeURIComponent(location.branch)}&year=${encodeURIComponent(location.year)}&subject=${encodeURIComponent(location.subject)}&file_id=${encodeURIComponent(insertResult.data.id)}&title=${encodeURIComponent(title)}`,
                 createdBy: verification.user.id
             });
 
@@ -2779,7 +2779,7 @@ app.post("/api/platform/homework",platformUpload.single("pdf"),async function(re
         const deadline=new Date(Date.now()+hours*3600000).toISOString();
         const result=await supabase.from("platform_notes").insert({branch:location.branch,year:location.year,subject:location.subject,type:"homework",title,content,created_by:verification.user.id,homework_file_drive_id:uploaded.id,homework_file_url:uploaded.url,homework_file_name:uploaded.name,submission_deadline:deadline}).select().single();
         if(result.error) throw result.error;
-        await createSystemNotification({title:"واجب منزلي جديد",message:`تم نشر واجب جديد: «${title}».`,type:"homework",targetType:"class",targetBranch:location.branch,targetYear:location.year,targetSubject:location.subject,link:"pages/platform.html",createdBy:verification.user.id});
+        await createSystemNotification({title:"واجب منزلي جديد",message:`تم نشر واجب جديد: «${title}».`,type:"homework",targetType:"class",targetBranch:location.branch,targetYear:location.year,targetSubject:location.subject,link:`pages/platform.html?branch=${encodeURIComponent(location.branch)}&year=${encodeURIComponent(location.year)}&subject=${encodeURIComponent(location.subject)}&note_id=${encodeURIComponent(result.data.id)}&title=${encodeURIComponent(title)}`,createdBy:verification.user.id});
         return res.json({success:true,message:"تم نشر الواجب بنجاح.",note:result.data});
     }catch(error){if(uploadedId&&drive){try{await drive.files.delete({fileId:uploadedId});}catch(_){}} console.error("Homework create error:",error);return res.status(500).json({success:false,message:error?.message||"حدث خطأ أثناء إنشاء الواجب."});}
 });
@@ -2996,7 +2996,7 @@ app.post(
                 targetBranch: location.branch,
                 targetYear: location.year,
                 targetSubject: location.subject,
-                link: `pages/platform.html`,
+                link: `pages/platform.html?branch=${encodeURIComponent(location.branch)}&year=${encodeURIComponent(location.year)}&subject=${encodeURIComponent(location.subject)}&note_id=${encodeURIComponent(result.data.id)}&title=${encodeURIComponent(title)}`,
                 createdBy: verification.user.id
             });
 

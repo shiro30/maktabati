@@ -1470,8 +1470,44 @@
 
 <script>
 (function(){
- async function setupPush(){try{const Push=window.Capacitor?.Plugins?.PushNotifications;if(!Push)return;const s=(await supabaseClient.auth.getSession())?.data?.session;if(!s)return;let p=await Push.checkPermissions();if(p.receive!=="granted")p=await Push.requestPermissions();if(p.receive!=="granted")return;try{await Push.createChannel({id:"maktabati_notifications",name:"إشعارات مكتبتي",description:"إشعارات جديدة من مكتبتي",importance:5,sound:"default",visibility:1});}catch(_){}Push.addListener("registration",async d=>{try{await fetch("/api/push/register",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({token:d.value,platform:"android"})});}catch(e){console.warn(e);}});Push.addListener("registrationError",e=>console.warn(e));Push.addListener("pushNotificationActionPerformed",a=>{const link=a?.notification?.data?.link;if(link)window.location.href=String(link);});await Push.register();}catch(e){console.warn("Push setup:",e);}}
+ async function registerPushToken(tokenValue){
+   try{
+     const s=(await supabaseClient.auth.getSession())?.data?.session;
+     if(!s||!tokenValue)return;
+     await fetch("/api/push/register",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({token:String(tokenValue),platform:"android"})});
+   }catch(e){console.warn("Push token registration:",e);}
+ }
+ window.MaktabatiNativePushToken=registerPushToken;
+ window.MaktabatiNativePushError=function(e){console.warn("Push:",e);};
+ window.MaktabatiNativePushPermission=function(e){console.warn("Push permission:",e);};
+ async function setupPush(){
+   try{
+     const bridge=window.MaktabatiNativePush;
+     if(!bridge)return;
+     const s=(await supabaseClient.auth.getSession())?.data?.session;
+     if(!s)return;
+     const permission=bridge.requestPermission();
+     if(permission==="granted") bridge.register();
+   }catch(e){console.warn("Push setup:",e);}
+ }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setupPush);else setupPush();
+})();
+</script>
+
+<script>
+(function(){
+  if(document.getElementById("universalBackButton")) return;
+  const button=document.createElement("button");
+  button.id="universalBackButton";
+  button.type="button";
+  button.textContent="↩ الصفحة السابقة";
+  button.setAttribute("aria-label","العودة إلى الصفحة السابقة");
+  button.style.cssText="position:fixed;left:16px;bottom:16px;z-index:99990;border:1px solid rgba(148,163,184,.35);background:rgba(15,23,42,.94);color:#fff;border-radius:12px;padding:9px 13px;font:600 13px/1.2 Arial,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25);backdrop-filter:blur(6px);";
+  button.addEventListener("click",function(){
+    if(window.history.length>1){window.history.back();}
+    else{window.location.href=location.pathname.indexOf("/pages/")!==-1?"../index.html":"index.html";}
+  });
+  document.body.appendChild(button);
 })();
 </script>
 </body>
