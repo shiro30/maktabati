@@ -6,7 +6,14 @@ const fs = require("fs");
 
 const { createClient } = require("@supabase/supabase-js");
 const { google } = require("googleapis");
-const { authenticate } = require("@google-cloud/local-auth");
+
+const {
+    S3Client,
+    PutObjectCommand,
+    GetObjectCommand,
+    HeadObjectCommand,
+    DeleteObjectCommand
+} = require("@aws-sdk/client-s3");
 
 const multer = require("multer");
 const { Readable } = require("stream");
@@ -37,194 +44,165 @@ const supabase = createClient(
 );
 
 /* =========================================================
-   GOOGLE DRIVE
+   BACKBLAZE B2 STORAGE
 ========================================================= */
 
-const GOOGLE_SCOPES = [
-    "https://www.googleapis.com/auth/drive"
-];
+const B2_KEY_ID = process.env.B2_KEY_ID;
+const B2_APPLICATION_KEY = process.env.B2_APPLICATION_KEY;
+const B2_BUCKET = process.env.B2_BUCKET || "maktabati";
+const B2_ENDPOINT = process.env.B2_ENDPOINT || "https://s3.us-east-005.backblazeb2.com";
+const B2_REGION = process.env.B2_REGION || "us-east-005";
 
-const GOOGLE_OAUTH_FILE = path.join(
-    __dirname,
-    "google-oauth.json"
-);
-
-const GOOGLE_TOKEN_FILE = path.join(
-    __dirname,
-    "token.json"
-);
-
-let drive = null;
-
-/* =========================================================
-   قراءة بيانات Google OAuth
-========================================================= */
-
-function getOAuthClientData() {
-    if (
-        process.env.GOOGLE_CLIENT_ID &&
-        process.env.GOOGLE_CLIENT_SECRET
-    ) {
-        console.log(
-            "استخدام بيانات Google OAuth من متغيرات البيئة."
-        );
-
-        return {
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
-            redirect_uris: []
-        };
-    }
-
-    if (!fs.existsSync(GOOGLE_OAUTH_FILE)) {
-        throw new Error(
-            "بيانات Google OAuth غير موجودة. أضف GOOGLE_CLIENT_ID و GOOGLE_CLIENT_SECRET في Render."
-        );
-    }
-
-    const credentials = JSON.parse(
-        fs.readFileSync(GOOGLE_OAUTH_FILE, "utf8")
+if (!B2_KEY_ID || !B2_APPLICATION_KEY) {
+    console.error(
+        "خطأ: B2_KEY_ID و B2_APPLICATION_KEY غير موجودين في متغيرات البيئة."
     );
-
-    const config =
-        credentials.installed ||
-        credentials.web;
-
-    if (!config) {
-        throw new Error(
-            "ملف google-oauth.json غير صالح."
-        );
-    }
-
-    return config;
+    process.exit(1);
 }
 
-/* =========================================================
-   الاتصال بـ Google Drive
-========================================================= */
-
-async function authorizeGoogleDrive() {
-    const config = getOAuthClientData();
-
-    if (process.env.GOOGLE_REFRESH_TOKEN) {
-        console.log(
-            "جاري الاتصال بـ Google Drive باستخدام Refresh Token..."
-        );
-
-        const oauth2Client =
-            new google.auth.OAuth2(
-                config.client_id,
-                config.client_secret,
-                config.redirect_uris &&
-                config.redirect_uris.length > 0
-                    ? config.redirect_uris[0]
-                    : undefined
-            );
-
-        oauth2Client.setCredentials({
-            refresh_token:
-                process.env.GOOGLE_REFRESH_TOKEN
-        });
-
-        await oauth2Client.getAccessToken();
-
-        drive = google.drive({
-            version: "v3",
-            auth: oauth2Client
-        });
-
-        console.log(
-            "تم الاتصال بـ Google Drive بنجاح."
-        );
-
-        return;
+const b2Client = new S3Client({
+    region: B2_REGION,
+    endpoint: B2_ENDPOINT,
+    credentials: {
+        accessKeyId: B2_KEY_ID,
+        secretAccessKey: B2_APPLICATION_KEY
     }
+});
 
-    if (fs.existsSync(GOOGLE_TOKEN_FILE)) {
-        try {
-            const savedCredentials =
-                JSON.parse(
-                    fs.readFileSync(
-                        GOOGLE_TOKEN_FILE,
-                        "utf8"
-                    )
-                );
+function sanitizeStorageName(name) {
+    return String(name || "file")
+        .normalize("NFKC")
+        .replace(/[\\/\\:*?"<>|\r\n]+/g, "_")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 180) || "file";
+}
 
-            const oauth2Client =
-                new google.auth.OAuth2(
-                    config.client_id,
-                    config.client_secret,
-                    config.redirect_uris
-                        ? config.redirect_uris[0]
-                        : undefined
-                );
+function storageUrl(key) {
+    return `/api/storage?key=${encodeURIComponent(String(key))}`;
+}
 
-            oauth2Client.setCredentials(
-                savedCredentials
-            );
+async function b2PutObject({ name, mimeType, body }) {
+    const key =
+        `uploads/${Date.now()}-${crypto.randomUUID()}-${sanitizeStorageName(name)}`;
 
-            drive = google.drive({
-                version: "v3",
-                auth: oauth2Client
-            });
+    let fileBuffer;
 
-            console.log(
-                "تم تحميل جلسة Google Drive المحفوظة."
-            );
+    if (Buffer.isBuffer(body)) {
+        fileBuffer = body;
+    } else {
+        const chunks = [];
 
-            return;
-        } catch (error) {
-            console.log(
-                "تعذر استخدام token.json."
-            );
-
-            console.log(
-                "سيتم طلب تسجيل الدخول إلى Google من جديد."
+        for await (const chunk of body) {
+            chunks.push(
+                Buffer.isBuffer(chunk)
+                    ? chunk
+                    : Buffer.from(chunk)
             );
         }
+
+        fileBuffer = Buffer.concat(chunks);
     }
 
-    console.log(
-        "لم يتم العثور على جلسة Google محفوظة."
+    await b2Client.send(
+        new PutObjectCommand({
+            Bucket: B2_BUCKET,
+            Key: key,
+            Body: fileBuffer,
+            ContentType:
+                mimeType || "application/octet-stream",
+            ContentLength: fileBuffer.length
+        })
     );
 
-    console.log(
-        "سيتم فتح نافذة تسجيل الدخول إلى Google..."
-    );
-
-    const auth =
-        await authenticate({
-            scopes: GOOGLE_SCOPES,
-            keyfilePath: GOOGLE_OAUTH_FILE
-        });
-
-    if (
-        auth.credentials &&
-        auth.credentials.refresh_token
-    ) {
-        fs.writeFileSync(
-            GOOGLE_TOKEN_FILE,
-            JSON.stringify(
-                auth.credentials,
-                null,
-                2
-            )
-        );
-
-        console.log(
-            "تم حفظ جلسة Google في token.json."
-        );
-    }
-
-    drive = google.drive({
-        version: "v3",
-        auth: auth
-    });
-
-    console.log(
-        "تم الاتصال بـ Google Drive بنجاح."
+    return {
+        id: key,
+        name: name || key.split("/").pop(),
+        key,
+        webViewLink: storageUrl(key),
+        webContentLink: storageUrl(key)
+    };
+}
+async function b2HeadObject(key) {
+    return b2Client.send(
+        new HeadObjectCommand({
+            Bucket: B2_BUCKET,
+            Key: key
+        })
     );
 }
+
+async function b2GetObjectStream(key, range) {
+    const response = await b2Client.send(
+        new GetObjectCommand({
+            Bucket: B2_BUCKET,
+            Key: key,
+            ...(range ? { Range: range } : {})
+        })
+    );
+
+    return response.Body;
+}
+
+async function b2DeleteObject(key) {
+    await b2Client.send(
+        new DeleteObjectCommand({
+            Bucket: B2_BUCKET,
+            Key: key
+        })
+    );
+}
+
+/*
+   طبقة توافق صغيرة تحافظ على واجهات التخزين الحالية داخل المشروع،
+   لكن التنفيذ الفعلي أصبح Backblaze B2 وليس Google Drive.
+*/
+const drive = {
+    files: {
+        async create({ requestBody = {}, media = {} }) {
+            const uploaded = await b2PutObject({
+                name: requestBody.name,
+                mimeType: media.mimeType,
+                body: media.body
+            });
+            return { data: uploaded };
+        },
+
+        async get(params = {}, options = {}) {
+            const key = params.fileId;
+            if (!key) throw new Error("معرف ملف التخزين غير موجود.");
+
+            if (params.alt === "media") {
+                const range = options?.headers?.Range || options?.headers?.range;
+                const body = await b2GetObjectStream(key, range);
+                return { data: body };
+            }
+
+            const head = await b2HeadObject(key);
+            return {
+                data: {
+                    id: key,
+                    name: key.split("/").pop(),
+                    size: String(head.ContentLength || 0),
+                    mimeType: head.ContentType || "application/octet-stream"
+                }
+            };
+        },
+
+        async delete({ fileId }) {
+            if (!fileId) return { data: {} };
+            await b2DeleteObject(fileId);
+            return { data: {} };
+        }
+    },
+
+    permissions: {
+        async create() {
+            // B2 bucket is private; access is controlled by this application.
+            return { data: {} };
+        }
+    }
+};
 
 /* =========================================================
    MULTER
@@ -526,7 +504,62 @@ async function verifyUser(req) {
                 "حدث خطأ أثناء التحقق من المستخدم."
         };
     }
-}
+ }
+
+/* =========================================================
+   الوصول إلى ملفات Backblaze B2 عبر الخادم
+   (المخزن نفسه Private)
+========================================================= */
+
+app.get("/api/storage", async function (req, res) {
+    try {
+        const key = String(req.query.key || "").trim();
+
+        if (!key || !key.startsWith("uploads/")) {
+            return res.status(400).json({
+                success: false,
+                message: "مفتاح الملف غير صالح."
+            });
+        }
+
+        const head = await b2HeadObject(key);
+        const range = req.headers.range || null;
+        const stream = await b2GetObjectStream(key, range);
+
+        res.setHeader(
+            "Content-Type",
+            head.ContentType || "application/octet-stream"
+        );
+        res.setHeader("Accept-Ranges", "bytes");
+        res.setHeader("Cache-Control", "private, max-age=3600");
+
+        if (!range) {
+            if (Number.isFinite(Number(head.ContentLength))) {
+                res.setHeader("Content-Length", String(head.ContentLength));
+            }
+            stream.pipe(res);
+            return;
+        }
+
+        const contentRange = head.ContentRange;
+        if (contentRange) res.setHeader("Content-Range", contentRange);
+        if (Number.isFinite(Number(head.ContentLength))) {
+            res.setHeader("Content-Length", String(head.ContentLength));
+        }
+        res.status(206);
+        stream.pipe(res);
+    } catch (error) {
+        const status = error?.$metadata?.httpStatusCode;
+        if (!res.headersSent) {
+            return res.status(status === 404 ? 404 : 500).json({
+                success: false,
+                message: status === 404 ? "الملف غير موجود." : "تعذر فتح الملف.",
+                error: error?.message
+            });
+        }
+        res.end();
+    }
+});
 
 /* =========================================================
    التحقق من المبرمج
@@ -2547,21 +2580,7 @@ app.post(
                     .json({
                         success: false,
                         message:
-                            "Google Drive غير متصل بالخادم."
-                    });
-            }
-
-            const platformFolderId =
-                process.env
-                    .GOOGLE_DRIVE_FOLDER_ID;
-
-            if (!platformFolderId) {
-                return res
-                    .status(500)
-                    .json({
-                        success: false,
-                        message:
-                            "لم يتم إعداد مجلد Google Drive الخاص بالمنصة."
+                            "خدمة التخزين غير متصلة بالخادم."
                     });
             }
 
@@ -2574,11 +2593,7 @@ app.post(
                 await drive.files.create({
                     requestBody: {
                         name:
-                            safeFileName,
-
-                        parents: [
-                            platformFolderId
-                        ]
+                            safeFileName
                     },
 
                     media: {
@@ -2627,9 +2642,7 @@ app.post(
             const webViewLink =
                 uploaded.data.webViewLink ||
                 (
-                    "https://drive.google.com/file/d/" +
-                    uploadedFileId +
-                    "/view"
+                    storageUrl(uploadedFileId)
                 );
 
             const insertResult =
@@ -2755,13 +2768,11 @@ app.post(
    نظام الواجبات المنزلية
 ========================================================= */
 async function uploadPdfToPlatformDrive(pdfFile){
-    if(!drive) throw new Error("Google Drive غير متصل بالخادم.");
-    const folderId=process.env.GOOGLE_DRIVE_FOLDER_ID;
-    if(!folderId) throw new Error("لم يتم إعداد مجلد Google Drive الخاص بالمنصة.");
-    const uploaded=await drive.files.create({requestBody:{name:path.basename(pdfFile.originalname),parents:[folderId]},media:{mimeType:"application/pdf",body:Readable.from(pdfFile.buffer)},fields:"id,name,webViewLink"});
+    if(!drive) throw new Error("خدمة التخزين غير متصلة بالخادم.");
+    const uploaded=await drive.files.create({requestBody:{name:path.basename(pdfFile.originalname)},media:{mimeType:"application/pdf",body:Readable.from(pdfFile.buffer)},fields:"id,name,webViewLink"});
     if(!uploaded.data.id) throw new Error("تعذر الحصول على معرف ملف PDF.");
     await drive.permissions.create({fileId:uploaded.data.id,requestBody:{role:"reader",type:"anyone"},fields:"id"});
-    return {id:uploaded.data.id,name:uploaded.data.name||path.basename(pdfFile.originalname),url:uploaded.data.webViewLink||`https://drive.google.com/file/d/${uploaded.data.id}/view`};
+    return {id:uploaded.data.id,name:uploaded.data.name||path.basename(pdfFile.originalname),url:uploaded.data.webViewLink};
 }
 
 app.post("/api/platform/homework",platformUpload.single("pdf"),async function(req,res){
@@ -3826,7 +3837,7 @@ app.post(
                     .json({
                         success: false,
                         message:
-                            "Google Drive غير متصل بالخادم."
+                            "خدمة التخزين غير متصلة بالخادم."
                     });
             }
 
@@ -3996,20 +4007,6 @@ app.post(
                     });
             }
 
-            const folderId =
-                process.env
-                    .GOOGLE_DRIVE_FOLDER_ID;
-
-            if (!folderId) {
-                return res
-                    .status(500)
-                    .json({
-                        success: false,
-                        message:
-                            "لم يتم إعداد مجلد Google Drive في الخادم."
-                    });
-            }
-
             const safePdfFileName =
                 path.basename(
                     pdfFile.originalname
@@ -4017,11 +4014,7 @@ app.post(
 
             const pdfMetadata = {
                 name:
-                    safePdfFileName,
-
-                parents: [
-                    folderId
-                ]
+                    safePdfFileName
             };
 
             const pdfMedia = {
@@ -4035,7 +4028,7 @@ app.post(
             };
 
             console.log(
-                "بدء رفع ملف PDF إلى Google Drive..."
+                "بدء رفع ملف PDF إلى Backblaze B2..."
             );
 
             const uploadedPdf =
@@ -4115,10 +4108,7 @@ app.post(
             }
 
             const webViewLink =
-                uploadedPdf.data.webViewLink ||
-                "https://drive.google.com/file/d/" +
-                uploadedPdfId +
-                "/view";
+                uploadedPdf.data.webViewLink;
 
             const safeCoverFileName =
                 path.basename(
@@ -4130,11 +4120,7 @@ app.post(
                     "غلاف - " +
                     title +
                     " - " +
-                    safeCoverFileName,
-
-                parents: [
-                    folderId
-                ]
+                    safeCoverFileName
             };
 
             const coverMedia = {
@@ -4148,7 +4134,7 @@ app.post(
             };
 
             console.log(
-                "بدء رفع غلاف الكتاب إلى Google Drive..."
+                "بدء رفع غلاف الكتاب إلى Backblaze B2..."
             );
 
             const uploadedCover =
@@ -4255,15 +4241,10 @@ app.post(
             }
 
             const coverUrl =
-                "https://drive.google.com/thumbnail?id=" +
-                uploadedCoverId +
-                "&sz=w1000";
+                uploadedCover.data.webViewLink;
 
             const coverViewLink =
-                uploadedCover.data.webViewLink ||
-                "https://drive.google.com/file/d/" +
-                uploadedCoverId +
-                "/view";
+                uploadedCover.data.webViewLink;
 
             console.log(
                 "رابط الغلاف:",
@@ -4419,7 +4400,7 @@ app.post(
 
         } catch (error) {
             console.error(
-                "Google Drive / Supabase upload error:"
+                "Storage / Supabase upload error:"
             );
 
             console.error(error);
@@ -4600,7 +4581,7 @@ app.delete(
                     .json({
                         success: false,
                         message:
-                            "Google Drive غير متصل بالخادم، لم يتم حذف الكتاب."
+                            "خدمة التخزين غير متصلة بالخادم، لم يتم حذف الكتاب."
                     });
             }
 
@@ -4640,7 +4621,7 @@ app.delete(
                             .json({
                                 success: false,
                                 message:
-                                    "تعذر حذف ملف الكتاب من Google Drive، لذلك لم يتم حذف الكتاب من المكتبة."
+                                    "تعذر حذف ملف الكتاب من التخزين، لذلك لم يتم حذف الكتاب من المكتبة."
                             });
                     }
                 }
@@ -4652,16 +4633,17 @@ app.delete(
                 try {
                     const coverUrl =
                         new URL(
-                            book.cover_url
+                            book.cover_url,
+                            "http://localhost"
                         );
 
                     coverFileId =
                         coverUrl.searchParams.get(
-                            "id"
+                            "key"
                         );
                 } catch (urlError) {
                     console.log(
-                        "تعذر استخراج معرف الغلاف من الرابط."
+                        "تعذر استخراج مفتاح الغلاف من الرابط."
                     );
                 }
             }
@@ -4702,7 +4684,7 @@ app.delete(
                             .json({
                                 success: false,
                                 message:
-                                    "تم التعامل مع ملف الكتاب لكن تعذر حذف غلافه من Google Drive، لذلك لم يتم حذف الكتاب من المكتبة."
+                                    "تم التعامل مع ملف الكتاب لكن تعذر حذف غلافه من التخزين، لذلك لم يتم حذف الكتاب من المكتبة."
                             });
                     }
                 }
@@ -4725,7 +4707,7 @@ app.delete(
                     .json({
                         success: false,
                         message:
-                            "تم حذف ملفات الكتاب من Google Drive لكن حدث خطأ أثناء حذف سجل الكتاب من قاعدة البيانات."
+                            "تم حذف ملفات الكتاب من التخزين لكن حدث خطأ أثناء حذف سجل الكتاب من قاعدة البيانات."
                     });
             }
 
@@ -4921,7 +4903,7 @@ app.get(
                     .json({
                         success: false,
                         message:
-                            "Google Drive غير متصل بالخادم."
+                            "خدمة التخزين غير متصلة بالخادم."
                     });
             }
 
@@ -5224,7 +5206,7 @@ app.get(
                 "error",
                 function (error) {
                     console.error(
-                        "Google Drive Range stream error:",
+                        "B2 Range stream error:",
                         error
                     );
 
@@ -5436,7 +5418,7 @@ app.delete(
                     });
                 } catch (driveError) {
                     console.warn(
-                        "Google Drive delete warning:",
+                        "Storage delete warning:",
                         driveError.message
                     );
                 }
@@ -5597,7 +5579,7 @@ app.get(
                     .json({
                         success: false,
                         message:
-                            "Google Drive غير متصل بالخادم."
+                            "خدمة التخزين غير متصلة بالخادم."
                     });
             }
 
@@ -6006,10 +5988,15 @@ app.use(
 async function startServer() {
     try {
         console.log(
-            "جاري الاتصال بـ Google Drive..."
+            "جاري تهيئة Backblaze B2..."
         );
 
-        await authorizeGoogleDrive();
+        // نتحقق من الوصول إلى التخزين عند التشغيل دون الحاجة إلى Google OAuth.
+        await b2HeadObject("__maktabati_healthcheck__").catch((error) => {
+            // 404 يعني أن الاتصال صحيح والملف غير موجود.
+            const status = error?.$metadata?.httpStatusCode;
+            if (status !== 404) throw error;
+        });
 
         app.listen(
             PORT,
@@ -6028,7 +6015,7 @@ async function startServer() {
                 );
 
                 console.log(
-                    "Google Drive: متصل"
+                    "Backblaze B2: متصل"
                 );
 
                 console.log(
@@ -6075,7 +6062,7 @@ async function startServer() {
         );
 
         console.error(
-            "فشل الاتصال بـ Google Drive"
+            "فشل الاتصال بـ Backblaze B2"
         );
 
         console.error(
