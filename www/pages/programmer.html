@@ -896,6 +896,8 @@
 
     </style>
 
+    <link rel="stylesheet" href="../mobile.css">
+    <link rel="stylesheet" href="../theme.css">
 </head>
 
 <body>
@@ -1225,7 +1227,22 @@
                 </div>
 
 
-                <!-- GOOGLE DRIVE -->
+                <!-- MONTHLY STUDENT REPORT -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon">📊</div>
+
+                    <h2>التقرير الشهري للتلاميذ</h2>
+
+                    <p>عرض التلاميذ الذين دخلوا خلال أي شهر مع إمكانية الطباعة والاستخراج.</p>
+
+                    <a href="monthly-student-report.html" class="dashboard-button">📊 فتح التقرير الشهري</a>
+
+                </div>
+
+
+                <!-- BACKBLAZE B2 -->
 
                 <div class="dashboard-card">
 
@@ -1238,17 +1255,17 @@
                     </h2>
 
                     <p>
-                        التخزين السحابي المستخدم لحفظ
-                        ملفات الكتب الإلكترونية.
+                        التخزين السحابي Backblaze B2 المستخدم لحفظ
+                        ملفات الكتب والملفات التعليمية.
                     </p>
 
                     <a
-                        href="https://drive.google.com/"
+                        href="https://secure.backblaze.com/b2_buckets.htm"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="dashboard-button"
                     >
-                        ☁️ فتح التخزين السحابي
+                        ☁️ فتح Backblaze B2
                     </a>
 
                 </div>
@@ -2325,6 +2342,24 @@
 
     </script>
 
+
+<script>
+(function(){
+  if(document.getElementById("universalBackButton")) return;
+  const button=document.createElement("button");
+  button.id="universalBackButton";
+  button.type="button";
+  button.textContent="↩ الصفحة السابقة";
+  button.setAttribute("aria-label","العودة إلى الصفحة السابقة");
+  button.style.cssText="position:fixed;left:16px;bottom:16px;z-index:99990;border:1px solid rgba(148,163,184,.35);background:rgba(15,23,42,.94);color:#fff;border-radius:12px;padding:9px 13px;font:600 13px/1.2 Arial,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25);backdrop-filter:blur(6px);";
+  button.addEventListener("click",function(){
+    if(window.history.length>1){window.history.back();}
+    else{window.location.href=location.pathname.indexOf("/pages/")!==-1?"../index.html":"index.html";}
+  });
+  document.body.appendChild(button);
+})();
+</script>
+    <script src="../theme.js"></script>
 </body>
 
 </html>

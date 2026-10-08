@@ -1,0 +1,90 @@
+/* Maktabati - responsive mobile adjustments only */
+@media (max-width: 768px) {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body { min-width: 0 !important; }
+  img, video, iframe, canvas, svg { max-width: 100%; }
+
+  .container, main, .main-content, .content, .page-content {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .container { padding-left: 12px !important; padding-right: 12px !important; }
+
+  .navbar, .navbar-inner, .nav-container, .header, .dashboard-header,
+  .institution-bar, .top-bar, .toolbar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .navbar { flex-wrap: wrap !important; }
+  .navbar .nav-links, .nav-links, .navbar ul {
+    flex-wrap: wrap !important;
+    max-width: 100% !important;
+  }
+
+  .logo, .brand, .logo-title, .logo-subtitle { min-width: 0 !important; }
+  .logo-title, .section-title, .section-heading, h1, h2, h3 {
+    overflow-wrap: anywhere;
+  }
+
+  .grid, .dashboard-grid, .stats-grid, .form-grid, .cards-grid,
+  .categories-grid, .books-grid, .features-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card, .dashboard-card, .category-card, .section, .form-card,
+  .identity-card, .book-card, .contact-item, .step-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .section, .card, .form-card { padding-left: 14px !important; padding-right: 14px !important; }
+
+  .form-group, .field, .form-control, select, textarea, input {
+    max-width: 100% !important;
+  }
+  input, select, textarea, button { font-size: 16px !important; }
+  .form-grid { gap: 12px !important; }
+
+  .action-btn, .main-btn, .login-btn, .dashboard-button, .item-btn,
+  .read-button, .mini-btn, .card-link, .download-app-btn {
+    max-width: 100%;
+  }
+
+  table { width: 100%; max-width: 100%; }
+  .table-container, .table-responsive, .table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal, .modal-content, .dialog, .popup {
+    max-width: calc(100vw - 20px) !important;
+  }
+
+  .pdf-viewer, .pdf-container, .document-viewer, .viewer-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .info-row, .document-info-row, .registration-row, .school-row {
+    flex-wrap: wrap !important;
+  }
+
+  .footer-links { flex-wrap: wrap !important; }
+
+  /* Keep the universal back button reachable without covering content. */
+  #universalBackButton {
+    left: 10px !important;
+    bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .container { padding-left: 10px !important; padding-right: 10px !important; }
+  .section, .card, .form-card { padding-left: 11px !important; padding-right: 11px !important; }
+  .dashboard-header h1, h1 { font-size: clamp(22px, 7vw, 30px); }
+  h2 { font-size: clamp(19px, 6vw, 25px); }
+}

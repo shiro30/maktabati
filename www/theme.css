@@ -1,0 +1,19 @@
+/* Maktabati global theme layer */
+:root{--mk-bg:#f5f7fb;--mk-surface:#fff;--mk-surface-2:#eef2f7;--mk-text:#172033;--mk-muted:#64748b;--mk-border:rgba(15,23,42,.10);--mk-accent:#ff7a18;--mk-shadow:0 18px 55px rgba(15,23,42,.10)}
+html[data-theme="dark"]{--mk-bg:#060b14;--mk-surface:#0c1524;--mk-surface-2:#101d30;--mk-text:#f5f7fb;--mk-muted:#9aa9bd;--mk-border:rgba(255,255,255,.10);--mk-shadow:0 18px 55px rgba(0,0,0,.30)}
+html,body{transition:background-color .25s ease,color .25s ease}
+#mkThemeToggle{position:fixed;top:16px;left:16px;z-index:100000;display:flex;align-items:center;gap:7px;border:1px solid var(--mk-border);border-radius:999px;padding:9px 12px;background:color-mix(in srgb,var(--mk-surface) 88%,transparent);color:var(--mk-text);box-shadow:var(--mk-shadow);backdrop-filter:blur(12px);font:700 13px/1 "Cairo",Arial,sans-serif;cursor:pointer;transition:.2s}
+#mkThemeToggle:hover{transform:translateY(-2px)}
+html[data-theme="light"] body{background-color:var(--mk-bg)!important;color:var(--mk-text)!important}
+html[data-theme="dark"] body{color:var(--mk-text)}
+/* Common cards / forms */
+html[data-theme="light"] .card,html[data-theme="light"] .section,html[data-theme="light"] .management-section,html[data-theme="light"] .modal-content,html[data-theme="light"] .panel,html[data-theme="light"] .welcome,html[data-theme="light"] .teacher-platform-info{background:rgba(255,255,255,.90)!important;color:var(--mk-text)!important;border-color:var(--mk-border)!important;box-shadow:var(--mk-shadow)!important}
+html[data-theme="light"] input,html[data-theme="light"] textarea,html[data-theme="light"] select{background:#fff!important;color:#172033!important;border-color:rgba(15,23,42,.16)!important}
+html[data-theme="light"] .card p,html[data-theme="light"] .section p,html[data-theme="light"] .muted,html[data-theme="light"] small{color:var(--mk-muted)!important}
+html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="dark"] select{background:#0b1627!important;color:#f5f7fb!important;border-color:rgba(255,255,255,.13)!important}
+/* Darken old light pages without changing their brand */
+html[data-theme="dark"] .book-card,html[data-theme="dark"] .category-card,html[data-theme="dark"] .contact-card,html[data-theme="dark"] .guide-card,html[data-theme="dark"] .form-container,html[data-theme="dark"] .auth-card{background:rgba(12,21,36,.94)!important;color:#f5f7fb!important;border-color:var(--mk-border)!important}
+/* Make existing interfaces more polished */
+.card,.management-card,.teacher-platform-info,.welcome{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:hover,.management-card:hover{transform:translateY(-3px)}
+@media(max-width:700px){#mkThemeToggle{top:10px;left:10px;padding:8px 10px;font-size:12px}.card:hover,.management-card:hover{transform:none}}

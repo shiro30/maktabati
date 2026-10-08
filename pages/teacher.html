@@ -1022,9 +1022,16 @@
     }
 
 </style>
+<style>
+.submission-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:18px 0}.submission-summary{font-weight:700;color:#94a3b8}.submission-homework{background:rgba(15,35,60,.75);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:16px;margin-bottom:15px}.submission-homework h3{margin:0 0 8px}.submission-table{width:100%;border-collapse:collapse;margin-top:12px}.submission-table th,.submission-table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:right}.submission-status{font-weight:800}.submission-status.done{color:#22c55e}.submission-status.pending{color:#f59e0b}.submission-file{display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(59,130,246,.12);color:#60a5fa;text-decoration:none}.submission-empty{padding:16px;text-align:center;color:#94a3b8}
+html[data-theme="light"] .submission-homework{background:#fff;border-color:rgba(15,23,42,.10)}
+@media(max-width:700px){.submission-table{font-size:12px}.submission-table th,.submission-table td{padding:8px 5px}.submission-toolbar{align-items:stretch}.submission-toolbar button{width:100%}}
+</style>
+
 ```
 
     <link rel="stylesheet" href="../mobile.css">
+    <link rel="stylesheet" href="../theme.css">
 </head>
 
 <body>
@@ -1277,6 +1284,22 @@
                 وتعديلها وحذفها ضمن مادتك.
             </p>
 
+        </div>
+
+    </a>
+
+
+    <!-- متابعة تسليمات التلاميذ -->
+
+    <a
+        href="#submissionManagement"
+        class="card-link"
+        id="submissionsCard">
+
+        <div class="card management-card">
+            <div class="card-icon">📥</div>
+            <h3>تسليمات التلاميذ</h3>
+            <p>عرض من سلّم الواجب، فتح ملف الحل، ومعرفة من لم يسلّم بعد.</p>
         </div>
 
     </a>
@@ -1789,6 +1812,34 @@
 
 </div>
 
+
+<!-- =========================
+     HOMEWORK SUBMISSIONS
+========================= -->
+
+<div class="section platform-management" id="submissionManagement">
+    <div class="management-header">
+        <h2>📥 تسليمات التلاميذ</h2>
+        <button class="close-management" type="button" onclick="closeManagement()">✕ إغلاق</button>
+    </div>
+    <div class="management-selector">
+        <div class="form-group">
+            <label for="submissionBranch">الشعبة</label>
+            <select id="submissionBranch" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label for="submissionYear">السنة</label>
+            <select id="submissionYear" class="form-control"></select>
+        </div>
+    </div>
+    <div class="submission-toolbar">
+        <div class="submission-summary" id="submissionSummary">اختر الشعبة والسنة لعرض التسليمات.</div>
+        <button type="button" class="btn btn-primary" id="loadSubmissionsBtn">🔄 تحديث التسليمات</button>
+    </div>
+    <div id="submissionList" class="submission-list">
+        <div class="message info">لم يتم تحميل التسليمات بعد.</div>
+    </div>
+</div>
 
 <!-- =========================
      MY BOOKS
@@ -2659,6 +2710,10 @@ async function checkTeacher() {
         notesCard.style.display =
             "none";
 
+        if (submissionsCard) {
+            submissionsCard.style.display = "none";
+        }
+
     }
 
 
@@ -2690,6 +2745,11 @@ const lessonsCard =
 const notesCard =
     document.getElementById(
         "notesCard"
+    );
+
+const submissionsCard =
+    document.getElementById(
+        "submissionsCard"
     );
 
 
@@ -2741,6 +2801,24 @@ notesCard.addEventListener(
 
     }
 );
+
+
+/* =========================================
+   فتح تسليمات التلاميذ
+========================================= */
+
+if (submissionsCard) {
+    submissionsCard.addEventListener("click", function(event) {
+        if (!currentTeacherSubject) {
+            event.preventDefault();
+            alert("لا توجد مادة مرتبطة بحسابك.");
+            return;
+        }
+        event.preventDefault();
+        openManagement("submissions");
+        setTimeout(() => window.loadTeacherHomeworkSubmissions?.(), 250);
+    });
+}
 
 
 /* =========================================
@@ -2826,6 +2904,16 @@ function openManagement(
 
         }
 
+    }
+
+    if (type === "submissions") {
+        const section = document.getElementById("submissionManagement");
+        section.classList.add("visible");
+        section.scrollIntoView({behavior:"smooth", block:"start"});
+        const sourceBranch=document.getElementById("noteBranch");
+        const sourceYear=document.getElementById("noteYear");
+        if(sourceBranch?.value) document.getElementById("submissionBranch").value=sourceBranch.value;
+        if(sourceYear?.value) document.getElementById("submissionYear").value=sourceYear.value;
     }
 
 }
@@ -5124,6 +5212,56 @@ checkTeacher();
     else{window.location.href=location.pathname.indexOf("/pages/")!==-1?"../index.html":"index.html";}
   });
   document.body.appendChild(button);
+})();
+</script>
+    <script src="../theme.js"></script>
+<script>
+(function(){
+  const branch=document.getElementById('submissionBranch');
+  const year=document.getElementById('submissionYear');
+  const list=document.getElementById('submissionList');
+  const summary=document.getElementById('submissionSummary');
+  const btn=document.getElementById('loadSubmissionsBtn');
+  if(!branch||!year||!list||!btn)return;
+  function esc(v){const d=document.createElement('div');d.textContent=String(v??'');return d.innerHTML;}
+  function fill(){
+    if(branch.options.length===0){
+      const source=document.getElementById('noteBranch');
+      if(source){branch.innerHTML=source.innerHTML;}
+    }
+    if(year.options.length===0){
+      const source=document.getElementById('noteYear');
+      if(source){year.innerHTML=source.innerHTML;}
+    }
+  }
+  async function load(){
+    fill();
+    const sourceBranch=document.getElementById('noteBranch');
+    const sourceYear=document.getElementById('noteYear');
+    if(sourceBranch && sourceBranch.value) branch.value=sourceBranch.value;
+    if(sourceYear && sourceYear.value) year.value=sourceYear.value;
+    const b=String(branch.value||'').trim();
+    const y=Number(year.value||0);
+    const badgeText=document.getElementById('teacherSubjectBadge')?.textContent||'';
+    const subject=(badgeText.split('المادة:')[1]||'').trim();
+    if(!b||![1,2,3].includes(y)||!subject){list.innerHTML='<div class="message info">حدد الشعبة والسنة وتأكد من تحميل مادة الأستاذ.</div>';return;}
+    try{
+      btn.disabled=true; summary.textContent='جار تحميل تسليمات التلاميذ...';
+      const r=await platformFetch('/api/platform/homework/submissions?branch='+encodeURIComponent(b)+'&year='+encodeURIComponent(y)+'&subject='+encodeURIComponent(subject));
+      const d=await r.json(); if(!r.ok)throw new Error(d.message||'تعذر تحميل التسليمات.');
+      const homeworks=d.homeworks||[];
+      if(!homeworks.length){summary.textContent='لا توجد واجبات لهذه المادة في الاختيار الحالي.';list.innerHTML='<div class="submission-empty">لا توجد واجبات منشورة بعد.</div>';return;}
+      let total=0,done=0;
+      list.innerHTML=homeworks.map(hw=>{
+        const students=hw.students||[]; total+=students.length; done+=students.filter(s=>s.submitted).length;
+        return `<div class="submission-homework"><h3>📚 ${esc(hw.title)}</h3><div style="color:#94a3b8;font-size:13px">موعد التسليم: ${hw.submission_deadline?new Date(hw.submission_deadline).toLocaleString('ar-DZ'):'غير محدد'}</div><div style="overflow:auto"><table class="submission-table"><thead><tr><th>التلميذ</th><th>الحالة</th><th>تاريخ التسليم</th><th>الحل</th></tr></thead><tbody>${students.map(s=>`<tr><td>${esc(s.full_name)}</td><td><span class="submission-status ${s.submitted?'done':'pending'}">${esc(s.status)}</span></td><td>${s.submitted_at?esc(new Date(s.submitted_at).toLocaleString('ar-DZ')):'—'}</td><td>${s.file_url?`<a class="submission-file" href="${esc(s.file_url)}" target="_blank" rel="noopener">📄 فتح الحل</a>`:'—'}</td></tr>`).join('')}</tbody></table></div></div>`;
+      }).join('');
+      summary.textContent=`تم التسليم: ${done} من ${total} تلميذ`;
+    }catch(e){summary.textContent='تعذر تحميل التسليمات.';list.innerHTML=`<div class="message error">❌ ${esc(e.message)}</div>`;}
+    finally{btn.disabled=false;}
+  }
+  btn.addEventListener('click',load); branch.addEventListener('change',load); year.addEventListener('change',load);
+  window.loadTeacherHomeworkSubmissions=load;
 })();
 </script>
 </body>

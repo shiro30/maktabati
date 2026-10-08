@@ -865,7 +865,9 @@ async function createSystemNotification({
                 link,
                 created_by: createdBy,
                 is_active: true
-            });
+            })
+            .select("id")
+            .single();
 
         if (result.error) {
             console.error("Notification insert error:", result.error);
@@ -907,11 +909,17 @@ async function getPushAudienceUserIds({ targetType, targetUserId, targetBranch, 
     const result = await supabase.auth.admin.listUsers({ page:1, perPage:1000 });
     if (result.error) throw result.error;
     const users = result.data.users || [];
-    const profileResult = await supabase.from("profiles").select("id,role").in("id", users.map(u => u.id));
-    const roles = Object.fromEntries((profileResult.data || []).map(p => [p.id, p.role]));
+    if (!users.length) return [];
+    const profileResult = await supabase.from("profiles").select("id,role,branch,year").in("id", users.map(u => u.id));
+    if (profileResult.error) throw profileResult.error;
+    const profiles = Object.fromEntries((profileResult.data || []).map(p => [p.id, p]));
     return users.filter(user => {
-        if (roles[user.id] && String(roles[user.id]).toLowerCase() !== "student") return false;
-        if (targetType === "class") return String(user.user_metadata?.branch || "").trim() === String(targetBranch || "").trim() && Number(user.user_metadata?.year) === Number(targetYear);
+        const profile = profiles[user.id];
+        if (!profile || String(profile.role || "").toLowerCase() !== "student") return false;
+        if (targetType === "class") {
+            return String(profile.branch || user.user_metadata?.branch || "").trim() === String(targetBranch || "").trim()
+                && Number(profile.year || user.user_metadata?.year) === Number(targetYear);
+        }
         return true;
     }).map(user => user.id);
 }
@@ -2767,7 +2775,7 @@ app.post(
 /* =========================================================
    نظام الواجبات المنزلية
 ========================================================= */
-async function uploadPdfToPlatformDrive(pdfFile){
+async function uploadPdfToPlatformStorage(pdfFile){
     if(!drive) throw new Error("خدمة التخزين غير متصلة بالخادم.");
     const uploaded=await drive.files.create({requestBody:{name:path.basename(pdfFile.originalname)},media:{mimeType:"application/pdf",body:Readable.from(pdfFile.buffer)},fields:"id,name,webViewLink"});
     if(!uploaded.data.id) throw new Error("تعذر الحصول على معرف ملف PDF.");
@@ -2786,7 +2794,7 @@ app.post("/api/platform/homework",platformUpload.single("pdf"),async function(re
         if(!title||!content) return res.status(400).json({success:false,message:"العنوان والتعليمات مطلوبان."});
         if(!pdf) return res.status(400).json({success:false,message:"يرجى اختيار ملف PDF للواجب."});
         if(!Number.isFinite(hours)||hours<=0||hours>720) return res.status(400).json({success:false,message:"مدة التسليم غير صالحة."});
-        const uploaded=await uploadPdfToPlatformDrive(pdf); uploadedId=uploaded.id;
+        const uploaded=await uploadPdfToPlatformStorage(pdf); uploadedId=uploaded.id;
         const deadline=new Date(Date.now()+hours*3600000).toISOString();
         const result=await supabase.from("platform_notes").insert({branch:location.branch,year:location.year,subject:location.subject,type:"homework",title,content,created_by:verification.user.id,homework_file_drive_id:uploaded.id,homework_file_url:uploaded.url,homework_file_name:uploaded.name,submission_deadline:deadline}).select().single();
         if(result.error) throw result.error;
@@ -2807,7 +2815,7 @@ app.post("/api/platform/homework/:id/submit",platformUpload.single("pdf"),async 
         if(note.branch!==verification.studentBranch||Number(note.year)!==Number(verification.studentYear)) return res.status(403).json({success:false,message:"لا يمكنك تسليم حل هذا الواجب."});
         if(!note.submission_deadline||new Date(note.submission_deadline)<=new Date()) return res.status(410).json({success:false,message:"انتهت مهلة تسليم هذا الواجب."});
         if(!req.file) return res.status(400).json({success:false,message:"يرجى اختيار ملف PDF للحل."});
-        const uploaded=await uploadPdfToPlatformDrive(req.file); uploadedId=uploaded.id;
+        const uploaded=await uploadPdfToPlatformStorage(req.file); uploadedId=uploaded.id;
         const old=await supabase.from("homework_submissions").select("drive_file_id").eq("note_id",note.id).eq("student_id",verification.user.id).maybeSingle();
         const now=new Date().toISOString();
         const result=await supabase.from("homework_submissions").upsert({note_id:note.id,student_id:verification.user.id,drive_file_id:uploaded.id,file_name:uploaded.name,file_url:uploaded.url,submitted_at:now,updated_at:now},{onConflict:"note_id,student_id"}).select().single();
@@ -2826,9 +2834,9 @@ app.get("/api/platform/homework/submissions",async function(req,res){
         if(verification.profile.role==="teacher"&&!teacherCanAccessSubject(verification,subject)) return res.status(403).json({success:false,message:"لا يمكنك مشاهدة واجبات مادة أخرى."});
         const notes=await supabase.from("platform_notes").select("id,title,content,branch,year,subject,submission_deadline,created_at").eq("type","homework").eq("branch",branch).eq("year",year).eq("subject",subject).order("created_at",{ascending:false}); if(notes.error) throw notes.error;
         const users=await supabase.auth.admin.listUsers({page:1,perPage:1000}); if(users.error) throw users.error;
-        const profiles=await supabase.from("profiles").select("id,full_name"); if(profiles.error) throw profiles.error;
-        const names=Object.fromEntries((profiles.data||[]).map(p=>[p.id,p.full_name||"تلميذ"]));
-        const students=(users.data.users||[]).filter(u=>String(u.user_metadata?.branch||"").trim()===branch&&Number(u.user_metadata?.year)===year).map(u=>({id:u.id,full_name:names[u.id]||u.user_metadata?.full_name||u.email||"تلميذ",branch,year}));
+        const profiles=await supabase.from("profiles").select("id,full_name,role,branch,year"); if(profiles.error) throw profiles.error;
+        const profileMap=Object.fromEntries((profiles.data||[]).map(p=>[p.id,p]));
+        const students=(users.data.users||[]).filter(u=>{const p=profileMap[u.id]; return p && String(p.role||"").toLowerCase()==="student" && String(p.branch||u.user_metadata?.branch||"").trim()===branch && Number(p.year||u.user_metadata?.year)===year;}).map(u=>({id:u.id,full_name:profileMap[u.id]?.full_name||u.user_metadata?.full_name||u.email||"تلميذ",branch,year}));
         const homeworks=[];
         for(const note of notes.data||[]){const sub=await supabase.from("homework_submissions").select("student_id,file_name,file_url,submitted_at,updated_at").eq("note_id",note.id);if(sub.error)throw sub.error;const by=Object.fromEntries((sub.data||[]).map(x=>[x.student_id,x]));const expired=new Date(note.submission_deadline)<=new Date();homeworks.push({...note,students:students.map(st=>{const x=by[st.id];return {...st,submitted:!!x,submitted_at:x?.submitted_at||null,file_name:x?.file_name||null,file_url:x?.file_url||null,status:x?"تم التسليم":(expired?"انتهت المهلة":"لم يتم التسليم")};})});}
         return res.json({success:true,homeworks});
